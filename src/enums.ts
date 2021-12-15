@@ -3,7 +3,7 @@ export enum ButtonStyles {
   secondary = ' white',
 }
 
-export enum RadioBtnStyles {
+export enum InputsStyles {
   default = 'default',
   purple = 'purple',
 }

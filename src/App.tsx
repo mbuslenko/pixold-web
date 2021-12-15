@@ -1,10 +1,17 @@
+import { useState } from 'react';
 import './App.scss';
 import Button from './components/button/Button';
 import Checkbox from './components/checkbox/Checkbox';
 import RadioBtn from './components/radioButton/RadioBtn';
-import { ButtonStyles, RadioBtnStyles } from './enums';
+import { ButtonStyles, InputsStyles } from './enums';
 
 function App() {
+  const [checkedOne, setCheckedOne] = useState<boolean>(false);
+
+  const handleChangeOne = () => {
+    setCheckedOne(!checkedOne);
+  };
+
   return (
     <>
       <div className="App">Pixold-web</div>
@@ -13,11 +20,16 @@ function App() {
         <Button textContent="Cancel" styles={ButtonStyles.secondary} action={() => {}} />
       </div>
       <div>
-        <RadioBtn className={RadioBtnStyles.default} textContent="566655" />
-        <RadioBtn className={RadioBtnStyles.purple} textContent="fgfgffggf" />
+        <RadioBtn className={InputsStyles.default} textContent="566655" />
+        <RadioBtn className={InputsStyles.purple} textContent="fgfgffggf" />
       </div>
       <div>
-        <Checkbox />
+        <Checkbox
+          className={InputsStyles.default}
+          textContent="dfgdfgdfgd"
+          value={checkedOne}
+          onChange={handleChangeOne}
+        />
       </div>
     </>
   );
