@@ -25,3 +25,15 @@ export interface IToggle {
   onChange: () => void;
   textContent?: string | number;
 }
+
+export interface IItem {
+  id: number;
+  name: string;
+}
+
+export interface IDropdown {
+  title: string;
+  items: Array<IItem>;
+  value: string;
+  onChange: (item: string) => void;
+}
