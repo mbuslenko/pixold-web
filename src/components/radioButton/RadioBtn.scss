@@ -6,10 +6,6 @@
   letter-spacing: -0.02em;
   color: #2d3436;
   margin: 0px 12px;
-
-  /*   display: grid;
-  grid-template-columns: 1em auto;
-  gap: 0.5em; */
 }
 
 .radio-input-default[type='radio'] {
@@ -25,8 +21,6 @@
   border: 2px solid #2d3436;
   border-radius: 50%;
   transform: translateY(0.25em);
-  /*   display: grid;
-  place-content: center; */
   position: relative;
   cursor: pointer;
 }
@@ -44,7 +38,6 @@
   border-radius: 50%;
   transform: scale(0);
   transition: 120ms transform ease-in-out;
-  /* box-shadow: inset 1em 1em #2d3436; */
   background-color: #2d3436;
 }
 
@@ -60,10 +53,6 @@
   color: #2d3436;
   margin-left: 12px;
 }
-
-/* .form-control-default + .form-control-default {
-  margin-top: 1em;
-} */
 
 .form-control-purple {
   font-size: 20px;
