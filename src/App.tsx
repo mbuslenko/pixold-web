@@ -3,6 +3,7 @@ import './App.scss';
 import Button from './components/button/Button';
 import Checkbox from './components/checkbox/Checkbox';
 import RadioBtn from './components/radioButton/RadioBtn';
+import Toggle from './components/toggle/Toggle';
 import { ButtonStyles, InputsStyles } from './enums';
 
 function App() {
@@ -25,6 +26,14 @@ function App() {
       </div>
       <div>
         <Checkbox
+          className={InputsStyles.default}
+          textContent="dfgdfgdfgd"
+          value={checkedOne}
+          onChange={handleChangeOne}
+        />
+      </div>
+      <div>
+        <Toggle
           className={InputsStyles.default}
           textContent="dfgdfgdfgd"
           value={checkedOne}

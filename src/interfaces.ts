@@ -18,3 +18,10 @@ export interface ICheckbox {
   value: boolean;
   onChange: () => void;
 }
+
+export interface IToggle {
+  className: InputsStyles;
+  value: boolean;
+  onChange: () => void;
+  textContent?: string | number;
+}
