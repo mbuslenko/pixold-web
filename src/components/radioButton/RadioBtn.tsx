@@ -1,8 +1,8 @@
-import React, { FC, useState } from 'react';
+import React, { useState } from 'react';
 import { IRadioBtn } from '../../interfaces';
 import './RadioBtn.scss';
 
-const RadioBtn: FC<IRadioBtn> = ({ className, textContent }) => {
+const RadioBtn: React.FC<IRadioBtn> = ({ className, textContent }) => {
   const [isChecked, setIsChecked] = useState<boolean>(false);
 
   const toggleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
