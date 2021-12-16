@@ -1,25 +1,33 @@
-import logo from './logo.svg';
 import './App.css';
+import React from 'react';
+import Globe from 'react-globe.gl'
+import * as json from './test.json';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const { useState, useEffect } = React;
 
-export default App;
+  const World = () => {
+    const [countries, setCountries] = useState({ features: []});
+
+    useEffect(() => {
+      // load data
+      setCountries(json.features)
+    }, []);
+
+    return <Globe
+      globeImageUrl="//unpkg.com/three-globe/example/img/earth-dark.jpg"
+      showAtmosphere={false}
+
+      hexPolygonsData={countries}
+      hexPolygonResolution={3}
+      hexPolygonMargin={0.3}
+      hexPolygonColor={({ properties: d }) => {
+        return d.color || '#242526' }}
+      //hexPolygonColor={() => `#242526`}
+      hexPolygonLabel={({ properties: d }) => `
+        <b>${d.ADMIN} (${d.ISO_A2})</b> <br />
+        Population: <i>${d.POP_EST}</i>
+      `}
+    />;
+  };
+
+export default World
