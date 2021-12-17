@@ -1,0 +1,110 @@
+@import '../../shared/Variable.scss';
+
+.form-control-default {
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: -0.02em;
+  color: #2d3436;
+  margin: 0px 12px;
+}
+
+.radio-input-default[type='radio'] {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: #fffefb;
+  margin: 0;
+
+  color: #2d3436;
+  width: 24px;
+  height: 24px;
+
+  border: 2px solid #2d3436;
+  border-radius: 50%;
+  transform: translateY(0.25em);
+  position: relative;
+  cursor: pointer;
+}
+
+.radio-input-default[type='radio']::before {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  background-color: #2d3436;
+}
+
+.radio-input-default[type='radio']:checked {
+  border: 3px solid #2d3436;
+}
+
+.radio-input-default[type='radio']:checked::before {
+  transform: scale(1);
+}
+
+.radio-text-default {
+  color: #2d3436;
+  margin-left: 12px;
+}
+
+.form-control-purple {
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: -0.02em;
+  color: $purple;
+  margin: 0px 12px;
+}
+
+.radio-input-purple[type='radio'] {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: #fffefb;
+  margin: 0;
+
+  color: $purple;
+  width: 24px;
+  height: 24px;
+
+  border: 2px solid $purple;
+  border-radius: 50%;
+  transform: translateY(0.25em);
+  position: relative;
+  cursor: pointer;
+}
+
+.radio-input-purple[type='radio']::before {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  background-color: $purple;
+  box-shadow: 0px 0px 3px rgba(66, 39, 253, 0.4);
+}
+
+.radio-input-purple[type='radio']:checked {
+  border: 3px solid $purple;
+}
+
+.radio-input-purple[type='radio']:checked::before {
+  transform: scale(1);
+}
+
+.radio-text-purple {
+  color: #3b3f4e;
+  margin-left: 12px;
+}
