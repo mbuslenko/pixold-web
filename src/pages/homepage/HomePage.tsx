@@ -1,7 +1,6 @@
 import React from 'react';
+import { Button } from '../../ui-kit/button/Button';
 import './HomePage.scss';
-import Button from '../../components/button/Button';
-import { ButtonStyles } from '../../enums';
 
 const HomePage: React.FC = () => {
   return (
@@ -17,13 +16,11 @@ const HomePage: React.FC = () => {
           <h1 className="title">There will be a slogan</h1>
           <div className="wrap-btn">
             <Button
-              textContent="Get started"
-              styles={ButtonStyles.primary}
-              action={() => {
+              text="Get started"
+              priority='primary'
+              onClick={() => {
                 console.log('Get started');
               }}
-              width={132}
-              height={44}
             />
           </div>
         </section>
@@ -50,13 +47,12 @@ const HomePage: React.FC = () => {
               <div className="polygon-title-card">Attack</div>
               <div className="polygon-btn">
                 <Button
-                  textContent="Read more"
-                  styles={ButtonStyles.red}
-                  action={() => {
+                  text="Read more"
+                  // styles={ButtonStyles.red}
+                  priority='secondary'
+                  onClick={() => {
                     console.log('Read more');
                   }}
-                  width={127}
-                  height={44}
                 />
               </div>
             </div>
@@ -65,13 +61,11 @@ const HomePage: React.FC = () => {
               <div className="polygon-title-card">Miner</div>
               <div className="polygon-btn">
                 <Button
-                  textContent="Read more"
-                  styles={ButtonStyles.yellow}
-                  action={() => {
+                  text="Read more"
+                  priority='secondary'
+                  onClick={() => {
                     console.log('Read more');
                   }}
-                  width={127}
-                  height={44}
                 />
               </div>
             </div>
@@ -80,13 +74,11 @@ const HomePage: React.FC = () => {
               <div className="polygon-title-card">Defender</div>
               <div className="polygon-btn">
                 <Button
-                  textContent="Read more"
-                  styles={ButtonStyles.blue}
-                  action={() => {
+                  text="Read more"
+                  priority='secondary'
+                  onClick={() => {
                     console.log('Read more');
                   }}
-                  width={127}
-                  height={44}
                 />
               </div>
             </div>
