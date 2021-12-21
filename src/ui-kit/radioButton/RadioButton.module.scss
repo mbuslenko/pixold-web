@@ -1,0 +1,63 @@
+@import '../../shared/Variable.scss';
+
+@mixin radio-priority-style ($color) {
+  border-color: $color;
+
+  &:checked::after {
+    background-color: $color;
+  }
+}
+
+.radio {
+  appearance: none;
+  font: inherit;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: {
+    width: 2px;
+    style: solid;
+  };
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  &:checked {
+    border-width: 3px;
+
+    &::after {
+      content: '';
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+  }
+
+  &.primary {
+    @include radio-priority-style($purple)
+  }
+
+  &.secondary {
+    @include radio-priority-style($grey)
+  }
+}
+
+.radio-label {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.radio-description {
+  margin-left: 12px;
+
+  &.primary {
+    color: $font-black;
+  }
+
+  &.secondary {
+    color: $grey;
+  }
+}

@@ -1,0 +1,51 @@
+@import '../../shared/Variable.scss';
+
+.button {
+  border-radius: 10px;
+  padding: 11px 18px;
+  height: 44px;
+  cursor: pointer;
+}
+
+.primary {
+  background-color: $purple;
+  color: $font-grey;
+  border: none;
+
+  &:hover {
+    box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.25);
+  }
+
+  &:active {
+    box-shadow: 0px 2px 5px rgba(255, 255, 255, 0.2);
+  }
+
+  &:disabled {
+    background-color: #2D3436;
+    color: #B4B4B4;
+    cursor: not-allowed;
+  }
+}
+
+.secondary {
+  background-color: transparent;
+  color: $purple;
+  border: solid 2px $purple;
+
+  &:hover {
+    border-width: 4px;
+    padding: 9px 16px;
+  }
+
+  &:active {
+    border-width: 3px;
+    padding: 10px 17px;
+  }
+
+  &:disabled {
+    color: #B4B4B4;
+    background-color: #2D3436;
+    border: 2px solid #B4B4B4;
+    cursor: not-allowed;
+  }
+}

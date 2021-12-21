@@ -1,0 +1,29 @@
+@import '../../shared/Variable.scss';
+
+.container {
+  background-color: $black;
+  color: $white;
+  padding: 32px;
+  width: 523px;
+  border: 1px solid $purple;
+  border-radius: 4px;
+}
+
+.heading {
+  font-weight: bold;
+}
+
+.text {
+  margin-top: 9px;
+  overflow-wrap: break-word;
+}
+
+.button-container {
+  display: flex;
+  align-items: center;
+  margin-top: 32px;
+
+  & .button-wrapper:not(& .button-wrapper:last-child) {
+    margin-right: 12px;
+  }
+}

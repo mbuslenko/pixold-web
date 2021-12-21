@@ -1,11 +1,8 @@
 import './App.scss';
 
-function App() {
+export const App: React.FC = () => {
   return (
     <>
-      <div className="App">Pixold-web</div>
     </>
   );
-}
-
-export default App;
+};
