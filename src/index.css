@@ -196,13 +196,15 @@ body {
   -moz-osx-font-smoothing: grayscale;
   font-style: normal;
   font-weight: normal;
+  background-color: #010010;
+  color: #ffffff;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
-#root {
-  max-width: 1440px;
+.container {
+  max-width: 1720px;
   margin: 0 auto;
 }

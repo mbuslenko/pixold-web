@@ -1,7 +1,10 @@
 @import '../../shared/Variable.scss';
 
 .primary,
-.secondary {
+.secondary,
+.red,
+.yellow,
+.blue {
   width: 93px;
   height: 44px;
   background-color: $purple;
@@ -37,28 +40,98 @@
   cursor: default;
 }
 
-.white {
+.white,
+.red,
+.yellow,
+.blue {
   background-color: #fffefb;
   color: $purple;
   border: 2px solid $purple;
   box-shadow: none;
 }
 
-.white:hover {
+.red,
+.yellow,
+.blue {
+  background-color: #010010;
+}
+
+.red {
+  color: #d63031;
+  border: 2px solid #d63031;
+}
+
+.yellow {
+  color: #ffec40;
+  border: 2px solid #ffec40;
+}
+
+.blue {
+  color: #3dacfd;
+  border: 2px solid #3dacfd;
+}
+
+.white:hover,
+.red:hover,
+.yellow:hover,
+.blue:hover {
   border: 4px solid $purple;
   box-shadow: none;
 }
 
-.white:active {
+.red:hover {
+  border: 4px solid #d63031;
+}
+
+.yellow:hover {
+  border: 4px solid #ffec40;
+}
+
+.blue:hover {
+  border: 4px solid #3dacfd;
+}
+
+.white:active,
+.red:active,
+.yellow:active,
+.blue:active {
   border: 3px solid $purple;
   box-shadow: none;
 }
 
+.red:active {
+  border: 3px solid #d63031;
+}
+
+.yellow:active {
+  border: 3px solid #ffec40;
+}
+
+.blue:active {
+  border: 3px solid #3dacfd;
+}
+
 .white:disabled,
-.white[disabled] {
+.white[disabled],
+.red:disabled,
+.red[disabled],
+.yellow:disabled,
+.yellow[disabled],
+.blue:disabled,
+.blue[disabled] {
   color: #b4b4b4;
   background: #fffefb;
   border: 2px solid #b4b4b4;
   box-shadow: none;
   cursor: default;
+}
+
+@media screen and (max-width: 425px) {
+  .primary,
+  .secondary {
+    width: 90px !important;
+    height: 34px !important;
+    font-size: 10px;
+    line-height: 12px;
+  }
 }
