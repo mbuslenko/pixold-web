@@ -22,7 +22,7 @@ export const Modal: React.FC<IModalProps> = ({ position, heading, text, children
               key={i}
             >
               {v}
-            </div>
+            </div>,
           )}
         </div>
       }
