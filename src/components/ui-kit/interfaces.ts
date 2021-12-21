@@ -1,11 +1,24 @@
 import React, { MouseEventHandler } from 'react';
 import { ElementPriority, InputStatus, InputType } from './type';
 
+// #TODO: unite colorStyle with priority interfaces
+export interface IButtonPrimaryColorStyle {
+  color: string;
+  backgroundColor: string;
+}
+
+export interface IButtonSecondaryColorStyle {
+  color: string;
+  backgroundColor: string;
+  borderColor: string;
+}
+
 export interface IButtonProps {
   text: string;
   priority: ElementPriority;
   onClick: MouseEventHandler;
   disabled?: boolean;
+  colorStyle?: IButtonPrimaryColorStyle | IButtonSecondaryColorStyle;
 }
 
 export interface IRadioButtonProps {
@@ -76,9 +89,17 @@ export interface IAlertProps {
   onClick: () => void;
 }
 
+// TODO: add position
+export interface IPosition {
+  x: number;
+  y: number;
+}
+
+// TODO: add styles to modal, z-index, size (width, height)
+
 export interface IModalProps {
   heading: string;
   text: string;
-  position?: { x: number, y: number };
+  position?: IPosition;
   buttons?: React.FC;
 }

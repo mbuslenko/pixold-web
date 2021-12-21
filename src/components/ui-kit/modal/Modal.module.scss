@@ -1,12 +1,14 @@
-@import '../../shared/Variable.scss';
+@import '../../../shared/Variable.scss';
 
 .container {
+  position: relative;
   background-color: $black;
   color: $white;
   padding: 32px;
   width: 523px;
   border: 1px solid $purple;
   border-radius: 4px;
+  z-index: 100;
 }
 
 .heading {

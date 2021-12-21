@@ -1,7 +1,9 @@
-.header-content {
-  display: flex;
-  justify-content: center;
-  height: 200px;
+.header {
+  margin-top: 240px;
+  // will be uncommented after the task from the designer
+  // position: sticky;
+  // top: 40px;
+  // z-index: 110;
 }
 
 .start {
@@ -9,13 +11,13 @@
   flex-direction: column;
   align-items: center;
   background-image: url('../../assets/svg/mapbase.svg');
-  padding-top: 35px;
 }
 
 .logo {
   width: 47px;
   height: 54px;
   background-image: url('../../assets/svg/logo.svg');
+  margin: auto;
 }
 
 .start-wrap {

@@ -1,0 +1,33 @@
+.get-started-screen {
+  padding: 380px 0 530px;
+  display: flex;
+  justify-content: center;
+}
+
+.info-container {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.whale-img {
+  position: absolute;
+  z-index: 101;
+}
+
+.whale-top {
+  top: -250px;
+  left: -360px;
+}
+
+.whale-bottom {
+  top: 140px;
+  right: -240px;
+}
+
+@media screen and (max-width: 425px) {
+  .whale-bottom {
+    display: none;
+  }
+}
