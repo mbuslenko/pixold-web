@@ -5,12 +5,27 @@ import { IModalPosition } from '../../components/ui-kit/interfaces';
 import { Modal } from '../../components/ui-kit/modal/Modal';
 import './PolygonsScreen.scss';
 
-const polygonAttackHeading = 'Attack red';
-const polygonAttackText = 'RED GO FAAAAAAAAAAASTER!!!!!!!!!!';
-const polygonMinerHeading = 'Miner yellow';
-const polygonMinerText = 'WORK AGAIN ?!';
-const polygonDefenderHeading = 'Defender Blue';
-const polygonDefenderText = 'Just boring capitalism...';
+const polygonAttackHeading = 'Attack';
+const polygonMinerHeading = 'Miner';
+const polygonDefenderHeading = 'Defender';
+
+const polygonAttackText = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                          Blandit ultricies aliquam quis in accumsan, vel ut. 
+                          Posuere suscipit neque scelerisque libero. 
+                          Quisque ipsum tristique arcu velit facilisi nec lectus. 
+                          Commodo sed elementum congue consequat.`;
+                          
+const polygonMinerText = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                          Blandit ultricies aliquam quis in accumsan, vel ut. 
+                          Posuere suscipit neque scelerisque libero. 
+                          Quisque ipsum tristique arcu velit facilisi nec lectus. 
+                          Commodo sed elementum congue consequat.`;
+
+const polygonDefenderText = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                          Blandit ultricies aliquam quis in accumsan, vel ut. 
+                          Posuere suscipit neque scelerisque libero. 
+                          Quisque ipsum tristique arcu velit facilisi nec lectus. 
+                          Commodo sed elementum congue consequat.`;
 
 export const PolygonsScreen: React.FC = () => {
   const [modalPosition, setModalPosition] = useState<IModalPosition | undefined>();
