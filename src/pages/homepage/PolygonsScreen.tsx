@@ -1,8 +1,9 @@
 import React from 'react';
 import { useRef, useState } from 'react';
 import { Button } from '../../components/ui-kit/button/Button';
-import { IPosition } from '../../components/ui-kit/interfaces';
+import { IModalPosition } from '../../components/ui-kit/interfaces';
 import { Modal } from '../../components/ui-kit/modal/Modal';
+import './PolygonsScreen.scss';
 
 const polygonAttackHeading = 'Attack red';
 const polygonAttackText = 'RED GO FAAAAAAAAAAASTER!!!!!!!!!!';
@@ -12,7 +13,7 @@ const polygonDefenderHeading = 'Defender Blue';
 const polygonDefenderText = 'Just boring capitalism...';
 
 export const PolygonsScreen: React.FC = () => {
-  const [position, setPosition] = useState<IPosition>({ x: 0, y: 0 });
+  const [modalPosition, setModalPosition] = useState<IModalPosition | undefined>();
   const [isModalVisible, setModalVisibility] = useState<boolean>(false);
   const [modalHeading, setModalHeading] = useState<string>('');
   const [modalText, setModalText] = useState<string>('');
@@ -20,82 +21,80 @@ export const PolygonsScreen: React.FC = () => {
   const polygonMinerRef = useRef<HTMLDivElement>(null);
   const polygonDefenderRef = useRef<HTMLDivElement>(null);
 
-  const mouseMoveCallback = (e: React.MouseEvent): void => {
-    // TODO: need to refactor if {} statements
-    if (window.innerWidth < 425) {
-      return;
-    }
+  const isPolygonOnPosition = (polygon: HTMLDivElement, x: number, y: number): boolean => (
+    y >= polygon.offsetTop && y <= polygon.offsetTop + polygon.offsetHeight &&
+    x >= polygon.offsetLeft && x <= polygon.offsetLeft + polygon.offsetWidth
+  );
 
-    const { current: polygonAttackDom } = polygonAttackRef;
-
-    if (!polygonAttackDom) {
-      return;
-    }
-
-    if (
-      e.pageY >= polygonAttackDom.offsetTop && e.pageY <= polygonAttackDom.offsetTop + polygonAttackDom.offsetHeight &&
-      e.pageX >= polygonAttackDom.offsetLeft && e.pageX <= polygonAttackDom.offsetLeft + polygonAttackDom.offsetWidth
-    ) {
-      setModalHeading(polygonAttackHeading);
-      setModalText(polygonAttackText);
-      setModalVisibility(true);
-      setPosition({
-        x: e.pageX < window.innerWidth / 2 ? (e.pageX + 20) : (e.pageX - 553),
-        y: e.pageY,
-      });
-
-      return;
-    }
-
-    const { current: polygonMinerDom } = polygonMinerRef;
-
-    if (!polygonMinerDom) {
-      return;
-    }
-
-    if (
-      e.pageY >= polygonMinerDom.offsetTop && e.pageY <= polygonMinerDom.offsetTop + polygonMinerDom.offsetHeight &&
-      e.pageX >= polygonMinerDom.offsetLeft && e.pageX <= polygonMinerDom.offsetLeft + polygonMinerDom.offsetWidth
-    ) {
-      setModalHeading(polygonMinerHeading);
-      setModalText(polygonMinerText);
-      setModalVisibility(true);
-      setPosition({
-        x: e.pageX < window.innerWidth / 2 ? (e.pageX + 20) : (e.pageX - 553),
-        y: e.pageY,
-      });
-
-      return;
-    }
-
-    const { current: polygonDefenderDom } = polygonDefenderRef;
-
-    if (!polygonDefenderDom) {
-      return;
-    }
-
-    if (
-      e.pageY >= polygonDefenderDom.offsetTop && e.pageY <= polygonDefenderDom.offsetTop + polygonDefenderDom.offsetHeight &&
-      e.pageX >= polygonDefenderDom.offsetLeft && e.pageX <= polygonDefenderDom.offsetLeft + polygonDefenderDom.offsetWidth
-    ) {
-      setModalHeading(polygonDefenderHeading);
-      setModalText(polygonDefenderText);
-      setModalVisibility(true);
-      setPosition({
-        x: e.pageX < window.innerWidth / 2 ? (e.pageX + 20) : (e.pageX - 553),
-        y: e.pageY,
-      });
-
-      return;
-    }
-
-    setModalVisibility(false);
+  const setInfoModalPosition = (x: number, y: number): void => {
+    setModalPosition({
+      x: x < window.innerWidth / 2 ? (x + 20) : (x - 553),
+      y: y,
+    });
   };
 
   const showInfoModal = (modalHeading: string, modalText: string): void => {
     setModalHeading(modalHeading);
     setModalText(modalText);
     setModalVisibility(true);
+
+    if (window.innerWidth < 425) {
+      // I block/unblock scrolling this way (not with pure css) so every device would work same
+      document.body.style.top = `-${window.scrollY}px`;
+      document.body.style.position = 'fixed';
+    }
+  };
+
+  const hideInfoModal = (): void => {
+    // Reason why I setModalPosition(undefined):
+    // If you are in desktop mode and hover over polygon - modal will set it's positions.
+    // After going to mobile mode - position will be from desktop
+    // and css class with media query positions won't work
+    setModalPosition(undefined);
+    setModalVisibility(false);
+
+    if (window.innerWidth < 425) {
+      document.body.style.position = '';
+      window.scrollTo(0, parseInt(document.body.style.top || '0') * -1);
+      document.body.style.top = '';
+    }
+  };
+
+  const mouseMoveCallback = (e: React.MouseEvent): void => {
+    if (window.innerWidth < 425) {
+      return;
+    }
+
+    const { current: polygonAttackDom } = polygonAttackRef;
+    const { current: polygonDefenderDom } = polygonDefenderRef;
+    const { current: polygonMinerDom } = polygonMinerRef;
+
+    if (!polygonAttackDom || !polygonDefenderDom || !polygonMinerDom) {
+      return;
+    }
+
+    if (isPolygonOnPosition(polygonAttackDom, e.pageX, e.pageY)) {
+      setInfoModalPosition(e.pageX, e.pageY);
+      showInfoModal(polygonAttackHeading, polygonAttackText);
+
+      return;
+    }
+
+    if (isPolygonOnPosition(polygonDefenderDom, e.pageX, e.pageY)) {
+      setInfoModalPosition(e.pageX, e.pageY);
+      showInfoModal(polygonMinerHeading, polygonMinerText);
+
+      return;
+    }
+
+    if (isPolygonOnPosition(polygonMinerDom, e.pageX, e.pageY)) {
+      setInfoModalPosition(e.pageX, e.pageY);
+      showInfoModal(polygonDefenderHeading, polygonDefenderText);
+
+      return;
+    }
+
+    hideInfoModal();
   };
 
   return (
@@ -108,13 +107,16 @@ export const PolygonsScreen: React.FC = () => {
           <Modal
             heading={modalHeading}
             text={modalText}
-            position={position}
+            position={modalPosition}
+            positionClassName='info-modal-position'
+            colorsClassName='info-modal-colors'
+            sizeClassName='info-modal-size'
           >
             {window.innerWidth < 425 &&
               <Button
                 text={'Got it!'}
-                priority={'primary'}
-                onClick={() => setModalVisibility(false)}
+                priority='primary'
+                onClick={hideInfoModal}
               />
             }
           </Modal>
@@ -130,8 +132,8 @@ export const PolygonsScreen: React.FC = () => {
             <div className="polygon-btn">
               <Button
                 text="Read more"
-                // styles={ButtonStyles.red}
                 priority='secondary'
+                className='polygon-btn-red'
                 onClick={() => showInfoModal(polygonAttackHeading, polygonAttackText)}
               />
             </div>
@@ -146,6 +148,7 @@ export const PolygonsScreen: React.FC = () => {
               <Button
                 text="Read more"
                 priority='secondary'
+                className='polygon-btn-yellow'
                 onClick={() => showInfoModal(polygonMinerHeading, polygonMinerText)}
               />
             </div>
@@ -160,6 +163,7 @@ export const PolygonsScreen: React.FC = () => {
               <Button
                 text="Read more"
                 priority='secondary'
+                className='polygon-btn-blue'
                 onClick={() => showInfoModal(polygonDefenderHeading, polygonDefenderText)}
               />
             </div>

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Button } from '../../components/ui-kit/button/Button';
 
 export const StartScreen: React.FC = () => {
@@ -6,13 +7,12 @@ export const StartScreen: React.FC = () => {
       <section className="start">
         <h1 className="title">There will be a slogan</h1>
         <div className="wrap-btn">
-          <Button
-            text="Get started"
-            priority='primary'
-            onClick={() => {
-              console.log('Get started');
-            }}
-          />
+          <Link to='/auth'>
+            <Button
+              text="Get started"
+              priority='primary'
+            />
+          </Link>
         </div>
       </section>
     </div>

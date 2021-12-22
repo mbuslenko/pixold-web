@@ -2,6 +2,7 @@
   padding: 380px 0 530px;
   display: flex;
   justify-content: center;
+  overflow: hidden;
 }
 
 .info-container {
@@ -22,12 +23,35 @@
 }
 
 .whale-bottom {
-  top: 140px;
-  right: -240px;
+  top: 250px;
+  right: -230px;
+}
+
+.get-started-modal-size {
+  width: 523px;
+  padding: 32px;
 }
 
 @media screen and (max-width: 425px) {
+  .get-started-screen {
+    justify-content: end;
+  }
+
+  .info-container {
+    right: -2px;
+  }
+
+  .whale-top {
+    // TODO: download img separately from blur effect and then change transform to width & height
+    transform: scale(0.77);
+    left: -280px;
+  }
+
   .whale-bottom {
     display: none;
+  }
+
+  .get-started-modal-size {
+    width: 277px;
   }
 }

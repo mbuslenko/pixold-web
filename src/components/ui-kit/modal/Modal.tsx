@@ -2,11 +2,19 @@ import React from 'react';
 import { IModalProps } from '../interfaces';
 import styles from './Modal.module.scss';
 
-export const Modal: React.FC<IModalProps> = ({ position, heading, text, children }) => {
+export const Modal: React.FC<IModalProps> = ({
+  sizeClassName,
+  colorsClassName,
+  positionClassName,
+  position,
+  heading,
+  text,
+  children,
+}) => {
   return (
     <div
-      style={position && { position: 'absolute', left: `${position.x}px`, top: `${position.y}px` }}
-      className={styles.container}
+      style={position && { left: `${position.x}px`, top: `${position.y}px` }}
+      className={`${styles.container} ${sizeClassName ?? styles['default-size']} ${positionClassName ?? ''} ${colorsClassName ?? styles['default-colors']}`}
     >
       <h2 className={styles.heading}>
         {heading}

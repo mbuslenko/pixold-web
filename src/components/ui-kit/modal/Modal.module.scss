@@ -1,18 +1,23 @@
 @import '../../../shared/Variable.scss';
 
 .container {
-  position: relative;
+  font-size: 24px;
+  border-radius: 4px;
+}
+
+.default-size {
+  width: 523px;
+  padding: 32px;
+}
+
+.default-colors {
   background-color: $black;
   color: $white;
-  padding: 32px;
-  width: 523px;
   border: 1px solid $purple;
-  border-radius: 4px;
-  z-index: 100;
 }
 
 .heading {
-  font-weight: bold;
+  font-weight: 700;
 }
 
 .text {

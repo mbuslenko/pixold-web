@@ -2,15 +2,22 @@
 
 .button {
   border-radius: 10px;
-  padding: 11px 18px;
+  padding: 9px 18px;
   height: 44px;
+  font: {
+    size: 18px;
+    weight: 600;
+  };
   cursor: pointer;
 }
 
 .primary {
-  background-color: $purple;
-  color: $font-grey;
   border: none;
+
+  &.default-style {
+    background-color: $purple;
+    color: $font-grey;
+  }
 
   &:hover {
     box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.25);
@@ -23,29 +30,36 @@
   &:disabled {
     background-color: #2D3436;
     color: #B4B4B4;
-    cursor: not-allowed;
+    pointer-events: none;
   }
 }
 
 .secondary {
   background-color: transparent;
-  color: $purple;
-  border: solid 2px $purple;
+  border: {
+    style: solid;
+    width: 2px;
+  };
+
+  &.default-style {
+    color: $purple;
+    border: solid 2px $purple;
+  }
 
   &:hover {
     border-width: 4px;
-    padding: 9px 16px;
+    padding: 7px 16px;
   }
 
   &:active {
     border-width: 3px;
-    padding: 10px 17px;
+    padding: 8px 17px;
   }
 
   &:disabled {
     color: #B4B4B4;
     background-color: #2D3436;
     border: 2px solid #B4B4B4;
-    cursor: not-allowed;
+    pointer-events: none;
   }
 }
