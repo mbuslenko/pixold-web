@@ -36,6 +36,11 @@ export const PolygonsScreen: React.FC = () => {
   const polygonMinerRef = useRef<HTMLDivElement>(null);
   const polygonDefenderRef = useRef<HTMLDivElement>(null);
 
+  const isWindowSmall = (): boolean => (
+    // TODO: make constants for window resolutions
+    window.innerWidth <= 425
+  );
+
   const isPolygonOnPosition = (polygon: HTMLDivElement, x: number, y: number): boolean => (
     y >= polygon.offsetTop && y <= polygon.offsetTop + polygon.offsetHeight &&
     x >= polygon.offsetLeft && x <= polygon.offsetLeft + polygon.offsetWidth
@@ -53,7 +58,7 @@ export const PolygonsScreen: React.FC = () => {
     setModalText(modalText);
     setModalVisibility(true);
 
-    if (window.innerWidth < 425) {
+    if (isWindowSmall()) {
       // I block/unblock scrolling this way (not with pure css) so every device would work same
       document.body.style.top = `-${window.scrollY}px`;
       document.body.style.position = 'fixed';
@@ -68,7 +73,7 @@ export const PolygonsScreen: React.FC = () => {
     setModalPosition(undefined);
     setModalVisibility(false);
 
-    if (window.innerWidth < 425) {
+    if (isWindowSmall()) {
       document.body.style.position = '';
       window.scrollTo(0, parseInt(document.body.style.top || '0') * -1);
       document.body.style.top = '';
@@ -76,7 +81,7 @@ export const PolygonsScreen: React.FC = () => {
   };
 
   const mouseMoveCallback = (e: React.MouseEvent): void => {
-    if (window.innerWidth < 425) {
+    if (isWindowSmall()) {
       return;
     }
 
@@ -95,14 +100,14 @@ export const PolygonsScreen: React.FC = () => {
       return;
     }
 
-    if (isPolygonOnPosition(polygonDefenderDom, e.pageX, e.pageY)) {
+    if (isPolygonOnPosition(polygonMinerDom, e.pageX, e.pageY)) {
       setInfoModalPosition(e.pageX, e.pageY);
       showInfoModal(polygonMinerHeading, polygonMinerText);
 
       return;
     }
 
-    if (isPolygonOnPosition(polygonMinerDom, e.pageX, e.pageY)) {
+    if (isPolygonOnPosition(polygonDefenderDom, e.pageX, e.pageY)) {
       setInfoModalPosition(e.pageX, e.pageY);
       showInfoModal(polygonDefenderHeading, polygonDefenderText);
 
@@ -127,7 +132,7 @@ export const PolygonsScreen: React.FC = () => {
             colorsClassName='info-modal-colors'
             sizeClassName='info-modal-size'
           >
-            {window.innerWidth < 425 &&
+            {isWindowSmall() &&
               <Button
                 text={'Got it!'}
                 priority='secondary'
