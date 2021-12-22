@@ -2,6 +2,7 @@
 
 .get-started-screen {
   padding: 380px 0 530px;
+  display: -webkit-flex;
   display: flex;
   justify-content: center;
   // overflow: hidden;
@@ -42,6 +43,7 @@
 
 @media screen and (max-width: 425px) {
   .get-started-screen {
+    -webkit-justify-content: right;
     justify-content: right;
     padding: 244px 0 265px;
   }
