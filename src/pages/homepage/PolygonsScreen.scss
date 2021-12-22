@@ -1,5 +1,10 @@
 @import '../../shared/Variable.scss';
 
+$red: #D63031;
+$yellow: #FFEC40;
+$blue: #3DACFD;
+
+
 .info-modal-position {
   position: absolute;
   z-index: 2;
@@ -21,18 +26,18 @@
 }
 
 .polygon-btn-red {
-  color: #D63031;
-  border-color: #D63031;
+  color: $red;
+  border-color: $red;
 }
 
 .polygon-btn-yellow {
-  color: #FFEC40;
-  border-color: #FFEC40;
+  color: $yellow;
+  border-color: $yellow;
 }
 
 .polygon-btn-blue {
-  color: #3DACFD;
-  border-color: #3DACFD;
+  color: $blue;
+  border-color: $blue;
 }
 
 @media screen and (max-width: $screen-max-width-mobile) {

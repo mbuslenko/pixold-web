@@ -41,10 +41,12 @@ export const PolygonsScreen: React.FC = () => {
     window.innerWidth <= 425
   );
 
-  const isPolygonOnPosition = (polygon: HTMLDivElement, x: number, y: number): boolean => (
-    y >= polygon.offsetTop && y <= polygon.offsetTop + polygon.offsetHeight &&
-    x >= polygon.offsetLeft && x <= polygon.offsetLeft + polygon.offsetWidth
-  );
+  const isPolygonOnPosition = (polygon: HTMLDivElement, x: number, y: number): boolean => {
+    const inRangeX: boolean = (y >= polygon.offsetTop) && (y <= polygon.offsetTop + polygon.offsetHeight);
+    const inRangeY: boolean = (x >= polygon.offsetLeft) && (x <= polygon.offsetLeft + polygon.offsetWidth);
+
+    return inRangeX && inRangeY;
+  };
 
   const setInfoModalPosition = (x: number, y: number): void => {
     setModalPosition({
