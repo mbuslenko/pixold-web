@@ -17,6 +17,7 @@ export const GetStartedScreen: React.FC = () => {
           heading='Let’s dive in!'
           text='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Blandit ultricies aliquam quis in accumsan, vel ut. Posuere suscipit neque scelerisque libero. Quisque ipsum tristique arcu velit facilisi nec lectus. Commodo sed elementum congue consequat.'
           sizeClassName='get-started-modal-size'
+          colorsClassName='get-started-modal-color'
         >
           {/* #TODO: look for alternative for redirect */}
           <Link to='/auth'>

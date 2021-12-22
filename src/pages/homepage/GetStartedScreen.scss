@@ -1,8 +1,10 @@
+@import '../../shared/Variable.scss';
+
 .get-started-screen {
   padding: 380px 0 530px;
   display: flex;
   justify-content: center;
-  overflow: hidden;
+  // overflow: hidden;
 }
 
 .info-container {
@@ -14,7 +16,7 @@
 
 .whale-img {
   position: absolute;
-  z-index: 101;
+  z-index: 1;
 }
 
 .whale-top {
@@ -32,13 +34,19 @@
   padding: 32px;
 }
 
+.get-started-modal-color {
+  background-color: $black;
+  color: $white;
+  border: 1px solid $purple;
+}
+
 @media screen and (max-width: 425px) {
   .get-started-screen {
-    justify-content: end;
+    justify-content: right;
   }
 
   .info-container {
-    right: -2px;
+    // right: -2px;
   }
 
   .whale-top {
@@ -53,5 +61,9 @@
 
   .get-started-modal-size {
     width: 277px;
+  }
+
+  .get-started-modal-color {
+    border-right: none;
   }
 }

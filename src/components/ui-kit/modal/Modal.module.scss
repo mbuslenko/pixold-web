@@ -3,6 +3,8 @@
 .container {
   font-size: 24px;
   border-radius: 4px;
+  display: flex;
+  flex-direction: column;
 }
 
 .default-size {
@@ -23,6 +25,7 @@
 .text {
   margin-top: 9px;
   overflow-wrap: break-word;
+  overflow-y: scroll;
 }
 
 .button-container {

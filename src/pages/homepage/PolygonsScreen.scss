@@ -15,6 +15,11 @@
   padding: 32px;
 }
 
+.info-modal-button-color {
+  color: $white;
+  border-color: $white;
+}
+
 .polygon-btn-red {
   color: #D63031;
   border-color: #D63031;
@@ -33,11 +38,12 @@
 @media screen and (max-width: $screen-max-width-mobile) {
   .info-modal-position {
     position: fixed;
-    top: 234px;
+    top: 10%;
     left: calc(50% - 172px);
   }
 
   .info-modal-size {
     width: 344px;
+    max-height: 80%;
   }
 }
