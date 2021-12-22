@@ -1,11 +1,14 @@
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import './App.scss';
+import HomePage from './pages/homepage/HomePage';
 
-function App() {
+export const App: React.FC = () => {
   return (
-    <>
-      <div className="App">Pixold-web</div>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<Navigate replace to='/home'/>}/>
+        <Route path='/home' element={<HomePage />}/>
+      </Routes>
+    </BrowserRouter>
   );
-}
-
-export default App;
+};
