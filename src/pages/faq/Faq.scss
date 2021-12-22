@@ -1,0 +1,41 @@
+@import '../../shared/Variable.scss';
+
+.faq-page {
+  max-width: 1440px;
+  margin: auto;
+}
+
+.faq-primary-button-color {
+  background-color: $white;
+  color: $black;
+}
+
+.faq-secondary-button-color {
+  border-color: $white;
+  color: $white;
+}
+
+.page-heading {
+  font: {
+    family: 'Montserrat';
+    weight: 700;
+    size: 100px;
+  }
+  padding: 0 1em;
+  text-indent: -0.08em;
+}
+
+.faq-topic-container {
+  padding: 0 6.875em 14.125em;
+}
+
+@media screen and (max-width: $screen-max-width-mobile) {
+  .page-heading {
+    font-size: 50px;
+    padding: 0 0.72em;
+  }
+
+  .faq-topic-container {
+    padding: 0 2.25em 5.375em;
+  }
+}

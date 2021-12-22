@@ -7,7 +7,7 @@ import { InfoScreen } from './InfoScreen';
 import { PolygonsScreen } from './PolygonsScreen';
 import { StartScreen } from './StartScreen';
 
-const HomePage: React.FC = () => {
+export const HomePage: React.FC = () => {
   return (
     <>
       <Header />
@@ -19,5 +19,3 @@ const HomePage: React.FC = () => {
     </>
   );
 };
-
-export default HomePage;

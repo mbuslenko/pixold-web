@@ -1,0 +1,29 @@
+@import '../../shared/Variable.scss';
+
+.faq-question {
+  // height: 19.875em;
+  // overflow: hidden;
+}
+
+.faq-question-heading {
+  font: {
+    size: 30px;
+    weight: 600;
+    style: 'Montserrat';
+  }
+  margin-bottom: 1.1em;
+}
+
+.faq-question-text {
+  font-size: 24px;
+}
+
+@media screen and (max-width: $screen-max-width-mobile) {
+  .faq-question-heading {
+    font-size: 15px;
+  }
+
+  .faq-question-text {
+    font-size: 12px;
+  }
+}

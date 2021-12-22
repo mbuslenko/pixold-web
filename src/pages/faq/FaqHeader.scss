@@ -1,0 +1,28 @@
+@import '../../shared/Variable.scss';
+
+.faq-header {
+  width: 100%;
+  padding: 4em 6.25em 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-link-wrapper {
+  display: inline-block;
+  margin-right: 0.875em;
+}
+
+@media screen and (max-width: $screen-max-width-mobile) {
+  .faq-header {
+    padding: 4em 2.25em 0;
+  }
+
+  .faq-header-logo {
+    width: 5.25em;
+  }
+
+  .nav-link-wrapper {
+    margin-right: 0.625em;
+  }
+}

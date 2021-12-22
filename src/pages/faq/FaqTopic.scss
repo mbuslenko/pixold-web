@@ -1,0 +1,29 @@
+@import '../../shared/Variable.scss';
+
+.faq-topic:not(.faq-topic:last-child) {
+  margin-bottom: 11.625em;
+}
+
+.faq-topic-heading {
+  color: $purple;
+  font: {
+    weight: 700;
+    size: 40px;
+  }
+  padding-bottom: 0.5em;
+  border-bottom: 2px solid $purple;
+}
+
+.question-container {
+  padding: 5.25em 1.625em 0;
+  display: grid;
+  gap: 4.625em 9.75em;
+  grid-template-columns: repeat(2, calc(50% - 4.875em));
+}
+
+@media screen and (max-width: $screen-max-width-mobile) {
+  .question-container {
+    padding: 2.75em 3.25em;
+    grid-template-columns: 100%;
+  }
+}
