@@ -1,0 +1,121 @@
+@import '../../shared/Variable.scss';
+
+.login-wrap {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.login-content {
+  padding-top: 136px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo {
+  width: 47px;
+  height: 54px;
+  background-image: url('../../assets/svg/logo.svg');
+  background-repeat: no-repeat;
+}
+
+.login-title {
+  font-family: Montserrat;
+  font-weight: bold;
+  font-size: 50px;
+  line-height: 61px;
+  letter-spacing: -0.02em;
+  padding-top: 144px;
+}
+
+.login-desc {
+  padding-top: 15px;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: -0.02em;
+  text-align: center;
+}
+
+.login-btn-wrap {
+  padding-top: 86px;
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+}
+
+.login-btn {
+  background: $purple;
+  box-shadow: 0px 2px 5px rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: 10px;
+
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  letter-spacing: -0.02em;
+  color: $font-grey;
+
+  cursor: pointer;
+  transition: all 0.1s linear;
+  padding: 11px 31px 11px 42px;
+  position: relative;
+}
+
+.login-btn:hover {
+  box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.25);
+}
+
+.login-btn:active {
+  box-shadow: 0px 2px 5px rgba(255, 255, 255, 0.25);
+}
+
+.login-btn:disabled,
+.login-btn[disabled] {
+  background-color: #2d3436;
+  color: #b4b4b4;
+  box-shadow: none;
+  cursor: default;
+}
+
+.login-apple-btn::before {
+  position: absolute;
+  content: '';
+  background-image: url('../../assets/svg/apple.svg');
+  width: 14px;
+  height: 17px;
+  left: 18px;
+}
+
+.login-btn.login-google-btn {
+  padding: 11px 16px 11px 46px;
+}
+
+.login-google-btn::before {
+  position: absolute;
+  content: '';
+  background-image: url('../../assets/svg/google.svg');
+  width: 18px;
+  height: 18px;
+  left: 18px;
+}
+
+@media screen and (max-width: $screen-max-width-mobile) {
+  .login-content {
+    padding-top: 98px;
+  }
+
+  .login-title {
+    font-size: 30px;
+    line-height: 37px;
+  }
+
+  .login-desc {
+    font-size: 15px;
+    line-height: 18px;
+  }
+
+  .login-btn-wrap {
+    padding-top: 90px;
+  }
+}
