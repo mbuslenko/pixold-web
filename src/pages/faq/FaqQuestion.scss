@@ -18,6 +18,12 @@
   font-size: 24px;
 }
 
+.faq-question-text.short-text {
+  height: 8em;
+  overflow: hidden;
+  margin-bottom: 1em;
+}
+
 @media screen and (max-width: $screen-max-width-mobile) {
   .faq-question-heading {
     font-size: 15px;

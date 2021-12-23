@@ -16,14 +16,48 @@
 
 .question-container {
   padding: 5.25em 1.625em 0;
-  display: grid;
-  gap: 4.625em 9.75em;
-  grid-template-columns: repeat(2, calc(50% - 4.875em));
+  display: flex;
+  flex-wrap: wrap;
+}
+
+// TODO: change $screen-max-width-mobile to min-width
+@media screen and (min-width: $screen-max-width-mobile) {
+  .question-wrapper {
+    width: calc(50% - 4.875em);
+
+    &:nth-child(even) {
+      margin-left: 9.75em;
+    }
+
+    &:nth-child(n+3) {
+      margin-top: 4.625em;
+    }
+  }
 }
 
 @media screen and (max-width: $screen-max-width-mobile) {
+  .faq-topic:not(.faq-topic:last-child) {
+    margin-bottom: 6em;
+  }
+
+  .faq-topic-heading {
+    font-size: 20px;
+  }
+
   .question-container {
     padding: 2.75em 3.25em;
-    grid-template-columns: 100%;
+    flex-direction: column;
+  }
+
+  .question-wrapper {
+    width: 100%;
+
+    &:nth-child(n+2) {
+      margin-top: 4.625em;
+    }
+
+    &:nth-child(even) {
+      margin-left: 0;
+    }
   }
 }

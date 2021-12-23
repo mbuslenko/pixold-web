@@ -2,7 +2,7 @@
 
 .faq-header {
   width: 100%;
-  padding: 4em 6.25em 0;
+  padding: 4em 6.25em 16em;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -15,7 +15,7 @@
 
 @media screen and (max-width: $screen-max-width-mobile) {
   .faq-header {
-    padding: 4em 2.25em 0;
+    padding: 4em 2.25em;
   }
 
   .faq-header-logo {

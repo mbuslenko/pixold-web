@@ -5,6 +5,10 @@
   margin: auto;
 }
 
+.faq-page-content.is-blurred {
+  filter: blur(5px);
+}
+
 .faq-primary-button-color {
   background-color: $white;
   color: $black;
@@ -23,6 +27,7 @@
   }
   padding: 0 1em;
   text-indent: -0.08em;
+  margin: 0 0 1.28em;
 }
 
 .faq-topic-container {

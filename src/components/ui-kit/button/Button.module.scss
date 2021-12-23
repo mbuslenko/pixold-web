@@ -2,7 +2,7 @@
 
 .button {
   border-radius: 10px;
-  padding: 9px 18px;
+  padding: 0 18px;
   height: 44px;
   font: {
     size: 18px;
@@ -61,5 +61,13 @@
     background-color: #2D3436;
     border: 2px solid #B4B4B4;
     pointer-events: none;
+  }
+}
+
+@media screen and (max-width: $screen-max-width-mobile) {
+  .button {
+    height: 24px;
+    font-size: 10px;
+    border-radius: 5px;
   }
 }
