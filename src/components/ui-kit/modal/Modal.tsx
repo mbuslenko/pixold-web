@@ -24,12 +24,12 @@ export const Modal: React.FC<IModalProps> = ({
       </p>
       {children &&
         <div className={styles['button-container']}>
-          {React.Children.map(children, (v, i) =>
+          {React.Children.map(children, (value, index) =>
             <div
               className={styles['button-wrapper']}
-              key={i}
+              key={index}
             >
-              {v}
+              {value}
             </div>,
           )}
         </div>
