@@ -12,6 +12,10 @@ h1 {
   margin: 0.67em 0;
 }
 
+p {
+  white-space: pre-line;
+}
+
 hr {
   box-sizing: content-box;
   height: 0;
@@ -190,6 +194,7 @@ html {
 }
 
 body {
+  width: 100%;
   margin: 0;
   font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;

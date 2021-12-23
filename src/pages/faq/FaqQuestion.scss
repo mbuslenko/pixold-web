@@ -1,10 +1,5 @@
 @import '../../shared/Variable.scss';
 
-.faq-question {
-  // height: 19.875em;
-  // overflow: hidden;
-}
-
 .faq-question-heading {
   font: {
     size: 30px;
@@ -16,12 +11,12 @@
 
 .faq-question-text {
   font-size: 24px;
-}
 
-.faq-question-text.short-text {
-  height: 8em;
-  overflow: hidden;
-  margin-bottom: 1em;
+  &.short-text {
+    height: 8.5em;
+    overflow: hidden;
+    margin-bottom: 1em;
+  }
 }
 
 @media screen and (max-width: $screen-max-width-mobile) {
@@ -31,5 +26,9 @@
 
   .faq-question-text {
     font-size: 12px;
+
+    &.short-text {
+      height: 9em;
+    }
   }
 }
