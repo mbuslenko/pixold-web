@@ -23,7 +23,6 @@ const LoginPage: React.FC = () => {
   }, []);
 
   const handleLoginSuccess = async (responseGoogleData: GoogleLoginResponse | GoogleLoginResponseOffline) => {
-
     if (!('tokenId' in responseGoogleData)) {
       return;
     }
