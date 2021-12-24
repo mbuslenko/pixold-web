@@ -1,0 +1,39 @@
+@import '../../../shared/Variable.scss';
+
+.container {
+  font-size: 24px;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+}
+
+.default-size {
+  width: 523px;
+  padding: 32px;
+}
+
+.default-colors {
+  background-color: $black;
+  color: $white;
+  border: 1px solid $purple;
+}
+
+.heading {
+  font-weight: 700;
+}
+
+.text {
+  margin-top: 9px;
+  overflow-wrap: break-word;
+  overflow-y: auto;
+}
+
+.button-container {
+  display: flex;
+  align-items: center;
+  margin-top: 32px;
+
+  & .button-wrapper:not(& .button-wrapper:last-child) {
+    margin-right: 12px;
+  }
+}

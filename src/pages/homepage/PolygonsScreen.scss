@@ -1,0 +1,54 @@
+@import '../../shared/Variable.scss';
+
+$red: #D63031;
+$yellow: #FFEC40;
+$blue: #3DACFD;
+
+
+.info-modal-position {
+  position: absolute;
+  z-index: 2;
+}
+
+.info-modal-colors {
+  color: $white;
+  background-color: #02001F;
+}
+
+.info-modal-size {
+  width: 523px;
+  padding: 32px;
+}
+
+.info-modal-button-color {
+  color: $white;
+  border-color: $white;
+}
+
+.polygon-btn-red {
+  color: $red;
+  border-color: $red;
+}
+
+.polygon-btn-yellow {
+  color: $yellow;
+  border-color: $yellow;
+}
+
+.polygon-btn-blue {
+  color: $blue;
+  border-color: $blue;
+}
+
+@media screen and (max-width: $screen-max-width-mobile) {
+  .info-modal-position {
+    position: fixed;
+    top: 10%;
+    left: calc(50% - 172px);
+  }
+
+  .info-modal-size {
+    width: 344px;
+    max-height: 80%;
+  }
+}

@@ -1,15 +1,17 @@
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import './App.scss';
 import LoginPage from './pages/loginPage/LoginPage';
 
-//TODO add Route <Route path="/auth" element={<LoginPage />} />
+import HomePage from './pages/homepage/HomePage';
 
-function App() {
+export const App: React.FC = () => {
   return (
-    <>
-      {/* <div className="App">Pixold-web</div> */}
-      <LoginPage />
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Navigate replace to="/auth" />} />
+        <Route path="/home" element={<HomePage />} />
+        <Route path="/auth" element={<LoginPage />} />
+      </Routes>
+    </BrowserRouter>
   );
-}
-
-export default App;
+};

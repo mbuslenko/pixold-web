@@ -2,12 +2,7 @@ import React, { useState } from 'react';
 import './LoginPage.scss';
 import GoogleLogin, { GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
 import axios from 'axios';
-
-{
-  /* <Route exact path="/auth">
-  {loggedIn ? <Redirect to="/play" /> : <HomePage />}
-</Route>; */
-}
+import { Navigate } from 'react-router-dom';
 
 const clientId = '574224742867-trmdu15b20r5ejv3i42eek47l2m9q8dv.apps.googleusercontent.com';
 
@@ -72,10 +67,9 @@ const LoginPage: React.FC = () => {
             onFailure={handleLoginFailure}
             cookiePolicy={'single_host_origin'}
           />
-          {/* <button className="login-btn login-google-btn">Continue with Google</button> */}
         </div>
       </div>
-      {/* {redirectToPlay && <Redirect to="/play" />} */}
+      {redirectToPlay && <Navigate to="/play" />}
     </div>
   );
 };

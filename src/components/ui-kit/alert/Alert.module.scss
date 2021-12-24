@@ -1,0 +1,54 @@
+@import '../../shared/Variable.scss';
+
+.container {
+  width: 900px;
+  min-height: 59px;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 20px;
+  font-size: 16px;
+  border: {
+    width: 1px;
+    style: solid;
+    radius: 10px;
+  };
+
+  &.blue {
+    border-color: #AED9FF;
+    background-color: #E5F3FF;
+    color: #104EA2;
+  }
+
+  &.yellow {
+    border-color: #FFF4E4;
+    background-color: #FFC061;
+    color: #7B430E;
+  }
+
+  &.red {
+    border-color: #FFF3F0;
+    background-color: #FFB5A5;
+    color: #D42600;
+  }
+
+  &.green {
+    border-color: #B0CEAF;
+    background-color: #DFFCDE;
+    color: #00B894;
+  }
+
+  &.grey {
+    border-color: #B9B9B9;
+    background-color: $black;
+    color: #DFE6E9;
+  }
+}
+
+.heading {
+  font-weight: 600;
+}
+
+.text {
+  margin-top: 8px;
+  overflow-wrap: break-word;
+}
