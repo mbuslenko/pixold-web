@@ -1,4 +1,4 @@
-import { MouseEventHandler, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import GoogleLogin, { GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
 
@@ -57,7 +57,7 @@ const LoginPage: React.FC = () => {
           <button className="login-btn login-apple-btn">Continue with Apple</button>
           <GoogleLogin
             clientId={clientId}
-            render={(renderProps: { onClick: MouseEventHandler<HTMLButtonElement> | undefined; disabled: boolean | undefined; }) => (
+            render={(renderProps) => (
               <button
                 className="login-btn login-google-btn"
                 onClick={renderProps.onClick}
@@ -68,7 +68,7 @@ const LoginPage: React.FC = () => {
             )}
             buttonText="Login"
             onSuccess={handleLoginSuccess}
-            onFailure={(e: any) => handleLoginFailure(e)}
+            onFailure={handleLoginFailure}
             cookiePolicy={'single_host_origin'}
           />
         </div>
