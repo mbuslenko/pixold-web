@@ -11,7 +11,7 @@ import { IAuthResponse } from './interfaces';
 const baseUrl = 'https://pixold.azurewebsites.net';
 
 // TODO: add clientId into environment file
-const clientId = '574224742867-trmdu15b20r5ejv3i42eek47l2m9q8dv.apps.googleusercontent.com';
+const clientId = '574224742867-c0eqn53abpbv5edtmgm73u0ti6nk8fqe.apps.googleusercontent.com';
 
 const LoginPage: React.FC = () => {
   const [redirectToPlay, setRedirectToPlay] = useState<boolean>(false);
