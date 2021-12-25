@@ -10,11 +10,14 @@ import { baseUrl } from '../../shared/ts/consts';
 
 const LoginPreloaderPage: React.FC = () => {
   const [redirectToPlay, setRedirectToPlay] = useState<boolean>(false);
-  /*  const [isLoading, setIsLoading] = useState<boolean>(false); */
 
   const responseGoogleData: GoogleLoginResponse = JSON.parse(
     window.localStorage.getItem('responseGoogleData') as string,
   );
+
+  if (!responseGoogleData) {
+    return <Navigate to="/auth" />;
+  }
 
   axios
     .post<IAuthResponse>(`${baseUrl}/auth`, {
