@@ -4,7 +4,7 @@ import axios from 'axios';
 import './LoginPreloaderPage.scss';
 import loaderLogo from '../../assets/svg/loader-logo.svg';
 import { IAuthResponse } from './interfaces';
-import { GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
+import { GoogleLoginResponse } from 'react-google-login';
 import { Navigate } from 'react-router-dom';
 
 // TODO: baseUrl should be global variable
