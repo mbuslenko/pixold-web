@@ -23,6 +23,11 @@ export const WalletConnect: React.FC = () => {
   const connectWalletCallback = () => {
     console.log([testUserId, publicKey, secretKey]);
 
+    if (!publicKey || !secretKey) {
+      setInputStatus('invalid');
+      return;
+    }
+
     axios
       .post(
         `${baseUrl}/wallet/connect`,
@@ -35,6 +40,13 @@ export const WalletConnect: React.FC = () => {
       .then(response => setRedirectToWallet(true))
       .catch(error => {
         console.error(error.response.data.message);
+
+        if (error.response.status === 400) {
+          setAlertHeading(error.response.data.message);
+        } else if (error.response.status === 500) {
+          setAlertHeading('Internal server error occured');
+        }
+
         setIsAlertVisible(true);
         setInputStatus('invalid');
         setTimeout(
