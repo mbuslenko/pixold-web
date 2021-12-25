@@ -2,7 +2,7 @@ import { useLayoutEffect, useRef, useState } from 'react';
 import { IFaqQuestionProps } from './interfaces';
 import './FaqQuestion.scss';
 import { Button } from '../../components/ui-kit/button/Button';
-import { isSmallScreen } from '../../util/helperFunctions';
+import { isSmallScreen } from '../../shared/ts/helperFunctions';
 
 export const FaqQuestion: React.FC<IFaqQuestionProps> = ({ question, answer, showInfoModalCallback }) => {
   const answerRef = useRef<HTMLDivElement>(null);

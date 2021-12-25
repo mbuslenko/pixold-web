@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { IInputProps } from '../interfaces';
-import { InputStatus } from '../type'
+import { InputStatus } from '../type';
 import styles from './Input.module.scss';
 
 export const Input: React.FC<IInputProps> = ({ type, placeholder, description, status, onInput }) => {
@@ -11,7 +11,7 @@ export const Input: React.FC<IInputProps> = ({ type, placeholder, description, s
   };
 
   return (
-    <label className={`${styles['input-label']} ${styles[inputStatus]}`}>
+    <label className={`${styles['input-label']} ${styles[inputStatus] ?? ''}`}>
       <input
         className={`${styles.input} ${styles[inputStatus]}`}
         type={type}
@@ -19,7 +19,9 @@ export const Input: React.FC<IInputProps> = ({ type, placeholder, description, s
         disabled={inputStatus === 'disabled'}
         onInput={onInputCallback}
       />
-      {description}
+      <span className={styles.description}>
+        {description}
+      </span>
     </label>
   );
 };

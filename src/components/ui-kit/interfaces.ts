@@ -74,7 +74,7 @@ export interface IAlertProps {
   type: 'blue' | 'yellow' | 'red' | 'green' | 'gray';
   heading: string;
   text?: string;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 export interface IModalPosition {
