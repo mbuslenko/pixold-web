@@ -3,7 +3,7 @@ import './App.scss';
 import LoginPage from './pages/loginPage/LoginPage';
 
 import HomePage from './pages/homepage/HomePage';
-import PreloaderPage from './pages/preloaderPage/PreloaderPage';
+import LoginPreloaderPage from './pages/preloaderPages/LoginPreloaderPage';
 
 export const App: React.FC = () => {
   return (
@@ -12,7 +12,7 @@ export const App: React.FC = () => {
         <Route path="/" element={<Navigate replace to="/auth" />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/auth" element={<LoginPage />} />
-        <Route path="/load" element={<PreloaderPage />} />
+        <Route path="/auth/load" element={<LoginPreloaderPage />} />
       </Routes>
     </BrowserRouter>
   );

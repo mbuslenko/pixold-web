@@ -1,20 +1,15 @@
 import { useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
 import GoogleLogin, { GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
-
-import axios from 'axios';
+import { Navigate } from 'react-router-dom';
 
 import './LoginPage.scss';
-import { IAuthResponse } from './interfaces';
-
-// TODO: baseUrl should be global variable
-const baseUrl = 'https://pixold.azurewebsites.net';
 
 // TODO: add clientId into environment file
-const clientId = '574224742867-c0eqn53abpbv5edtmgm73u0ti6nk8fqe.apps.googleusercontent.com';
+const clientId = '574224742867-j214k7camduhed6qdlut6pv2agi2k62r.apps.googleusercontent.com';
 
 const LoginPage: React.FC = () => {
   const [redirectToPlay, setRedirectToPlay] = useState<boolean>(false);
+  const [redirectToLoad, setRedirectToLoad] = useState<boolean>(false);
 
   useEffect(() => {
     if (window.localStorage.getItem('id') && window.localStorage.getItem('accessToken')) {
@@ -27,19 +22,9 @@ const LoginPage: React.FC = () => {
       return;
     }
 
-    axios
-      .post<IAuthResponse>(`${baseUrl}/auth`, {
-        email: responseGoogleData.profileObj.email,
-        firstName: responseGoogleData.profileObj.givenName,
-        lastName: responseGoogleData.profileObj.familyName,
-        avatarUrl: responseGoogleData.profileObj.imageUrl,
-      })
-      .then((res) => {
-        window.localStorage.setItem('id', res.data.id);
-        window.localStorage.setItem('accessToken', res.data.accessToken);
-        setRedirectToPlay(true);
-      })
-      .catch((er) => console.error(er));
+    // TODO: Change to redux
+    window.localStorage.setItem('responseGoogleData', JSON.stringify(responseGoogleData));
+    setRedirectToLoad(true);
   };
 
   const handleLoginFailure = (e: any) => {
@@ -73,6 +58,7 @@ const LoginPage: React.FC = () => {
         </div>
       </div>
       {redirectToPlay && <Navigate to="/play" />}
+      {redirectToLoad && <Navigate to="/auth/load" />}
     </div>
   );
 };
