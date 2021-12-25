@@ -13,7 +13,8 @@ import { InputStatus } from '../../components/ui-kit/type';
 export const WalletConnect: React.FC = () => {
   const [publicKey, setPublicKey] = useState<string>('');
   const [secretKey, setSecretKey] = useState<string>('');
-  const [inputStatus, setInputStatus] = useState<InputStatus>();
+  const [publicKeyStatus, setPublicKeyStatus] = useState<InputStatus>();
+  const [secretKeyStatus, setSecretKeyStatus] = useState<InputStatus>();
   const [isAlertVisible, setIsAlertVisible] = useState<boolean>(false);
   const [alertHeading, setAlertHeading] = useState<string>('');
   const [redirectToWallet, setRedirectToWallet] = useState<boolean>(false);
@@ -21,7 +22,21 @@ export const WalletConnect: React.FC = () => {
   const connectWalletCallback = () => {
     const userId = window.localStorage.getItem('userId');
 
-    if (!publicKey || !secretKey) return setInputStatus('invalid');
+    if (publicKey.length === 0) {
+      setPublicKeyStatus('invalid');
+
+      if (secretKey.length === 0) {
+        setSecretKeyStatus('invalid');
+      }
+
+      return;
+    }
+
+    if (secretKey.length === 0) {
+      setSecretKeyStatus('invalid');
+
+      return;
+    }
 
     axios
       .post(
@@ -32,18 +47,19 @@ export const WalletConnect: React.FC = () => {
           secret: secretKey,
         },
       )
-      .then(response => setRedirectToWallet(true))
+      .then(() => setRedirectToWallet(true))
       .catch(error => {
         console.error(error.response.data.message);
 
         if (error.response.status === 400) {
           setAlertHeading(error.response.data.message);
         } else if (error.response.status === 500) {
-          setAlertHeading('Internal server error occured');
+          setAlertHeading('Internal server error occurred');
         }
 
         setIsAlertVisible(true);
-        setInputStatus('invalid');
+        setPublicKeyStatus('invalid');
+        setSecretKeyStatus('invalid');
         setTimeout(
           () => setIsAlertVisible(false),
           5000,
@@ -83,14 +99,14 @@ export const WalletConnect: React.FC = () => {
           placeholder='Enter your public key'
           description='Public key'
           onInput={text => setPublicKey(text)}
-          status={inputStatus}
+          status={publicKeyStatus}
         />
         <Input
           type='text'
           placeholder='Enter your secret key'
           description='Secret key'
           onInput={text => setSecretKey(text)}
-          status={inputStatus}
+          status={secretKeyStatus}
         />
       </div>
       <Button
