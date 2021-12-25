@@ -52,6 +52,13 @@ export const WalletConnect: React.FC = () => {
       .then(() => setRedirectToWallet(true))
       .catch(error => {
         console.error(error.response.data.message);
+
+        if (error.response.status === 400) {
+          setAlertHeading(error.response.data.message);
+        } else if (error.response.status === 500) {
+          setAlertHeading('Internal server error occurred');
+        }
+
         setIsAlertVisible(true);
         setPublicKeyStatus('invalid');
         setSecretKeyStatus('invalid');
