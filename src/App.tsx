@@ -19,9 +19,8 @@ export const App: React.FC = () => {
         <Route path='/wallet'>
           <Route path='connect' element={<WalletConnect/>}/>
         </Route>
-        <Route path="/auth" element={<LoginPage />}>
-          <Route path="load" element={<LoginPreloaderPage />} />
-        </Route>
+        <Route path="/auth" element={<LoginPage />}/>
+        <Route path='/auth/load' element={<LoginPreloaderPage/>}/>
       </Routes>
     </BrowserRouter>
   );

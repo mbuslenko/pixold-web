@@ -15,6 +15,8 @@ const LoginPreloaderPage: React.FC = () => {
     window.localStorage.getItem('responseGoogleData') as string,
   );
 
+  console.log(responseGoogleData)
+
   if (!responseGoogleData) {
     return <Navigate to="/auth" />;
   }

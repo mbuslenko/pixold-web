@@ -10,8 +10,6 @@ import './WalletConnect.scss';
 import axios from 'axios';
 import { InputStatus } from '../../components/ui-kit/type';
 
-const testUserId = 'cbd7b09b-ada5-46ea-beee-f16817faec14';
-
 export const WalletConnect: React.FC = () => {
   const [publicKey, setPublicKey] = useState<string>('');
   const [secretKey, setSecretKey] = useState<string>('');
@@ -21,18 +19,15 @@ export const WalletConnect: React.FC = () => {
   const [redirectToWallet, setRedirectToWallet] = useState<boolean>(false);
 
   const connectWalletCallback = () => {
-    console.log([testUserId, publicKey, secretKey]);
+    const userId = window.localStorage.getItem('userId');
 
-    if (!publicKey || !secretKey) {
-      setInputStatus('invalid');
-      return;
-    }
+    if (!publicKey || !secretKey) return setInputStatus('invalid');
 
     axios
       .post(
         `${baseUrl}/wallet/connect`,
         {
-          userId: testUserId,
+          userId,
           publicKey,
           secret: secretKey,
         },
