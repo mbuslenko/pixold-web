@@ -6,6 +6,7 @@ export interface IButtonProps {
   onClick?: MouseEventHandler;
   priority: ElementPriority;
   className?: string;
+  mediaClassName?: string;
   disabled?: boolean;
 }
 

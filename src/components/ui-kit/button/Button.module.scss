@@ -63,11 +63,3 @@
     pointer-events: none;
   }
 }
-
-@media screen and (max-width: $screen-max-width-mobile) {
-  .button {
-    height: 24px;
-    font-size: 10px;
-    border-radius: 5px;
-  }
-}

@@ -17,6 +17,7 @@ export const FaqHeader: React.FC = () => {
               text='Home'
               priority='primary'
               className='faq-primary-button-color'
+              mediaClassName='mobile-faq-button'
             />
           </Link>
         </div>
@@ -25,6 +26,7 @@ export const FaqHeader: React.FC = () => {
             text='Get started'
             priority='primary'
             className='faq-primary-button-color'
+            mediaClassName='mobile-faq-button'
           />
         </Link>
       </nav>

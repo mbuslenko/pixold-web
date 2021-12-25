@@ -4,6 +4,9 @@ import { CoinPage } from './pages/coinPage/CoinPage';
 import { Faq } from './pages/faq/Faq';
 import { HomePage } from './pages/homepage/HomePage';
 import { WalletConnect } from './pages/walletConnect/WalletConnect';
+import LoginPage from './pages/loginPage/LoginPage';
+
+import LoginPreloaderPage from './pages/preloaderPages/LoginPreloaderPage';
 
 export const App: React.FC = () => {
   return (
@@ -15,6 +18,9 @@ export const App: React.FC = () => {
         <Route path='/coin' element={<CoinPage/>}/>
         <Route path='/wallet'>
           <Route path='connect' element={<WalletConnect/>}/>
+        </Route>
+        <Route path="/auth" element={<LoginPage />}>
+          <Route path="load" element={<LoginPreloaderPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -3,6 +3,7 @@ import { IFaqQuestionProps } from './interfaces';
 import './FaqQuestion.scss';
 import { Button } from '../../components/ui-kit/button/Button';
 import { isSmallScreen } from '../../shared/ts/helperFunctions';
+import { AnswerTextDomHeight } from './enums';
 
 export const FaqQuestion: React.FC<IFaqQuestionProps> = ({ question, answer, showInfoModalCallback }) => {
   const answerRef = useRef<HTMLDivElement>(null);
@@ -13,13 +14,13 @@ export const FaqQuestion: React.FC<IFaqQuestionProps> = ({ question, answer, sho
     () => {
       const answerDomHeight = answerRef.current?.offsetHeight ?? 0;
 
-      if (answerDomHeight > 250 && !isSmallScreen()) {
+      if (answerDomHeight > AnswerTextDomHeight.LARGE && !isSmallScreen()) {
         setIsTextOverflow(true);
 
         return;
       }
 
-      if (answerDomHeight > 185 && isSmallScreen()) {
+      if (answerDomHeight > AnswerTextDomHeight.SMALL && isSmallScreen()) {
         setIsTextOverflow(true);
 
         return;
@@ -45,6 +46,7 @@ export const FaqQuestion: React.FC<IFaqQuestionProps> = ({ question, answer, sho
           text='Read more'
           priority='secondary'
           className='faq-secondary-button-color'
+          mediaClassName='mobile-faq-button'
           onClick={() => showInfoModalCallback(question, answer)}
         />
       }
