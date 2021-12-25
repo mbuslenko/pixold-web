@@ -74,8 +74,6 @@
   color: $white;
 }
 
-// TODO: finish media styles
-
 @media screen and (max-width: $screen-max-width-biggest) {
   .coin-page-content {
     margin-top: -6.25em;
@@ -99,9 +97,14 @@
 }
 
 @media screen and (max-width: $screen-max-width-big) {
+  .coin-page-background {
+    width: 125%;
+    height: 125%;
+  }
+
   .coin-page-content {
-    margin-top: -6.25em;
-    right: 40em;
+    right: unset;
+    margin: -6.25em 0 0 3em;
   }
 
   .pixel-coin-circle {
@@ -125,9 +128,14 @@
     align-items: unset;
   }
 
+  .coin-page-background {
+    width: 150%;
+    height: 150%;
+  }
+
   .coin-page-content {
-    margin-top: 8.5em;
-    right: 7em;
+    margin: 8.5em 0 0 2em;
+    right: unset;
   }
 
   .pixel-coin-circle {
