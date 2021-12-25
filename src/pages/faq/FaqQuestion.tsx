@@ -46,6 +46,7 @@ export const FaqQuestion: React.FC<IFaqQuestionProps> = ({ question, answer, sho
           text='Read more'
           priority='secondary'
           className='faq-secondary-button-color'
+          mediaClassName='mobile-faq-button'
           onClick={() => showInfoModalCallback(question, answer)}
         />
       }
