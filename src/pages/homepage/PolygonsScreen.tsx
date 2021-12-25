@@ -3,6 +3,7 @@ import { useRef, useState } from 'react';
 import { Button } from '../../components/ui-kit/button/Button';
 import { IModalPosition } from '../../components/ui-kit/interfaces';
 import { Modal } from '../../components/ui-kit/modal/Modal';
+import { blockScrolling, isSmallScreen, unblockScrolling } from '../../shared/ts/helperFunctions';
 import './PolygonsScreen.scss';
 
 const polygonAttackHeading = 'Attack';
@@ -36,11 +37,6 @@ export const PolygonsScreen: React.FC = () => {
   const polygonMinerRef = useRef<HTMLDivElement>(null);
   const polygonDefenderRef = useRef<HTMLDivElement>(null);
 
-  const isWindowSmall = (): boolean => (
-    // TODO: make constants for window resolutions
-    window.innerWidth <= 425
-  );
-
   const isPolygonOnPosition = (polygon: HTMLDivElement, x: number, y: number): boolean => {
     const inRangeX: boolean = (y >= polygon.offsetTop) && (y <= polygon.offsetTop + polygon.offsetHeight);
     const inRangeY: boolean = (x >= polygon.offsetLeft) && (x <= polygon.offsetLeft + polygon.offsetWidth);
@@ -60,10 +56,8 @@ export const PolygonsScreen: React.FC = () => {
     setModalText(modalText);
     setModalVisibility(true);
 
-    if (isWindowSmall()) {
-      // I block/unblock scrolling this way (not with pure css) so every device would work same
-      document.body.style.top = `-${window.scrollY}px`;
-      document.body.style.position = 'fixed';
+    if (isSmallScreen()) {
+      blockScrolling();
     }
   };
 
@@ -75,15 +69,13 @@ export const PolygonsScreen: React.FC = () => {
     setModalPosition(undefined);
     setModalVisibility(false);
 
-    if (isWindowSmall()) {
-      document.body.style.position = '';
-      window.scrollTo(0, parseInt(document.body.style.top || '0') * -1);
-      document.body.style.top = '';
+    if (isSmallScreen()) {
+      unblockScrolling();
     }
   };
 
   const mouseMoveCallback = (e: React.MouseEvent): void => {
-    if (isWindowSmall()) {
+    if (isSmallScreen()) {
       return;
     }
 
@@ -134,7 +126,7 @@ export const PolygonsScreen: React.FC = () => {
             colorsClassName='info-modal-colors'
             sizeClassName='info-modal-size'
           >
-            {isWindowSmall() &&
+            {isSmallScreen() &&
               <Button
                 text={'Got it!'}
                 priority='secondary'
