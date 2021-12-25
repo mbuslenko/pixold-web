@@ -3,7 +3,7 @@ import { useRef, useState } from 'react';
 import { Button } from '../../components/ui-kit/button/Button';
 import { IModalPosition } from '../../components/ui-kit/interfaces';
 import { Modal } from '../../components/ui-kit/modal/Modal';
-import { blockScrolling, isSmallScreen, unblockScrolling } from '../../util/helperFunctions';
+import { blockScrolling, isSmallScreen, unblockScrolling } from '../../shared/ts/helperFunctions';
 import './PolygonsScreen.scss';
 
 const polygonAttackHeading = 'Attack';

@@ -1,6 +1,7 @@
+import { ScreenWidth } from './enums';
+
 export const isSmallScreen = (): boolean => (
-  // TODO: make constants for window resolutions
-  window.innerWidth <= 425
+  window.innerWidth <= ScreenWidth.MOBILE
 );
 
 export const blockScrolling = (): void => {
