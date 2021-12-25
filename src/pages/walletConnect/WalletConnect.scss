@@ -54,3 +54,10 @@
   border-color: $white;
   color: $white;
 }
+
+@media screen and (max-width: $screen-max-width-mobile) {
+  .go-back-link {
+    top: 1.55em;
+    left: 1.75em;
+  }
+}

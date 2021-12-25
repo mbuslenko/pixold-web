@@ -1,16 +1,48 @@
 import { useState } from 'react';
 import { Button } from '../../components/ui-kit/button/Button';
 import { Input } from '../../components/ui-kit/input/Input';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { Alert } from '../../components/ui-kit/alert/Alert';
 
+import { baseUrl } from '../../shared/ts/consts';
 import lumenLogoImg from '../../assets/svg/lumen-logo.svg';
 import './WalletConnect.scss';
+import axios from 'axios';
+import { InputStatus } from '../../components/ui-kit/type';
+
+const testUserId = 'cbd7b09b-ada5-46ea-beee-f16817faec14';
 
 export const WalletConnect: React.FC = () => {
   const [publicKey, setPublicKey] = useState<string>('');
   const [secretKey, setSecretKey] = useState<string>('');
+  const [inputStatus, setInputStatus] = useState<InputStatus>();
   const [isAlertVisible, setIsAlertVisible] = useState<boolean>(false);
+  const [alertHeading, setAlertHeading] = useState<string>('');
+  const [redirectToWallet, setRedirectToWallet] = useState<boolean>(false);
+
+  const connectWalletCallback = () => {
+    console.log([testUserId, publicKey, secretKey]);
+
+    axios
+      .post(
+        `${baseUrl}/wallet/connect`,
+        {
+          userId: testUserId,
+          publicKey,
+          secret: secretKey,
+        },
+      )
+      .then(response => setRedirectToWallet(true))
+      .catch(error => {
+        console.error(error.response.data.message);
+        setIsAlertVisible(true);
+        setInputStatus('invalid');
+        setTimeout(
+          () => setIsAlertVisible(false),
+          5000,
+        );
+      });
+  };
 
   return (
     <section className='wallet-connect-page'>
@@ -44,24 +76,31 @@ export const WalletConnect: React.FC = () => {
           placeholder='Enter your public key'
           description='Public key'
           onInput={text => setPublicKey(text)}
-          status='default'
+          status={inputStatus}
         />
         <Input
           type='text'
           placeholder='Enter your secret key'
           description='Secret key'
           onInput={text => setSecretKey(text)}
-          status='default'
+          status={inputStatus}
         />
       </div>
       <Button
         text='Submit'
         priority='primary'
         className='pink-primary-button-color'
-        onClick={() => console.log('submit\n' + publicKey + '\n' + secretKey)}
+        onClick={connectWalletCallback}
       />
       { isAlertVisible &&
-        <Alert type='red' heading='CONNECTION ERROR'/>
+        <Alert
+          type='red'
+          heading={alertHeading}
+          onClick={() => setIsAlertVisible(false)}
+        />
+      }
+      { redirectToWallet &&
+        <Navigate to='/wallet'/>
       }
     </section>
   );

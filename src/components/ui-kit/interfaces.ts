@@ -45,7 +45,7 @@ export interface IInputProps {
   placeholder: string;
   description: string;
   onInput: (text: string) => void;
-  status: InputStatus;
+  status?: InputStatus;
 }
 
 export interface IDropdownOption {

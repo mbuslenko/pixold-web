@@ -1,7 +1,9 @@
 @import '../../../shared/scss/Variable.scss';
 
 .container {
-  min-height: 59px;
+  position: fixed;
+  left: 50px;
+  bottom: 50px;
   display: flex;
   flex-direction: column;
   padding: 20px 24px;

@@ -10,26 +10,21 @@ import './CoinPage.scss';
 export const CoinPage: React.FC = () => {
   return (
     <section className='coin-page'>
-      <img
-        className='pixel-coin-circle'
-        src={pixelCoinCircleImg}
-      />
       <div className='coin-page-background'>
         <img src={coinPageBackgroundImg1}/>
         <img src={coinPageBackgroundImg2}/>
       </div>
       <div className='coin-page-content'>
-        <div className='coin-page-logo-container'>
+        <div className='coin-page-icon-container'>
           <img
-            className='coin-page-logo'
+            className='coin-page-icon'
             src={pixelCoinLogoImg}
           />
           <img
-            className='coin-page-logo'
+            className='coin-page-icon'
             src={lumenLogoImg}
           />
         </div>
-
         <div className='coin-page-text-container'>
           <h1>
             Pixel coin
@@ -37,6 +32,10 @@ export const CoinPage: React.FC = () => {
           <p>
             Take the game to real life
           </p>
+          <img
+            className='pixel-coin-circle'
+            src={pixelCoinCircleImg}
+          />
         </div>
 
         <nav className='coin-page-navigation'>
