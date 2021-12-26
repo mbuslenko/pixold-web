@@ -4,12 +4,8 @@ const axiosInstance = axios.create({
   baseURL: 'https://pixold.azurewebsites.net',
 });
 
-const userId = window.localStorage.getItem('userId');
 const accessToken = window.localStorage.getItem('accessToken');
 
-if (userId) {
-  axiosInstance.defaults.headers.common['User'] = userId;
-}
 if (accessToken) {
   axiosInstance.defaults.headers.common['Authorization'] = accessToken;
 }
