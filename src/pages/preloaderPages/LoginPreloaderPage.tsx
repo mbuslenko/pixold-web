@@ -1,12 +1,14 @@
 import { useState } from 'react';
-import axios from 'axios';
 
 import './LoginPreloaderPage.scss';
 import loaderLogo from '../../assets/svg/loader-logo.svg';
 import { IAuthResponse } from './interfaces';
 import { GoogleLoginResponse } from 'react-google-login';
 import { Navigate } from 'react-router-dom';
-import { baseUrl } from '../../shared/ts/consts';
+import axiosInstance from '../../shared/utils/axios-config';
+
+// TODO: baseUrl should be global variable
+const baseUrl = 'https://pixold.azurewebsites.net';
 
 const LoginPreloaderPage: React.FC = () => {
   const [redirectToPlay, setRedirectToPlay] = useState<boolean>(false);
@@ -19,7 +21,7 @@ const LoginPreloaderPage: React.FC = () => {
     return <Navigate to="/auth" />;
   }
 
-  axios
+  axiosInstance
     .post<IAuthResponse>(`${baseUrl}/auth`, {
       email: responseGoogleData.profileObj.email,
       firstName: responseGoogleData.profileObj.givenName,

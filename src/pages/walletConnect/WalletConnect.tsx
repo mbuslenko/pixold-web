@@ -7,8 +7,8 @@ import { Alert } from '../../components/ui-kit/alert/Alert';
 import { baseUrl } from '../../shared/ts/consts';
 import lumenLogoImg from '../../assets/svg/lumen-logo.svg';
 import './WalletConnect.scss';
-import axios from 'axios';
 import { InputStatus } from '../../components/ui-kit/type';
+import axiosInstance from '../../shared/utils/axios-config';
 
 export const WalletConnect: React.FC = () => {
   const [publicKey, setPublicKey] = useState<string>('');
@@ -38,7 +38,7 @@ export const WalletConnect: React.FC = () => {
       return;
     }
 
-    axios
+    axiosInstance
       .post(
         `${baseUrl}/wallet/connect`,
         {
