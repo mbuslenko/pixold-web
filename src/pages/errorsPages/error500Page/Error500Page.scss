@@ -1,0 +1,20 @@
+@import '../../../shared/Variable.scss';
+
+.error-500-desc {
+  max-width: 918px;
+  font-family: Montserrat;
+
+  font-weight: 600;
+  font-size: 50px;
+  line-height: 61px;
+  text-align: center;
+  letter-spacing: -0.02em;
+}
+
+@media screen and (max-width: $screen-max-width-mobile) {
+  .error-500-desc {
+    max-width: 315px;
+    font-size: 20px;
+    line-height: 24px;
+  }
+}
