@@ -24,8 +24,8 @@ export const App: React.FC = () => {
         <Route path='/wallet'>
           <Route path='connect' element={<WalletConnect/>}/>
         </Route>
-        <Route path="*" element={<Error404Page />} />
         <Route path="/500" element={<Error500Page />} />
+        <Route path="*" element={<Error404Page />} />
       </Routes>
     </BrowserRouter>
   );

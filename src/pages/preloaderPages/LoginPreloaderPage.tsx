@@ -1,25 +1,27 @@
 import { useState } from 'react';
 
-import axiosInstance from '../../shared/utils/axios-config';
+// import axiosInstance from '../../shared/utils/axios-config';
+import axios from 'axios';
 
 import './LoginPreloaderPage.scss';
 import loaderLogo from '../../assets/svg/loader-logo.svg';
 import { IAuthResponse } from './interfaces';
 import { GoogleLoginResponse } from 'react-google-login';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const LoginPreloaderPage: React.FC = () => {
   const [redirectToPlay, setRedirectToPlay] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   const responseGoogleData: GoogleLoginResponse = JSON.parse(
     window.localStorage.getItem('responseGoogleData') as string,
   );
 
   if (!responseGoogleData) {
-    return <Navigate to="/auth" />;
+    navigate('/auth');
   }
 
-  axiosInstance
+  axios
     .post<IAuthResponse>(`${process.env.REACT_APP_BASE_URL}/auth`, {
       email: responseGoogleData.profileObj.email,
       firstName: responseGoogleData.profileObj.givenName,

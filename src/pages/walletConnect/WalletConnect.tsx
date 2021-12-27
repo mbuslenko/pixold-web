@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 
-import axiosInstance from '../../shared/utils/axios-config';
+import { AxiosInstance } from '../../shared/utils/axios-config';
 
 import { Button } from '../../components/ui-kit/button/Button';
 import { Input } from '../../components/ui-kit/input/Input';
@@ -18,11 +18,14 @@ export const WalletConnect: React.FC = () => {
   const [secretKeyStatus, setSecretKeyStatus] = useState<InputStatus>();
   const [isAlertVisible, setIsAlertVisible] = useState<boolean>(false);
   const [alertHeading, setAlertHeading] = useState<string>('');
-  const [redirectToWallet, setRedirectToWallet] = useState<boolean>(false);
+  const [sendRequest, setSendRequest] = useState<boolean>(false);
+  const postData = {
+    userId: window.localStorage.getItem('userId'),
+    publicKey,
+    secret: secretKey,
+  };
 
   const connectWalletCallback = () => {
-    const userId = window.localStorage.getItem('userId');
-
     if (publicKey.length === 0) {
       setPublicKeyStatus('invalid');
 
@@ -37,31 +40,35 @@ export const WalletConnect: React.FC = () => {
       return;
     }
 
-    axiosInstance
-      .post(
-        `${process.env.REACT_APP_BASE_URL}/wallet/connect`,
-        {
-          userId,
-          publicKey,
-          secret: secretKey,
-        },
-      )
-      .then(() => setRedirectToWallet(true))
-      .catch(error => {
-        if (error.response.status === 400) {
-          setAlertHeading(error.response.data.message);
-        } else if (error.response.status === 500) {
-          setAlertHeading('Internal server error occurred');
-        }
+    setSendRequest(true);
 
-        setIsAlertVisible(true);
-        setPublicKeyStatus('invalid');
-        setSecretKeyStatus('invalid');
-        setTimeout(
-          () => setIsAlertVisible(false),
-          5000,
-        );
-      });
+
+    // axios
+    //   .post(
+    //     `${process.env.REACT_APP_BASE_URL}/wallet/connect`,
+    //     postData,
+    //   )
+    //   // .then(() => setRedirectToWallet(true))
+    //   .then((response) => console.log(['wallet connect then', response]))
+    //   .catch(error => {
+    //     console.log(['wallet connect error', error]);
+
+    //     if (error.response.status === 400) {
+    //       setAlertHeading(error.response.data.message);
+    //     } else if (error.response.status === 500) {
+    //       setAlertHeading('Internal server error occurred');
+    //     }
+
+    //     setIsAlertVisible(true);
+    //     setPublicKeyStatus('invalid');
+    //     setSecretKeyStatus('invalid');
+    //     setTimeout(
+    //       () => setIsAlertVisible(false),
+    //       5000,
+    //     );
+
+    //     console.error(error.message);
+    //   });
   };
 
   return (
@@ -123,8 +130,14 @@ export const WalletConnect: React.FC = () => {
           onClick={() => setIsAlertVisible(false)}
         />
       }
-      { redirectToWallet &&
-        <Navigate to='/wallet'/>
+
+      { sendRequest &&
+        <AxiosInstance
+          postUrl={`/wallet/connect`}
+          postData={postData}
+          responseCallback={response => console.log(['wallet response', response])}
+          errorCallback={error => { console.log(['wallet error', error]); setAlertHeading('ALARM'); setIsAlertVisible(true); }}
+        />
       }
     </section>
   );
