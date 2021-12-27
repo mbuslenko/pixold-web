@@ -1,11 +1,13 @@
 import { Link } from 'react-router-dom';
+
 import { Button } from '../../components/ui-kit/button/Button';
+
+import './CoinPage.scss';
+import coinPageBackgroundImg1 from '../../assets/svg/coin-page-background-1.svg';
+import coinPageBackgroundImg2 from '../../assets/svg/coin-page-background-2.svg';
 import pixelCoinLogoImg from '../../assets/svg/pixel-coin-logo.svg';
 import pixelCoinCircleImg from '../../assets/svg/pixel-coin-circle.svg';
 import lumenLogoImg from '../../assets/svg/lumen-logo.svg';
-import coinPageBackgroundImg1 from '../../assets/svg/coin-page-background-1.svg';
-import coinPageBackgroundImg2 from '../../assets/svg/coin-page-background-2.svg';
-import './CoinPage.scss';
 
 export const CoinPage: React.FC = () => {
   return (
