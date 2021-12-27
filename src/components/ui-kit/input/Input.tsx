@@ -3,11 +3,17 @@ import { IInputProps } from '../interfaces';
 import { InputStatus } from '../type';
 import styles from './Input.module.scss';
 
-export const Input: React.FC<IInputProps> = ({ type, placeholder, description, status, onInput }) => {
+export const Input: React.FC<IInputProps> = ({
+  type,
+  placeholder,
+  description,
+  status,
+  onInputCallback,
+}) => {
   const [inputStatus, changeInputStatus] = useState<InputStatus>();
-  const onInputCallback = (e: React.FormEvent<HTMLInputElement>): void => {
-    onInput((e.target as HTMLInputElement).value);
+  const onInput = (e: React.FormEvent<HTMLInputElement>): void => {
     changeInputStatus(undefined);
+    onInputCallback((e.target as HTMLInputElement).value, undefined);
   };
 
   useEffect(
@@ -24,7 +30,7 @@ export const Input: React.FC<IInputProps> = ({ type, placeholder, description, s
         type={type}
         placeholder={placeholder}
         disabled={inputStatus === 'disabled'}
-        onInput={onInputCallback}
+        onInput={onInput}
       />
       <span className={styles.description}>
         {description}

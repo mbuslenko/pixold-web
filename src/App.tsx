@@ -6,8 +6,8 @@ import { Error500Page } from './pages/errorsPages/error500Page/Error500Page';
 import { Faq } from './pages/faq/Faq';
 import { HomePage } from './pages/homepage/HomePage';
 import { WalletConnect } from './pages/walletConnect/WalletConnect';
-import LoginPage from './pages/loginPage/LoginPage';
-import LoginPreloaderPage from './pages/preloaderPages/LoginPreloaderPage';
+import { LoginPage } from './pages/loginPage/LoginPage';
+import { LoginPreloaderPage } from './pages/preloaderPages/LoginPreloaderPage';
 
 import './App.scss';
 

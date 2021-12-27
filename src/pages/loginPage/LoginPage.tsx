@@ -1,19 +1,18 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import GoogleLogin, { GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import './LoginPage.scss';
 
 // TODO: add clientId into environment file
 const clientId = '574224742867-er1e971hndcooedtb4q6qi3mqioe5qh9.apps.googleusercontent.com';
 
-const LoginPage: React.FC = () => {
-  const [redirectToPlay, setRedirectToPlay] = useState<boolean>(false);
-  const [redirectToLoad, setRedirectToLoad] = useState<boolean>(false);
+export const LoginPage: React.FC = () => {
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (window.localStorage.getItem('userId') && window.localStorage.getItem('accessToken')) {
-      setRedirectToPlay(true);
+      navigate('/play');
     }
   }, []);
 
@@ -24,7 +23,7 @@ const LoginPage: React.FC = () => {
 
     // TODO: Change to redux
     window.localStorage.setItem('responseGoogleData', JSON.stringify(responseGoogleData));
-    setRedirectToLoad(true);
+      navigate('/auth/load');
   };
 
   const handleLoginFailure = (e: any) => {
@@ -57,10 +56,6 @@ const LoginPage: React.FC = () => {
           />
         </div>
       </div>
-      {redirectToPlay && <Navigate to="/play" />}
-      {redirectToLoad && <Navigate to="/auth/load" />}
     </div>
   );
 };
-
-export default LoginPage;

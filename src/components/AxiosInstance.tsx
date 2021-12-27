@@ -6,27 +6,16 @@ import { useNavigate } from 'react-router-dom';
 import { IAxiosInstanceProps } from './interfaces';
 
 const axiosInstance = axios.create({
-  baseURL: 'https://pixold.azurewebsites.net',
+  baseURL: process.env.REACT_APP_BASE_URL,
 });
 
-// axiosInstance.interceptors.response.use(
-//   (response) => response,
-//   (error) => {
-//     console.log('error inside axios');
-
-//     if (error.response.status === 401) {
-//       // navigate('/auth');
-//       setRedirectUrl('/auth');
-//     } else if (error.response.status === 500) {
-//       // navigate('/500');
-//       setRedirectUrl('/navigate');
-//     }
-
-//     setRedirect(true);
-//   },
-// );
-
-export const AxiosInstance: React.FC<IAxiosInstanceProps> = ({ postUrl, postData, responseCallback, errorCallback }) => {
+export const AxiosInstance: React.FC<IAxiosInstanceProps> = ({
+  requestMethod,
+  requestUrl,
+  requestData,
+  responseCallback,
+  errorCallback,
+}) => {
   const navigate = useNavigate();
   const accessToken = window.localStorage.getItem('accessToken');
 
@@ -36,12 +25,9 @@ export const AxiosInstance: React.FC<IAxiosInstanceProps> = ({ postUrl, postData
 
   useEffect(
     () => {
-      axiosInstance
-        .post(postUrl, postData)
+      axiosInstance[requestMethod](requestUrl, requestData)
         .then(responseCallback)
         .catch(error => {
-          console.log(['axios error', error]);
-
           if (error.response.status === 401) {
             navigate('/auth');
           } else if (error.response.status === 500) {
@@ -51,7 +37,7 @@ export const AxiosInstance: React.FC<IAxiosInstanceProps> = ({ postUrl, postData
           errorCallback(error);
         });
     },
-    []
+    [],
   );
 
   return (<></>);
