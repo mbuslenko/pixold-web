@@ -5,7 +5,7 @@ import { Navigate } from 'react-router-dom';
 import './LoginPage.scss';
 
 // TODO: add clientId into environment file
-const clientId = '574224742867-j214k7camduhed6qdlut6pv2agi2k62r.apps.googleusercontent.com';
+const clientId = '574224742867-er1e971hndcooedtb4q6qi3mqioe5qh9.apps.googleusercontent.com';
 
 const LoginPage: React.FC = () => {
   const [redirectToPlay, setRedirectToPlay] = useState<boolean>(false);
