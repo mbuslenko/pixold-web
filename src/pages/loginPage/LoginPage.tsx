@@ -12,7 +12,7 @@ const LoginPage: React.FC = () => {
   const [redirectToLoad, setRedirectToLoad] = useState<boolean>(false);
 
   useEffect(() => {
-    if (window.localStorage.getItem('id') && window.localStorage.getItem('accessToken')) {
+    if (window.localStorage.getItem('userId') && window.localStorage.getItem('accessToken')) {
       setRedirectToPlay(true);
     }
   }, []);

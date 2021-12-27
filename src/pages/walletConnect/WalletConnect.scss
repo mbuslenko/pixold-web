@@ -1,0 +1,68 @@
+@import '../../shared/scss/Variable.scss';
+
+.wallet-connect-page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.go-back-link {
+  position: absolute;
+  top: 3.125em;
+  left: 3.75em;
+}
+
+.lumen-logo {
+  width: 7.875em;
+  height: 7.875em;
+  margin-bottom: 2.8125em;
+}
+
+.wallet-connect-text-container {
+  margin-bottom: 3.5em;
+}
+
+.wallet-connect-heading {
+  font: {
+    family: 'Montserrat';
+    size: 30px;
+    weight: 900;
+  }
+  margin-bottom: 0 0 0.5em;
+}
+
+.wallet-connect-text {
+  width: 17.625em;
+  text-align: center;
+}
+
+.wallet-connect-input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.875em;
+  margin-bottom: 3.5em;
+}
+
+.pink-primary-button-color {
+  background-color: #F178B6;
+  color: $black;
+}
+
+.black-white-secondary-button-color {
+  border-color: $white;
+  color: $white;
+}
+
+@media screen and (max-width: $screen-max-width-smallest) {
+  .wallet-connect-page {
+    justify-content: unset;
+    padding-top: 5.75em;
+  }
+
+  .go-back-link {
+    top: 1.55em;
+    left: 1.75em;
+  }
+}

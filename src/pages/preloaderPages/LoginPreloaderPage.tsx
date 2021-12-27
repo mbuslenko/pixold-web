@@ -7,9 +7,6 @@ import { IAuthResponse } from './interfaces';
 import { GoogleLoginResponse } from 'react-google-login';
 import { Navigate } from 'react-router-dom';
 
-// TODO: baseUrl should be global variable
-const baseUrl = 'https://pixold.azurewebsites.net';
-
 const LoginPreloaderPage: React.FC = () => {
   const [redirectToPlay, setRedirectToPlay] = useState<boolean>(false);
 
@@ -22,14 +19,14 @@ const LoginPreloaderPage: React.FC = () => {
   }
 
   axios
-    .post<IAuthResponse>(`${baseUrl}/auth`, {
+    .post<IAuthResponse>(`${process.env.REACT_APP_BASE_URL}/auth`, {
       email: responseGoogleData.profileObj.email,
       firstName: responseGoogleData.profileObj.givenName,
       lastName: responseGoogleData.profileObj.familyName,
       avatarUrl: responseGoogleData.profileObj.imageUrl,
     })
     .then((res) => {
-      window.localStorage.setItem('id', res.data.id);
+      window.localStorage.setItem('userId', res.data.id);
       window.localStorage.setItem('accessToken', res.data.accessToken);
       setRedirectToPlay(true);
     })

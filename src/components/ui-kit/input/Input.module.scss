@@ -1,4 +1,4 @@
-@import '../../shared/Variable.scss';
+@import '../../../shared/scss/Variable.scss';
 
 .input {
   border: 1px solid #B4B4B4;
@@ -44,4 +44,9 @@
   &.invalid {
     color: $red-light;
   }
+}
+
+.description {
+  font-size: 14px;
+  color: #3B3F4E;
 }
