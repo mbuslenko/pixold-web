@@ -1,14 +1,15 @@
+import axios from 'axios';
+
 import { useState } from 'react';
+import { Link, Navigate } from 'react-router-dom';
+
 import { Button } from '../../components/ui-kit/button/Button';
 import { Input } from '../../components/ui-kit/input/Input';
-import { Link, Navigate } from 'react-router-dom';
 import { Alert } from '../../components/ui-kit/alert/Alert';
-
-import { baseUrl } from '../../shared/ts/consts';
-import lumenLogoImg from '../../assets/svg/lumen-logo.svg';
-import './WalletConnect.scss';
-import axios from 'axios';
 import { InputStatus } from '../../components/ui-kit/type';
+
+import './WalletConnect.scss';
+import lumenLogoImg from '../../assets/svg/lumen-logo.svg';
 
 export const WalletConnect: React.FC = () => {
   const [publicKey, setPublicKey] = useState<string>('');
@@ -30,9 +31,7 @@ export const WalletConnect: React.FC = () => {
       }
 
       return;
-    }
-
-    if (secretKey.length === 0) {
+    } else if (secretKey.length === 0) {
       setSecretKeyStatus('invalid');
 
       return;
@@ -40,7 +39,7 @@ export const WalletConnect: React.FC = () => {
 
     axios
       .post(
-        `${baseUrl}/wallet/connect`,
+        `${process.env.REACT_APP_BASE_URL}/wallet/connect`,
         {
           userId,
           publicKey,
@@ -49,8 +48,6 @@ export const WalletConnect: React.FC = () => {
       )
       .then(() => setRedirectToWallet(true))
       .catch(error => {
-        console.error(error.response.data.message);
-
         if (error.response.status === 400) {
           setAlertHeading(error.response.data.message);
         } else if (error.response.status === 500) {
@@ -89,7 +86,11 @@ export const WalletConnect: React.FC = () => {
           Connect a wallet
         </h1>
         <p className='wallet-connect-text'>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Blandit ultricies aliquam quis in accumsan, vel ut. Posuere suscipit neque scelerisque libero. Quisque ipsum tristique arcu velit facilisi nec lectus. Commodo sed elementum congue consequat.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Blandit ultricies aliquam quis in accumsan, vel ut.
+          Posuere suscipit neque scelerisque libero.
+          Quisque ipsum tristique arcu velit facilisi nec lectus.
+          Commodo sed elementum congue consequat.
         </p>
       </div>
 

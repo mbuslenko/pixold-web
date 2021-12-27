@@ -55,7 +55,12 @@
   color: $white;
 }
 
-@media screen and (max-width: $screen-max-width-mobile) {
+@media screen and (max-width: $screen-max-width-smallest) {
+  .wallet-connect-page {
+    justify-content: unset;
+    padding-top: 5.75em;
+  }
+
   .go-back-link {
     top: 1.55em;
     left: 1.75em;

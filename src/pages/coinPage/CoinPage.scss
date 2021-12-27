@@ -2,27 +2,19 @@
 
 .coin-page {
   display: flex;
-  // justify-content: right;
   align-items: center;
-  // padding-left: 14em;
   overflow: hidden;
   height: 100vh;
   position: relative;
-  // padding-right: 40em;
 }
 
 .coin-page-content {
   position: absolute;
-  // margin-top: -6.25em;
-  // right: 40em;
 }
 
 .pixel-coin-circle {
   position: absolute;
-  // top: -120%;
-  // right: -105%;
   z-index: -1;
-  // transform: scale(1.1);
 }
 
 .coin-page-background {
@@ -32,6 +24,7 @@
   display: flex;
   flex-direction: column;
   z-index: -2;
+  justify-content: center;
 }
 
 .coin-page-icon {
@@ -42,13 +35,10 @@
 
 .coin-page-text-container {
   position: relative;
-  // font-size: 70px;
-  // line-height: 77px;
   width: 8.8em;
   margin: 0.85em 0;
 
   h1 {
-    // font-size: 70px;
     margin: 0;
   }
 }
@@ -81,9 +71,8 @@
   }
 
   .pixel-coin-circle {
-    top: -4.05em;
-    right: -10em;
-    transform: scale(1.05);
+    top: -3.9em;
+    right: -9.5em;
   }
 
   .coin-page-text-container {
@@ -97,20 +86,16 @@
 }
 
 @media screen and (max-width: $screen-max-width-big) {
-  .coin-page-background {
-    width: 125%;
-    height: 125%;
-  }
-
   .coin-page-content {
     right: unset;
     margin: -6.25em 0 0 3em;
   }
 
   .pixel-coin-circle {
-    top: -4.65em;
-    right: -11em;
-    transform: scale(0.95);
+    top: -3.65em;
+    right: -9em;
+    width: 800px;
+    height: 800px;
   }
 
   .coin-page-text-container {
@@ -123,14 +108,44 @@
   }
 }
 
-@media screen and (max-width: $screen-max-width-medium) {
+
+@media screen and (max-width: $screen-max-width-small) {
+  .coin-page-content {
+    right: unset;
+    margin: -6.25em 0 0 3em;
+  }
+
+  .pixel-coin-circle {
+    top: -3em;
+    right: -7.5em;
+    width: 600px;
+    height: 600px;
+  }
+
+  .coin-page-text-container {
+    font-size: 56px;
+    line-height: 63px;
+
+    h1 {
+      font-size: 63px;
+    }
+  }
+
+  .coin-page-icon {
+    height: 20px;
+    width: 20px;
+  }
+}
+
+@media screen and (max-width: $screen-max-width-smallest) {
   .coin-page {
     align-items: unset;
   }
 
+
   .coin-page-background {
-    width: 150%;
-    height: 150%;
+    justify-content: unset;
+    padding-top: 45%;
   }
 
   .coin-page-content {
@@ -139,9 +154,10 @@
   }
 
   .pixel-coin-circle {
-    top: -12.75em;
-    right: -19em;
-    transform: scale(0.45);
+    top: -3.75em;
+    right: -9.25em;
+    width: 400px;
+    height: 400px;
   }
 
   .coin-page-text-container {

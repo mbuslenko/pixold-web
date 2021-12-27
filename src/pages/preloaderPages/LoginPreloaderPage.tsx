@@ -6,7 +6,6 @@ import loaderLogo from '../../assets/svg/loader-logo.svg';
 import { IAuthResponse } from './interfaces';
 import { GoogleLoginResponse } from 'react-google-login';
 import { Navigate } from 'react-router-dom';
-import { baseUrl } from '../../shared/ts/consts';
 
 const LoginPreloaderPage: React.FC = () => {
   const [redirectToPlay, setRedirectToPlay] = useState<boolean>(false);
@@ -15,14 +14,12 @@ const LoginPreloaderPage: React.FC = () => {
     window.localStorage.getItem('responseGoogleData') as string,
   );
 
-  console.log(responseGoogleData)
-
   if (!responseGoogleData) {
     return <Navigate to="/auth" />;
   }
 
   axios
-    .post<IAuthResponse>(`${baseUrl}/auth`, {
+    .post<IAuthResponse>(`${process.env.REACT_APP_BASE_URL}/auth`, {
       email: responseGoogleData.profileObj.email,
       firstName: responseGoogleData.profileObj.givenName,
       lastName: responseGoogleData.profileObj.familyName,
