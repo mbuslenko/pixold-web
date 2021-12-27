@@ -18,7 +18,7 @@ export const App: React.FC = () => {
         <Route path="/auth" element={<LoginPage />} />
         <Route path="/auth/load" element={<LoginPreloaderPage />} />
         <Route path="*" element={<Error404Page />} />
-        <Route path="" element={<Error500Page />} />
+        <Route path="/500" element={<Error500Page />} />
       </Routes>
     </BrowserRouter>
   );
