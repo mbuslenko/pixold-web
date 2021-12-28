@@ -1,1 +1,1 @@
-export type WalletBalanceCurrency = 'PXL' | 'XML' | 'USD';
+export type WalletBalanceCurrency = 'PXL' | 'XLM' | 'USD';

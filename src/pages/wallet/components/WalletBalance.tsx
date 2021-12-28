@@ -1,9 +1,11 @@
+
+import { WalletBalanceProps } from '../interfaces';
+import { WalletBalanceCurrency } from '../types';
+
 import './WalletBalance.scss';
 import dollarSignUrl from '../../../assets/svg/dollar-sign.svg';
 import lumenLogoUrl from '../../../assets/svg/lumen-logo-purple.svg';
 import pixelCoinLogoUrl from '../../../assets/svg/pixel-coin-logo-purple.svg';
-import { WalletBalanceProps } from '../interfaces';
-import { WalletBalanceCurrency } from '../types';
 
 const balanceMaxLength = 6;
 
@@ -13,9 +15,8 @@ export const WalletBalance: React.FC<WalletBalanceProps> = ({ balance, currency 
       return balance;
     }
 
-    let newBalance: string = balance;
+    const newBalance: string = Number(balance).toFixed(balance.length - balanceMaxLength);
 
-    newBalance = Number(newBalance).toFixed(newBalance.length - balanceMaxLength);
     if (newBalance.length <= balanceMaxLength) {
       return newBalance;
     }
@@ -28,7 +29,7 @@ export const WalletBalance: React.FC<WalletBalanceProps> = ({ balance, currency 
         return pixelCoinLogoUrl;
       case 'USD':
         return dollarSignUrl;
-      case 'XML':
+      case 'XLM':
         return lumenLogoUrl;
     }
   };

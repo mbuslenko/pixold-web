@@ -1,6 +1,7 @@
 import { Button } from '../../../components/ui-kit/button/Button';
 import { Dropdown } from '../../../components/ui-kit/dropdown/Dropdown';
 import { Input } from '../../../components/ui-kit/input/Input';
+
 import { WalletSwitchProps } from '../interfaces';
 
 import './WalletSwitch.scss';

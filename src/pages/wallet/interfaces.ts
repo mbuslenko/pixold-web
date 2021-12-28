@@ -10,7 +10,9 @@ export interface WalletHeaderProps {
 }
 
 export interface WalletBalanceContainerProps {
-  wallets: WalletBalanceProps[]
+  pxl: string;
+  xlm: string;
+  usd: string;
 }
 
 export interface WalletSwitchProps {
