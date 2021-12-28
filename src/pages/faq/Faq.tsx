@@ -1,14 +1,17 @@
-import { FaqHeader } from './FaqHeader';
-import { IFaqTopicData } from './interfaces';
-import './Faq.scss';
-import { FaqTopic } from './FaqTopic';
-import { Footer } from '../homepage/Footer';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+
+import { blockScrolling, unblockScrolling } from '../../shared/ts/helperFunctions';
+
 import { Button } from '../../components/ui-kit/button/Button';
 import { Modal } from '../../components/ui-kit/modal/Modal';
+import { AxiosInstance } from '../../components/AxiosInstance';
+
+import './Faq.scss';
+import { FaqHeader } from './FaqHeader';
+import { FaqTopic } from './FaqTopic';
+import { Footer } from '../homepage/Footer';
+import { IFaqTopicData } from './interfaces';
 import { ShowInfoModalCallback } from './types';
-import axios from 'axios';
-import { blockScrolling, unblockScrolling } from '../../shared/ts/helperFunctions';
 
 export const Faq: React.FC = () => {
   const [faqTopicData, setFaqTopicData] = useState<IFaqTopicData[]>([]);
@@ -27,16 +30,6 @@ export const Faq: React.FC = () => {
     setIsVisibleModal(false);
     unblockScrolling();
   };
-
-  useEffect(
-    () => {
-      axios
-        .get('https://pixold.azurewebsites.net/faq')
-        .then(response => setFaqTopicData(response.data))
-        .catch(error => console.error([`ERROR: ${error.message}`]));
-    },
-    [],
-  );
 
   return (
     <section className='faq-page'>
@@ -71,6 +64,12 @@ export const Faq: React.FC = () => {
           </Modal>
         </div>
       }
+      <AxiosInstance
+        requestMethod='get'
+        requestUrl='/faq'
+        responseCallback={response => setFaqTopicData(response.data)}
+        errorCallback={error => console.error(`ERROR: ${error.message}`)}
+      />
     </section>
   );
 };

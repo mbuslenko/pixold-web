@@ -1,8 +1,7 @@
-import axios from 'axios';
-
 import { useState } from 'react';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
+import { AxiosInstance } from '../../components/AxiosInstance';
 import { Button } from '../../components/ui-kit/button/Button';
 import { Input } from '../../components/ui-kit/input/Input';
 import { Alert } from '../../components/ui-kit/alert/Alert';
@@ -18,10 +17,27 @@ export const WalletConnect: React.FC = () => {
   const [secretKeyStatus, setSecretKeyStatus] = useState<InputStatus>();
   const [isAlertVisible, setIsAlertVisible] = useState<boolean>(false);
   const [alertHeading, setAlertHeading] = useState<string>('');
-  const [redirectToWallet, setRedirectToWallet] = useState<boolean>(false);
+  const [sendRequest, setSendRequest] = useState<boolean>(false);
+  const navigate = useNavigate();
+  const postData = {
+    userId: window.localStorage.getItem('userId'),
+    publicKey,
+    secret: secretKey,
+  };
+
+  const publicKeyInputCallback = (text: string, status: InputStatus | undefined) => {
+    setPublicKey(text);
+    setPublicKeyStatus(status);
+  };
+  const secretKeyInputCallback = (text: string, status: InputStatus | undefined) => {
+    setSecretKey(text);
+    setSecretKeyStatus(status);
+  };
 
   const connectWalletCallback = () => {
-    const userId = window.localStorage.getItem('userId');
+    if (publicKeyStatus === 'invalid' || secretKeyStatus === 'invalid') {
+      return;
+    }
 
     if (publicKey.length === 0) {
       setPublicKeyStatus('invalid');
@@ -37,31 +53,26 @@ export const WalletConnect: React.FC = () => {
       return;
     }
 
-    axios
-      .post(
-        `${process.env.REACT_APP_BASE_URL}/wallet/connect`,
-        {
-          userId,
-          publicKey,
-          secret: secretKey,
-        },
-      )
-      .then(() => setRedirectToWallet(true))
-      .catch(error => {
-        if (error.response.status === 400) {
-          setAlertHeading(error.response.data.message);
-        } else if (error.response.status === 500) {
-          setAlertHeading('Internal server error occurred');
-        }
+    setSendRequest(true);
+  };
 
-        setIsAlertVisible(true);
-        setPublicKeyStatus('invalid');
-        setSecretKeyStatus('invalid');
-        setTimeout(
-          () => setIsAlertVisible(false),
-          5000,
-        );
-      });
+  const postResponseCallback = () => {
+    navigate('/wallet');
+  };
+
+  const postErrorCallback = (error: any) => {
+    if (error.response.status === 400) {
+      setAlertHeading(error.response.data.message);
+    }
+
+    setSendRequest(false);
+    setIsAlertVisible(true);
+    setPublicKeyStatus('invalid');
+    setSecretKeyStatus('invalid');
+    setTimeout(
+      () => setIsAlertVisible(false),
+      5000,
+    );
   };
 
   return (
@@ -99,14 +110,14 @@ export const WalletConnect: React.FC = () => {
           type='text'
           placeholder='Enter your public key'
           description='Public key'
-          onInput={text => setPublicKey(text)}
+          onInputCallback={publicKeyInputCallback}
           status={publicKeyStatus}
         />
         <Input
           type='text'
           placeholder='Enter your secret key'
           description='Secret key'
-          onInput={text => setSecretKey(text)}
+          onInputCallback={secretKeyInputCallback}
           status={secretKeyStatus}
         />
       </div>
@@ -123,8 +134,15 @@ export const WalletConnect: React.FC = () => {
           onClick={() => setIsAlertVisible(false)}
         />
       }
-      { redirectToWallet &&
-        <Navigate to='/wallet'/>
+
+      { sendRequest &&
+        <AxiosInstance
+          requestMethod='post'
+          requestUrl={`/wallet/connect`}
+          requestData={postData}
+          responseCallback={postResponseCallback}
+          errorCallback={postErrorCallback}
+        />
       }
     </section>
   );
