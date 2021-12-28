@@ -12,14 +12,18 @@ export const UsernamePage: React.FC = () => {
     <div className="username-wrap">
       <h1 className="username-title">Set your username</h1>
       <div className="username-controls-wrap">
-        <Input
-          type="text"
-          placeholder="Please enter username"
-          description="Username"
-          onInput={(text) => setUsername(text)}
-        />
+        <div className="username-input-wrap">
+          <Input
+            type="text"
+            placeholder="Please enter username"
+            description="Username"
+            onInputCallback={(text) => setUsername(text)}
+          />
+        </div>
         <Button text="Check" priority="secondary" className="username-btn-check" />
-        <Button text="Submit" priority="primary" />
+        <div className="username-submit-wrap">
+          <Button text="Submit" priority="primary" />
+        </div>
       </div>
     </div>
   );

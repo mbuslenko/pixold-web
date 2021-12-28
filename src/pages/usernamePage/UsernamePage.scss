@@ -25,10 +25,10 @@
   padding-top: 85px;
   max-width: 400px;
   display: grid;
-  grid-template-columns: [a] 1fr [a-e] 1fr [e] 1fr [ee];
+  grid-template-columns: auto auto;
   grid-auto-columns: 100%;
   justify-content: center;
-  gap: 98px 9px;
+  gap: 98px 19px;
   justify-items: center;
 }
 
@@ -36,14 +36,23 @@
   color: $grey-b4;
 }
 
-/* .username-btn-submit {
-  background-color: $purple;
-  color: $font-grey;
-  justify-self: center;
-} */
+.username-submit-wrap {
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
 
 @media screen and (max-width: $screen-max-width-mobile) {
   .username-title {
     max-width: 300px;
+  }
+
+  .username-input-wrap {
+    grid-column-start: 1;
+    grid-column-end: 3;
+  }
+
+  .username-submit-wrap {
+    grid-column-start: 2;
+    grid-column-end: 3;
   }
 }
