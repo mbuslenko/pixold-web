@@ -13,6 +13,7 @@ export const AxiosInstance: React.FC<IAxiosInstanceProps> = ({
   requestMethod,
   requestUrl,
   requestData,
+  requestParams,
   responseCallback,
   errorCallback,
 }) => {
@@ -25,7 +26,12 @@ export const AxiosInstance: React.FC<IAxiosInstanceProps> = ({
 
   useEffect(
     () => {
-      axiosInstance[requestMethod](requestUrl, requestData)
+      axiosInstance.request({
+        method: requestMethod,
+        url: requestUrl,
+        data: requestData,
+        params: requestParams,
+      })
         .then(responseCallback)
         .catch(error => {
           if (error.response.status === 403 || error.response.status === 401) {
