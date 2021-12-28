@@ -44,7 +44,7 @@ export interface IInputProps {
   type: InputType;
   placeholder: string;
   description: string;
-  onInput: (text: string) => void;
+  onInputCallback: (text: string, status: InputStatus | undefined) => void;
   status?: InputStatus;
 }
 
