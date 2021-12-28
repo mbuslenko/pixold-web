@@ -28,7 +28,7 @@ export const AxiosInstance: React.FC<IAxiosInstanceProps> = ({
       axiosInstance[requestMethod](requestUrl, requestData)
         .then(responseCallback)
         .catch(error => {
-          if (error.response.status === 401) {
+          if (error.response.status === 403 || error.response.status === 401) {
             navigate('/auth');
           } else if (error.response.status === 500) {
             navigate('/500');
