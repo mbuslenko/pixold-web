@@ -10,12 +10,13 @@ import LoginPage from './pages/loginPage/LoginPage';
 import LoginPreloaderPage from './pages/preloaderPages/LoginPreloaderPage';
 
 import './App.scss';
+import { UsernamePage } from './pages/usernamePage/UsernamePage';
 
 export const App: React.FC = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navigate replace to="/home" />} />
+        {/*         <Route path="/" element={<Navigate replace to="/home" />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/faq" element={<Faq />} />
         <Route path="/auth" element={<LoginPage />} />
@@ -25,7 +26,8 @@ export const App: React.FC = () => {
           <Route path='connect' element={<WalletConnect/>}/>
         </Route>
         <Route path="*" element={<Error404Page />} />
-        <Route path="/500" element={<Error500Page />} />
+        <Route path="/500" element={<Error500Page />} /> */}
+        <Route path="/username" element={<UsernamePage />} />
       </Routes>
     </BrowserRouter>
   );

@@ -1,0 +1,49 @@
+@import '../../shared/scss/Variable.scss';
+
+.username-wrap {
+  width: 100%;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.username-title {
+  font-family: Montserrat;
+  font-weight: bold;
+  font-size: 50px;
+  line-height: 61px;
+  text-align: center;
+  letter-spacing: -0.02em;
+
+  margin: 0;
+}
+
+.username-controls-wrap {
+  padding-top: 85px;
+  max-width: 400px;
+  display: grid;
+  grid-template-columns: [a] 1fr [a-e] 1fr [e] 1fr [ee];
+  grid-auto-columns: 100%;
+  justify-content: center;
+  gap: 98px 9px;
+  justify-items: center;
+}
+
+.username-btn-check {
+  color: $grey-b4;
+}
+
+/* .username-btn-submit {
+  background-color: $purple;
+  color: $font-grey;
+  justify-self: center;
+} */
+
+@media screen and (max-width: $screen-max-width-mobile) {
+  .username-title {
+    max-width: 300px;
+  }
+}
