@@ -8,6 +8,7 @@ import { HomePage } from './pages/homepage/HomePage';
 import { WalletConnect } from './pages/walletConnect/WalletConnect';
 import { LoginPage } from './pages/loginPage/LoginPage';
 import { LoginPreloaderPage } from './pages/preloaderPages/LoginPreloaderPage';
+import { TopPage } from './pages/topPage/TopPage';
 
 import './App.scss';
 
@@ -15,15 +16,16 @@ export const App: React.FC = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navigate replace to="/home" />} />
+        <Route path="/" element={<Navigate replace to="/score" />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/faq" element={<Faq />} />
         <Route path="/auth" element={<LoginPage />} />
         <Route path="/auth/load" element={<LoginPreloaderPage />} />
-        <Route path='/coin' element={<CoinPage/>}/>
-        <Route path='/wallet'>
-          <Route path='connect' element={<WalletConnect/>}/>
+        <Route path="/coin" element={<CoinPage />} />
+        <Route path="/wallet">
+          <Route path="connect" element={<WalletConnect />} />
         </Route>
+        <Route path="/score" element={<TopPage />} />
         <Route path="/500" element={<Error500Page />} />
         <Route path="*" element={<Error404Page />} />
       </Routes>
