@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { AxiosInstance } from '../../components/AxiosInstance';
+import { GetResponseUsernameCheck } from '../../shared/ts/types';
 
+import { useAxiosInstance } from '../../components/AxiosInstance';
 import { Button } from '../../components/ui-kit/button/Button';
 import { Input } from '../../components/ui-kit/input/Input';
 import { InputStatus } from '../../components/ui-kit/type';
@@ -11,41 +12,49 @@ import './UsernamePage.scss';
 
 export const UsernamePage: React.FC = () => {
   const navigate = useNavigate();
+  const request = useAxiosInstance(navigate);
 
   const [username, setUsername] = useState<string>('');
   const [usernameStatus, setUsernameStatus] = useState<InputStatus>();
-
-  const [sendCheckRequest, setSendCheckRequest] = useState<boolean>(false);
-  const [sendSubmitRequest, setSendSubmitRequest] = useState<boolean>(false);
 
   const checkPostErrorCallback = () => {
     setUsernameStatus('invalid');
   };
 
   const checkUsernameCallback = () => {
-    setSendCheckRequest(true);
+    request({
+      requestMethod: "get",
+      requestUrl: `/user/check/username/${username}`,
+      responseCallback: checkPostResponseCallback,
+      errorCallback: checkPostErrorCallback,
+    });
   };
 
-  const checkPostResponseCallback = (response: any) => {
+  const checkPostResponseCallback = (response: GetResponseUsernameCheck) => {
     if (response.data.result === true) {
       setUsernameStatus('valid');
     } else {
       setUsernameStatus('invalid');
     }
+  };
 
-    setSendCheckRequest(false);
+  const onInputCallback = (text: string, status: InputStatus | undefined) => {
+    setUsername(text);
+    setUsernameStatus(status);
   };
 
   const submitCallback = () => {
     if (usernameStatus === 'invalid') {
       return;
     } else {
-      setSendSubmitRequest(true);
+      request({
+        requestMethod: "post",
+        requestUrl: `/user/update/username`,
+        requestData: { username },
+        responseCallback: () => navigate('/wallet'),
+        errorCallback: checkPostErrorCallback,
+      });
     }
-  };
-
-  const submitResponseCallback = () => {
-    navigate('/wallet');
   };
 
   return (
@@ -57,7 +66,7 @@ export const UsernamePage: React.FC = () => {
             type="text"
             placeholder="Please enter username"
             description="Username"
-            onInputCallback={(text) => setUsername(text)}
+            onInputCallback={onInputCallback}
             status={usernameStatus}
           />
         </div>
@@ -66,25 +75,6 @@ export const UsernamePage: React.FC = () => {
           <Button text="Submit" priority="primary" onClick={submitCallback} />
         </div>
       </div>
-
-      {sendCheckRequest && (
-        <AxiosInstance
-          requestMethod="get"
-          requestUrl={`/user/check/username/${username}`}
-          responseCallback={checkPostResponseCallback}
-          errorCallback={checkPostErrorCallback}
-        />
-      )}
-
-      {sendSubmitRequest && (
-        <AxiosInstance
-          requestMethod="post"
-          requestUrl={`/user/update/username`}
-          requestData={{ username }}
-          responseCallback={submitResponseCallback}
-          errorCallback={checkPostErrorCallback}
-        />
-      )}
     </div>
   );
 };

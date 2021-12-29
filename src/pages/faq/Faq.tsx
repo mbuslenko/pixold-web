@@ -1,20 +1,22 @@
-import { useState } from 'react';
+import { useState, useEffect  } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { blockScrolling, unblockScrolling } from '../../shared/ts/helperFunctions';
 
 import { Button } from '../../components/ui-kit/button/Button';
 import { Modal } from '../../components/ui-kit/modal/Modal';
-import { AxiosInstance } from '../../components/AxiosInstance';
+import { useAxiosInstance } from '../../components/AxiosInstance';
 
 import './Faq.scss';
 import { FaqHeader } from './FaqHeader';
 import { FaqTopic } from './FaqTopic';
 import { Footer } from '../homepage/Footer';
-import { IFaqTopicData } from './interfaces';
 import { ShowInfoModalCallback } from './types';
+import { GetResponseFaq } from '../../shared/ts/types';
 
 export const Faq: React.FC = () => {
-  const [faqTopicData, setFaqTopicData] = useState<IFaqTopicData[]>([]);
+  const request = useAxiosInstance(useNavigate());
+  const [faqTopicData, setFaqTopicData] = useState<GetResponseFaq['data']>([]);
   const [isVisibleModal, setIsVisibleModal] = useState<boolean>(false);
   const [modalHeading, setModalHeading] = useState<string>('');
   const [modalText, setModalText] = useState<string>('');
@@ -30,6 +32,14 @@ export const Faq: React.FC = () => {
     setIsVisibleModal(false);
     unblockScrolling();
   };
+
+  useEffect(() => {
+    request({
+      requestMethod: 'get',
+      requestUrl: '/faq',
+      responseCallback: response => setFaqTopicData(response.data),
+    });
+  }, []);
 
   return (
     <section className='faq-page'>
@@ -64,12 +74,6 @@ export const Faq: React.FC = () => {
           </Modal>
         </div>
       }
-      <AxiosInstance
-        requestMethod='get'
-        requestUrl='/faq'
-        responseCallback={response => setFaqTopicData(response.data)}
-        errorCallback={error => console.error(`ERROR: ${error.message}`)}
-      />
     </section>
   );
 };

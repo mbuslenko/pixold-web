@@ -4,9 +4,6 @@ import { useNavigate } from 'react-router-dom';
 
 import './LoginPage.scss';
 
-// TODO: add clientId into environment file
-const clientId = '574224742867-er1e971hndcooedtb4q6qi3mqioe5qh9.apps.googleusercontent.com';
-
 export const LoginPage: React.FC = () => {
   const navigate = useNavigate();
 
@@ -39,7 +36,7 @@ export const LoginPage: React.FC = () => {
         <div className="login-btn-wrap">
           <button className="login-btn login-apple-btn">Continue with Apple</button>
           <GoogleLogin
-            clientId={clientId}
+            clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID ?? ''}
             render={(renderProps) => (
               <button
                 className="login-btn login-google-btn"

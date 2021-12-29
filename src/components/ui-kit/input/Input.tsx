@@ -25,13 +25,15 @@ export const Input: React.FC<IInputProps> = ({
 
   return (
     <label className={`${styles['input-label']} ${inputStatus && styles[inputStatus]}`}>
-      <input
-        className={`${styles.input} ${inputStatus && styles[inputStatus]}`}
-        type={type}
-        placeholder={placeholder}
-        disabled={inputStatus === 'disabled'}
-        onInput={onInput}
-      />
+      <div className={`${styles['input-wrapper']} ${inputStatus && styles[inputStatus]}`}>
+        <input
+          className={`${styles.input} ${inputStatus && styles[inputStatus]}`}
+          type={type}
+          placeholder={placeholder}
+          disabled={inputStatus === 'disabled'}
+          onInput={onInput}
+        />
+      </div>
       <span className={styles.description}>
         {description}
       </span>

@@ -9,7 +9,6 @@ export const FaqQuestion: React.FC<IFaqQuestionProps> = ({ question, answer, sho
   const answerRef = useRef<HTMLDivElement>(null);
   const [isTextOverflow, setIsTextOverflow] = useState<boolean>(false);
 
-  // useLayoutEffect or useEffect
   useLayoutEffect(
     () => {
       const answerDomHeight = answerRef.current?.offsetHeight ?? 0;

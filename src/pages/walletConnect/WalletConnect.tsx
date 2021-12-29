@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { AxiosInstance } from '../../components/AxiosInstance';
+import { useAxiosInstance } from '../../components/AxiosInstance';
 import { Button } from '../../components/ui-kit/button/Button';
 import { Input } from '../../components/ui-kit/input/Input';
 import { Alert } from '../../components/ui-kit/alert/Alert';
@@ -11,16 +11,16 @@ import './WalletConnect.scss';
 import lumenLogoImg from '../../assets/svg/lumen-logo.svg';
 
 export const WalletConnect: React.FC = () => {
+  const navigate = useNavigate();
+  const request = useAxiosInstance(navigate);
   const [publicKey, setPublicKey] = useState<string>('');
   const [secretKey, setSecretKey] = useState<string>('');
   const [publicKeyStatus, setPublicKeyStatus] = useState<InputStatus>();
   const [secretKeyStatus, setSecretKeyStatus] = useState<InputStatus>();
   const [isAlertVisible, setIsAlertVisible] = useState<boolean>(false);
   const [alertHeading, setAlertHeading] = useState<string>('');
-  const [sendRequest, setSendRequest] = useState<boolean>(false);
-  const navigate = useNavigate();
   const postData = {
-    userId: window.localStorage.getItem('userId'),
+    userId: window.localStorage.getItem('userId') ?? '',
     publicKey,
     secret: secretKey,
   };
@@ -53,11 +53,13 @@ export const WalletConnect: React.FC = () => {
       return;
     }
 
-    setSendRequest(true);
-  };
-
-  const postResponseCallback = () => {
-    navigate('/wallet');
+    request({
+      requestMethod: 'post',
+      requestUrl: `/wallet/connect`,
+      requestData: postData,
+      responseCallback: () => navigate('/wallet'),
+      errorCallback: postErrorCallback,
+    });
   };
 
   const postErrorCallback = (error: any) => {
@@ -65,7 +67,6 @@ export const WalletConnect: React.FC = () => {
       setAlertHeading(error.response.data.message);
     }
 
-    setSendRequest(false);
     setIsAlertVisible(true);
     setPublicKeyStatus('invalid');
     setSecretKeyStatus('invalid');
@@ -132,16 +133,6 @@ export const WalletConnect: React.FC = () => {
           type='red'
           heading={alertHeading}
           onClick={() => setIsAlertVisible(false)}
-        />
-      }
-
-      { sendRequest &&
-        <AxiosInstance
-          requestMethod='post'
-          requestUrl={`/wallet/connect`}
-          requestData={postData}
-          responseCallback={postResponseCallback}
-          errorCallback={postErrorCallback}
         />
       }
     </section>

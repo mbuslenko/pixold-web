@@ -6,24 +6,30 @@ import dollarSignUrl from '../../../assets/svg/dollar-sign.svg';
 import lumenLogoUrl from '../../../assets/svg/lumen-logo-purple.svg';
 import pixelCoinLogoUrl from '../../../assets/svg/pixel-coin-logo-purple.svg';
 
-const balanceMaxLength = 5;
+const balanceMaxLength = 6;
+const textSliceEnd = balanceMaxLength - 1;
+const balanceOverflow = '...';
 
 export const WalletBalance: React.FC<WalletBalanceProps> = ({ balance, currency }) => {
-  const adjustBalanceLength = (balance: string): string => {
-    if (balance.toString().length <= balanceMaxLength) {
-      return balance;
+  const adjustBalanceLength = (balance: number): string => {
+    const balanceText: string = balance.toString();
+    const balanceDigitCount: number = balance.toString().replace('.', '').length;
+
+    if (balanceDigitCount <= balanceMaxLength) {
+      return balanceText;
     }
 
-    const numberBeforeDot = parseInt(balance, 10).toString();
-
-    const newBalance: string = Number(balance).toFixed(balanceMaxLength - numberBeforeDot.length);
-
-    if (newBalance.length <= balanceMaxLength) {
-      return newBalance;
+    if (Number.isInteger(balance)) {
+      return balanceText.slice(0, textSliceEnd) + balanceOverflow;
     }
 
-    return newBalance.slice(0, balanceMaxLength) + '...';
+    if (balanceText.indexOf('.') < textSliceEnd) {
+      return balanceText.slice(0, textSliceEnd + 1) + balanceOverflow;
+    }
+
+    return balanceText.slice(0, textSliceEnd) + balanceOverflow;
   };
+
   const getLogoUrlFromCurrency = (currency: WalletBalanceCurrency): string => {
     switch (currency) {
       case 'PXL':

@@ -1,5 +1,16 @@
 @import '../../../shared/scss/Variable.scss';
 
+@mixin inputStatusIcon ($icon-name) {
+  &::after {
+    content: url('../../../assets/svg/' + $icon-name + '.svg');
+    position: absolute;
+    right: 16px;
+    top: calc(50% - 9px);
+    height: 18px;
+    width: 18px;
+  }
+}
+
 .input {
   border: 1px solid #B4B4B4;
   border-radius: 4px;
@@ -8,7 +19,7 @@
   color: $white;
   width: 255px;
   height: 48px;
-  padding: 0 18px;
+  padding: 0 40px 0 18px;
 
   &:disabled {
     background-color: $grey-dark;
@@ -25,6 +36,20 @@
 
   &.invalid {
     border-color: $red-light;
+  }
+}
+
+.input-wrapper {
+  &.valid {
+    @include inputStatusIcon('check-icon');
+
+    position: relative;
+  }
+
+  &.invalid {
+    @include inputStatusIcon('cross-icon');
+
+    position: relative;
   }
 }
 

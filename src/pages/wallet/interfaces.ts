@@ -1,7 +1,7 @@
 import { WalletBalanceCurrency } from './types';
 
 export interface WalletBalanceProps {
-  balance: string;
+  balance: number;
   currency: WalletBalanceCurrency;
 }
 
@@ -10,9 +10,9 @@ export interface WalletHeaderProps {
 }
 
 export interface WalletBalanceContainerProps {
-  pxl: string;
-  xlm: string;
-  usd: string;
+  pxl: number;
+  xlm: number;
+  usd: number;
 }
 
 export interface WalletSwitchProps {
