@@ -26,9 +26,14 @@ export const LoginPreloaderPage: React.FC = () => {
   };
 
   const responseCallback = (response: AxiosResponse) => {
-    window.localStorage.setItem('userId', response.data.id);
+    window.localStorage.setItem('userId', response.data.userId);
     window.localStorage.setItem('accessToken', response.data.accessToken);
-    navigate('/play');
+    
+    if (response.data.updateUsername === true) {
+      return navigate('/username');
+    } else {
+      return navigate('/play');
+    }
   };
 
   return (
