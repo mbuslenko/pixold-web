@@ -13,7 +13,6 @@ const usernameOverflow = '...';
 
 export const WalletHeader: React.FC<WalletHeaderProps> = ({ username }) => {
   const adjustUsernameLength = (username: string): string => {
-    console.log(username)
     if (username.length <= usernameMaxLength) {
       return username;
     }
