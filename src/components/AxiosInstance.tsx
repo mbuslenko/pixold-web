@@ -40,7 +40,9 @@ export const AxiosInstance: React.FC<IAxiosInstanceProps> = ({
             navigate('/500');
           }
 
-          errorCallback(error);
+          if (errorCallback) {
+            errorCallback(error);
+          }
         });
     },
     [],

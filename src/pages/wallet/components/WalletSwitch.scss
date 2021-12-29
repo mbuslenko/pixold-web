@@ -1,0 +1,46 @@
+@import '../../../shared/scss/Variable.scss';
+
+@import '../extends.scss';
+
+.wallet-switch-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.wallet-switch-heading {
+  @extend %container-heading;
+
+  &::after {
+    content: 'soon';
+    position: relative;
+    left: 8px;
+    bottom: 4px;
+    padding: 4px;
+    background-color: $purple;
+    border-radius: 4px;
+    font: {
+      size: 10px;
+      weight: 600;
+    };
+  }
+}
+
+.wallet-switch-input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.375em;
+}
+
+
+@media screen and (max-width: $screen-max-width-small) {
+  .wallet-switch-container {
+    justify-content: unset;
+  }
+
+  .wallet-switch-input-container {
+    margin-bottom: 2.5em;
+  }
+}

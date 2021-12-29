@@ -6,5 +6,5 @@ export interface IAxiosInstanceProps {
   requestData?: any;
   requestParams?: any;
   responseCallback: (response: AxiosResponse) => void;
-  errorCallback: (error: any) => void;
+  errorCallback?: (error: any) => void;
 }

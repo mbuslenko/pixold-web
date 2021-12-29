@@ -1,4 +1,4 @@
-@import '../../shared/Variable.scss';
+@import '../../../shared/scss/Variable.scss';
 
 .dropdown-container {
   display: inline-flex;
@@ -14,7 +14,7 @@
   position: relative;
 
   &::after {
-    content: url('../../images/arrow-up.svg');
+    content: url('../../../assets/svg/arrow-up.svg');
     position: absolute;
     right: 18px;
     transform: rotate(180deg);
