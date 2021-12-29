@@ -48,6 +48,7 @@
 .pink-primary-button-color {
   background-color: #F178B6;
   color: $black;
+  flex-shrink: 0;
 }
 
 .black-white-secondary-button-color {
