@@ -7,21 +7,23 @@ import dollarSignUrl from '../../../assets/svg/dollar-sign.svg';
 import lumenLogoUrl from '../../../assets/svg/lumen-logo-purple.svg';
 import pixelCoinLogoUrl from '../../../assets/svg/pixel-coin-logo-purple.svg';
 
-const balanceMaxLength = 6;
+const balanceMaxLength = 5;
 
 export const WalletBalance: React.FC<WalletBalanceProps> = ({ balance, currency }) => {
   const adjustBalanceLength = (balance: string): string => {
-    if (balance.length <= balanceMaxLength) {
+    if (balance.toString().length <= balanceMaxLength) {
       return balance;
     }
 
-    const newBalance: string = Number(balance).toFixed(balance.length - balanceMaxLength);
+    const numberBeforeDot = parseInt(balance).toString();
+
+    const newBalance: string = Number(balance).toFixed(balanceMaxLength - numberBeforeDot.length);
 
     if (newBalance.length <= balanceMaxLength) {
       return newBalance;
     }
 
-    return newBalance.slice(0, balanceMaxLength + 1);
+    return newBalance.slice(0, balanceMaxLength) + '...';
   };
   const getLogoUrlFromCurrency = (currency: WalletBalanceCurrency): string => {
     switch (currency) {
