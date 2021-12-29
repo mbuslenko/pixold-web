@@ -1,4 +1,3 @@
-
 import { WalletBalanceProps } from '../interfaces';
 import { WalletBalanceCurrency } from '../types';
 
@@ -15,7 +14,7 @@ export const WalletBalance: React.FC<WalletBalanceProps> = ({ balance, currency 
       return balance;
     }
 
-    const numberBeforeDot = parseInt(balance).toString();
+    const numberBeforeDot = parseInt(balance, 10).toString();
 
     const newBalance: string = Number(balance).toFixed(balanceMaxLength - numberBeforeDot.length);
 
@@ -37,14 +36,9 @@ export const WalletBalance: React.FC<WalletBalanceProps> = ({ balance, currency 
   };
 
   return (
-    <div className='wallet-balance'>
-      <img
-        className='wallet-balance-icon'
-        src={getLogoUrlFromCurrency(currency)}
-      />
-      <span>
-        {`${adjustBalanceLength(balance)} ${currency}`}
-      </span>
+    <div className="wallet-balance">
+      <img className="wallet-balance-icon" src={getLogoUrlFromCurrency(currency)} />
+      <span>{`${adjustBalanceLength(balance)} ${currency}`}</span>
     </div>
   );
 };
