@@ -5,8 +5,8 @@
   margin: auto;
 }
 
-.faq-page-content.is-blurred {
-  filter: blur(5px);
+.is-blurred {
+  filter: $blur;
 }
 
 .faq-primary-button-color {

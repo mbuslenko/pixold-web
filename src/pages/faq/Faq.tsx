@@ -1,4 +1,4 @@
-import { useState, useEffect  } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { blockScrolling, unblockScrolling } from '../../shared/ts/helperFunctions';
@@ -37,43 +37,29 @@ export const Faq: React.FC = () => {
     request({
       requestMethod: 'get',
       requestUrl: '/faq',
-      responseCallback: response => setFaqTopicData(response.data),
+      responseCallback: (response) => setFaqTopicData(response.data),
     });
   }, []);
 
   return (
-    <section className='faq-page'>
+    <section className="faq-page">
       <FaqHeader />
       <section className={`faq-page-content ${isVisibleModal && 'is-blurred'}`}>
-        <h1 className='page-heading'>FAQ</h1>
-        <div className='faq-topic-container'>
+        <h1 className="page-heading">FAQ</h1>
+        <div className="faq-topic-container">
           {faqTopicData.map(({ name, content }, index) => (
-            <FaqTopic
-              key={index}
-              name={name}
-              content={content}
-              showInfoModalCallback={showInfoModal}
-            />
+            <FaqTopic key={index} name={name} content={content} showInfoModalCallback={showInfoModal} />
           ))}
         </div>
         <Footer />
       </section>
-      { isVisibleModal &&
-        <div className='info-modal-wrapper'>
-          <Modal
-            heading={modalHeading}
-            text={modalText}
-            sizeClassName='info-modal-size'
-          >
-            <Button
-              text='Close'
-              priority='secondary'
-              className='faq-secondary-button-color'
-              onClick={hideInfoModal}
-            />
+      {isVisibleModal && (
+        <div className="info-modal-wrapper">
+          <Modal heading={modalHeading} text={modalText} sizeClassName="info-modal-size">
+            <Button text="Close" priority="secondary" className="faq-secondary-button-color" onClick={hideInfoModal} />
           </Modal>
         </div>
-      }
+      )}
     </section>
   );
 };
