@@ -1,4 +1,4 @@
-import { useState, useEffect  } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { blockScrolling, unblockScrolling } from '../../shared/ts/helperFunctions';
@@ -42,18 +42,13 @@ export const Faq: React.FC = () => {
   }, []);
 
   return (
-    <section className='faq-page'>
+    <section className="faq-page">
       <FaqHeader />
       <section className={`faq-page-content ${isVisibleModal && 'is-blurred'}`}>
         <h1 className='faq-heading'>FAQ</h1>
         <div className='faq-topic-container'>
           {faqTopicData.map(({ name, content }, index) => (
-            <FaqTopic
-              key={index}
-              name={name}
-              content={content}
-              showInfoModalCallback={showInfoModal}
-            />
+            <FaqTopic key={index} name={name} content={content} showInfoModalCallback={showInfoModal} />
           ))}
         </div>
         <Footer />
@@ -73,7 +68,7 @@ export const Faq: React.FC = () => {
             />
           </Modal>
         </div>
-      }
+      )}
     </section>
   );
 };

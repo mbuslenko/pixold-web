@@ -9,7 +9,7 @@
   letter-spacing: -0.02em;
 }
 
-@media screen and (max-width: $screen-max-width-mobile) {
+@media screen and (max-width: $screen-max-width-smallest) {
   .error-404-desc {
     max-width: 315px;
     font-size: 50px;

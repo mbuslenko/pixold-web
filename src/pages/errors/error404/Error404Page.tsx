@@ -1,10 +1,9 @@
 import ErrorPage from '../ErrorPage';
 
+import './Error404Page.scss';
 import hexagonPurple from '../../../assets/svg/hexagon-purple.svg';
 import error404Svg from '../../../assets/svg/404.svg';
 import error404SvgVertical from '../../../assets/svg/404-vertical.svg';
-
-import './Error404Page.scss';
 
 export const Error404Page: React.FC = () => {
   return (
