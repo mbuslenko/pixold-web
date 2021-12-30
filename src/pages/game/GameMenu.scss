@@ -1,0 +1,59 @@
+@import '../../shared/scss/Variable.scss';
+
+.menu {
+  display: inline-flex;
+  justify-content: space-between;
+  width: 654px;
+  font: {
+    size: 10px;
+    weight: 600;
+  }
+  color: $white;
+  padding: 2em 4em;
+  border: 1px solid $purple;
+  border-radius: 15px;
+  background-color: rgba($purple, 0.1);
+}
+
+.menu-heading {
+  display: none;
+}
+
+.menu-link-container {
+  display: flex;
+  gap: 0 2.8em;
+  align-items: center;
+}
+
+.menu-link {
+  display: inline-block;
+  color: inherit;
+  text: {
+    align: center;
+    decoration: none;
+  }
+}
+
+.menu-show-button {
+  display: none;
+}
+
+@media screen and (max-width: $screen-max-width-smallest) {
+  .menu {
+    flex-direction: column;
+    width: 90%;
+    margin: 5%;
+  }
+
+  .menu-link-container {
+    flex-direction: column;
+  }
+
+  .menu-heading {
+    display: unset;
+  }
+
+  .menu-show-button {
+    display: unset;
+  }
+}
