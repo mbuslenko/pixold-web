@@ -90,5 +90,4 @@ export interface IModalProps {
   colorsClassName?: string;
   sizeClassName?: string;
   position?: IModalPosition;
-  buttonContainerClassName?: string;
 }

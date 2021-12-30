@@ -80,7 +80,7 @@
   background-color: $white;
 }
 
-@media screen and (max-width: 780px) {
+@media screen and (max-width: $screen-max-width-small) {
   .hexagon1 {
     height: 25%;
     top: -9%;
