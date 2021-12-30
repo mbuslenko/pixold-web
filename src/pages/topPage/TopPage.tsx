@@ -44,7 +44,7 @@ export const TopPage: React.FC = () => {
     <>
       <div className={`top-content ${isVisibleModalPreview && 'is-blurred'}`}>
         <div className="top-back-wrap">
-          <Link to="/game">
+          <Link to="/play">
             <Button text="← Back to game" priority="secondary" className="top-back" />
           </Link>
         </div>
