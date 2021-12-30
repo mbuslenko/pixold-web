@@ -1,0 +1,150 @@
+@import '../../shared/scss/Variable.scss';
+
+.top-wrap {
+  max-width: 1776px;
+  margin: 0 auto;
+  height: 100vh;
+
+  position: relative;
+}
+
+//TODO: move is-blurred class to shared folder
+
+.is-blurred {
+  filter: blur(5px);
+}
+
+.top-content {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 100%;
+}
+
+.top-back-wrap,
+.top-show-wrap {
+  position: absolute;
+  bottom: 75px;
+}
+
+.top-back-wrap {
+  left: 3.75%;
+}
+
+.top-show-wrap {
+  right: 3.75%;
+}
+
+.top-info {
+  padding-top: 170px;
+}
+
+.top-title {
+  font-family: Montserrat;
+  font-weight: bold;
+  font-size: 45px;
+  line-height: 85.9%;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.top-table {
+  padding-top: 60px;
+  max-width: 625px;
+  display: grid;
+  grid-template-columns: 4fr 1fr 2fr;
+  grid-template-rows: auto;
+  gap: 22px 27px;
+  margin: 0 auto;
+}
+
+.top-cell {
+  background: rgba(96, 74, 247, 0.4);
+  border-radius: 11px;
+  height: 51px;
+}
+
+.top-desc {
+  padding-top: 25px;
+  font-family: Montserrat;
+  font-weight: bold;
+  font-size: 120px;
+  line-height: 85.9%;
+  letter-spacing: -0.02em;
+}
+
+.top-back {
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+
+  letter-spacing: -0.02em;
+  color: $white;
+  border: 2px solid $white;
+}
+
+.top-show {
+  background: $white;
+}
+
+.top-modal-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.top-modal-size {
+  width: 523px;
+  max-height: 80%;
+  padding: 32px;
+}
+
+.top-btn-close {
+  background: $purple;
+  color: $font-grey;
+}
+
+@media screen and (max-width: $screen-max-width-small) {
+  .top-content {
+    display: block;
+  }
+
+  .top-title {
+    padding-left: 20px;
+    font-size: 25px;
+  }
+
+  .top-desc {
+    padding-top: 15px;
+    padding-left: 20px;
+    font-size: 50px;
+  }
+
+  .cell-2 {
+    display: none;
+  }
+
+  .top-table {
+    padding-top: 15px;
+    grid-template-columns: 5fr 2fr;
+  }
+
+  .top-back-wrap,
+  .top-show-wrap {
+    left: 20px;
+    bottom: 15px;
+  }
+
+  .top-back-wrap {
+    top: 3.75%;
+  }
+
+  .top-modal-size {
+    width: 335px;
+  }
+}

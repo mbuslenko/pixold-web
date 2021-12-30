@@ -9,6 +9,7 @@ import { Wallet } from './pages/wallet/components/Wallet';
 import { WalletConnect } from './pages/walletConnect/WalletConnect';
 import { LoginPage } from './pages/loginPage/LoginPage';
 import { LoginPreloaderPage } from './pages/preloaderPages/LoginPreloaderPage';
+import { TopPage } from './pages/topPage/TopPage';
 
 import './App.scss';
 import { UsernamePage } from './pages/usernamePage/UsernamePage';
@@ -22,13 +23,13 @@ export const App: React.FC = () => {
         <Route path="/faq" element={<Faq />} />
         <Route path="/auth" element={<LoginPage />} />
         <Route path="/auth/load" element={<LoginPreloaderPage />} />
-        <Route path='/coin' element={<CoinPage/>}/>
-        <Route path='/wallet' element={<Wallet/>} />
+        <Route path="/coin" element={<CoinPage />} />
+        <Route path="/wallet" element={<Wallet />} />
         <Route path="/wallet/connect" element={<WalletConnect />} /> // TODO: change to nested route
+        <Route path="/players" element={<TopPage />} />
+        <Route path="/username" element={<UsernamePage />} />
         <Route path="/500" element={<Error500Page />} />
         <Route path="*" element={<Error404Page />} />
-        <Route path="/500" element={<Error500Page />} />
-        <Route path="/username" element={<UsernamePage />} />
       </Routes>
     </BrowserRouter>
   );
