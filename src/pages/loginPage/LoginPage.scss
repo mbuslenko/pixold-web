@@ -101,7 +101,7 @@
   left: 18px;
 }
 
-@media screen and (max-width: $screen-max-width-mobile) {
+@media screen and (max-width: $screen-max-width-smallest) {
   .login-content {
     padding-top: 98px;
   }

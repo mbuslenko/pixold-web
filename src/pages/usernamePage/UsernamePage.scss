@@ -41,7 +41,7 @@
   grid-column-end: 3;
 }
 
-@media screen and (max-width: $screen-max-width-mobile) {
+@media screen and (max-width: $screen-max-width-smallest) {
   .username-title {
     max-width: 300px;
   }

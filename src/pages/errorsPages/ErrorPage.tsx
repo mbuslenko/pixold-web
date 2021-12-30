@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 
 import { Button } from '../../components/ui-kit/button/Button';
 
-import { IErrorPage } from './interfaces';
 import './ErrorPage.scss';
+import { IErrorPage } from './interfaces';
 
 const ErrorPage: React.FC<IErrorPage> = ({ hexagonSrc, backgroundSrc, verticalBackgroundSrc, title, children }) => {
   return (
