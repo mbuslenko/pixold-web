@@ -23,8 +23,10 @@ export const UsernamePage: React.FC = () => {
 
   const checkUsernameCallback = () => {
     request({
-      requestMethod: "get",
-      requestUrl: `/user/check/username/${username}`,
+      requestConfig: {
+        method: 'get',
+        url: `/user/check/username/${username}`,
+      },
       onResponse: checkPostResponseCallback,
       onError: checkPostErrorCallback,
     });
@@ -48,9 +50,11 @@ export const UsernamePage: React.FC = () => {
       return;
     } else {
       request({
-        requestMethod: "post",
-        requestUrl: `/user/update/username`,
-        requestData: { username },
+        requestConfig: {
+          method: "post",
+          url: `/user/update/username`,
+          data: { username },
+        },
         onResponse: () => navigate('/wallet'),
         onError: checkPostErrorCallback,
       });

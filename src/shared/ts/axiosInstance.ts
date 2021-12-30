@@ -11,10 +11,7 @@ const axiosInstance = axios.create({
 // TODO: make { requestMethod, requestUrl, requestData, requestParams, } separate object
 export const useAxiosInstance = (navigate: NavigateFunction): AxiosInstanceFunction => {
   return ({
-    requestMethod,
-    requestUrl,
-    requestData,
-    requestParams,
+    requestConfig,
     onResponse,
     onError,
   }) => {
@@ -24,12 +21,7 @@ export const useAxiosInstance = (navigate: NavigateFunction): AxiosInstanceFunct
       axiosInstance.defaults.headers.common.Authorization = accessToken;
     }
 
-    axiosInstance.request({
-      method: requestMethod,
-      url: requestUrl,
-      data: requestData,
-      params: requestParams,
-    })
+    axiosInstance.request(requestConfig)
       .then(onResponse)
       .catch(error => {
         if (error.response.status === 403 || error.response.status === 401) {

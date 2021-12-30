@@ -54,9 +54,11 @@ export const WalletConnect: React.FC = () => {
     }
 
     request({
-      requestMethod: 'post',
-      requestUrl: `/wallet/connect`,
-      requestData: postData,
+      requestConfig: {
+        method: 'post',
+        url: `/wallet/connect`,
+        data: postData,
+      },
       onResponse: () => navigate('/wallet'),
       onError: postErrorCallback,
     });

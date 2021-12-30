@@ -1,4 +1,4 @@
 export enum ScreenWidth {
   DESKTOP = 1440,
-  MOBILE = 425
+  MOBILE = 480
 }

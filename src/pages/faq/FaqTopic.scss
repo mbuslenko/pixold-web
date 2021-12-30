@@ -20,8 +20,7 @@
   flex-wrap: wrap;
 }
 
-// TODO: change $screen-max-width-mobile to min-width
-@media screen and (min-width: $screen-max-width-mobile) {
+@media screen and (min-width: $screen-min-width-smallest) {
   .faq-question-wrapper {
     width: calc(50% - 4.875em);
 
@@ -35,7 +34,7 @@
   }
 }
 
-@media screen and (max-width: $screen-max-width-mobile) {
+@media screen and (max-width: $screen-max-width-smallest) {
   .faq-topic:not(.faq-topic:last-child) {
     margin-bottom: 6em;
   }

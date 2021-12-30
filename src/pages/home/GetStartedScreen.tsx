@@ -22,6 +22,7 @@ export const GetStartedScreen: React.FC = () => {
             <Button
               text={'Get started'}
               appearance={{ priority: 'primary' }}
+              addedClasses='get-started-screen-button'
             />
           </Link>
         </Modal>

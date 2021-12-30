@@ -1,3 +1,5 @@
+@import '../../shared/scss/variables.scss';
+
 .header {
   margin-top: 240px;
   // will be uncommented after the task from the designer
@@ -255,7 +257,7 @@
   color: #474e50;
 }
 
-@media screen and (max-width: 425px) {
+@media screen and (max-width: $screen-max-width-smallest) {
   .header-content {
     height: 70px;
   }

@@ -35,8 +35,10 @@ export const Wallet: React.FC = () => {
 
   useEffect(() => {
     request({
-      requestUrl: '/wallet',
-      requestMethod: 'get',
+      requestConfig: {
+        url: '/wallet',
+        method: 'get',
+      },
       onResponse: getUserResponseCallback,
       onError: errorCallback,
     });

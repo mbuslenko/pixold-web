@@ -35,8 +35,10 @@ export const Faq: React.FC = () => {
 
   useEffect(() => {
     request({
-      requestMethod: 'get',
-      requestUrl: '/faq',
+      requestConfig: {
+        method: 'get',
+        url: '/faq',
+      },
       onResponse: response => setFaqTopicData(response.data),
     });
   }, []);
@@ -68,7 +70,7 @@ export const Faq: React.FC = () => {
             />
           </Modal>
         </div>
-      )}
+      }
     </section>
   );
 };

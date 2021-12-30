@@ -29,7 +29,12 @@
   right: -230px;
 }
 
-@media screen and (max-width: 425px) {
+.get-started-screen-button {
+  position: relative;
+  z-index: 2;
+}
+
+@media screen and (max-width: $screen-max-width-smallest) {
   .get-started-screen {
     justify-content: unset;
     padding: 244px 0 265px;

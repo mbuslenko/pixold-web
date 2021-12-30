@@ -41,9 +41,11 @@ export const LoginPreloaderPage: React.FC = () => {
 
   useEffect(() => {
     request({
-      requestMethod: 'post',
-      requestUrl: '/auth',
-      requestData: responseData,
+      requestConfig: {
+        method: 'post',
+        url: '/auth',
+        data: responseData,
+      },
       onResponse: responseCallback,
     });
   }, []);

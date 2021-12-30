@@ -36,7 +36,7 @@
   max-height: 80%;
 }
 
-@media screen and (max-width: $screen-max-width-mobile) {
+@media screen and (max-width: $screen-max-width-smallest) {
   .faq-heading {
     font-size: 50px;
     padding: 0 0.72em;

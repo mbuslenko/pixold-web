@@ -41,7 +41,7 @@
   border: none;
 }
 
-@media screen and (max-width: $screen-max-width-mobile) {
+@media screen and (max-width: $screen-max-width-smallest) {
   .container {
     font-size: 15px;
     width: 344px;
