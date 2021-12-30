@@ -1,4 +1,4 @@
-@import '../../shared/Variable.scss';
+@import '../../shared/variables.scss';
 
 .toggle {
   appearance: none;
@@ -14,7 +14,7 @@
     width: 1px;
     style: solid;
     radius: 100px;
-  };
+  }
   cursor: pointer;
 }
 

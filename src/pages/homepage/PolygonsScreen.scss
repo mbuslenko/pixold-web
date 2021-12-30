@@ -1,9 +1,8 @@
-@import '../../shared/scss/Variable.scss';
+@import '../../shared/scss/variables.scss';
 
-$red: #D63031;
-$yellow: #FFEC40;
-$blue: #3DACFD;
-
+$red: #d63031;
+$yellow: #ffec40;
+$blue: #3dacfd;
 
 .info-modal-position {
   position: absolute;
@@ -12,7 +11,7 @@ $blue: #3DACFD;
 
 .info-modal-colors {
   color: $white;
-  background-color: #02001F;
+  background-color: #02001f;
 }
 
 .info-modal-size {

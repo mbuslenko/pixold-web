@@ -1,6 +1,6 @@
-@import '../../shared/Variable.scss';
+@import '../../shared/variables.scss';
 
-@mixin radio-priority-style ($color) {
+@mixin radio-priority-style($color) {
   border-color: $color;
 
   &:checked::after {
@@ -18,7 +18,7 @@
   border: {
     width: 2px;
     style: solid;
-  };
+  }
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -36,11 +36,11 @@
   }
 
   &.primary {
-    @include radio-priority-style($purple)
+    @include radio-priority-style($purple);
   }
 
   &.secondary {
-    @include radio-priority-style($grey)
+    @include radio-priority-style($grey);
   }
 }
 

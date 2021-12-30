@@ -1,15 +1,18 @@
-import { AxiosResponse } from 'axios';
-
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GoogleLoginResponse } from 'react-google-login';
 
-import { AxiosInstance } from '../../components/AxiosInstance';
+import { PostResponseAuth } from '../../shared/ts/types';
+
+import { useAxiosInstance } from '../../components/AxiosInstance';
 
 import './LoginPreloaderPage.scss';
 import loaderLogo from '../../assets/svg/loader-logo.svg';
 
 export const LoginPreloaderPage: React.FC = () => {
   const navigate = useNavigate();
+  const request = useAxiosInstance(navigate);
+
   const responseGoogleData: GoogleLoginResponse = JSON.parse(
     window.localStorage.getItem('responseGoogleData') as string,
   );
@@ -25,10 +28,10 @@ export const LoginPreloaderPage: React.FC = () => {
     avatarUrl: responseGoogleData.profileObj.imageUrl,
   };
 
-  const responseCallback = (response: AxiosResponse) => {
+  const responseCallback = (response: PostResponseAuth) => {
     window.localStorage.setItem('userId', response.data.userId);
     window.localStorage.setItem('accessToken', response.data.accessToken);
-    
+
     if (response.data.updateUsername === true) {
       return navigate('/username');
     } else {
@@ -36,18 +39,20 @@ export const LoginPreloaderPage: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    request({
+      requestMethod: 'post',
+      requestUrl: '/auth',
+      requestData: responseData,
+      responseCallback,
+    });
+  }, []);
+
   return (
     <>
       <div className="loader-wrap">
         <img src={loaderLogo} alt="loader Logo" className="loader-logo" />
         <div className="loader-text">Loading...</div>
-        <AxiosInstance
-          requestMethod='post'
-          requestUrl='/auth'
-          requestData={responseData}
-          responseCallback={responseCallback}
-          errorCallback={error => console.error(error)}
-        />
       </div>
     </>
   );

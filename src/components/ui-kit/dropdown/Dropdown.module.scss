@@ -1,4 +1,4 @@
-@import '../../../shared/scss/Variable.scss';
+@import '../../../shared/scss/variables.scss';
 
 .dropdown-container {
   display: inline-flex;
@@ -12,7 +12,7 @@
 
 .selected-option {
   padding: 13px 45px 13px 18px;
-  border: 1px solid #B4B4B4;
+  border: 1px solid #b4b4b4;
   border-radius: 4px;
   cursor: pointer;
   position: relative;
@@ -29,7 +29,7 @@
   }
 
   &.disabled {
-    color: #B4B4B4;
+    color: #b4b4b4;
     background-color: $grey-dark;
   }
 }
@@ -46,7 +46,7 @@
   background-color: $black;
   z-index: 10;
   visibility: hidden;
-  border: 1px solid #B4B4B4;
+  border: 1px solid #b4b4b4;
   border-radius: 0 0 4px 4px;
 
   &.is-open {

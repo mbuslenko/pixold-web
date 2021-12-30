@@ -1,4 +1,4 @@
-@import '../../../shared/scss/Variable.scss';
+@import '../../../shared/scss/variables.scss';
 
 .container {
   position: fixed;
@@ -12,36 +12,36 @@
     width: 1px;
     style: solid;
     radius: 10px;
-  };
+  }
 
   &.blue {
-    border-color: #AED9FF;
-    background-color: #E5F3FF;
-    color: #104EA2;
+    border-color: #aed9ff;
+    background-color: #e5f3ff;
+    color: #104ea2;
   }
 
   &.yellow {
-    border-color: #FFF4E4;
-    background-color: #FFC061;
-    color: #7B430E;
+    border-color: #fff4e4;
+    background-color: #ffc061;
+    color: #7b430e;
   }
 
   &.red {
-    border-color: #FFB5A5;
-    background-color: #FFF3F0;
-    color: #D42600;
+    border-color: #ffb5a5;
+    background-color: #fff3f0;
+    color: #d42600;
   }
 
   &.green {
-    border-color: #B0CEAF;
-    background-color: #DFFCDE;
-    color: #00B894;
+    border-color: #b0ceaf;
+    background-color: #dffcde;
+    color: #00b894;
   }
 
   &.grey {
-    border-color: #B9B9B9;
+    border-color: #b9b9b9;
     background-color: $black;
-    color: #DFE6E9;
+    color: #dfe6e9;
   }
 }
 

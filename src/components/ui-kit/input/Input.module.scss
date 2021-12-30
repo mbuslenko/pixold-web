@@ -1,6 +1,6 @@
-@import '../../../shared/scss/Variable.scss';
+@import '../../../shared/scss/variables.scss';
 
-@mixin inputStatusIcon ($icon-name) {
+@mixin inputStatusIcon($icon-name) {
   &::after {
     content: url('../../../assets/svg/' + $icon-name + '.svg');
     position: absolute;
@@ -12,7 +12,7 @@
 }
 
 .input {
-  border: 1px solid #B4B4B4;
+  border: 1px solid #b4b4b4;
   border-radius: 4px;
   background-color: transparent;
   font-size: 18px;
@@ -73,5 +73,5 @@
 
 .description {
   font-size: 14px;
-  color: #3B3F4E;
+  color: #3b3f4e;
 }

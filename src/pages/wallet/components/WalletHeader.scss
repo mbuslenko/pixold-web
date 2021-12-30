@@ -1,4 +1,4 @@
-@import '../../../shared/scss/Variable.scss';
+@import '../../../shared/scss/variables.scss';
 
 .wallet-page-header {
   width: 100%;
@@ -28,7 +28,6 @@
 .header-button-big {
   display: inline-block;
 }
-
 
 @media screen and (max-width: $screen-max-width-small) {
   .header-button-small {

@@ -1,4 +1,4 @@
-@import '../../../shared/scss/Variable.scss';
+@import '../../../shared/scss/variables.scss';
 
 .button {
   border-radius: 10px;
@@ -7,7 +7,7 @@
   font: {
     size: 18px;
     weight: 600;
-  };
+  }
   cursor: pointer;
 }
 
@@ -28,8 +28,8 @@
   }
 
   &:disabled {
-    background-color: #2D3436;
-    color: #B4B4B4;
+    background-color: #2d3436;
+    color: #b4b4b4;
     pointer-events: none;
   }
 }
@@ -39,7 +39,7 @@
   border: {
     style: solid;
     width: 2px;
-  };
+  }
 
   &.default-style {
     color: $purple;
@@ -57,9 +57,9 @@
   }
 
   &:disabled {
-    color: #B4B4B4;
-    background-color: #2D3436;
-    border: 2px solid #B4B4B4;
+    color: #b4b4b4;
+    background-color: #2d3436;
+    border: 2px solid #b4b4b4;
     pointer-events: none;
   }
 }

@@ -1,4 +1,4 @@
-@import '../../shared/scss/Variable.scss';
+@import '../../shared/scss/variables.scss';
 
 .wallet-connect-page {
   height: 100vh;
@@ -46,7 +46,7 @@
 }
 
 .pink-primary-button-color {
-  background-color: #F178B6;
+  background-color: #f178b6;
   color: $black;
   flex-shrink: 0;
 }

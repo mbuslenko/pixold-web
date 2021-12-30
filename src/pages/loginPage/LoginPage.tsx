@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
-import GoogleLogin, { GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
 import { useNavigate } from 'react-router-dom';
+import GoogleLogin from 'react-google-login';
+
+import { GetResponseLoginGoogle } from '../../shared/ts/types';
 
 import './LoginPage.scss';
 
@@ -13,14 +15,14 @@ export const LoginPage: React.FC = () => {
     }
   }, []);
 
-  const handleLoginSuccess = async (responseGoogleData: GoogleLoginResponse | GoogleLoginResponseOffline) => {
+  const handleLoginSuccess = async (responseGoogleData: GetResponseLoginGoogle) => {
     if (!('tokenId' in responseGoogleData)) {
       return;
     }
 
     // TODO: Change to redux
     window.localStorage.setItem('responseGoogleData', JSON.stringify(responseGoogleData));
-      navigate('/auth/load');
+    navigate('/auth/load');
   };
 
   const handleLoginFailure = (e: any) => {

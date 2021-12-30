@@ -1,4 +1,4 @@
-@import '../../shared/Variable.scss';
+@import '../../shared/variables.scss';
 
 .container {
   display: inline-block;
@@ -23,7 +23,7 @@
   appearance: none;
 
   &:checked + .description {
-    color: #FFFEFB;
+    color: #fffefb;
 
     &::before {
       content: '';
@@ -43,5 +43,5 @@
   font: {
     size: 18px;
     weight: 600;
-  };
+  }
 }
