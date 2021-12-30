@@ -117,6 +117,12 @@
   padding: 32px;
 }
 
+.top-btn-close-container {
+  padding-top: 32px;
+  display: flex;
+  justify-content: flex-end;
+}
+
 .top-btn-close {
   background: $purple;
   color: $font-grey;
@@ -162,6 +168,10 @@
 
   .top-modal-size {
     width: 335px;
+  }
+
+  .top-btn-close-container {
+    justify-content: flex-start;
   }
 
   /*   .top-show-wrap {

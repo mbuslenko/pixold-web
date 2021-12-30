@@ -16,7 +16,7 @@ export interface IRadioButtonProps {
   name: string;
   value: string;
   checked?: boolean;
-  onChange: (value: string) => void
+  onChange: (value: string) => void;
 }
 
 export interface IRadioButtonGroupOption {
@@ -55,9 +55,9 @@ export interface IDropdownOption {
 
 export interface IDropdownProps {
   placeholder: string;
-  options: IDropdownOption[]
+  options: IDropdownOption[];
   disabled?: boolean;
-  onChange: (value: string) => void
+  onChange: (value: string) => void;
 }
 
 export interface ITabbedButtonGroupOption {
@@ -90,4 +90,5 @@ export interface IModalProps {
   colorsClassName?: string;
   sizeClassName?: string;
   position?: IModalPosition;
+  buttonContainerClassName?: string;
 }

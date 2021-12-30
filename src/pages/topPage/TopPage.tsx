@@ -69,7 +69,12 @@ export const TopPage: React.FC = () => {
       </div>
       {isVisibleModalPreview && (
         <div className="top-modal-wrapper">
-          <Modal heading={modalHeading} text={modalText} sizeClassName="top-modal-size">
+          <Modal
+            heading={modalHeading}
+            text={modalText}
+            sizeClassName="top-modal-size"
+            buttonContainerClassName="top-btn-close-container"
+          >
             <Button text="Close" priority="primary" className="top-btn-close" onClick={hideModalPreview} />
           </Modal>
         </div>

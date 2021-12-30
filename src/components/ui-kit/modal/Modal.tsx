@@ -6,6 +6,7 @@ export const Modal: React.FC<IModalProps> = ({
   sizeClassName,
   colorsClassName,
   positionClassName,
+  buttonContainerClassName,
   position,
   heading,
   text,
@@ -14,26 +15,21 @@ export const Modal: React.FC<IModalProps> = ({
   return (
     <div
       style={position && { left: `${position.x}px`, top: `${position.y}px` }}
-      className={`${styles.container} ${sizeClassName ?? styles['default-size']} ${positionClassName ?? ''} ${colorsClassName ?? styles['default-colors']}`}
+      className={`${styles.container} ${sizeClassName ?? styles['default-size']} ${positionClassName ?? ''} ${
+        colorsClassName ?? styles['default-colors']
+      }`}
     >
-      <h2 className={styles.heading}>
-        {heading}
-      </h2>
-      <p className={styles.text}>
-        {text}
-      </p>
-      {children &&
-        <div className={styles['button-container']}>
-          {React.Children.map(children, (value, index) =>
-            <div
-              className={styles['button-wrapper']}
-              key={index}
-            >
+      <h2 className={styles.heading}>{heading}</h2>
+      <p className={styles.text}>{text}</p>
+      {children && (
+        <div className={buttonContainerClassName ?? styles['button-container']}>
+          {React.Children.map(children, (value, index) => (
+            <div className={styles['button-wrapper']} key={index}>
               {value}
-            </div>,
-          )}
+            </div>
+          ))}
         </div>
-      }
+      )}
     </div>
   );
 };
