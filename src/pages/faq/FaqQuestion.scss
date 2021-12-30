@@ -12,7 +12,7 @@
 .faq-question-text {
   font-size: 24px;
 
-  &.short-text {
+  &.faq-short-text {
     height: 8.5em;
     overflow: hidden;
     margin-bottom: 1em;
@@ -27,7 +27,7 @@
   .faq-question-text {
     font-size: 12px;
 
-    &.short-text {
+    &.faq-short-text {
       height: 9em;
     }
   }

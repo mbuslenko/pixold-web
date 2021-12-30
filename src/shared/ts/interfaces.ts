@@ -1,3 +1,7 @@
+import { AxiosResponse } from 'axios';
+
+import { RequestData } from './types';
+
 export interface IGetResponseFaqContent {
   question: string;
   answer: string;
@@ -48,4 +52,13 @@ export interface IPostDataUsername {
 
 export interface IGetResponseUsernameCheck {
   result: boolean
+}
+
+export interface IAxiosInstanceProps {
+  requestMethod: 'post' | 'get',
+  requestUrl: string;
+  requestData?: RequestData;
+  requestParams?: any;
+  onResponse: (response: AxiosResponse) => void;
+  onError?: (error: any) => void;
 }

@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { useAxiosInstance } from '../../components/AxiosInstance';
-import { Button } from '../../components/ui-kit/button/Button';
-import { Input } from '../../components/ui-kit/input/Input';
-import { Alert } from '../../components/ui-kit/alert/Alert';
-import { InputStatus } from '../../components/ui-kit/type';
+import { useAxiosInstance } from '../../shared/ts/axiosInstance';
+import { Button } from '../../components/button/Button';
+import { Input } from '../../components/input/Input';
+import { Alert } from '../../components/alert/Alert';
+import { InputStatus } from '../../components/type';
 
 import './WalletConnect.scss';
 import lumenLogoImg from '../../assets/svg/lumen-logo.svg';
@@ -57,8 +57,8 @@ export const WalletConnect: React.FC = () => {
       requestMethod: 'post',
       requestUrl: `/wallet/connect`,
       requestData: postData,
-      responseCallback: () => navigate('/wallet'),
-      errorCallback: postErrorCallback,
+      onResponse: () => navigate('/wallet'),
+      onError: postErrorCallback,
     });
   };
 
@@ -84,8 +84,7 @@ export const WalletConnect: React.FC = () => {
       >
         <Button
           text='←'
-          priority='secondary'
-          className='black-white-secondary-button-color'
+          appearance={{ priority: 'secondary', theme: 'black-white' }}
         />
       </Link>
       <img
@@ -124,9 +123,9 @@ export const WalletConnect: React.FC = () => {
       </div>
       <Button
         text='Submit'
-        priority='primary'
-        className='pink-primary-button-color'
+        appearance={{ priority: 'primary', theme: 'pink' }}
         onClick={connectWalletCallback}
+        addedClasses='no-shrink'
       />
       { isAlertVisible &&
         <Alert

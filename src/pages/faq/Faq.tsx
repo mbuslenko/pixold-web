@@ -2,17 +2,17 @@ import { useState, useEffect  } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { blockScrolling, unblockScrolling } from '../../shared/ts/helperFunctions';
+import { GetResponseFaq } from '../../shared/ts/types';
+import { useAxiosInstance } from '../../shared/ts/axiosInstance';
 
-import { Button } from '../../components/ui-kit/button/Button';
-import { Modal } from '../../components/ui-kit/modal/Modal';
-import { useAxiosInstance } from '../../components/AxiosInstance';
+import { Button } from '../../components/button/Button';
+import { Modal } from '../../components/modal/Modal';
 
 import './Faq.scss';
 import { FaqHeader } from './FaqHeader';
 import { FaqTopic } from './FaqTopic';
-import { Footer } from '../homepage/Footer';
+import { Footer } from '../home/Footer';
 import { ShowInfoModalCallback } from './types';
-import { GetResponseFaq } from '../../shared/ts/types';
 
 export const Faq: React.FC = () => {
   const request = useAxiosInstance(useNavigate());
@@ -37,7 +37,7 @@ export const Faq: React.FC = () => {
     request({
       requestMethod: 'get',
       requestUrl: '/faq',
-      responseCallback: response => setFaqTopicData(response.data),
+      onResponse: response => setFaqTopicData(response.data),
     });
   }, []);
 
@@ -45,7 +45,7 @@ export const Faq: React.FC = () => {
     <section className='faq-page'>
       <FaqHeader />
       <section className={`faq-page-content ${isVisibleModal && 'is-blurred'}`}>
-        <h1 className='page-heading'>FAQ</h1>
+        <h1 className='faq-heading'>FAQ</h1>
         <div className='faq-topic-container'>
           {faqTopicData.map(({ name, content }, index) => (
             <FaqTopic
@@ -59,17 +59,17 @@ export const Faq: React.FC = () => {
         <Footer />
       </section>
       { isVisibleModal &&
-        <div className='info-modal-wrapper'>
+        <div className='faq-info-modal-wrapper'>
           <Modal
             heading={modalHeading}
             text={modalText}
-            sizeClassName='info-modal-size'
+            addedClasses='faq-info-modal-size'
           >
             <Button
               text='Close'
-              priority='secondary'
-              className='faq-secondary-button-color'
+              appearance={{ priority: 'secondary', theme: 'black-white' }}
               onClick={hideInfoModal}
+              addedClasses='faq-button-small'
             />
           </Modal>
         </div>

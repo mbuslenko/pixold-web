@@ -1,0 +1,77 @@
+@import '../../shared/scss/variables.scss';
+
+@mixin inputStatusIcon($icon-name) {
+  &::after {
+    content: url('../../assets/svg/' + $icon-name + '.svg');
+    position: absolute;
+    right: 16px;
+    top: calc(50% - 9px);
+    height: 18px;
+    width: 18px;
+  }
+}
+
+.input {
+  border: 1px solid #b4b4b4;
+  border-radius: 4px;
+  background-color: transparent;
+  font-size: 18px;
+  color: $white;
+  width: 255px;
+  height: 48px;
+  padding: 0 40px 0 18px;
+
+  &:disabled {
+    background-color: $grey-dark;
+  }
+
+  &:focus {
+    border-color: $purple;
+    outline: 0;
+  }
+
+  &.valid {
+    border-color: $green-light;
+  }
+
+  &.invalid {
+    border-color: $red-light;
+  }
+}
+
+.input-wrapper {
+  &.valid {
+    @include inputStatusIcon('check-icon');
+
+    position: relative;
+  }
+
+  &.invalid {
+    @include inputStatusIcon('cross-icon');
+
+    position: relative;
+  }
+}
+
+.input-label {
+  display: inline-flex;
+  flex-direction: column;
+  cursor: text;
+
+  &.disabled {
+    cursor: default;
+  }
+
+  &.valid {
+    color: $green-light;
+  }
+
+  &.invalid {
+    color: $red-light;
+  }
+}
+
+.description {
+  font-size: 14px;
+  color: #3b3f4e;
+}

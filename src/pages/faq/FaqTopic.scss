@@ -14,7 +14,7 @@
   border-bottom: 2px solid $purple;
 }
 
-.question-container {
+.faq-question-container {
   padding: 5.25em 1.625em 0;
   display: flex;
   flex-wrap: wrap;
@@ -22,7 +22,7 @@
 
 // TODO: change $screen-max-width-mobile to min-width
 @media screen and (min-width: $screen-max-width-mobile) {
-  .question-wrapper {
+  .faq-question-wrapper {
     width: calc(50% - 4.875em);
 
     &:nth-child(even) {
@@ -44,12 +44,12 @@
     font-size: 20px;
   }
 
-  .question-container {
+  .faq-question-container {
     padding: 2.75em 3.25em 0;
     flex-direction: column;
   }
 
-  .question-wrapper {
+  .faq-question-wrapper {
     width: 100%;
 
     &:nth-child(n + 2) {

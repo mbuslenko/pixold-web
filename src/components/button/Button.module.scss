@@ -1,0 +1,123 @@
+@import '../../shared/scss/variables.scss';
+
+@mixin primary-color($background-color, $color) {
+  background-color: $background-color;
+  color: $color;
+}
+
+@mixin secondary-color($color) {
+  border-color: $color;
+  color: $color;
+}
+
+@mixin primary-auth($icon-name) {
+  position: relative;
+  background-color: $purple;
+  color: $white;
+  padding-left: 42px;
+  text-align: left;
+
+  &::before {
+    content: url('../../assets/svg/' + $icon-name + '.svg');
+
+    display: inline-block;
+    height: 18px;
+    width: 18px;
+    position: absolute;
+    left: 18px;
+  }
+}
+
+.button {
+  border-radius: 10px;
+  padding: 0 18px;
+  height: 44px;
+  font: {
+    size: 18px;
+    weight: 600;
+  }
+  cursor: pointer;
+}
+
+.primary {
+  border: none;
+
+  &.default {
+    @include primary-color($purple, $font-grey);
+  }
+
+  &.black-white {
+    @include primary-color($white, $black);
+  }
+
+  &.pink {
+    @include primary-color($pink, $black);
+  }
+
+  &.google {
+    @include primary-auth('google-logo');
+  }
+
+  &.apple {
+    @include primary-auth('apple-logo');
+  }
+
+  &:hover {
+    box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.25);
+  }
+
+  &:active {
+    box-shadow: 0px 2px 5px rgba(255, 255, 255, 0.2);
+  }
+
+  &:disabled {
+    background-color: #2d3436;
+    color: #b4b4b4;
+    pointer-events: none;
+  }
+}
+
+.secondary {
+  background-color: transparent;
+  border: {
+    style: solid;
+    width: 2px;
+  }
+
+  &.default {
+    @include secondary-color($purple);
+  }
+
+  &.black-white {
+    @include secondary-color($white);
+  }
+
+  &.red {
+    @include secondary-color($red);
+  }
+
+  &.yellow {
+    @include secondary-color($yellow);
+  }
+
+  &.blue {
+    @include secondary-color($blue);
+  }
+
+  &:hover {
+    border-width: 4px;
+    padding: 0 16px;
+  }
+
+  &:active {
+    border-width: 3px;
+    padding: 0 17px;
+  }
+
+  &:disabled {
+    color: #b4b4b4;
+    background-color: #2d3436;
+    border: 2px solid #b4b4b4;
+    pointer-events: none;
+  }
+}

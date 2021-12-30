@@ -1,10 +1,9 @@
-import { WalletBalanceProps } from '../interfaces';
-import { WalletBalanceCurrency } from '../types';
-
 import './WalletBalance.scss';
 import dollarSignUrl from '../../../assets/svg/dollar-sign.svg';
 import lumenLogoUrl from '../../../assets/svg/lumen-logo-purple.svg';
 import pixelCoinLogoUrl from '../../../assets/svg/pixel-coin-logo-purple.svg';
+import { WalletBalanceProps } from '../interfaces';
+import { WalletBalanceCurrency } from '../types';
 
 const balanceMaxLength = 6;
 const textSliceEnd = balanceMaxLength - 1;

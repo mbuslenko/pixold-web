@@ -45,15 +45,8 @@
   margin-bottom: 3.5em;
 }
 
-.pink-primary-button-color {
-  background-color: #f178b6;
-  color: $black;
+.no-shrink {
   flex-shrink: 0;
-}
-
-.black-white-secondary-button-color {
-  border-color: $white;
-  color: $white;
 }
 
 @media screen and (max-width: $screen-max-width-smallest) {

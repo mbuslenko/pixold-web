@@ -1,17 +1,16 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
-import { CoinPage } from './pages/coinPage/CoinPage';
-import { Error404Page } from './pages/errorsPages/error404Page/Error404Page';
-import { Error500Page } from './pages/errorsPages/error500Page/Error500Page';
+import './App.scss';
+import { CoinPage } from './pages/coin/CoinPage';
+import { Error404Page } from './pages/errors/error404/Error404Page';
+import { Error500Page } from './pages/errors/error500/Error500Page';
 import { Faq } from './pages/faq/Faq';
-import { HomePage } from './pages/homepage/HomePage';
+import { HomePage } from './pages/home/HomePage';
 import { Wallet } from './pages/wallet/components/Wallet';
 import { WalletConnect } from './pages/walletConnect/WalletConnect';
-import { LoginPage } from './pages/loginPage/LoginPage';
-import { LoginPreloaderPage } from './pages/preloaderPages/LoginPreloaderPage';
-
-import './App.scss';
-import { UsernamePage } from './pages/usernamePage/UsernamePage';
+import { LoginPage } from './pages/login/LoginPage';
+import { LoginPreloaderPage } from './pages/preloader/LoginPreloaderPage';
+import { UsernamePage } from './pages/username/UsernamePage';
 
 export const App: React.FC = () => {
   return (

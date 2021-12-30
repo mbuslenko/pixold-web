@@ -1,4 +1,10 @@
+@import './shared/scss/variables.scss';
+
 body {
-  background-color: black;
-  color: white;
+  background-color: $black;
+  color: $white;
+}
+
+.is-blurred {
+  filter: blur(5px);
 }

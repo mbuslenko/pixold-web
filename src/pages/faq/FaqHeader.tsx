@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom';
-import { Button } from '../../components/ui-kit/button/Button';
-import whiteLogoImg from '../../assets/svg/white-logo.svg';
+
+import { Button } from '../../components/button/Button';
+
 import './FaqHeader.scss';
+import whiteLogoImg from '../../assets/svg/white-logo.svg';
 
 export const FaqHeader: React.FC = () => {
   return (
@@ -10,23 +12,22 @@ export const FaqHeader: React.FC = () => {
         src={whiteLogoImg}
         className='faq-header-logo'
       />
-      <nav className='nav-container'>
-        <div className='nav-link-wrapper'>
-          <Link to='/home'>
-            <Button
-              text='Home'
-              priority='primary'
-              className='faq-primary-button-color'
-              mediaClassName='mobile-faq-button'
-            />
-          </Link>
-        </div>
+      <nav>
+        <Link
+          to='/home'
+          className='faq-header-link'
+        >
+          <Button
+            text='Home'
+            appearance={{ priority: 'primary', theme: 'black-white' }}
+            addedClasses='faq-button-small'
+          />
+        </Link>
         <Link to='/auth'>
           <Button
             text='Get started'
-            priority='primary'
-            className='faq-primary-button-color'
-            mediaClassName='mobile-faq-button'
+            appearance={{ priority: 'primary', theme: 'black-white' }}
+            addedClasses='faq-button-small'
           />
         </Link>
       </nav>

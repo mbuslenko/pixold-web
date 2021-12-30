@@ -1,15 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { useAxiosInstance } from '../../../components/AxiosInstance';
+import pageBackgroundImg from '../../../assets/svg/wallet-page-background.svg';
+import { useAxiosInstance } from '../../../shared/ts/axiosInstance';
+import { GetResponseWallet } from '../../../shared/ts/types';
 
+import './Wallet.scss';
 import { WalletSwitch } from './WalletSwitch';
 import { WalletHeader } from './WalletHeader';
 import { WalletBalanceContainer } from './WalletBalanceContainer';
-
-import './Wallet.scss';
-import walletPageBackgroundImg from '../../../assets/svg/wallet-page-background.svg';
-import { GetResponseWallet } from '../../../shared/ts/types';
 
 export const Wallet: React.FC = () => {
   const navigate = useNavigate();
@@ -38,19 +37,19 @@ export const Wallet: React.FC = () => {
     request({
       requestUrl: '/wallet',
       requestMethod: 'get',
-      responseCallback: getUserResponseCallback,
-      errorCallback: errorCallback,
+      onResponse: getUserResponseCallback,
+      onError: errorCallback,
     });
   }, []);
 
   return (
-    <section className="wallet-page">
+    <section>
       <WalletHeader username={username} />
       <main className="wallet-page-main">
         <WalletBalanceContainer pxl={pxl} xlm={xlm} usd={usd} />
         <WalletSwitch onSubmit={() => console.log('switch submit')} />
       </main>
-      <img className="wallet-page-background" src={walletPageBackgroundImg} />
+      <img className="wallet-page-background" src={pageBackgroundImg} />
     </section>
   );
 };

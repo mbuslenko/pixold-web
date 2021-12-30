@@ -1,8 +1,11 @@
 import { useLayoutEffect, useRef, useState } from 'react';
-import { IFaqQuestionProps } from './interfaces';
-import './FaqQuestion.scss';
-import { Button } from '../../components/ui-kit/button/Button';
+
+import { Button } from '../../components/button/Button';
+
 import { isSmallScreen } from '../../shared/ts/helperFunctions';
+
+import './FaqQuestion.scss';
+import { IFaqQuestionProps } from './interfaces';
 import { AnswerTextDomHeight } from './enums';
 
 export const FaqQuestion: React.FC<IFaqQuestionProps> = ({ question, answer, showInfoModalCallback }) => {
@@ -30,22 +33,18 @@ export const FaqQuestion: React.FC<IFaqQuestionProps> = ({ question, answer, sho
 
 
   return (
-    <div
-      className='faq-question'
-      ref={answerRef}
-    >
+    <div ref={answerRef}>
       <h3 className='faq-question-heading'>
         {question}
       </h3>
-      <p className={`faq-question-text ${isTextOverflow && 'short-text'}`}>
+      <p className={`faq-question-text ${isTextOverflow && 'faq-short-text'}`}>
         {answer}
       </p>
       { isTextOverflow &&
         <Button
           text='Read more'
-          priority='secondary'
-          className='faq-secondary-button-color'
-          mediaClassName='mobile-faq-button'
+          appearance={{ priority: 'secondary', theme: 'black-white' }}
+          addedClasses='faq-button-small'
           onClick={() => showInfoModalCallback(question, answer)}
         />
       }

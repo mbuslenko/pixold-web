@@ -1,0 +1,55 @@
+@import '../../shared/scss/variables.scss';
+
+.container {
+  position: fixed;
+  left: 50px;
+  bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 24px;
+  font-size: 16px;
+  border: {
+    width: 1px;
+    style: solid;
+    radius: 10px;
+  }
+
+  &.blue {
+    border-color: #aed9ff;
+    background-color: #e5f3ff;
+    color: #104ea2;
+  }
+
+  &.yellow {
+    border-color: #fff4e4;
+    background-color: #ffc061;
+    color: #7b430e;
+  }
+
+  &.red {
+    border-color: #ffb5a5;
+    background-color: #fff3f0;
+    color: #d42600;
+  }
+
+  &.green {
+    border-color: #b0ceaf;
+    background-color: #dffcde;
+    color: #00b894;
+  }
+
+  &.grey {
+    border-color: #b9b9b9;
+    background-color: $black;
+    color: #dfe6e9;
+  }
+}
+
+.heading {
+  font-weight: 600;
+}
+
+.text {
+  margin-top: 8px;
+  overflow-wrap: break-word;
+}

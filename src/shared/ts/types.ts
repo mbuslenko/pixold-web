@@ -11,6 +11,7 @@ import {
   IPostDataWalletConnect,
   IPostResponseAuth,
   IPostResponseWalletConnect,
+  IAxiosInstanceProps,
 } from './interfaces';
 
 export type GetResponseFaq = AxiosResponse<IGetResponseFaqTopic[]>;
@@ -22,3 +23,5 @@ export type PostResponseWalletConnect = AxiosResponse<IPostResponseWalletConnect
 export type PostResponseAuth = AxiosResponse<IPostResponseAuth>;
 
 export type RequestData = IPostDataAuth | IPostDataWalletConnect | IPostDataUsername;
+
+export type AxiosInstanceFunction = (payload: IAxiosInstanceProps) => void
