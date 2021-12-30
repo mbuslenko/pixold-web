@@ -1,0 +1,59 @@
+@import '../../../shared/scss/Variable.scss';
+
+.wallet-page-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5em 4.375em 0;
+}
+
+.user-container {
+  display: flex;
+  align-items: center;
+  gap: 0 2.875em;
+}
+
+.username {
+  font: {
+    weight: 700;
+    size: 30px;
+  }
+}
+
+.header-button-small {
+  display: none;
+}
+
+.header-button-big {
+  display: inline-block;
+}
+
+
+@media screen and (max-width: $screen-max-width-small) {
+  .header-button-small {
+    display: inline-block;
+  }
+
+  .header-button-big {
+    display: none;
+  }
+}
+
+@media screen and (max-width: $screen-max-width-smallest) {
+  .wallet-page-header {
+    padding: 2em 1.75em;
+  }
+
+  .user-container {
+    gap: 0;
+  }
+
+  .username {
+    font-size: 20px;
+  }
+
+  .header-logo {
+    display: none;
+  }
+}
