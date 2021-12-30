@@ -2,3 +2,7 @@ body {
   background-color: black;
   color: white;
 }
+
+.is-blurred {
+  filter: blur(5px);
+}

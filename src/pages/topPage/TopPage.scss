@@ -4,14 +4,9 @@
   max-width: 1776px;
   margin: 0 auto;
   height: 100vh;
+  overflow: hidden;
 
   position: relative;
-}
-
-//TODO: move is-blurred class to shared folder
-
-.is-blurred {
-  filter: blur(5px);
 }
 
 .top-content {
@@ -36,7 +31,7 @@
 }
 
 .top-info {
-  padding-top: 170px;
+  padding-top: 15%;
 }
 
 .top-title {
@@ -49,23 +44,17 @@
 }
 
 .top-table {
-  padding-top: 60px;
+  padding-top: 5%;
   max-width: 625px;
-  display: grid;
-  grid-template-columns: 4fr 1fr 2fr;
-  grid-template-rows: auto;
-  gap: 22px 27px;
   margin: 0 auto;
 }
 
-.top-cell {
-  background: rgba(96, 74, 247, 0.4);
-  border-radius: 11px;
-  height: 51px;
+.player-list {
+  width: 625px;
 }
 
 .top-desc {
-  padding-top: 25px;
+  padding-top: 3%;
   font-family: Montserrat;
   font-weight: bold;
   font-size: 120px;
@@ -114,30 +103,36 @@
     display: block;
   }
 
+  .top-info {
+    padding-top: 180px;
+  }
+
   .top-title {
-    padding-left: 20px;
+    padding-left: 4%;
     font-size: 25px;
   }
 
   .top-desc {
-    padding-top: 15px;
+    padding-top: 2%;
     padding-left: 20px;
     font-size: 50px;
   }
 
-  .cell-2 {
-    display: none;
+  .top-table {
+    padding-top: 60px;
   }
 
-  .top-table {
-    padding-top: 15px;
-    grid-template-columns: 5fr 2fr;
+  .player-list {
+    margin-left: -106px;
   }
 
   .top-back-wrap,
   .top-show-wrap {
     left: 20px;
-    bottom: 15px;
+  }
+
+  .top-show-wrap {
+    bottom: 39px;
   }
 
   .top-back-wrap {

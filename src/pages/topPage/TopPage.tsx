@@ -7,20 +7,7 @@ import { Button } from '../../components/ui-kit/button/Button';
 import { Modal } from '../../components/ui-kit/modal/Modal';
 
 import './TopPage.scss';
-import { TopPlayer } from './TopPlayer';
-
-//TODO: scroll container if 50 players and realization background-gradient
-
-const arrTopPlayers = [
-  { username: '', place: '', score: '' },
-  { username: '', place: '', score: '' },
-  { username: '', place: '', score: '' },
-  { username: '', place: '', score: '' },
-  { username: '', place: '', score: '' },
-  { username: '', place: '', score: '' },
-  { username: '', place: '', score: '' },
-  { username: '', place: '', score: '' },
-];
+import playerList from '../../assets/svg/players-list.svg';
 
 const modalHeading = 'All seats are already taken';
 
@@ -42,25 +29,25 @@ export const TopPage: React.FC = () => {
 
   return (
     <>
-      <div className={`top-content ${isVisibleModalPreview && 'is-blurred'}`}>
-        <div className="top-back-wrap">
-          <Link to="/play">
-            <Button text="← Back to game" priority="secondary" className="top-back" />
-          </Link>
-        </div>
-        <div className="top-info">
-          <div className="top-heading-container">
-            <h1 className="top-title">Top Players page</h1>
-            <h2 className="top-desc">Will be soon</h2>
+      <div className="top-wrap">
+        <div className={`top-content ${isVisibleModalPreview && 'is-blurred'}`}>
+          <div className="top-back-wrap">
+            <Link to="/play">
+              <Button text="← Back to game" priority="secondary" className="top-back" />
+            </Link>
           </div>
-          <div className="top-table">
-            {arrTopPlayers.map((value) => {
-              return <TopPlayer username={value.username} place={value.place} score={value.score} />;
-            })}
+          <div className="top-info">
+            <div className="top-heading-container">
+              <h1 className="top-title">Top Players page</h1>
+              <h2 className="top-desc">Will be soon</h2>
+            </div>
+            <div className="top-table">
+              <img src={playerList} alt="Player list" className="player-list" />
+            </div>
           </div>
-        </div>
-        <div className="top-show-wrap">
-          <Button text="Sign up for preview" priority="primary" className="top-show" onClick={showModalPreview} />
+          <div className="top-show-wrap">
+            <Button text="Sign up for preview" priority="primary" className="top-show" onClick={showModalPreview} />
+          </div>
         </div>
       </div>
       {isVisibleModalPreview && (
