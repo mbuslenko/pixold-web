@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { GetResponseUsernameCheck } from '../../shared/ts/types';
-
 import { useAxiosInstance } from '../../shared/ts/axiosInstance';
+
 import { Button } from '../../components/button/Button';
 import { Input } from '../../components/input/Input';
 import { InputStatus } from '../../components/type';

@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { GoogleLoginResponse } from 'react-google-login';
 
 import { PostResponseAuth } from '../../shared/ts/types';
-
 import { useAxiosInstance } from '../../shared/ts/axiosInstance';
 
 import './LoginPreloaderPage.scss';

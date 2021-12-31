@@ -10,16 +10,12 @@ export const FaqTopic: React.FC<IFaqTopicProps> = ({ name, content, showInfoModa
       </h2>
       <div className='faq-question-container'>
         {content.map(({ question, answer }, index) => (
-          <div
-            className='faq-question-wrapper'
+          <FaqQuestion
+            question={question}
+            answer={answer}
+            showInfoModalCallback={showInfoModalCallback}
             key={index}
-          >
-            <FaqQuestion
-              question={question}
-              answer={answer}
-              showInfoModalCallback={showInfoModalCallback}
-            />
-          </div>
+          />
         ))}
       </div>
     </section>

@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import pageBackgroundImg from '../../../assets/svg/wallet-page-background.svg';
 import { useAxiosInstance } from '../../../shared/ts/axiosInstance';
 import { GetResponseWallet } from '../../../shared/ts/types';
 
 import './Wallet.scss';
+import pageBackgroundImg from '../../../assets/svg/wallet-page-background.svg';
 import { WalletSwitch } from './WalletSwitch';
 import { WalletHeader } from './WalletHeader';
 import { WalletBalanceContainer } from './WalletBalanceContainer';

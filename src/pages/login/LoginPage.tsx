@@ -4,8 +4,9 @@ import GoogleLogin from 'react-google-login';
 
 import { GetResponseLoginGoogle } from '../../shared/ts/types';
 
-import './LoginPage.scss';
 import { Button } from '../../components/button/Button';
+
+import './LoginPage.scss';
 
 export const LoginPage: React.FC = () => {
   const navigate = useNavigate();

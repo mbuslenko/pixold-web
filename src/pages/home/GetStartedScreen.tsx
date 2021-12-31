@@ -1,9 +1,11 @@
+import { Link } from 'react-router-dom';
+
 import { Button } from '../../components/button/Button';
 import { Modal } from '../../components/modal/Modal';
-import { Link } from 'react-router-dom';
+
+import './GetStartedScreen.scss';
 import imgWhale1 from '../../assets/svg/whale-1.svg';
 import imgWhale2 from '../../assets/svg/whale-2.svg';
-import './GetStartedScreen.scss';
 
 export const GetStartedScreen: React.FC = () => {
   return (

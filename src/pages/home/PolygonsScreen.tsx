@@ -1,10 +1,13 @@
 import React from 'react';
 import { useRef, useState } from 'react';
+
+import { blockScrolling, isSmallScreen, unblockScrolling } from '../../shared/ts/helperFunctions';
+
 import { Button } from '../../components/button/Button';
 import { IModalPosition } from '../../components/interfaces';
 import { Modal } from '../../components/modal/Modal';
 import { ModalPositionType } from '../../components/type';
-import { blockScrolling, isSmallScreen, unblockScrolling } from '../../shared/ts/helperFunctions';
+
 import './PolygonsScreen.scss';
 
 const polygonAttackHeading = 'Attack';

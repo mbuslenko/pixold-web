@@ -1,8 +1,9 @@
 import React from 'react';
+
+import './HomePage.scss';
 import { Footer } from './Footer';
 import { GetStartedScreen } from './GetStartedScreen';
 import { Header } from './Header';
-import './HomePage.scss';
 import { InfoScreen } from './InfoScreen';
 import { PolygonsScreen } from './PolygonsScreen';
 import { StartScreen } from './StartScreen';

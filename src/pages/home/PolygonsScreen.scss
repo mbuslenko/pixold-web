@@ -1,20 +1,5 @@
 @import '../../shared/scss/variables.scss';
 
-.info-modal-position {
-  position: absolute;
-  z-index: 2;
-}
-
-.info-modal-colors {
-  color: $white;
-  background-color: #02001f;
-}
-
-.info-modal-size {
-  width: 523px;
-  padding: 32px;
-}
-
 .polygon-info-modal {
   z-index: 2;
 }
