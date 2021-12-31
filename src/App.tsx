@@ -28,7 +28,7 @@ export const App: React.FC = () => {
         <Route path="/wallet/connect" element={<WalletConnect />} /> // TODO: change to nested route
         <Route path="/500" element={<Error500Page />} />
         <Route path="/username" element={<UsernamePage />} />
-        <Route path="/game" element={<Game />} />
+        <Route path="/play" element={<Game />} />
         <Route path="*" element={<Error404Page />} />
       </Routes>
     </BrowserRouter>

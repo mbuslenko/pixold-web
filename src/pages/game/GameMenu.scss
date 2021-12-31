@@ -1,59 +1,207 @@
 @import '../../shared/scss/Variable.scss';
 
-.menu {
-  display: inline-flex;
-  justify-content: space-between;
-  width: 654px;
-  font: {
-    size: 10px;
-    weight: 600;
+$assets-path: '../../assets/svg/';
+
+@mixin nav-link-icon ($icon-name) {
+  &::before {
+    content: url($assets-path + $icon-name + '.svg');
+    display: block;
+    width: 36px;
+    height: 30px;
   }
+
+  &:hover::before {
+    content: url($assets-path + $icon-name + '-hover.svg');
+  }
+
+  @media screen and (max-width: $screen-max-width-smallest) {
+    &::before {
+      content: url($assets-path + $icon-name + '-hover.svg');
+      display: inline-block;
+    }
+  }
+}
+
+.game-menu-wrapper {
+  width: 654px;
+  position: absolute;
+  left: calc(50% - 327px);
+  bottom: 34px;
+}
+
+.game-menu {
+  width: 100%;
+  height: 100%;
+  display: none;
   color: $white;
   padding: 2em 4em;
   border: 1px solid $purple;
   border-radius: 15px;
   background-color: rgba($purple, 0.1);
+  font: {
+    size: 10px;
+    weight: 600;
+  }
+
+  &.is-visible {
+    display: block;
+  }
 }
 
-.menu-heading {
+.game-menu-heading {
   display: none;
+  font-size: 30px;
 }
 
-.menu-link-container {
+.game-menu-navigation {
+  display: flex;
+  justify-content: space-between;
+}
+
+.game-menu-link-container {
   display: flex;
   gap: 0 2.8em;
   align-items: center;
 }
 
-.menu-link {
-  display: inline-block;
+.game-menu-button {
+  font: inherit;
+  color: inherit;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+
+  &.territory-icon {
+    @include nav-link-icon('territory-icon');
+
+    &::before {
+      margin: 0 auto 6px;
+    }
+  }
+}
+
+.game-menu-link {
   color: inherit;
   text: {
     align: center;
     decoration: none;
   }
+
+  &::before {
+    margin: 0 0 6px;
+  }
+
+  &.players-icon {
+    @include nav-link-icon('players-icon');
+  }
+
+  &.redeem-icon {
+    @include nav-link-icon('redeem-icon');
+  }
+
+  &.wallet-icon {
+    @include nav-link-icon('wallet-icon');
+  }
+
+  &.faq-icon {
+    @include nav-link-icon('faq-icon');
+  }
+
+  &.settings-icon {
+    @include nav-link-icon('settings-icon');
+  }
 }
 
-.menu-show-button {
+.game-menu-logo-small {
+  width: 26px;
+  height: 26px;
   display: none;
 }
 
+.show-menu-button {
+  display: none;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 50px;
+  height: 50px;
+  border: 1px solid $purple;
+  border-radius: 15px;
+
+  &::after {
+    content: url('../../assets/svg/game-menu-button-icon.svg');
+    display: block;
+    width: 20px;
+    height: 20px;
+    margin: auto;
+  }
+
+  &.is-active {
+    border: none;
+
+    &::after {
+      content: url('../../assets/svg/game-menu-button-active-icon.svg');
+    }
+  }
+}
+
 @media screen and (max-width: $screen-max-width-smallest) {
-  .menu {
-    flex-direction: column;
+  .game-menu-wrapper {
     width: 90%;
-    margin: 5%;
+    left: 5%;
+    bottom: 20px;
   }
 
-  .menu-link-container {
+  .game-menu {
     flex-direction: column;
+    padding: 34px 24px 12px;
+
+    &.is-visible {
+      display: flex;
+    }
   }
 
-  .menu-heading {
-    display: unset;
+  .game-menu-heading {
+    display: block;
+    margin: 0 0 170px;
   }
 
-  .menu-show-button {
-    display: unset;
+  .game-menu-navigation {
+    flex-direction: column;
+    gap: 104px 0;
+    margin-bottom: 76px;
+  }
+
+  .game-menu-logo {
+    display: none;
+  }
+
+  .game-menu-link-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 32px 0;
+  }
+
+  .game-menu-link, .game-menu-button.territory-icon {
+    display: flex;
+    align-items: center;
+    gap: 0 38px;
+    font: {
+      size: 20px;
+      weight: 600;
+    }
+
+    &:before {
+      margin: 0;
+    }
+  }
+
+  .game-menu-logo-small {
+    display: block;
+    align-self: flex-end;
+  }
+
+  .show-menu-button {
+    display: block;
   }
 }

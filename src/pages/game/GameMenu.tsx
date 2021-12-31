@@ -1,56 +1,82 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import logo from '../../assets/svg/logo.svg';
-import territoryIcon from '../../assets/svg/territory-icon.svg';
-import playersIcon from '../../assets/svg/players-icon.svg';
-import redeemIcon from '../../assets/svg/redeem-icon.svg';
-import walletIcon from '../../assets/svg/wallet-icon.svg';
-import faqIcon from '../../assets/svg/faq-icon.svg';
-import settingsIcon from '../../assets/svg/settings-icon.svg';
-import menuButtonIcon from '../../assets/svg/game-menu-button-icon.svg';
+import { isSmallScreen } from '../../shared/ts/helperFunctions';
+
 import './GameMenu.scss';
+import logo from '../../assets/svg/logo.svg';
 
 export const GameMenu: React.FC = () => {
+  const [menuIsVisible, setMenuIsVisible] = useState<boolean>(true);
+
+  useEffect(() => {
+    if (isSmallScreen()) {
+      setMenuIsVisible(false);
+    }
+  }, []);
+
+
   return (
-    <section className='menu'>
-      <h2 className='menu-heading'>
-        Navigate
-      </h2>
-      <img
-        className='menu-logo'
-        src={logo}
+    <div className='game-menu-wrapper'>
+      <section className={`game-menu ${menuIsVisible && 'is-visible'}`}>
+        <h2 className='game-menu-heading'>
+          Navigate
+        </h2>
+        <nav className='game-menu-navigation'>
+          <img
+            className='game-menu-logo'
+            src={logo}
+          />
+          <div className='game-menu-link-container'>
+            <button
+              className='game-menu-button territory-icon'
+              onClick={() => console.log(';)')}
+            >
+              My territory
+            </button>
+            <Link
+              className='game-menu-link players-icon'
+              to='/players'
+            >
+              Players
+            </Link>
+            <Link
+              className='game-menu-link redeem-icon'
+              to='/redeem'
+            >
+              Redeem
+            </Link>
+            <Link
+              className='game-menu-link wallet-icon'
+              to='/wallet'
+            >
+              Wallet
+            </Link>
+          </div>
+          <div className='game-menu-link-container'>
+            <Link
+              className='game-menu-link faq-icon'
+              to='/faq'
+            >
+              FAQ
+            </Link>
+            <Link
+              className='game-menu-link settings-icon'
+              to='/settings'
+            >
+              Settings
+            </Link>
+          </div>
+        </nav>
+        <img
+          src={logo}
+          className='game-menu-logo-small'
+        />
+      </section>
+      <button
+        className={`game-menu-button show-menu-button ${menuIsVisible && 'is-active'}`}
+        onClick={() => setMenuIsVisible(!menuIsVisible)}
       />
-      <div className='menu-link-container'>
-        <Link className='menu-link' to=''>
-          <img src={territoryIcon} />
-          <p>My territory</p>
-        </Link>
-        <Link className='menu-link' to='/players'>
-          <img src={playersIcon} />
-          <p>Players</p>
-        </Link>
-        <Link className='menu-link' to='/redeem'>
-          <img src={redeemIcon} />
-          <p>Redeem</p>
-        </Link>
-        <Link className='menu-link' to='/wallet'>
-          <img src={walletIcon} />
-          <p>Wallet</p>
-        </Link>
-      </div>
-      <div className='menu-link-container'>
-        <Link className='menu-link' to='/faq'>
-          <img src={faqIcon} />
-          <p>FAQ</p>
-        </Link>
-        <Link className='menu-link' to=''>
-          <img src={settingsIcon} />
-          <p>Settings</p>
-        </Link>
-      </div>
-      <button className='menu-show-button'>
-        <img src={menuButtonIcon} />
-      </button>
-    </section>
+    </div>
   );
 };
