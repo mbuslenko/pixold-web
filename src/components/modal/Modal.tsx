@@ -22,24 +22,17 @@ export const Modal: React.FC<IModalProps> = ({
       style={modalStyle}
       className={`${styles.container} ${modalTheme} ${addedClasses ?? ''}`}
     >
-      <h2 className={styles.heading}>
-        {heading}
-      </h2>
-      <p className={styles.text}>
-        {text}
-      </p>
-      {children &&
+      <h2 className={styles.heading}>{heading}</h2>
+      <p className={styles.text}>{text}</p>
+      {children && (
         <div className={styles['button-container']}>
-          {React.Children.map(children, (value, index) =>
-            <div
-              className={styles['button-wrapper']}
-              key={index}
-            >
+          {React.Children.map(children, (value, index) => (
+            <div className={styles['button-wrapper']} key={index}>
               {value}
-            </div>,
-          )}
+            </div>
+          ))}
         </div>
-      }
+      )}
     </div>
   );
 };
