@@ -25,10 +25,7 @@
   align-items: center;
   justify-content: flex-end;
   margin-top: 32px;
-
-  & .button-wrapper:not(& .button-wrapper:last-child) {
-    margin-right: 12px;
-  }
+  gap: 0 12px;
 }
 
 .default-colors {

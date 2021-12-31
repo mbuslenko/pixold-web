@@ -8,12 +8,15 @@ export const Input: React.FC<IInputProps> = ({
   placeholder,
   description,
   status,
-  onInputCallback,
+  disabledPopup,
+  onInput,
 }) => {
   const [inputStatus, changeInputStatus] = useState<InputStatus>();
-  const onInput = (e: React.FormEvent<HTMLInputElement>): void => {
+  const inputPopup: string | undefined = (status === 'disabled' && disabledPopup) ? disabledPopup : undefined;
+
+  const onInputCallback = (e: React.FormEvent<HTMLInputElement>): void => {
     changeInputStatus(undefined);
-    onInputCallback((e.target as HTMLInputElement).value, undefined);
+    onInput((e.target as HTMLInputElement).value, undefined);
   };
 
   useEffect(
@@ -24,14 +27,17 @@ export const Input: React.FC<IInputProps> = ({
   );
 
   return (
-    <label className={`${styles['input-label']} ${inputStatus && styles[inputStatus]}`}>
+    <label
+      title={inputPopup}
+      className={`${styles['input-label']} ${inputStatus && styles[inputStatus]}`}
+    >
       <div className={`${styles['input-wrapper']} ${inputStatus && styles[inputStatus]}`}>
         <input
           className={`${styles.input} ${inputStatus && styles[inputStatus]}`}
           type={type}
           placeholder={placeholder}
           disabled={inputStatus === 'disabled'}
-          onInput={onInput}
+          onInput={onInputCallback}
         />
       </div>
       <span className={styles.description}>

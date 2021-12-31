@@ -2,9 +2,16 @@ import { useState } from 'react';
 import { IDropdownProps } from '../interfaces';
 import styles from './Dropdown.module.scss';
 
-export const Dropdown: React.FC<IDropdownProps> = ({ placeholder, options, disabled, onChange }) => {
+export const Dropdown: React.FC<IDropdownProps> = ({
+  placeholder,
+  options,
+  disabled,
+  disabledPopup,
+  onChange,
+}) => {
   const [isOpen, changeOpenState] = useState<boolean>(false);
   const [selectedOption, changeSelectedOption] = useState<string>(placeholder);
+  const dropdownPopup: string | undefined = (disabled && disabledPopup) ? disabledPopup : undefined;
 
   const changeOptionCallback = (text: string, value: string): void => {
     if (disabled) {
@@ -17,7 +24,10 @@ export const Dropdown: React.FC<IDropdownProps> = ({ placeholder, options, disab
   };
 
   return (
-    <div className={`${disabled && styles.disabled} ${styles['dropdown-container']}`}>
+    <div
+      className={`${disabled && styles.disabled} ${styles['dropdown-container']}`}
+      title={dropdownPopup}
+    >
       <div
         className={`${disabled && styles.disabled} ${styles['selected-option']} ${isOpen && styles['is-open']}`}
         onClick={() => !disabled && changeOpenState(!isOpen)}

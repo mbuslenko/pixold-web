@@ -22,8 +22,9 @@ export interface IButtonProps {
   appearance: IButtonAppearance<'primary', PrimaryButtonTheme> |
               IButtonAppearance<'secondary', SecondaryButtonTheme>;
   addedClasses?: string;
-  onClick?: MouseEventHandler;
   disabled?: boolean;
+  disabledPopup?: string;
+  onClick?: MouseEventHandler;
 }
 
 export interface IRadioButtonProps {
@@ -60,8 +61,9 @@ export interface IInputProps {
   type: InputType;
   placeholder: string;
   description: string;
-  onInputCallback: (text: string, status: InputStatus | undefined) => void;
   status?: InputStatus;
+  disabledPopup?: string;
+  onInput: (text: string, status: InputStatus | undefined) => void;
 }
 
 export interface IDropdownOption {
@@ -73,6 +75,7 @@ export interface IDropdownProps {
   placeholder: string;
   options: IDropdownOption[]
   disabled?: boolean;
+  disabledPopup?: string;
   onChange: (value: string) => void
 }
 

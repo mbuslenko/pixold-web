@@ -30,7 +30,7 @@ export const WalletSwitch: React.FC<WalletSwitchProps> = ({ onSubmit }) => {
           placeholder='Please enter amount'
           description='Amount'
           status='disabled'
-          onInputCallback={value => console.log(`amount: ${value}`)}
+          onInput={value => console.log(`amount: ${value}`)}
         />
       </div>
       <Button

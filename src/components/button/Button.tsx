@@ -6,9 +6,11 @@ export const Button: React.FC<IButtonProps> = ({
   appearance: { priority, theme },
   addedClasses,
   disabled,
+  disabledPopup,
   onClick,
 }) => {
   const buttonTheme: string = theme ? styles[theme] : styles.default;
+  const buttonPopup: string | undefined = (disabled && disabledPopup) ? disabledPopup : undefined;
   const classNames: string = addedClasses ?? '';
 
   return (
@@ -16,6 +18,7 @@ export const Button: React.FC<IButtonProps> = ({
       onClick={onClick}
       className={`${styles.button} ${styles[priority]} ${buttonTheme} ${classNames}`}
       disabled={disabled}
+      title={buttonPopup}
     >
       {text}
     </button>

@@ -4,10 +4,6 @@
   display: inline-flex;
   flex-direction: column;
   font-size: 18px;
-
-  &.disabled {
-    pointer-events: none;
-  }
 }
 
 .selected-option {
@@ -31,6 +27,7 @@
   &.disabled {
     color: #b4b4b4;
     background-color: $grey-dark;
+    cursor: default;
   }
 }
 

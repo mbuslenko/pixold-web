@@ -37,6 +37,10 @@
     weight: 600;
   }
   cursor: pointer;
+
+  &:disabled {
+    cursor: default;
+  }
 }
 
 .primary {
@@ -62,18 +66,17 @@
     @include primary-auth('apple-logo');
   }
 
-  &:hover {
+  &:not(&:disabled):hover {
     box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.25);
   }
 
-  &:active {
+  &:not(&:disabled):active {
     box-shadow: 0px 2px 5px rgba(255, 255, 255, 0.2);
   }
 
   &:disabled {
     background-color: #2d3436;
     color: #b4b4b4;
-    pointer-events: none;
   }
 }
 
@@ -104,12 +107,12 @@
     @include secondary-color($blue);
   }
 
-  &:hover {
+  &:not(&:disabled):hover {
     border-width: 4px;
     padding: 0 16px;
   }
 
-  &:active {
+  &:not(&:disabled):active {
     border-width: 3px;
     padding: 0 17px;
   }
@@ -118,6 +121,5 @@
     color: #b4b4b4;
     background-color: #2d3436;
     border: 2px solid #b4b4b4;
-    pointer-events: none;
   }
 }

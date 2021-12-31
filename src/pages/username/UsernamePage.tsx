@@ -70,7 +70,7 @@ export const UsernamePage: React.FC = () => {
             type="text"
             placeholder="Please enter username"
             description="Username"
-            onInputCallback={onInputCallback}
+            onInput={onInputCallback}
             status={usernameStatus}
           />
         </div>

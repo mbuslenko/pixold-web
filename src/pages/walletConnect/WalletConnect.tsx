@@ -113,14 +113,14 @@ export const WalletConnect: React.FC = () => {
           type='text'
           placeholder='Enter your public key'
           description='Public key'
-          onInputCallback={publicKeyInputCallback}
+          onInput={publicKeyInputCallback}
           status={publicKeyStatus}
         />
         <Input
           type='text'
           placeholder='Enter your secret key'
           description='Secret key'
-          onInputCallback={secretKeyInputCallback}
+          onInput={secretKeyInputCallback}
           status={secretKeyStatus}
         />
       </div>

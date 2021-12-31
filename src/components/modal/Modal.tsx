@@ -26,11 +26,7 @@ export const Modal: React.FC<IModalProps> = ({
       <p className={styles.text}>{text}</p>
       {children && (
         <div className={styles['button-container']}>
-          {React.Children.map(children, (value, index) => (
-            <div className={styles['button-wrapper']} key={index}>
-              {value}
-            </div>
-          ))}
+          {React.Children.map(children, (value) => (value))}
         </div>
       )}
     </div>
