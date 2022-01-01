@@ -1,6 +1,5 @@
 import React from 'react';
 
-import './HomePage.scss';
 import { Footer } from './Footer';
 import { GetStartedScreen } from './GetStartedScreen';
 import { Header } from './Header';

@@ -1,7 +1,9 @@
+import './Header.scss';
+
 export const Header: React.FC = () => {
   return (
-    <header className="header">
-      <div className="logo"></div>
+    <header className="home-header">
+      <div className="home-logo"></div>
     </header>
   );
 };

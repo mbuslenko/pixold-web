@@ -208,8 +208,3 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
-
-.container {
-  max-width: 1720px;
-  margin: 0 auto;
-}
