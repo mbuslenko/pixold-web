@@ -28,6 +28,7 @@ export const FaqQuestion: React.FC<IFaqQuestionProps> = ({ question, answer, sho
         return;
       }
     },
+    // is it necessary to set [answerRef.current] ?
     [answerRef.current],
   );
 

@@ -12,6 +12,7 @@ import { LoginPage } from './pages/login/LoginPage';
 import { LoginPreloaderPage } from './pages/preloader/LoginPreloaderPage';
 import { UsernamePage } from './pages/username/UsernamePage';
 import { TopPage } from './pages/topPage/TopPage';
+import { PlayPage } from './pages/play/PlayPage';
 
 export const App: React.FC = () => {
   return (
@@ -27,6 +28,7 @@ export const App: React.FC = () => {
         <Route path="/wallet/connect" element={<WalletConnect />} /> // TODO: change to nested route
         <Route path="/players" element={<TopPage />} />
         <Route path="/username" element={<UsernamePage />} />
+        <Route path="/play" element={<PlayPage />} />
         <Route path="/500" element={<Error500Page />} />
         <Route path="*" element={<Error404Page />} />
       </Routes>
