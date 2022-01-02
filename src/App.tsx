@@ -4,14 +4,14 @@ import './App.scss';
 import { CoinPage } from './pages/coin/CoinPage';
 import { Error404Page } from './pages/errors/error404/Error404Page';
 import { Error500Page } from './pages/errors/error500/Error500Page';
-import { Faq } from './pages/faq/Faq';
+import { FaqPage } from './pages/faq/FaqPage';
 import { HomePage } from './pages/home/HomePage';
-import { Wallet } from './pages/wallet/components/Wallet';
-import { WalletConnect } from './pages/walletConnect/WalletConnect';
-import { LoginPage } from './pages/login/LoginPage';
-import { LoginPreloaderPage } from './pages/preloader/LoginPreloaderPage';
+import { WalletPage } from './pages/wallet/components/WalletPage';
+import { WalletConnectPage } from './pages/walletConnect/WalletConnectPage';
+import { AuthPage } from './pages/auth/AuthPage';
+import { AuthLoadPage } from './pages/authLoad/AuthLoadPage';
 import { UsernamePage } from './pages/username/UsernamePage';
-import { TopPage } from './pages/topPage/TopPage';
+import { PlayersPage } from './pages/players/PlayersPage';
 
 export const App: React.FC = () => {
   return (
@@ -19,13 +19,13 @@ export const App: React.FC = () => {
       <Routes>
         <Route path="/" element={<Navigate replace to="/home" />} />
         <Route path="/home" element={<HomePage />} />
-        <Route path="/faq" element={<Faq />} />
-        <Route path="/auth" element={<LoginPage />} />
-        <Route path="/auth/load" element={<LoginPreloaderPage />} />
+        <Route path="/faq" element={<FaqPage />} />
+        <Route path="/auth" element={<AuthPage />} />
+        <Route path="/auth/load" element={<AuthLoadPage />} />
         <Route path="/coin" element={<CoinPage />} />
-        <Route path="/wallet" element={<Wallet />} />
-        <Route path="/wallet/connect" element={<WalletConnect />} /> // TODO: change to nested route
-        <Route path="/players" element={<TopPage />} />
+        <Route path="/wallet" element={<WalletPage />} />
+        <Route path="/wallet/connect" element={<WalletConnectPage />} /> // TODO: change to nested route
+        <Route path="/players" element={<PlayersPage />} />
         <Route path="/username" element={<UsernamePage />} />
         <Route path="/500" element={<Error500Page />} />
         <Route path="*" element={<Error404Page />} />

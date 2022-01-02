@@ -1,6 +1,6 @@
-import './Footer.scss';
+import './HomeFooter.scss';
 
-export const Footer: React.FC = () => {
+export const HomeFooter: React.FC = () => {
   return (
     <footer className="home-footer">
       <p className="home-footer-top-text">

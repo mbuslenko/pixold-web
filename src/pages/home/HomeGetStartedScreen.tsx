@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import { Button } from '../../components/button/Button';
 import { Modal } from '../../components/modal/Modal';
 
-import './GetStartedScreen.scss';
+import './HomeGetStartedScreen.scss';
 import imgWhale1 from '../../assets/svg/whale-1.svg';
 import imgWhale2 from '../../assets/svg/whale-2.svg';
 
-export const GetStartedScreen: React.FC = () => {
+export const HomeGetStartedScreen: React.FC = () => {
   return (
     <section className='get-started-screen'>
       <div className='info-container'>

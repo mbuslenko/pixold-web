@@ -1,0 +1,123 @@
+@import '../../shared/scss/variables.scss';
+
+.polygon-container {
+  padding: 360px 0 160px;
+}
+
+.polygon-content {
+  max-width: 1042px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-areas:
+    'attack miner defender'
+    'desc desc desc';
+}
+
+.polygon-content-heading {
+  font-family: Montserrat;
+  font-weight: 900;
+  font-size: 40px;
+  line-height: 49px;
+  text-align: center;
+  grid-area: heading;
+  display: none;
+}
+
+.polygon {
+  text-align: center;
+}
+
+.polygon-attack {
+  grid-area: attack;
+}
+
+.polygon-miner {
+  grid-area: miner;
+}
+
+.polygon-defender {
+  grid-area: defender;
+}
+
+.polygon-icon {
+  height: 285px;
+  width: 265px;
+}
+
+.polygon-title, .polygon-content-desc {
+  font-size: 24px;
+  line-height: 29px;
+}
+
+.polygon-title {
+  font-family: Montserrat;
+  font-weight: 600;
+}
+
+.polygon-btn {
+  margin-top: 27px;
+  display: none;
+  // z-index: 1;
+}
+
+.polygon-content-desc {
+  grid-area: desc;
+  margin-top: 100px;
+  text-align: center;
+  color: $grey;
+}
+
+.polygon-info-modal {
+  z-index: 2;
+}
+
+@media screen and (max-width: $screen-max-width-smallest) {
+  .polygon-container {
+    padding: 100px 0;
+  }
+
+  .polygon-content {
+    max-width: 280px;
+    grid-template-columns: 100%;
+    grid-template-areas: unset;
+    grid-template-areas:
+      'heading'
+      'desc'
+      'attack'
+      'miner'
+      'defender';
+    grid-template-rows: 110px;
+  }
+
+ .polygon-content-heading {
+    font-size: 30px;
+    line-height: 37px;
+
+    display: block;
+  }
+
+  .polygon-title {
+    font-size: 24px;
+    line-height: 29px;
+  }
+
+  .polygon-icon {
+    height: initial;
+    width: initial;
+  }
+
+  .polygon-btn {
+    display: block;
+  }
+
+  .polygon-content-desc {
+    margin-top: 0;
+    font-size: 15px;
+    line-height: 18px;
+  }
+
+  .polygon-info-modal {
+    max-height: 80%;
+  }
+}

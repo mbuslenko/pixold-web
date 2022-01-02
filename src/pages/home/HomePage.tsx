@@ -1,21 +1,21 @@
 import React from 'react';
 
-import { Footer } from './Footer';
-import { GetStartedScreen } from './GetStartedScreen';
-import { Header } from './Header';
-import { InfoScreen } from './InfoScreen';
-import { PolygonsScreen } from './PolygonsScreen';
-import { StartScreen } from './StartScreen';
+import { HomeFooter } from './HomeFooter';
+import { HomeGetStartedScreen } from './HomeGetStartedScreen';
+import { HomeHeader } from './HomeHeader';
+import { HomeInfoScreen } from './HomeInfoScreen';
+import { HomePolygonsScreen } from './HomePolygonsScreen';
+import { HomeWelcomeScreen } from './HomeWelcomeScreen';
 
 export const HomePage: React.FC = () => {
   return (
     <>
-      <Header />
-      <StartScreen />
-      <InfoScreen />
-      <PolygonsScreen />
-      <GetStartedScreen />
-      <Footer />
+      <HomeHeader />
+      <HomeWelcomeScreen />
+      <HomeInfoScreen />
+      <HomePolygonsScreen />
+      <HomeGetStartedScreen />
+      <HomeFooter />
     </>
   );
 };

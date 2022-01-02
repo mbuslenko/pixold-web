@@ -8,10 +8,10 @@ import { Input } from '../../components/input/Input';
 import { Alert } from '../../components/alert/Alert';
 import { InputStatus } from '../../components/type';
 
-import './WalletConnect.scss';
+import './WalletConnectPage.scss';
 import lumenLogoImg from '../../assets/svg/lumen-logo.svg';
 
-export const WalletConnect: React.FC = () => {
+export const WalletConnectPage: React.FC = () => {
   const navigate = useNavigate();
   const request = useAxiosInstance(navigate);
   const [publicKey, setPublicKey] = useState<string>('');

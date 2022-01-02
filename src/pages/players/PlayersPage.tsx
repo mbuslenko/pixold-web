@@ -6,7 +6,7 @@ import { blockScrolling, unblockScrolling } from '../../shared/ts/helperFunction
 import { Button } from '../../components/button/Button';
 import { Modal } from '../../components/modal/Modal';
 
-import './TopPage.scss';
+import './PlayersPage.scss';
 import playerList from '../../assets/svg/players-list.svg';
 
 const modalHeading = 'All seats are already taken';
@@ -14,7 +14,7 @@ const modalHeading = 'All seats are already taken';
 const modalText =
   "We are very sorry, but we have already signed up enough people to test. We try to release it as soon as possible, so you won't have to wait long!";
 
-export const TopPage: React.FC = () => {
+export const PlayersPage: React.FC = () => {
   const [isVisibleModalPreview, setIsVisibleModalPreview] = useState<boolean>(false);
 
   const showModalPreview = (): void => {

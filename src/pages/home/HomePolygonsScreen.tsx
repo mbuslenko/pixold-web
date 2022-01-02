@@ -8,7 +8,10 @@ import { IModalPosition } from '../../components/interfaces';
 import { Modal } from '../../components/modal/Modal';
 import { ModalPositionType } from '../../components/type';
 
-import './PolygonsScreen.scss';
+import './HomePolygonsScreen.scss';
+import polygonAttackImg from '../../assets/svg/polygon-attack.svg';
+import polygonMinerImg from '../../assets/svg/polygon-miner.svg';
+import polygonDefenderImg from '../../assets/svg/polygon-defender.svg';
 
 const polygonAttackHeading = 'Attack';
 const polygonMinerHeading = 'Miner';
@@ -32,7 +35,7 @@ const polygonDefenderText = `Lorem ipsum dolor sit amet, consectetur adipiscing 
                           Quisque ipsum tristique arcu velit facilisi nec lectus.
                           Commodo sed elementum congue consequat.`;
 
-export const PolygonsScreen: React.FC = () => {
+export const HomePolygonsScreen: React.FC = () => {
   const [modalPositionType, setModalPositionType] = useState<ModalPositionType>('absolute');
   const [modalPosition, setModalPosition] = useState<IModalPosition>();
   const [isModalVisible, setModalVisibility] = useState<boolean>(false);
@@ -118,7 +121,10 @@ export const PolygonsScreen: React.FC = () => {
   };
 
   return (
-    <section className="polygons" onMouseMove={(e) => mouseMoveCallback(e)}>
+    <section
+      className="polygon-container"
+      onMouseMove={e => mouseMoveCallback(e)}
+    >
       {isModalVisible && (
         <Modal
           heading={modalHeading}
@@ -137,11 +143,21 @@ export const PolygonsScreen: React.FC = () => {
           )}
         </Modal>
       )}
-      <div className="polygons-content">
-        <h2 className="polygon-title">There will be a header</h2>
-        <div className="polygon-attack" ref={polygonAttackRef}>
-          <div className="polygon-attack-bg"></div>
-          <div className="polygon-title-card">Attack</div>
+      <div className="polygon-content">
+        <h2 className="polygon-content-heading">
+          There will be a header
+        </h2>
+        <div
+          className="polygon polygon-attack"
+          ref={polygonAttackRef}
+        >
+          <img
+            className='polygon-icon'
+            src={polygonAttackImg}
+          />
+          <div className="polygon-title">
+            Attack
+          </div>
           <div className="polygon-btn">
             <Button
               text="Read more"
@@ -150,9 +166,17 @@ export const PolygonsScreen: React.FC = () => {
             />
           </div>
         </div>
-        <div className="polygon-miner" ref={polygonMinerRef}>
-          <div className="polygon-miner-bg"></div>
-          <div className="polygon-title-card">Miner</div>
+        <div
+          className="polygon polygon-miner"
+          ref={polygonMinerRef}
+        >
+          <img
+            className='polygon-icon'
+            src={polygonMinerImg}
+          />
+          <div className="polygon-title">
+            Miner
+          </div>
           <div className="polygon-btn">
             <Button
               text="Read more"
@@ -161,9 +185,17 @@ export const PolygonsScreen: React.FC = () => {
             />
           </div>
         </div>
-        <div className="polygon-defender" ref={polygonDefenderRef}>
-          <div className="polygon-defender-bg"></div>
-          <div className="polygon-title-card">Defender</div>
+        <div
+          className="polygon polygon-defender"
+          ref={polygonDefenderRef}
+        >
+          <img
+            className='polygon-icon'
+            src={polygonDefenderImg}
+          />
+          <div className="polygon-title">
+            Defender
+          </div>
           <div className="polygon-btn">
             <Button
               text="Read more"
@@ -172,7 +204,7 @@ export const PolygonsScreen: React.FC = () => {
             />
           </div>
         </div>
-        <div className="polygon-desc">
+        <div className="polygon-content-desc">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Blandit ultricies aliquam quis in accumsan, vel ut.
           Posuere suscipit neque scelerisque libero. Quisque ipsum tristique arcu velit facilisi nec lectus. Commodo sed
           elementum congue consequat.

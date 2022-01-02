@@ -2,9 +2,9 @@ import { Link } from 'react-router-dom';
 
 import { Button } from '../../components/button/Button';
 
-import './StartScreen.scss';
+import './HomeWelcomeScreen.scss';
 
-export const StartScreen: React.FC = () => {
+export const HomeWelcomeScreen: React.FC = () => {
   return (
     <div className="home-start-wrap">
       <section className="home-start">

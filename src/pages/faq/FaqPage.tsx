@@ -8,13 +8,13 @@ import { useAxiosInstance } from '../../shared/ts/axiosInstance';
 import { Button } from '../../components/button/Button';
 import { Modal } from '../../components/modal/Modal';
 
-import './Faq.scss';
+import './FaqPage.scss';
 import { FaqHeader } from './FaqHeader';
 import { FaqTopic } from './FaqTopic';
-import { Footer } from '../home/Footer';
+import { HomeFooter } from '../home/HomeFooter';
 import { ShowInfoModalCallback } from './types';
 
-export const Faq: React.FC = () => {
+export const FaqPage: React.FC = () => {
   const request = useAxiosInstance(useNavigate());
   const [faqTopicData, setFaqTopicData] = useState<GetResponseFaq['data']>([]);
   const [isVisibleModal, setIsVisibleModal] = useState<boolean>(false);
@@ -53,7 +53,7 @@ export const Faq: React.FC = () => {
             <FaqTopic key={index} name={name} content={content} showInfoModalCallback={showInfoModal} />
           ))}
         </div>
-        <Footer />
+        <HomeFooter />
       </section>
       { isVisibleModal &&
         <div className='faq-info-modal-wrapper'>

@@ -5,10 +5,10 @@ import { GoogleLoginResponse } from 'react-google-login';
 import { PostResponseAuth } from '../../shared/ts/types';
 import { useAxiosInstance } from '../../shared/ts/axiosInstance';
 
-import './LoginPreloaderPage.scss';
+import './AuthLoadPage.scss';
 import loaderLogo from '../../assets/svg/loader-logo.svg';
 
-export const LoginPreloaderPage: React.FC = () => {
+export const AuthLoadPage: React.FC = () => {
   const navigate = useNavigate();
   const request = useAxiosInstance(navigate);
 

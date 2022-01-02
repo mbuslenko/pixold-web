@@ -6,9 +6,9 @@ import { GetResponseLoginGoogle } from '../../shared/ts/types';
 
 import { Button } from '../../components/button/Button';
 
-import './LoginPage.scss';
+import './AuthPage.scss';
 
-export const LoginPage: React.FC = () => {
+export const AuthPage: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {

@@ -4,13 +4,13 @@ import { useNavigate } from 'react-router-dom';
 import { useAxiosInstance } from '../../../shared/ts/axiosInstance';
 import { GetResponseWallet } from '../../../shared/ts/types';
 
-import './Wallet.scss';
+import './WalletPage.scss';
 import pageBackgroundImg from '../../../assets/svg/wallet-page-background.svg';
 import { WalletSwitch } from './WalletSwitch';
 import { WalletHeader } from './WalletHeader';
 import { WalletBalanceContainer } from './WalletBalanceContainer';
 
-export const Wallet: React.FC = () => {
+export const WalletPage: React.FC = () => {
   const navigate = useNavigate();
   const request = useAxiosInstance(navigate);
   const [username, setUsername] = useState<string>('');
