@@ -1,7 +1,7 @@
 @import '../../shared/scss/variables.scss';
 
-.home-start-wrap {
-  height: 883px;
+.home-start-wrapper {
+  padding: 274px 0 240px;
 }
 
 .home-start {
@@ -27,8 +27,8 @@
 }
 
 @media screen and (max-width: $screen-max-width-smallest) {
-  .home-start-wrap {
-    height: 700px;
+  .home-start-wrapper {
+    padding: 136px 0 20px;
   }
 
   .home-start {
