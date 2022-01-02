@@ -4,7 +4,6 @@
   max-width: 1440px;
   padding: 0 107px 50px;
   margin: 0 auto;
-
   font-size: 15px;
   line-height: 18px;
   letter-spacing: -0.02em;
@@ -21,17 +20,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   padding-left: 15px;
-}
-
-.home-footer-logo {
-  background-image: url('../../assets/svg/footer-logo.svg');
-  width: 25%;
-  height: 54px;
-  background-repeat: no-repeat;
-  background-position: left center;
-  background-size: contain;
 }
 
 .home-footer-year {
@@ -43,7 +32,6 @@
 @media screen and (max-width: $screen-max-width-smallest) {
   .home-footer {
     padding: 0 14px 25px;
-
     font-size: 10px;
     line-height: 12px;
   }
@@ -55,5 +43,10 @@
   .home-footer-year {
     font-size: 10px;
     line-height: 12px;
+  }
+
+  .home-footer-logo {
+    height: 38px;
+    width: 80px;
   }
 }

@@ -10,7 +10,7 @@ import {
   ModalTheme,
   PrimaryButtonTheme,
   SecondaryButtonTheme,
-} from './type';
+} from './types';
 
 export interface IButtonAppearance<P extends ElementPriority, T extends ButtonTheme> {
   priority: P;
@@ -21,7 +21,7 @@ export interface IButtonProps {
   text: string;
   appearance: IButtonAppearance<'primary', PrimaryButtonTheme> |
               IButtonAppearance<'secondary', SecondaryButtonTheme>;
-  addedClasses?: string;
+  className?: string;
   disabled?: boolean;
   disabledPopup?: string;
   onClick?: MouseEventHandler;
@@ -108,5 +108,10 @@ export interface IModalProps {
   positionType?: ModalPositionType;
   position?: IModalPosition;
   theme?: ModalTheme;
-  addedClasses?: string;
+  className?: string;
+}
+
+export interface ISvgProps<C extends string> {
+  color: C;
+  className?: string;
 }

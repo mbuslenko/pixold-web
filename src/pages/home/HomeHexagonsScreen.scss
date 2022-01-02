@@ -1,12 +1,9 @@
 @import '../../shared/scss/variables.scss';
 
-.polygon-container {
-  padding: 360px 0 160px;
-}
-
-.polygon-content {
-  max-width: 1042px;
+.hexagon-content {
+  max-width: 1440px;
   margin: 0 auto;
+  padding: 360px 200px 160px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-areas:
@@ -14,7 +11,7 @@
     'desc desc desc';
 }
 
-.polygon-content-heading {
+.hexagon-content-heading {
   font-family: Montserrat;
   font-weight: 900;
   font-size: 40px;
@@ -24,61 +21,81 @@
   display: none;
 }
 
-.polygon {
+.hexagon {
   text-align: center;
 }
 
-.polygon-attack {
+.hexagon-attack {
   grid-area: attack;
 }
 
-.polygon-miner {
+.hexagon-miner {
   grid-area: miner;
 }
 
-.polygon-defender {
+.hexagon-defender {
   grid-area: defender;
 }
 
-.polygon-icon {
+.hexagon-icon, .hexagon-icon-big {
   height: 285px;
   width: 265px;
 }
 
-.polygon-title, .polygon-content-desc {
+.hexagon-icon-small {
+  display: none;
+}
+
+.hexagon-title, .hexagon-content-desc {
   font-size: 24px;
   line-height: 29px;
 }
 
-.polygon-title {
+.hexagon-title {
   font-family: Montserrat;
   font-weight: 600;
 }
 
-.polygon-btn {
+.hexagon-btn {
   margin-top: 27px;
   display: none;
-  // z-index: 1;
 }
 
-.polygon-content-desc {
+.hexagon-content-desc {
   grid-area: desc;
   margin-top: 100px;
   text-align: center;
   color: $grey;
 }
 
-.polygon-info-modal {
+.hexagon-info-modal {
   z-index: 2;
 }
 
-@media screen and (max-width: $screen-max-width-smallest) {
-  .polygon-container {
-    padding: 100px 0;
+@media screen and (max-width: $screen-max-width-big) {
+  .hexagon-content {
+    padding: 360px 100px 160px;
+  }
+}
+
+@media screen and (max-width: $screen-max-width-medium) {
+  .hexagon-content {
+    padding: 360px 10px 160px;
   }
 
-  .polygon-content {
-    max-width: 280px;
+  .hexagon-btn {
+    display: block;
+  }
+
+  .hexagon-info-modal {
+    right: 0;
+    margin: auto;
+  }
+}
+
+@media screen and (max-width: $screen-max-width-small) {
+  .hexagon-content {
+    padding: 100px 28px;
     grid-template-columns: 100%;
     grid-template-areas: unset;
     grid-template-areas:
@@ -90,34 +107,38 @@
     grid-template-rows: 110px;
   }
 
- .polygon-content-heading {
+ .hexagon-content-heading {
     font-size: 30px;
     line-height: 37px;
 
     display: block;
   }
 
-  .polygon-title {
+  .hexagon-title {
     font-size: 24px;
     line-height: 29px;
   }
 
-  .polygon-icon {
+  .hexagon-icon {
     height: initial;
     width: initial;
   }
 
-  .polygon-btn {
-    display: block;
+  .hexagon-icon-small {
+    display: initial;
   }
 
-  .polygon-content-desc {
+  .hexagon-icon-big {
+    display: none;
+  }
+
+  .hexagon-content-desc {
     margin-top: 0;
     font-size: 15px;
     line-height: 18px;
   }
 
-  .polygon-info-modal {
+  .hexagon-info-modal {
     max-height: 80%;
   }
 }

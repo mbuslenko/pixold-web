@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom';
 
 import { Button } from '../../components/button/Button';
+import { PixelCoinLogoSvg } from '../../components/pixelCoinLogoSvg/PixelCoinLogoSvg';
+import { LumenLogoSvg } from '../../components/lumenLogoSvg/LumenLogoSvg';
 
 import './CoinPage.scss';
 import pageBackgroundImg1 from '../../assets/svg/coin-page-background-1.svg';
 import pageBackgroundImg2 from '../../assets/svg/coin-page-background-2.svg';
-import pixelCoinLogoImg from '../../assets/svg/pixel-coin-logo.svg';
 import pixelCoinCircleImg from '../../assets/svg/pixel-coin-circle.svg';
-import lumenLogoImg from '../../assets/svg/lumen-logo.svg';
 
 export const CoinPage: React.FC = () => {
   return (
@@ -18,13 +18,13 @@ export const CoinPage: React.FC = () => {
       </div>
       <div className='coin-page-content'>
         <div>
-          <img
+          <PixelCoinLogoSvg
+            color='pink'
             className='coin-page-icon'
-            src={pixelCoinLogoImg}
           />
-          <img
+          <LumenLogoSvg
+            color='pink'
             className='coin-page-icon'
-            src={lumenLogoImg}
           />
         </div>
         <div className='coin-page-text-container'>

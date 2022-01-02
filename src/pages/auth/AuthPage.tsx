@@ -15,7 +15,7 @@ export const AuthPage: React.FC = () => {
     if (window.localStorage.getItem('userId') && window.localStorage.getItem('accessToken')) {
       navigate('/play');
     }
-  }, []);
+  });
 
   const handleLoginSuccess = async (responseGoogleData: GetResponseLoginGoogle) => {
     if (!('tokenId' in responseGoogleData)) {

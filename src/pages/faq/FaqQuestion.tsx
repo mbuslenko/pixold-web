@@ -12,24 +12,21 @@ export const FaqQuestion: React.FC<IFaqQuestionProps> = ({ question, answer, sho
   const answerRef = useRef<HTMLDivElement>(null);
   const [isTextOverflow, setIsTextOverflow] = useState<boolean>(false);
 
-  useLayoutEffect(
-    () => {
-      const answerDomHeight = answerRef.current?.offsetHeight ?? 0;
+  useLayoutEffect(() => {
+    const answerDomHeight = answerRef.current?.offsetHeight ?? 0;
 
-      if (answerDomHeight > AnswerTextDomHeight.LARGE && !isSmallScreen()) {
-        setIsTextOverflow(true);
+    if (answerDomHeight > AnswerTextDomHeight.LARGE && !isSmallScreen()) {
+      setIsTextOverflow(true);
 
-        return;
-      }
+      return;
+    }
 
-      if (answerDomHeight > AnswerTextDomHeight.SMALL && isSmallScreen()) {
-        setIsTextOverflow(true);
+    if (answerDomHeight > AnswerTextDomHeight.SMALL && isSmallScreen()) {
+      setIsTextOverflow(true);
 
-        return;
-      }
-    },
-    [answerRef.current],
-  );
+      return;
+    }
+  });
 
 
   return (
@@ -44,7 +41,7 @@ export const FaqQuestion: React.FC<IFaqQuestionProps> = ({ question, answer, sho
         <Button
           text='Read more'
           appearance={{ priority: 'secondary', theme: 'black-white' }}
-          addedClasses='faq-button-small'
+          className='faq-button-small'
           onClick={() => showInfoModalCallback(question, answer)}
         />
       }

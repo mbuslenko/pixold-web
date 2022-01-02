@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { IInputProps } from '../interfaces';
-import { InputStatus } from '../type';
+import { InputStatus } from '../types';
 import styles from './Input.module.scss';
 
 export const Input: React.FC<IInputProps> = ({

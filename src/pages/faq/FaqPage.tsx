@@ -41,7 +41,7 @@ export const FaqPage: React.FC = () => {
       },
       onResponse: response => setFaqTopicData(response.data),
     });
-  }, []);
+  });
 
   return (
     <section className="faq-page">
@@ -60,13 +60,13 @@ export const FaqPage: React.FC = () => {
           <Modal
             heading={modalHeading}
             text={modalText}
-            addedClasses='faq-info-modal-size'
+            className='faq-info-modal-size'
           >
             <Button
               text='Close'
               appearance={{ priority: 'secondary', theme: 'black-white' }}
               onClick={hideInfoModal}
-              addedClasses='faq-button-small'
+              className='faq-button-small'
             />
           </Modal>
         </div>
