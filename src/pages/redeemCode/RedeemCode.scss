@@ -1,0 +1,73 @@
+@import '../../shared/scss/Variable.scss';
+
+.redeem-wrap {
+  max-width: 1920px;
+  margin: 0 auto;
+  height: 100vh;
+  overflow: hidden;
+
+  background-image: url('../../assets/svg/redeem-bg.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  padding-left: 16.125em;
+}
+
+.redeem-content-wrap {
+  max-width: 26.75em;
+}
+
+.redeem-title {
+  font-family: Montserrat;
+  font-weight: bold;
+  font-size: 70px;
+  line-height: 60px;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.redeem-text {
+  margin-top: 4em;
+  font-size: 20px;
+  line-height: 24px;
+  color: $grey;
+}
+
+.redeem-input-wrap {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 3.125em;
+}
+
+@media screen and (max-width: $screen-max-width-small) {
+  .redeem-wrap {
+    padding-left: 12.0625em;
+  }
+}
+
+@media screen and (max-width: $screen-max-width-smallest) {
+  .redeem-wrap {
+    background-image: none;
+    padding-left: 3em;
+  }
+
+  .redeem-content-wrap {
+    max-width: 14.8125em;
+  }
+
+  .redeem-title {
+    font-size: 45px;
+    line-height: 85.9%;
+  }
+
+  .redeem-text {
+    margin-top: 5.25em;
+    font-size: 15px;
+    line-height: 18px;
+  }
+}
