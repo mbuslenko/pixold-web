@@ -12,7 +12,7 @@
 }
 
 .input {
-  border: 1px solid #b4b4b4;
+  border: 1px solid $grey;
   border-radius: 4px;
   background-color: transparent;
   font-size: 18px;
@@ -73,5 +73,5 @@
 
 .description {
   font-size: 14px;
-  color: #3b3f4e;
+  color: $font-black;
 }

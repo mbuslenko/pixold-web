@@ -8,7 +8,7 @@
 
 .selected-option {
   padding: 13px 45px 13px 18px;
-  border: 1px solid #b4b4b4;
+  border: 1px solid $grey;
   border-radius: 4px;
   cursor: pointer;
   position: relative;
@@ -25,7 +25,7 @@
   }
 
   &.disabled {
-    color: #b4b4b4;
+    color: $grey;
     background-color: $grey-dark;
     cursor: default;
   }
@@ -43,7 +43,7 @@
   background-color: $black;
   z-index: 10;
   visibility: hidden;
-  border: 1px solid #b4b4b4;
+  border: 1px solid $grey;
   border-radius: 0 0 4px 4px;
 
   &.is-open {
