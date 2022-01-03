@@ -6,10 +6,10 @@ import { useAxiosInstance } from '../../shared/ts/axiosInstance';
 import { Button } from '../../components/button/Button';
 import { Input } from '../../components/input/Input';
 import { Alert } from '../../components/alert/Alert';
-import { InputStatus } from '../../components/type';
+import { InputStatus } from '../../components/types';
+import { LumenLogoSvg } from '../../components/lumenLogoSvg/LumenLogoSvg';
 
 import './WalletConnectPage.scss';
-import lumenLogoImg from '../../assets/svg/lumen-logo.svg';
 
 export const WalletConnectPage: React.FC = () => {
   const navigate = useNavigate();
@@ -90,9 +90,9 @@ export const WalletConnectPage: React.FC = () => {
           appearance={{ priority: 'secondary', theme: 'black-white' }}
         />
       </Link>
-      <img
-        className='lumen-logo'
-        src={lumenLogoImg}
+      <LumenLogoSvg
+        color='pink'
+        className='wallet-connect-lumen-logo no-shrink'
       />
 
       <div className='wallet-connect-text-container'>
@@ -128,7 +128,7 @@ export const WalletConnectPage: React.FC = () => {
         text='Submit'
         appearance={{ priority: 'primary', theme: 'pink' }}
         onClick={connectWalletCallback}
-        addedClasses='no-shrink'
+        className='no-shrink'
       />
       { isAlertVisible &&
         <Alert

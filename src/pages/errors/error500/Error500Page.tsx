@@ -1,14 +1,13 @@
-import ErrorPage from '../ErrorPage';
+import { ErrorPage } from '../ErrorPage';
 
 import './Error500Page.scss';
-import hexagonRed from '../../../assets/svg/hexagon-red.svg';
 import error500Svg from '../../../assets/svg/500.svg';
 import error500SvgVertical from '../../../assets/svg/500-vertical.svg';
 
 export const Error500Page: React.FC = () => {
   return (
     <ErrorPage
-      hexagonSrc={hexagonRed}
+      hexagonColor={'red'}
       backgroundSrc={error500Svg}
       verticalBackgroundSrc={error500SvgVertical}
       title="500"

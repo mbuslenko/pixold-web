@@ -47,7 +47,7 @@ export const AuthLoadPage: React.FC = () => {
       },
       onResponse: responseCallback,
     });
-  }, []);
+  });
 
   return (
     <>

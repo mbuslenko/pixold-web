@@ -1,15 +1,15 @@
 import { Link } from 'react-router-dom';
 
 import { Button } from '../../components/button/Button';
+import { LogoWithTextSvg } from '../../components/logoWithTextSvg/logoWithTextSvg';
 
 import './FaqHeader.scss';
-import whiteLogoImg from '../../assets/svg/white-logo.svg';
 
 export const FaqHeader: React.FC = () => {
   return (
     <header className='faq-header'>
-      <img
-        src={whiteLogoImg}
+      <LogoWithTextSvg
+        color='white'
         className='faq-header-logo'
       />
       <nav>
@@ -20,14 +20,14 @@ export const FaqHeader: React.FC = () => {
           <Button
             text='Home'
             appearance={{ priority: 'primary', theme: 'black-white' }}
-            addedClasses='faq-button-small'
+            className='faq-button-small'
           />
         </Link>
         <Link to='/auth'>
           <Button
             text='Get started'
             appearance={{ priority: 'primary', theme: 'black-white' }}
-            addedClasses='faq-button-small'
+            className='faq-button-small'
           />
         </Link>
       </nav>

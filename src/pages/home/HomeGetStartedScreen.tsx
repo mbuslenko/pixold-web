@@ -18,13 +18,13 @@ export const HomeGetStartedScreen: React.FC = () => {
         <Modal
           heading='Let’s dive in!'
           text='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Blandit ultricies aliquam quis in accumsan, vel ut. Posuere suscipit neque scelerisque libero. Quisque ipsum tristique arcu velit facilisi nec lectus. Commodo sed elementum congue consequat.'
-          addedClasses='get-started-modal-size'
+          className='get-started-modal-size'
         >
           <Link to='/auth'>
             <Button
               text={'Get started'}
               appearance={{ priority: 'primary' }}
-              addedClasses='get-started-screen-button'
+              className='get-started-screen-button'
             />
           </Link>
         </Modal>

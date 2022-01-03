@@ -3,7 +3,7 @@ import React from 'react';
 import { HomeFooter } from './HomeFooter';
 import { HomeGetStartedScreen } from './HomeGetStartedScreen';
 import { HomeInfoScreen } from './HomeInfoScreen';
-import { HomePolygonsScreen } from './HomePolygonsScreen';
+import { HomeHexagonsScreen } from './HomeHexagonsScreen';
 import { HomeWelcomeScreen } from './HomeWelcomeScreen';
 
 export const HomePage: React.FC = () => {
@@ -11,7 +11,7 @@ export const HomePage: React.FC = () => {
     <>
       <HomeWelcomeScreen />
       <HomeInfoScreen />
-      <HomePolygonsScreen />
+      <HomeHexagonsScreen />
       <HomeGetStartedScreen />
       <HomeFooter />
     </>

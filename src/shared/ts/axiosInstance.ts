@@ -8,7 +8,6 @@ const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL,
 });
 
-// TODO: make { requestMethod, requestUrl, requestData, requestParams, } separate object
 export const useAxiosInstance = (navigate: NavigateFunction): AxiosInstanceFunction => {
   return ({
     requestConfig,

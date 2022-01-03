@@ -9,8 +9,9 @@ export const Modal: React.FC<IModalProps> = ({
   positionType,
   position,
   theme,
-  addedClasses,
+  className,
 }) => {
+  const modalClassName: string = className ?? '';
   const modalTheme: string = theme ? styles[theme] : styles['default-colors'];
   const modalStyle = {
     position: positionType,
@@ -20,7 +21,7 @@ export const Modal: React.FC<IModalProps> = ({
   return (
     <div
       style={modalStyle}
-      className={`${styles.container} ${modalTheme} ${addedClasses ?? ''}`}
+      className={`${styles.container} ${modalTheme} ${modalClassName}`}
     >
       <h2 className={styles.heading}>{heading}</h2>
       <p className={styles.text}>{text}</p>

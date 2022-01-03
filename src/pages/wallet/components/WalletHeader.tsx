@@ -32,12 +32,12 @@ export const WalletHeader: React.FC<WalletHeaderProps> = ({ username }) => {
         <Button
           text='← Back to game'
           appearance={{ priority: 'secondary', theme: 'black-white' }}
-          addedClasses='header-button-big'
+          className='header-button-big'
         />
         <Button
           text='←'
           appearance={{ priority: 'secondary', theme: 'black-white' }}
-          addedClasses='header-button-small'
+          className='header-button-small'
         />
       </Link>
       <div className='user-container'>

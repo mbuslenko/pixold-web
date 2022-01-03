@@ -54,7 +54,7 @@ export interface IGetResponseUsernameCheck {
   result: boolean
 }
 
-export interface IAxiosInstanceConfig {
+export interface IAxiosRequestConfig {
   method: 'post' | 'get',
   url: string;
   data?: RequestData;
@@ -62,7 +62,7 @@ export interface IAxiosInstanceConfig {
 }
 
 export interface IAxiosInstanceProps {
-  requestConfig: IAxiosInstanceConfig;
+  requestConfig: IAxiosRequestConfig;
   onResponse: (response: AxiosResponse) => void;
   onError?: (error: any) => void;
 }
