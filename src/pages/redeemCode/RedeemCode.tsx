@@ -1,5 +1,6 @@
 import { Button } from '../../components/ui-kit/button/Button';
 import { Input } from '../../components/ui-kit/input/Input';
+
 import './RedeemCode.scss';
 
 export const RedeemCode: React.FC = () => {
@@ -8,8 +9,8 @@ export const RedeemCode: React.FC = () => {
   };
 
   return (
-    <div className="redeem-wrap">
-      <div className="redeem-content-wrap">
+    <div className="redeem-page">
+      <div className="redeem-content">
         <h1 className="redeem-title">Redeem code</h1>
         <p className="redeem-text">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Blandit ultricies aliquam quis in accumsan, vel ut.
