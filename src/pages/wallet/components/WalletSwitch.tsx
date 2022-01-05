@@ -1,6 +1,6 @@
-import { Button } from '../../../components/ui-kit/button/Button';
-import { Dropdown } from '../../../components/ui-kit/dropdown/Dropdown';
-import { Input } from '../../../components/ui-kit/input/Input';
+import { Button } from '../../../components/button/Button';
+import { Dropdown } from '../../../components/dropdown/Dropdown';
+import { Input } from '../../../components/input/Input';
 
 import { WalletSwitchProps } from '../interfaces';
 
@@ -30,14 +30,14 @@ export const WalletSwitch: React.FC<WalletSwitchProps> = ({ onSubmit }) => {
           placeholder='Please enter amount'
           description='Amount'
           status='disabled'
-          onInputCallback={value => console.log(`amount: ${value}`)}
+          onInput={value => console.log(`amount: ${value}`)}
         />
       </div>
       <Button
         text='Submit'
-        priority='primary'
+        appearance={{ priority: 'primary' }}
         disabled
-        onClick={() => onSubmit()}
+        onClick={onSubmit}
       />
     </section>
   );

@@ -1,10 +1,10 @@
-import { WalletBalanceProps } from '../interfaces';
-import { WalletBalanceCurrency } from '../types';
+import { PixelCoinLogoSvg } from '../../../components/pixelCoinLogoSvg/PixelCoinLogoSvg';
+import { LumenLogoSvg } from '../../../components/lumenLogoSvg/LumenLogoSvg';
 
 import './WalletBalance.scss';
-import dollarSignUrl from '../../../assets/svg/dollar-sign.svg';
-import lumenLogoUrl from '../../../assets/svg/lumen-logo-purple.svg';
-import pixelCoinLogoUrl from '../../../assets/svg/pixel-coin-logo-purple.svg';
+import dollarSignImg from '../../../assets/svg/dollar-sign.svg';
+import { WalletBalanceProps } from '../interfaces';
+import { WalletBalanceCurrency } from '../types';
 
 const balanceMaxLength = 6;
 const textSliceEnd = balanceMaxLength - 1;
@@ -30,20 +30,20 @@ export const WalletBalance: React.FC<WalletBalanceProps> = ({ balance, currency 
     return balanceText.slice(0, textSliceEnd) + balanceOverflow;
   };
 
-  const getLogoUrlFromCurrency = (currency: WalletBalanceCurrency): string => {
+  const getImgFromCurrency = (currency: WalletBalanceCurrency): JSX.Element => {
     switch (currency) {
       case 'PXL':
-        return pixelCoinLogoUrl;
+        return <PixelCoinLogoSvg className='wallet-balance-icon' color='purple' />;
       case 'USD':
-        return dollarSignUrl;
+        return <img className='wallet-balance-icon' src={dollarSignImg} />;
       case 'XLM':
-        return lumenLogoUrl;
+        return <LumenLogoSvg className='wallet-balance-icon' color='purple' />;
     }
   };
 
   return (
     <div className="wallet-balance">
-      <img className="wallet-balance-icon" src={getLogoUrlFromCurrency(currency)} />
+      {getImgFromCurrency(currency)}
       <span>{`${adjustBalanceLength(balance)} ${currency}`}</span>
     </div>
   );

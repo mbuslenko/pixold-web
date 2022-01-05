@@ -1,32 +1,33 @@
 import { Link } from 'react-router-dom';
-import { Button } from '../../components/ui-kit/button/Button';
-import whiteLogoImg from '../../assets/svg/white-logo.svg';
+
+import { Button } from '../../components/button/Button';
+import { LogoWithTextSvg } from '../../components/logoWithTextSvg/logoWithTextSvg';
+
 import './FaqHeader.scss';
 
 export const FaqHeader: React.FC = () => {
   return (
     <header className='faq-header'>
-      <img
-        src={whiteLogoImg}
+      <LogoWithTextSvg
+        color='white'
         className='faq-header-logo'
       />
-      <nav className='nav-container'>
-        <div className='nav-link-wrapper'>
-          <Link to='/home'>
-            <Button
-              text='Home'
-              priority='primary'
-              className='faq-primary-button-color'
-              mediaClassName='mobile-faq-button'
-            />
-          </Link>
-        </div>
+      <nav>
+        <Link
+          to='/home'
+          className='faq-header-link'
+        >
+          <Button
+            text='Home'
+            appearance={{ priority: 'primary', theme: 'black-white' }}
+            className='faq-button-small'
+          />
+        </Link>
         <Link to='/auth'>
           <Button
             text='Get started'
-            priority='primary'
-            className='faq-primary-button-color'
-            mediaClassName='mobile-faq-button'
+            appearance={{ priority: 'primary', theme: 'black-white' }}
+            className='faq-button-small'
           />
         </Link>
       </nav>

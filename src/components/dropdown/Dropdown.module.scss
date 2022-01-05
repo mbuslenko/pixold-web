@@ -1,0 +1,61 @@
+@import '../../shared/scss/variables.scss';
+
+.dropdown-container {
+  display: inline-flex;
+  flex-direction: column;
+  font-size: 18px;
+}
+
+.selected-option {
+  padding: 13px 45px 13px 18px;
+  border: 1px solid #b4b4b4;
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+
+  &::after {
+    content: url('../../assets/svg/arrow-up.svg');
+    position: absolute;
+    right: 18px;
+    transform: rotate(180deg);
+  }
+
+  &.is-open::after {
+    transform: rotate(0deg);
+  }
+
+  &.disabled {
+    color: #b4b4b4;
+    background-color: $grey-dark;
+    cursor: default;
+  }
+}
+
+.option-list-wrapper {
+  height: 0;
+}
+
+.option-list {
+  position: relative;
+  top: -4px;
+  display: inline-flex;
+  flex-direction: column;
+  background-color: $black;
+  z-index: 10;
+  visibility: hidden;
+  border: 1px solid #b4b4b4;
+  border-radius: 0 0 4px 4px;
+
+  &.is-open {
+    visibility: visible;
+  }
+}
+
+.option {
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  color: $white;
+  background-color: transparent;
+  padding: 18px 45px 18px 22px;
+}

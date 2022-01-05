@@ -1,6 +1,6 @@
+import './FaqTopic.scss';
 import { FaqQuestion } from './FaqQuestion';
 import { IFaqTopicProps } from './interfaces';
-import './FaqTopic.scss';
 
 export const FaqTopic: React.FC<IFaqTopicProps> = ({ name, content, showInfoModalCallback }) => {
   return (
@@ -8,18 +8,14 @@ export const FaqTopic: React.FC<IFaqTopicProps> = ({ name, content, showInfoModa
       <h2 className='faq-topic-heading'>
         {name}
       </h2>
-      <div className='question-container'>
+      <div className='faq-question-container'>
         {content.map(({ question, answer }, index) => (
-          <div
-            className='question-wrapper'
+          <FaqQuestion
+            question={question}
+            answer={answer}
+            showInfoModalCallback={showInfoModalCallback}
             key={index}
-          >
-            <FaqQuestion
-              question={question}
-              answer={answer}
-              showInfoModalCallback={showInfoModalCallback}
-            />
-          </div>
+          />
         ))}
       </div>
     </section>

@@ -1,0 +1,56 @@
+@import '../../shared/scss/variables.scss';
+
+.get-started-screen {
+  padding: 380px 0 530px;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.info-container {
+  position: relative;
+}
+
+.whale-img {
+  position: absolute;
+  z-index: 1;
+}
+
+.whale-top {
+  top: -250px;
+  left: -360px;
+}
+
+.whale-bottom {
+  top: 250px;
+  right: -230px;
+}
+
+.get-started-screen-button {
+  position: relative;
+  z-index: 2;
+}
+
+@media screen and (max-width: $screen-max-width-smallest) {
+  .get-started-screen {
+    justify-content: unset;
+    padding: 244px 0 265px;
+  }
+
+  .info-container {
+    margin: auto;
+  }
+
+  .whale-top {
+    transform: scale(0.77);
+    left: -280px;
+  }
+
+  .whale-bottom {
+    display: none;
+  }
+
+  .get-started-modal-size {
+    width: 277px;
+  }
+}

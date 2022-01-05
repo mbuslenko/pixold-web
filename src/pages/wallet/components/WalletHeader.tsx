@@ -1,12 +1,10 @@
 import { Link } from 'react-router-dom';
 
-import { Button } from '../../../components/ui-kit/button/Button';
-import '../../../components/ui-kit/button/ButtonThemes.scss';
-
-import { WalletHeaderProps } from '../interfaces';
+import { Button } from '../../../components/button/Button';
 
 import './WalletHeader.scss';
 import logoImg from '../../../assets/svg/logo.svg';
+import { WalletHeaderProps } from '../interfaces';
 
 const usernameMaxLength = 10;
 const usernameOverflow = '...';
@@ -33,13 +31,13 @@ export const WalletHeader: React.FC<WalletHeaderProps> = ({ username }) => {
       <Link to={'/play'}>
         <Button
           text='← Back to game'
-          priority='secondary'
-          className='faq-secondary-button-black-white-color header-button-big'
+          appearance={{ priority: 'secondary', theme: 'black-white' }}
+          className='header-button-big'
         />
         <Button
           text='←'
-          priority='secondary'
-          className='faq-secondary-button-black-white-color header-button-small'
+          appearance={{ priority: 'secondary', theme: 'black-white' }}
+          className='header-button-small'
         />
       </Link>
       <div className='user-container'>

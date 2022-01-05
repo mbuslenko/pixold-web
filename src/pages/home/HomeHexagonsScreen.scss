@@ -1,0 +1,144 @@
+@import '../../shared/scss/variables.scss';
+
+.hexagon-content {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 360px 200px 160px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-areas:
+    'attack miner defender'
+    'desc desc desc';
+}
+
+.hexagon-content-heading {
+  font-family: Montserrat;
+  font-weight: 900;
+  font-size: 40px;
+  line-height: 49px;
+  text-align: center;
+  grid-area: heading;
+  display: none;
+}
+
+.hexagon {
+  text-align: center;
+}
+
+.hexagon-attack {
+  grid-area: attack;
+}
+
+.hexagon-miner {
+  grid-area: miner;
+}
+
+.hexagon-defender {
+  grid-area: defender;
+}
+
+.hexagon-icon, .hexagon-icon-big {
+  height: 285px;
+  width: 265px;
+}
+
+.hexagon-icon-small {
+  display: none;
+}
+
+.hexagon-title, .hexagon-content-desc {
+  font-size: 24px;
+  line-height: 29px;
+}
+
+.hexagon-title {
+  font-family: Montserrat;
+  font-weight: 600;
+}
+
+.hexagon-btn {
+  margin-top: 27px;
+  display: none;
+}
+
+.hexagon-content-desc {
+  grid-area: desc;
+  margin-top: 100px;
+  text-align: center;
+  color: $grey;
+}
+
+.hexagon-info-modal {
+  z-index: 2;
+}
+
+@media screen and (max-width: $screen-max-width-big) {
+  .hexagon-content {
+    padding: 360px 100px 160px;
+  }
+}
+
+@media screen and (max-width: $screen-max-width-medium) {
+  .hexagon-content {
+    padding: 360px 10px 160px;
+  }
+
+  .hexagon-btn {
+    display: block;
+  }
+
+  .hexagon-info-modal {
+    right: 0;
+    margin: auto;
+  }
+}
+
+@media screen and (max-width: $screen-max-width-small) {
+  .hexagon-content {
+    padding: 100px 28px;
+    grid-template-columns: 100%;
+    grid-template-areas: unset;
+    grid-template-areas:
+      'heading'
+      'desc'
+      'attack'
+      'miner'
+      'defender';
+    grid-template-rows: 110px;
+  }
+
+ .hexagon-content-heading {
+    font-size: 30px;
+    line-height: 37px;
+
+    display: block;
+  }
+
+  .hexagon-title {
+    font-size: 24px;
+    line-height: 29px;
+  }
+
+  .hexagon-icon {
+    height: initial;
+    width: initial;
+  }
+
+  .hexagon-icon-small {
+    display: initial;
+  }
+
+  .hexagon-icon-big {
+    display: none;
+  }
+
+  .hexagon-content-desc {
+    margin-top: 0;
+    font-size: 15px;
+    line-height: 18px;
+  }
+
+  .hexagon-info-modal {
+    max-height: 80%;
+  }
+}

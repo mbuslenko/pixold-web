@@ -1,7 +1,7 @@
-import { ScreenWidth } from './enums';
+import { ScreenMaxWidth } from './enums';
 
 export const isSmallScreen = (): boolean => (
-  window.innerWidth <= ScreenWidth.MOBILE
+  window.innerWidth <= ScreenMaxWidth.SMALLEST
 );
 
 export const blockScrolling = (): void => {
