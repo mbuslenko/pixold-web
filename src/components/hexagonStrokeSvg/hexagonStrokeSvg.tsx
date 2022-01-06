@@ -1,7 +1,9 @@
+import { Color } from '../../shared/ts/enums';
+
 import { HexagonStrokeSvgProps } from '../types';
 
 export const HexagonStrokeSvg: React.FC<HexagonStrokeSvgProps> = ({ color, className }) => {
-  const strokeColor = color === 'purple' ? '#604AF7' : '#D63031';
+  const strokeColor = color === 'purple' ? Color.PURPLE : Color.RED;
 
   return (
     <svg

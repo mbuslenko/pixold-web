@@ -16,7 +16,7 @@ export const CoinPage: React.FC = () => {
         <img src={pageBackgroundImg1}/>
         <img src={pageBackgroundImg2}/>
       </div>
-      <div className='coin-page-content'>
+      <main className='coin-page-content'>
         <div>
           <PixelCoinLogoSvg
             color='pink'
@@ -32,7 +32,7 @@ export const CoinPage: React.FC = () => {
             Pixel coin
           </h1>
           <p>
-            Take the game to real life
+            Take the play to real life
           </p>
           <img
             className='pixel-coin-circle'
@@ -56,12 +56,12 @@ export const CoinPage: React.FC = () => {
             to='/play'
           >
             <Button
-              text='Back to the game'
+              text='Back to the play'
               appearance={{ priority: 'secondary', theme: 'black-white' }}
             />
           </Link>
         </nav>
-      </div>
+      </main>
     </section>
   );
 };

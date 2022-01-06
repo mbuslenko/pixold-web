@@ -33,7 +33,7 @@ export const UsernamePage: React.FC = () => {
   };
 
   const checkPostResponseCallback = (response: GetResponseUsernameCheck) => {
-    if (response.data.result === true) {
+    if (response.data.result) {
       setUsernameStatus('valid');
     } else {
       setUsernameStatus('invalid');
@@ -62,9 +62,9 @@ export const UsernamePage: React.FC = () => {
   };
 
   return (
-    <div className="username-wrap">
+    <section className="username-wrap">
       <h1 className="username-title">Set your username</h1>
-      <div className="username-controls-wrap">
+      <main className="username-controls-wrap">
         <div className="username-input-wrap">
           <Input
             type="text"
@@ -85,7 +85,7 @@ export const UsernamePage: React.FC = () => {
           onClick={submitCallback}
           className="username-btn-submit"
         />
-      </div>
-    </div>
+      </main>
+    </section>
   );
 };

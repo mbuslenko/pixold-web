@@ -1,8 +1,8 @@
 import { ScreenMaxWidth } from './enums';
 
-export const isSmallScreen = (): boolean => (
-  window.innerWidth <= ScreenMaxWidth.SMALLEST
-);
+export const isScreen = (size: ScreenMaxWidth): boolean => {
+  return window.innerWidth <= size;
+};
 
 export const blockScrolling = (): void => {
   // I block/unblock scrolling this way (not with pure css) so every device would work same

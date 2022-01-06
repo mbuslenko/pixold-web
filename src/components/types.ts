@@ -1,4 +1,4 @@
-import { ISvgProps } from './interfaces';
+import { IIconProps, ISvgProps } from './interfaces';
 
 export type ElementPriority = 'primary' | 'secondary';
 
@@ -20,6 +20,7 @@ export type CheckmarkColor = 'white' | 'purple';
 export type LumenLogoColor = 'pink' | 'purple';
 export type PixelCoinLogoColor = 'pink' | 'purple';
 export type LogoWithTextColor = 'white' | 'grey';
+export type GameMenuShowColor = 'purple' | 'white';
 
 export type HexagonSvgProps = ISvgProps<HexagonColor>;
 export type HexagonStrokeSvgProps = ISvgProps<HexagonStrokeColor>;
@@ -27,3 +28,8 @@ export type CheckmarkSvgProps = ISvgProps<CheckmarkColor>;
 export type LumenLogoSvgProps = ISvgProps<LumenLogoColor>;
 export type PixelCoinLogoSvgProps = ISvgProps<PixelCoinLogoColor>;
 export type LogoWithTextSvgProps = ISvgProps<LogoWithTextColor>;
+export type GameMenuShowSvgProps = ISvgProps<GameMenuShowColor>;
+
+export type GameMenuIconName = 'territory' | 'players' | 'redeem' | 'wallet' | 'faq' | 'settings';
+
+export type GameMenuIconSvgProps = IIconProps<GameMenuIconName>;

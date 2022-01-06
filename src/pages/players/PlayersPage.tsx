@@ -29,18 +29,18 @@ export const PlayersPage: React.FC = () => {
 
   return (
     <>
-      <div className="top-wrap">
+      <section className="top-wrap">
         <div className={`top-content ${isVisibleModalPreview && 'is-blurred'}`}>
           <div className="top-back-wrap">
             <Link to="/play">
               <Button
-                text="← Back to game"
+                text="← Back to play"
                 // className="top-back"
                 appearance={{ priority: 'secondary', theme: 'black-white' }}
               />
             </Link>
           </div>
-          <div className="top-info">
+          <main className="top-info">
             <div className="top-heading-container">
               <h1 className="top-title">Top Players page</h1>
               <h2 className="top-desc">Will be soon</h2>
@@ -48,7 +48,7 @@ export const PlayersPage: React.FC = () => {
             <div className="top-table">
               <img src={playerList} alt="Player list" className="player-list" />
             </div>
-          </div>
+          </main>
           <div className="top-show-wrap">
             <Button
               text="Sign up for preview"
@@ -58,7 +58,7 @@ export const PlayersPage: React.FC = () => {
             />
           </div>
         </div>
-      </div>
+      </section>
       {isVisibleModalPreview && (
         <div className="top-modal-wrapper">
           <Modal
