@@ -31,15 +31,13 @@ export const PlayersPage: React.FC = () => {
     <>
       <section className="top-wrap">
         <div className={`top-content ${isVisibleModalPreview && 'is-blurred'}`}>
-          <div className="top-back-wrap">
-            <Link to="/play">
-              <Button
-                text="← Back to play"
-                // className="top-back"
-                appearance={{ priority: 'secondary', theme: 'black-white' }}
-              />
-            </Link>
-          </div>
+          <Link to="/play">
+            <Button
+              text="← Back to play"
+              appearance={{ priority: 'secondary', theme: 'black-white' }}
+              className="top-btn top-back-btn"
+            />
+          </Link>
           <main className="top-info">
             <div className="top-heading-container">
               <h1 className="top-title">Top Players page</h1>
@@ -49,29 +47,18 @@ export const PlayersPage: React.FC = () => {
               <img src={playerList} alt="Player list" className="player-list" />
             </div>
           </main>
-          <div className="top-show-wrap">
-            <Button
-              text="Sign up for preview"
-              appearance={{ priority: 'primary', theme: 'black-white' }}
-              // className="top-show"
-              onClick={showModalPreview}
-            />
-          </div>
+          <Button
+            text="Sign up for preview"
+            appearance={{ priority: 'primary', theme: 'black-white' }}
+            className="top-btn top-show-btn"
+            onClick={showModalPreview}
+          />
         </div>
       </section>
       {isVisibleModalPreview && (
         <div className="top-modal-wrapper">
-          <Modal
-            heading={modalHeading}
-            text={modalText}
-            // sizeClassName="top-modal-size"
-          >
-            <Button
-              text="Close"
-              appearance={{ priority: 'primary' }}
-              // className="top-btn-close"
-              onClick={hideModalPreview}
-            />
+          <Modal heading={modalHeading} text={modalText}>
+            <Button text="Close" appearance={{ priority: 'primary' }} onClick={hideModalPreview} />
           </Modal>
         </div>
       )}
