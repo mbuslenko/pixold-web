@@ -52,7 +52,7 @@ export const UsernamePage: React.FC = () => {
 
     request({
       requestConfig: {
-        method: "post",
+        method: 'post',
         url: `/user/update/username`,
         data: { username },
       },
@@ -79,13 +79,12 @@ export const UsernamePage: React.FC = () => {
           appearance={{ priority: 'secondary', theme: 'black-white' }}
           onClick={checkUsernameCallback}
         />
-        <div className="username-submit-wrap">
-          <Button
-            text="Submit"
-            appearance={{ priority: 'primary' }}
-            onClick={submitCallback}
-          />
-        </div>
+        <Button
+          text="Submit"
+          appearance={{ priority: 'primary' }}
+          onClick={submitCallback}
+          className="username-btn-submit"
+        />
       </main>
     </section>
   );
