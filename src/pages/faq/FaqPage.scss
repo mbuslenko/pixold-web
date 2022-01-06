@@ -31,14 +31,6 @@
   align-items: center;
 }
 
-.faq-info-modal-size {
-  // maybe set to main styles of modal
-  max-height: 80%;
-}
-
-@media screen and (max-width: $screen-max-width-smallest) {
-}
-
 @media screen and (max-width: $screen-max-width-smallest) {
   .faq-heading {
     font-size: 50px;

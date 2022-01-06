@@ -5,12 +5,8 @@ import { LogoWithTextSvgProps } from '../types';
 let logoWithTextCount = 0;
 
 export const LogoWithTextSvg: React.FC<LogoWithTextSvgProps> = ({ color, className }) => {
-  const fillColor = color === 'white' ? Color.WHITE : '#474E50';
-  const fillColor1 = color === 'white' ? '#161616' : Color.BLACK;
-
-  logoWithTextCount++;
-
-  const linearGradientId = `loginWithText_linear_${logoWithTextCount}`;
+  const fillColor = color === 'white' ? Color.WHITE : Color.GREY_DARK;
+  const linearGradientId = `loginWithText_linear_${logoWithTextCount++}`;
 
   return (
     <svg
@@ -29,7 +25,7 @@ export const LogoWithTextSvg: React.FC<LogoWithTextSvgProps> = ({ color, classNa
         d="M34.6625 24.4152C34.6625 25.9494 34.318 27.3301 33.629 28.5575C32.9401 29.757 31.948 30.6914 30.6527 31.3609C29.3575 32.0025 27.828 32.3233 26.0642 32.3233H20.1942H18.8H15.275V16.8418H25.8575C28.696 16.8418 30.8732 17.5113 32.3889 18.8502C33.9046 20.1612 34.6625 22.0162 34.6625 24.4152ZM29.7019 24.4988C29.7019 21.9883 28.2413 20.7331 25.3201 20.7331H20.1942V28.4738H25.4441C26.7945 28.4738 27.8417 28.1391 28.5858 27.4696C29.3299 26.7723 29.7019 25.782 29.7019 24.4988Z"
         fill={`url(#${linearGradientId})`}
       />
-      <path d="M15.275 17.0376H20.1708V52.0918L15.275 49.448V17.0376Z" fill={fillColor1} />
+      <path d="M15.275 17.0376H20.1708V52.0918L15.275 49.448V17.0376Z" fill="#010010" />
       <path
         d="M79.1807 26.7228C79.1807 27.783 78.9397 28.7372 78.4578 29.5854C77.9759 30.4144 77.2819 31.0601 76.3759 31.5228C75.4699 31.9662 74.4 32.1878 73.1663 32.1878H69.0602V37.9999H65.6193V21.4891H73.0217C75.0072 21.4891 76.5301 21.9517 77.5903 22.877C78.6506 23.783 79.1807 25.065 79.1807 26.7228ZM75.7108 26.7806C75.7108 25.0457 74.6891 24.1782 72.6458 24.1782H69.0602V29.5276H72.7325C73.6771 29.5276 74.4096 29.2963 74.9301 28.8336C75.4506 28.3517 75.7108 27.6674 75.7108 26.7806Z"
         fill={fillColor}
@@ -60,9 +56,9 @@ export const LogoWithTextSvg: React.FC<LogoWithTextSvgProps> = ({ color, classNa
           y2="24.6751"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#010010" />
-          <stop offset="0.380208" stop-color="#010010" />
-          <stop offset="1" stop-color="#010010" />
+          <stop stopColor="#010010" />
+          <stop offset="0.380208" stopColor="#010010" />
+          <stop offset="1" stopColor="#010010" />
         </linearGradient>
       </defs>
     </svg>
