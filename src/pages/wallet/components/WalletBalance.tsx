@@ -1,43 +1,49 @@
+import { PixelCoinLogoSvg } from '../../../components/pixelCoinLogoSvg/PixelCoinLogoSvg';
+import { LumenLogoSvg } from '../../../components/lumenLogoSvg/LumenLogoSvg';
+
+import './WalletBalance.scss';
+import dollarSignImg from '../../../assets/svg/dollar-sign.svg';
 import { WalletBalanceProps } from '../interfaces';
 import { WalletBalanceCurrency } from '../types';
 
-import './WalletBalance.scss';
-import dollarSignUrl from '../../../assets/svg/dollar-sign.svg';
-import lumenLogoUrl from '../../../assets/svg/lumen-logo-purple.svg';
-import pixelCoinLogoUrl from '../../../assets/svg/pixel-coin-logo-purple.svg';
-
-const balanceMaxLength = 5;
+const balanceMaxLength = 6;
+const textSliceEnd = balanceMaxLength - 1;
+const balanceOverflow = '...';
 
 export const WalletBalance: React.FC<WalletBalanceProps> = ({ balance, currency }) => {
-  const adjustBalanceLength = (balance: string): string => {
-    if (balance.toString().length <= balanceMaxLength) {
-      return balance;
+  const adjustBalanceLength = (balance: number): string => {
+    const balanceText: string = balance.toString();
+    const balanceDigitCount: number = balance.toString().replace('.', '').length;
+
+    if (balanceDigitCount <= balanceMaxLength) {
+      return balanceText;
     }
 
-    const numberBeforeDot = parseInt(balance, 10).toString();
-
-    const newBalance: string = Number(balance).toFixed(balanceMaxLength - numberBeforeDot.length);
-
-    if (newBalance.length <= balanceMaxLength) {
-      return newBalance;
+    if (Number.isInteger(balance)) {
+      return balanceText.slice(0, textSliceEnd) + balanceOverflow;
     }
 
-    return newBalance.slice(0, balanceMaxLength) + '...';
+    if (balanceText.indexOf('.') < textSliceEnd) {
+      return balanceText.slice(0, textSliceEnd + 1) + balanceOverflow;
+    }
+
+    return balanceText.slice(0, textSliceEnd) + balanceOverflow;
   };
-  const getLogoUrlFromCurrency = (currency: WalletBalanceCurrency): string => {
+
+  const getImgFromCurrency = (currency: WalletBalanceCurrency): JSX.Element => {
     switch (currency) {
       case 'PXL':
-        return pixelCoinLogoUrl;
+        return <PixelCoinLogoSvg className="wallet-balance-icon" color="purple" />;
       case 'USD':
-        return dollarSignUrl;
+        return <img className="wallet-balance-icon" src={dollarSignImg} />;
       case 'XLM':
-        return lumenLogoUrl;
+        return <LumenLogoSvg className="wallet-balance-icon" color="purple" />;
     }
   };
 
   return (
     <div className="wallet-balance">
-      <img className="wallet-balance-icon" src={getLogoUrlFromCurrency(currency)} />
+      {getImgFromCurrency(currency)}
       <span>{`${adjustBalanceLength(balance)} ${currency}`}</span>
     </div>
   );

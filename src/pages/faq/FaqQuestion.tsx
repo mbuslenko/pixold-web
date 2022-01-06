@@ -1,55 +1,50 @@
 import { useLayoutEffect, useRef, useState } from 'react';
-import { IFaqQuestionProps } from './interfaces';
+
+import { Button } from '../../components/button/Button';
+
+import { isScreen } from '../../shared/ts/helperFunctions';
+import { ScreenMaxWidth } from '../../shared/ts/enums';
+
 import './FaqQuestion.scss';
-import { Button } from '../../components/ui-kit/button/Button';
-import { isSmallScreen } from '../../shared/ts/helperFunctions';
+import { IFaqQuestionProps } from './interfaces';
 import { AnswerTextDomHeight } from './enums';
 
 export const FaqQuestion: React.FC<IFaqQuestionProps> = ({ question, answer, showInfoModalCallback }) => {
   const answerRef = useRef<HTMLDivElement>(null);
   const [isTextOverflow, setIsTextOverflow] = useState<boolean>(false);
 
-  // useLayoutEffect or useEffect
-  useLayoutEffect(
-    () => {
-      const answerDomHeight = answerRef.current?.offsetHeight ?? 0;
+  useLayoutEffect(() => {
+    const answerDomHeight = answerRef.current?.offsetHeight ?? 0;
 
-      if (answerDomHeight > AnswerTextDomHeight.LARGE && !isSmallScreen()) {
-        setIsTextOverflow(true);
+    console.log([answerRef.current, answerDomHeight]);
 
-        return;
-      }
+    if (answerDomHeight > AnswerTextDomHeight.LARGE && !isScreen(ScreenMaxWidth.SMALL)) {
+      setIsTextOverflow(true);
 
-      if (answerDomHeight > AnswerTextDomHeight.SMALL && isSmallScreen()) {
-        setIsTextOverflow(true);
+      return;
+    }
 
-        return;
-      }
-    },
-    [answerRef.current],
-  );
+    if (answerDomHeight > AnswerTextDomHeight.SMALL && isScreen(ScreenMaxWidth.SMALL)) {
+      setIsTextOverflow(true);
 
+      return;
+    }
+  }, []);
 
   return (
-    <div
-      className='faq-question'
-      ref={answerRef}
-    >
-      <h3 className='faq-question-heading'>
-        {question}
-      </h3>
-      <p className={`faq-question-text ${isTextOverflow && 'short-text'}`}>
+    <section>
+      <h3 className="faq-question-heading">{question}</h3>
+      <p ref={answerRef} className={`faq-question-text ${isTextOverflow && 'faq-short-text'}`}>
         {answer}
       </p>
-      { isTextOverflow &&
+      {isTextOverflow && (
         <Button
-          text='Read more'
-          priority='secondary'
-          className='faq-secondary-button-color'
-          mediaClassName='mobile-faq-button'
+          text="Read more"
+          appearance={{ priority: 'secondary', theme: 'black-white' }}
+          className="faq-button-small"
           onClick={() => showInfoModalCallback(question, answer)}
         />
-      }
-    </div>
+      )}
+    </section>
   );
 };

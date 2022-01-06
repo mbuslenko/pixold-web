@@ -1,0 +1,47 @@
+@import '../../shared/scss/variables.scss';
+
+.container {
+  max-height: 80%;
+  width: 523px;
+  padding: 32px;
+  font-size: 24px;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  color: $white;
+}
+
+.heading {
+  font-weight: 700;
+}
+
+.text {
+  margin-top: 9px;
+  overflow-wrap: break-word;
+  overflow-y: auto;
+}
+
+.button-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 32px;
+  gap: 0 12px;
+}
+
+.default-colors {
+  background-color: $black;
+  border: 1px solid $purple;
+}
+
+.blue-dark {
+  background-color: $blue-dark;
+  border: none;
+}
+
+@media screen and (max-width: $screen-max-width-smallest) {
+  .container {
+    font-size: 15px;
+    width: 344px;
+  }
+}

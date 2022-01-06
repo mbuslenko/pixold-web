@@ -1,4 +1,4 @@
-@import '../../../shared/scss/Variable.scss';
+@import '../../../shared/scss/variables.scss';
 
 .wallet-balance {
   border: 1px solid $purple;
@@ -11,11 +11,13 @@
   font: {
     size: 50px;
     weight: 600;
-  };
+  }
 }
 
 .wallet-balance-icon {
   margin-right: 0.4em;
+  width: 34px;
+  height: 34px;
 }
 
 @media screen and (max-width: $screen-max-width-smallest) {
