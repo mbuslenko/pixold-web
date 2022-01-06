@@ -16,13 +16,15 @@ export const FaqQuestion: React.FC<IFaqQuestionProps> = ({ question, answer, sho
   useLayoutEffect(() => {
     const answerDomHeight = answerRef.current?.offsetHeight ?? 0;
 
-    if (answerDomHeight > AnswerTextDomHeight.LARGE && !isScreen(ScreenMaxWidth.SMALLEST)) {
+    console.log([answerRef.current, answerDomHeight]);
+
+    if (answerDomHeight > AnswerTextDomHeight.LARGE && !isScreen(ScreenMaxWidth.SMALL)) {
       setIsTextOverflow(true);
 
       return;
     }
 
-    if (answerDomHeight > AnswerTextDomHeight.SMALL && isScreen(ScreenMaxWidth.SMALLEST)) {
+    if (answerDomHeight > AnswerTextDomHeight.SMALL && isScreen(ScreenMaxWidth.SMALL)) {
       setIsTextOverflow(true);
 
       return;
@@ -31,11 +33,14 @@ export const FaqQuestion: React.FC<IFaqQuestionProps> = ({ question, answer, sho
 
 
   return (
-    <div ref={answerRef}>
+    <section>
       <h3 className='faq-question-heading'>
         {question}
       </h3>
-      <p className={`faq-question-text ${isTextOverflow && 'faq-short-text'}`}>
+      <p
+        ref={answerRef}
+        className={`faq-question-text ${isTextOverflow && 'faq-short-text'}`}
+      >
         {answer}
       </p>
       { isTextOverflow &&
@@ -46,6 +51,6 @@ export const FaqQuestion: React.FC<IFaqQuestionProps> = ({ question, answer, sho
           onClick={() => showInfoModalCallback(question, answer)}
         />
       }
-    </div>
+    </section>
   );
 };
