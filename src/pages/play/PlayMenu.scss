@@ -1,13 +1,11 @@
-@import '../../shared/scss/Variable.scss';
+@import '../../shared/scss/variables.scss';
 
 $assets-path: '../../assets/svg/';
 
 @mixin nav-link-icon ($icon-name) {
   &::before {
     content: url($assets-path + $icon-name + '.svg');
-    display: block;
-    width: 36px;
-    height: 30px;
+
   }
 
   &:hover::before {
@@ -22,14 +20,21 @@ $assets-path: '../../assets/svg/';
   }
 }
 
-.game-menu-wrapper {
+.play-menu-icon {
+  display: block;
+  width: 36px;
+  height: 30px;
+  margin: 0 auto 6px;
+}
+
+.play-menu-wrapper {
   width: 654px;
   position: absolute;
   left: calc(50% - 327px);
   bottom: 34px;
 }
 
-.game-menu {
+.play-menu {
   width: 100%;
   height: 100%;
   display: none;
@@ -48,71 +53,39 @@ $assets-path: '../../assets/svg/';
   }
 }
 
-.game-menu-heading {
+.play-menu-heading {
   display: none;
   font-size: 30px;
 }
 
-.game-menu-navigation {
+.play-menu-navigation {
   display: flex;
   justify-content: space-between;
 }
 
-.game-menu-link-container {
+.play-menu-link-container {
   display: flex;
   gap: 0 2.8em;
   align-items: center;
 }
 
-.game-menu-button {
+.play-menu-button {
   font: inherit;
   color: inherit;
   border: none;
   background-color: transparent;
   cursor: pointer;
-
-  &.territory-icon {
-    @include nav-link-icon('territory-icon');
-
-    &::before {
-      margin: 0 auto 6px;
-    }
-  }
 }
 
-.game-menu-link {
+.play-menu-link {
   color: inherit;
   text: {
     align: center;
     decoration: none;
   }
-
-  &::before {
-    margin: 0 0 6px;
-  }
-
-  &.players-icon {
-    @include nav-link-icon('players-icon');
-  }
-
-  &.redeem-icon {
-    @include nav-link-icon('redeem-icon');
-  }
-
-  &.wallet-icon {
-    @include nav-link-icon('wallet-icon');
-  }
-
-  &.faq-icon {
-    @include nav-link-icon('faq-icon');
-  }
-
-  &.settings-icon {
-    @include nav-link-icon('settings-icon');
-  }
 }
 
-.game-menu-logo-small {
+.play-menu-logo-small {
   width: 26px;
   height: 26px;
   display: none;
@@ -128,31 +101,25 @@ $assets-path: '../../assets/svg/';
   border: 1px solid $purple;
   border-radius: 15px;
 
-  &::after {
-    content: url('../../assets/svg/game-menu-button-icon.svg');
-    display: block;
-    width: 20px;
-    height: 20px;
-    margin: auto;
-  }
-
   &.is-active {
     border: none;
-
-    &::after {
-      content: url('../../assets/svg/game-menu-button-active-icon.svg');
-    }
   }
 }
 
+.show-menu-button-icon {
+  vertical-align: middle;
+  width: 20px;
+  height: 20px;
+}
+
 @media screen and (max-width: $screen-max-width-smallest) {
-  .game-menu-wrapper {
+  .play-menu-wrapper {
     width: 90%;
     left: 5%;
     bottom: 20px;
   }
 
-  .game-menu {
+  .play-menu {
     flex-direction: column;
     padding: 34px 24px 12px;
 
@@ -161,28 +128,30 @@ $assets-path: '../../assets/svg/';
     }
   }
 
-  .game-menu-heading {
+  .play-menu-heading {
     display: block;
     margin: 0 0 170px;
   }
 
-  .game-menu-navigation {
+  .play-menu-navigation {
     flex-direction: column;
     gap: 104px 0;
     margin-bottom: 76px;
   }
 
-  .game-menu-logo {
+  .play-menu-logo {
     display: none;
   }
 
-  .game-menu-link-container {
+  .play-menu-link-container {
     flex-direction: column;
     align-items: flex-start;
     gap: 32px 0;
   }
 
-  .game-menu-link, .game-menu-button.territory-icon {
+  .play-menu-link,
+  .play-menu-link-container .play-menu-button
+  {
     display: flex;
     align-items: center;
     gap: 0 38px;
@@ -190,13 +159,13 @@ $assets-path: '../../assets/svg/';
       size: 20px;
       weight: 600;
     }
-
-    &:before {
-      margin: 0;
-    }
   }
 
-  .game-menu-logo-small {
+  .play-menu-icon {
+    margin: 0;
+  }
+
+  .play-menu-logo-small {
     display: block;
     align-self: flex-end;
   }

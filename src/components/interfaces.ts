@@ -115,3 +115,8 @@ export interface ISvgProps<C extends string> {
   color: C;
   className?: string;
 }
+
+export interface IIconProps<I extends string> {
+  iconName: I;
+  className?: string;
+}

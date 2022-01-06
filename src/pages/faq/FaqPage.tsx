@@ -41,18 +41,18 @@ export const FaqPage: React.FC = () => {
       },
       onResponse: response => setFaqTopicData(response.data),
     });
-  });
+  }, []);
 
   return (
     <section className="faq-page">
       <FaqHeader />
       <section className={`faq-page-content ${isVisibleModal && 'is-blurred'}`}>
         <h1 className='faq-heading'>FAQ</h1>
-        <div className='faq-topic-container'>
+        <main className='faq-topic-container'>
           {faqTopicData.map(({ name, content }, index) => (
             <FaqTopic key={index} name={name} content={content} showInfoModalCallback={showInfoModal} />
           ))}
-        </div>
+        </main>
         <HomeFooter />
       </section>
       { isVisibleModal &&

@@ -9,7 +9,7 @@ import { IErrorPageProps } from './interfaces';
 
 export const ErrorPage: React.FC<IErrorPageProps> = ({ hexagonColor, backgroundSrc, verticalBackgroundSrc, title, children }) => {
   return (
-    <div className="error-page">
+    <section className="error-page">
       <HexagonStrokeSvg color={hexagonColor} className='hexagonTopLeft'/>
       <HexagonStrokeSvg color={hexagonColor} className='hexagonTopRight'/>
       <HexagonStrokeSvg color={hexagonColor} className='hexagonBottomRight'/>
@@ -17,7 +17,8 @@ export const ErrorPage: React.FC<IErrorPageProps> = ({ hexagonColor, backgroundS
 
       <img src={backgroundSrc} alt="Error" className="error-bg" />
       <img src={verticalBackgroundSrc} alt="Error" className="error-bg-vertical" />
-      <div className="error-content">
+
+      <main className="error-content">
         <h1 className="error-title">
           {title}
         </h1>
@@ -30,7 +31,7 @@ export const ErrorPage: React.FC<IErrorPageProps> = ({ hexagonColor, backgroundS
             />
           </Link>
         </div>
-      </div>
-    </div>
+      </main>
+    </section>
   );
 };

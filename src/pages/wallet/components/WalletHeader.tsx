@@ -30,7 +30,7 @@ export const WalletHeader: React.FC<WalletHeaderProps> = ({ username }) => {
     <header className='wallet-page-header'>
       <Link to={'/play'}>
         <Button
-          text='← Back to game'
+          text='← Back to play'
           appearance={{ priority: 'secondary', theme: 'black-white' }}
           className='header-button-big'
         />

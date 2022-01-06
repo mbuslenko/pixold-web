@@ -15,7 +15,7 @@ export const AuthPage: React.FC = () => {
     if (window.localStorage.getItem('userId') && window.localStorage.getItem('accessToken')) {
       navigate('/play');
     }
-  });
+  }, []);
 
   const handleLoginSuccess = async (responseGoogleData: GetResponseLoginGoogle) => {
     if (!('tokenId' in responseGoogleData)) {
@@ -32,11 +32,15 @@ export const AuthPage: React.FC = () => {
   };
 
   return (
-    <div className="login-wrap">
-      <div className="login-content">
-        <div className="logo"></div>
-        <div className="login-title">Authenticate</div>
-        <div className="login-desc">You need to be authorized to play the game</div>
+    <section className="login-wrap">
+      <main className="login-content">
+        <div className="logo" />
+        <div className="login-title">
+          Authenticate
+        </div>
+        <div className="login-desc">
+          You need to be authorized to play the play
+        </div>
         <div className="login-btn-wrap">
           <Button
             text='Continue with Apple'
@@ -57,7 +61,7 @@ export const AuthPage: React.FC = () => {
             cookiePolicy={'single_host_origin'}
           />
         </div>
-      </div>
-    </div>
+      </main>
+    </section>
   );
 };

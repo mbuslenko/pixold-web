@@ -2,7 +2,8 @@ import { useLayoutEffect, useRef, useState } from 'react';
 
 import { Button } from '../../components/button/Button';
 
-import { isSmallScreen } from '../../shared/ts/helperFunctions';
+import { isScreen } from '../../shared/ts/helperFunctions';
+import { ScreenMaxWidth } from '../../shared/ts/enums';
 
 import './FaqQuestion.scss';
 import { IFaqQuestionProps } from './interfaces';
@@ -15,18 +16,18 @@ export const FaqQuestion: React.FC<IFaqQuestionProps> = ({ question, answer, sho
   useLayoutEffect(() => {
     const answerDomHeight = answerRef.current?.offsetHeight ?? 0;
 
-    if (answerDomHeight > AnswerTextDomHeight.LARGE && !isSmallScreen()) {
+    if (answerDomHeight > AnswerTextDomHeight.LARGE && !isScreen(ScreenMaxWidth.SMALLEST)) {
       setIsTextOverflow(true);
 
       return;
     }
 
-    if (answerDomHeight > AnswerTextDomHeight.SMALL && isSmallScreen()) {
+    if (answerDomHeight > AnswerTextDomHeight.SMALL && isScreen(ScreenMaxWidth.SMALLEST)) {
       setIsTextOverflow(true);
 
       return;
     }
-  });
+  }, []);
 
 
   return (
