@@ -20,7 +20,7 @@ body {
 @supports (scrollbar-width: thin) {
   * {
     scrollbar-width: thin;
-    scrollbar-color: rgba(100, 100, 100, 0.8) transparent;
+    scrollbar-color: rgba($font-black, 0.8) transparent;
   }
 }
 
@@ -34,7 +34,7 @@ body {
   }
 
   *::-webkit-scrollbar-thumb {
-    background-color: rgba(54, 54, 54, 0.8);
+    background-color: rgba($font-black, 0.8);
     border-radius: 20px;
   }
 }
