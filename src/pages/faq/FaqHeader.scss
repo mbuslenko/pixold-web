@@ -1,4 +1,4 @@
-@import '../../shared/scss/Variable.scss';
+@import '../../shared/scss/variables.scss';
 
 .faq-header {
   width: 100%;
@@ -8,12 +8,12 @@
   justify-content: space-between;
 }
 
-.nav-link-wrapper {
+.faq-header-link {
   display: inline-block;
   margin-right: 0.875em;
 }
 
-@media screen and (max-width: $screen-max-width-mobile) {
+@media screen and (max-width: $screen-max-width-smallest) {
   .faq-header {
     padding: 4em 2.25em;
   }
@@ -22,7 +22,7 @@
     width: 5.25em;
   }
 
-  .nav-link-wrapper {
+  .faq-header-link {
     margin-right: 0.625em;
   }
 }

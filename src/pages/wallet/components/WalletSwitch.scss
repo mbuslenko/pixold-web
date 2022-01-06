@@ -1,4 +1,4 @@
-@import '../../../shared/scss/Variable.scss';
+@import '../../../shared/scss/variables.scss';
 
 @import '../extends.scss';
 
@@ -23,7 +23,7 @@
     font: {
       size: 10px;
       weight: 600;
-    };
+    }
   }
 }
 
@@ -33,7 +33,6 @@
   align-items: flex-start;
   gap: 1.375em;
 }
-
 
 @media screen and (max-width: $screen-max-width-small) {
   .wallet-switch-container {

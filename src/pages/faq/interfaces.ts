@@ -1,22 +1,13 @@
+import { IGetResponseFaqContent } from '../../shared/ts/interfaces';
+
 import { ShowInfoModalCallback } from './types';
-
-export interface IFaqTopicDataContent {
-  question: string;
-  answer: string;
-}
-
-export interface IFaqTopicData {
-  id: string;
-  name: string;
-  content: IFaqTopicDataContent[];
-}
 
 export interface IFaqTopicProps {
   name: string;
-  content: IFaqTopicDataContent[];
+  content: IGetResponseFaqContent[];
   showInfoModalCallback: ShowInfoModalCallback;
 }
 
-export interface IFaqQuestionProps extends IFaqTopicDataContent {
+export interface IFaqQuestionProps extends IGetResponseFaqContent {
   showInfoModalCallback: ShowInfoModalCallback;
 }
