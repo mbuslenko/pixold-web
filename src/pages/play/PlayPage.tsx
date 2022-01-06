@@ -1,3 +1,4 @@
+import { complex } from 'mathjs'
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { HexMap } from './HexMap';
 
@@ -34,9 +35,9 @@ export const PlayPage: React.FC = () => {
     window.onwheel = ({ deltaY }) => {
       // console.log('scroll');
       if (deltaY < 0) {
-        map.scale(1.2);
+        map.scale(1.2, complex(0, 0));
       } else {
-        map.scale(0.83);
+        map.scale(0.83, complex(0, 0));
       }
     };
 

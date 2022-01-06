@@ -1,14 +1,12 @@
 // import { geoNaturalEarth1, geoPath } from 'd3-geo';
 // import topojson from 'topojson';
 
-import math, { Complex } from 'mathjs';
+import { matrix, Complex, complex, add, Matrix, subtract, identity, multiply } from 'mathjs';
 
 export interface IPosition {
   x: number;
   y: number;
 }
-
-export type Position = Complex;
 
 export interface IHexSize {
   width: number;
@@ -27,7 +25,10 @@ export class HexMap {
   private _yFinal: number;
   private _offsetVelocity: number;
   private _animate: boolean;
-  private _mapOrigin: Position;
+  private _mapOrigin: Complex;
+  private _prevMouseState: Complex;
+  private _mapTranslation: Matrix;
+  private _mapScale: Matrix;
 
   constructor (ctx: CanvasRenderingContext2D) {
     this._ctx = ctx;
@@ -41,7 +42,10 @@ export class HexMap {
     this._yFinal = 0;
     this._offsetVelocity = 0.15;
     this._animate = false;
-    this._mapOrigin = math.complex(0, 0);
+    this._mapOrigin = complex(0, 0);
+    this._prevMouseState = complex(0, 0);
+    this._mapTranslation = identity(3) as Matrix;
+    this._mapScale = identity(3) as Matrix;
   }
 
   init (): void {
@@ -80,6 +84,39 @@ export class HexMap {
       context.lineTo(x + Math.sin(angle) * r, y - Math.cos(angle) * r);
     }
     context.closePath();
+  }
+
+  mouseDrag (mousePosition: Complex): void {
+    const diff = subtract(mousePosition, this._prevMouseState) as Complex;
+
+    this._mapOrigin = add(this._mapOrigin, diff) as Complex;
+    // diff is Vector2 not Vector3
+    this._mapTranslation = multiply(this._mapTranslation, diff);
+
+    //     var diff = mouseState.Position.ToVector2() - prevMouseState.Position.ToVector2();
+    //     mapOrigin += diff;
+
+    //     mapTranslation *= Matrix.CreateTranslation(new Vector3(diff, 0));
+  }
+
+  scale (scaleFactor: number, mousePosition: Complex): void {
+    // const pivot = add(mousePosition, this._mapOrigin);
+    // this._mapScale = multiply(this._mapScale, );
+
+    // var wheelValue = Math.Sign(mouseState.ScrollWheelValue - prevMouseState.ScrollWheelValue) / 50.0f;
+
+    // var pivot = mouseState.Position.ToVector2() - mapOrigin;
+
+    // var T = Matrix.CreateTranslation(-new Vector3(pivot, 0));
+    // var Tinv = Matrix.CreateTranslation(new Vector3(pivot, 0));
+
+    // mapScale *= T * Matrix.CreateScale(1.0f + wheelValue) * Tinv;
+
+    // mapTransform = mapScale * mapTranslation;
+
+    this._ctx.scale(scaleFactor, scaleFactor);
+
+    this.drawMap();
   }
 
   drawMap (): void {
@@ -135,17 +172,6 @@ export class HexMap {
     }
 
     requestAnimationFrame(this._smoothMove.bind(this));
-  }
-
-  scale (scaleFactor: number, mousePosition: Position): void {
-    // this._scaleFactor *= 1 + offset;
-    // this._ctx.scale(scaleFactor, scaleFactor);
-    // console.log(this._canvas.innerHeight);
-    const pivot = math.add(mousePosition, this._mapOrigin);
-    const translationMatrix = math.matrix([]);
-    const invertedTranslationMatrix = math.matrix([]);
-
-    this.drawMap();
   }
 
   click (x: number, y: number): void {
