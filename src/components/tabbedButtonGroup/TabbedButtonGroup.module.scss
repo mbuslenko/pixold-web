@@ -23,7 +23,7 @@
   appearance: none;
 
   &:checked + .description {
-    color: #fffefb;
+    color: $white;
 
     &::before {
       content: '';

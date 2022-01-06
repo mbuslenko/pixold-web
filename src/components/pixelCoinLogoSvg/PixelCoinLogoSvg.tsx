@@ -4,7 +4,14 @@ export const PixelCoinLogoSvg: React.FC<PixelCoinLogoSvgProps> = ({ color, class
   const fillColor: string = color === 'pink' ? '#F178B6' : '#604AF7';
 
   return (
-    <svg className={className} width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      className={className}
+      width="34"
+      height="34"
+      viewBox="0 0 34 34"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <path
         fill-rule="evenodd"
         clip-rule="evenodd"
