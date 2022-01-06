@@ -13,6 +13,10 @@ body {
   color: $white;
 }
 
+a {
+  text-decoration: none;
+}
+
 .is-blurred {
   filter: blur(5px);
 }
