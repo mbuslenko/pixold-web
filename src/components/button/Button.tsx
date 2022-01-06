@@ -10,7 +10,7 @@ export const Button: React.FC<IButtonProps> = ({
   onClick,
 }) => {
   const buttonTheme: string = theme ? styles[theme] : styles.default;
-  const buttonPopup: string | undefined = (disabled && disabledPopup) ? disabledPopup : undefined;
+  const buttonPopup: string | undefined = disabled && disabledPopup ? disabledPopup : undefined;
   const buttonClassName: string = className ?? '';
 
   return (

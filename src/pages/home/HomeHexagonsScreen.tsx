@@ -60,9 +60,7 @@ export const HomeHexagonsScreen: React.FC = () => {
     });
   };
 
-  const isScreenMedium = (): boolean => (
-    window.innerWidth <= ScreenMaxWidth.MEDIUM
-  );
+  const isScreenMedium = (): boolean => window.innerWidth <= ScreenMaxWidth.MEDIUM;
 
   const showInfoModal = (modalHeading: string, modalText: string): void => {
     setModalHeading(modalHeading);
@@ -126,10 +124,7 @@ export const HomeHexagonsScreen: React.FC = () => {
   };
 
   return (
-    <div
-      className="hexagon-content"
-      onMouseMove={e => mouseMoveCallback(e)}
-    >
+    <div className="hexagon-content" onMouseMove={(e) => mouseMoveCallback(e)}>
       {isModalVisible && (
         <Modal
           heading={modalHeading}
@@ -148,24 +143,11 @@ export const HomeHexagonsScreen: React.FC = () => {
           )}
         </Modal>
       )}
-      <h2 className="hexagon-content-heading">
-        There will be a header
-      </h2>
-      <div
-        className="hexagon hexagon-attack"
-        ref={hexagonAttackRef}
-      >
-        <HexagonSvg
-          className='hexagon-icon-small'
-          color='red'
-        />
-        <img
-          src={hexagonRedImg}
-          className='hexagon-icon-big'
-        />
-        <div className="hexagon-title">
-          Attack
-        </div>
+      <h2 className="hexagon-content-heading">There will be a header</h2>
+      <div className="hexagon hexagon-attack" ref={hexagonAttackRef}>
+        <HexagonSvg className="hexagon-icon-small" color="red" />
+        <img src={hexagonRedImg} className="hexagon-icon-big" />
+        <div className="hexagon-title">Attack</div>
         <div className="hexagon-btn">
           <Button
             text="Read more"
@@ -174,17 +156,9 @@ export const HomeHexagonsScreen: React.FC = () => {
           />
         </div>
       </div>
-      <div
-        className="hexagon hexagon-miner"
-        ref={hexagonMinerRef}
-      >
-        <HexagonSvg
-          color='yellow'
-          className='hexagon-icon'
-        />
-        <div className="hexagon-title">
-          Miner
-        </div>
+      <div className="hexagon hexagon-miner" ref={hexagonMinerRef}>
+        <HexagonSvg color="yellow" className="hexagon-icon" />
+        <div className="hexagon-title">Miner</div>
         <div className="hexagon-btn">
           <Button
             text="Read more"
@@ -193,21 +167,10 @@ export const HomeHexagonsScreen: React.FC = () => {
           />
         </div>
       </div>
-      <div
-        className="hexagon hexagon-defender"
-        ref={hexagonDefenderRef}
-      >
-        <HexagonSvg
-          color='blue'
-          className='hexagon-icon-small'
-        />
-        <img
-          src={hexagonBlueImg}
-          className='hexagon-icon-big'
-        />
-        <div className="hexagon-title">
-          Defender
-        </div>
+      <div className="hexagon hexagon-defender" ref={hexagonDefenderRef}>
+        <HexagonSvg color="blue" className="hexagon-icon-small" />
+        <img src={hexagonBlueImg} className="hexagon-icon-big" />
+        <div className="hexagon-title">Defender</div>
         <div className="hexagon-btn">
           <Button
             text="Read more"

@@ -19,94 +19,47 @@ export const PlayMenu: React.FC = () => {
   }, []);
 
   return (
-    <div className='play-menu-wrapper'>
+    <div className="play-menu-wrapper">
       <section className={`play-menu ${menuIsVisible && 'is-visible'}`}>
-        <h2 className='play-menu-heading'>
-          Navigate
-        </h2>
-        <nav className='play-menu-navigation'>
-          <img
-            className='play-menu-logo'
-            src={logo}
-          />
-          <div className='play-menu-link-container'>
-            <button
-              className='play-menu-button'
-              onClick={() => console.log(';)')}
-            >
-              <GameMenuIconSvg
-                iconName='territory'
-                className='play-menu-icon'
-              />
+        <h2 className="play-menu-heading">Navigate</h2>
+        <nav className="play-menu-navigation">
+          <img className="play-menu-logo" src={logo} />
+          <div className="play-menu-link-container">
+            <button className="play-menu-button" onClick={() => console.log(';)')}>
+              <GameMenuIconSvg iconName="territory" className="play-menu-icon" />
               My territory
             </button>
-            <Link
-              className='play-menu-link'
-              to='/players'
-            >
-              <GameMenuIconSvg
-                iconName='players'
-                className='play-menu-icon'
-              />
+            <Link className="play-menu-link" to="/players">
+              <GameMenuIconSvg iconName="players" className="play-menu-icon" />
               Players
             </Link>
-            <Link
-              className='play-menu-link'
-              to='/redeem'
-            >
-              <GameMenuIconSvg
-                iconName='redeem'
-                className='play-menu-icon'
-              />
+            <Link className="play-menu-link" to="/redeem">
+              <GameMenuIconSvg iconName="redeem" className="play-menu-icon" />
               Redeem
             </Link>
-            <Link
-              className='play-menu-link'
-              to='/wallet'
-            >
-              <GameMenuIconSvg
-                iconName='wallet'
-                className='play-menu-icon'
-              />
+            <Link className="play-menu-link" to="/wallet">
+              <GameMenuIconSvg iconName="wallet" className="play-menu-icon" />
               Wallet
             </Link>
           </div>
-          <div className='play-menu-link-container'>
-            <Link
-              className='play-menu-link'
-              to='/faq'
-            >
-              <GameMenuIconSvg
-                iconName='faq'
-                className='play-menu-icon'
-              />
+          <div className="play-menu-link-container">
+            <Link className="play-menu-link" to="/faq">
+              <GameMenuIconSvg iconName="faq" className="play-menu-icon" />
               FAQ
             </Link>
-            <Link
-              className='play-menu-link'
-              to='/settings'
-            >
-              <GameMenuIconSvg
-                iconName='settings'
-                className='play-menu-icon'
-              />
+            <Link className="play-menu-link" to="/settings">
+              <GameMenuIconSvg iconName="settings" className="play-menu-icon" />
               Settings
             </Link>
           </div>
         </nav>
-        <img
-          src={logo}
-          className='play-menu-logo-small'
-        />
+        <img src={logo} className="play-menu-logo-small" />
       </section>
       <button
         className={`play-menu-button show-menu-button ${menuIsVisible && 'is-active'}`}
         onClick={() => setMenuIsVisible(!menuIsVisible)}
       >
-        <GameMenuShowIconSvg
-          className='show-menu-button-icon'
-          color={menuIsVisible ? 'white' : 'purple' }
-        />
+        <GameMenuShowIconSvg className="show-menu-button-icon" color={menuIsVisible ? 'white' : 'purple'} />
       </button>
     </div>
   );

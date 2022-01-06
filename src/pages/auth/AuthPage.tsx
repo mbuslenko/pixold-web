@@ -35,22 +35,15 @@ export const AuthPage: React.FC = () => {
     <section className="login-wrap">
       <main className="login-content">
         <div className="logo" />
-        <div className="login-title">
-          Authenticate
-        </div>
-        <div className="login-desc">
-          You need to be authorized to play the play
-        </div>
+        <div className="login-title">Authenticate</div>
+        <div className="login-desc">You need to be authorized to play the play</div>
         <div className="login-btn-wrap">
-          <Button
-            text='Continue with Apple'
-            appearance={{ priority: 'primary', theme: 'apple' }}
-          />
+          <Button text="Continue with Apple" appearance={{ priority: 'primary', theme: 'apple' }} />
           <GoogleLogin
             clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID ?? ''}
             render={(renderProps) => (
               <Button
-                text='Continue with Google'
+                text="Continue with Google"
                 appearance={{ priority: 'primary', theme: 'google' }}
                 {...renderProps}
               />

@@ -31,26 +31,20 @@ export const FaqQuestion: React.FC<IFaqQuestionProps> = ({ question, answer, sho
     }
   }, []);
 
-
   return (
     <section>
-      <h3 className='faq-question-heading'>
-        {question}
-      </h3>
-      <p
-        ref={answerRef}
-        className={`faq-question-text ${isTextOverflow && 'faq-short-text'}`}
-      >
+      <h3 className="faq-question-heading">{question}</h3>
+      <p ref={answerRef} className={`faq-question-text ${isTextOverflow && 'faq-short-text'}`}>
         {answer}
       </p>
-      { isTextOverflow &&
+      {isTextOverflow && (
         <Button
-          text='Read more'
+          text="Read more"
           appearance={{ priority: 'secondary', theme: 'black-white' }}
-          className='faq-button-small'
+          className="faq-button-small"
           onClick={() => showInfoModalCallback(question, answer)}
         />
-      }
+      )}
     </section>
   );
 };

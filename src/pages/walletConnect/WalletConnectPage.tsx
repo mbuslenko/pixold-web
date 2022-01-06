@@ -73,70 +73,48 @@ export const WalletConnectPage: React.FC = () => {
     setIsAlertVisible(true);
     setPublicKeyStatus('invalid');
     setSecretKeyStatus('invalid');
-    setTimeout(
-      () => setIsAlertVisible(false),
-      5000,
-    );
+    setTimeout(() => setIsAlertVisible(false), 5000);
   };
 
   return (
-    <section className='wallet-connect-page'>
-      <Link
-        className='go-back-link'
-        to='/coin'
-      >
-        <Button
-          text='←'
-          appearance={{ priority: 'secondary', theme: 'black-white' }}
-        />
+    <section className="wallet-connect-page">
+      <Link className="go-back-link" to="/coin">
+        <Button text="←" appearance={{ priority: 'secondary', theme: 'black-white' }} />
       </Link>
-      <LumenLogoSvg
-        color='pink'
-        className='wallet-connect-lumen-logo no-shrink'
-      />
+      <LumenLogoSvg color="pink" className="wallet-connect-lumen-logo no-shrink" />
 
-      <div className='wallet-connect-text-container'>
-        <h1 className='wallet-connect-heading'>
-          Connect a wallet
-        </h1>
-        <p className='wallet-connect-text'>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Blandit ultricies aliquam quis in accumsan, vel ut.
-          Posuere suscipit neque scelerisque libero.
-          Quisque ipsum tristique arcu velit facilisi nec lectus.
-          Commodo sed elementum congue consequat.
+      <div className="wallet-connect-text-container">
+        <h1 className="wallet-connect-heading">Connect a wallet</h1>
+        <p className="wallet-connect-text">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Blandit ultricies aliquam quis in accumsan, vel ut.
+          Posuere suscipit neque scelerisque libero. Quisque ipsum tristique arcu velit facilisi nec lectus. Commodo sed
+          elementum congue consequat.
         </p>
       </div>
 
-      <div className='wallet-connect-input-container'>
+      <div className="wallet-connect-input-container">
         <Input
-          type='text'
-          placeholder='Enter your public key'
-          description='Public key'
+          type="text"
+          placeholder="Enter your public key"
+          description="Public key"
           onInput={publicKeyInputCallback}
           status={publicKeyStatus}
         />
         <Input
-          type='text'
-          placeholder='Enter your secret key'
-          description='Secret key'
+          type="text"
+          placeholder="Enter your secret key"
+          description="Secret key"
           onInput={secretKeyInputCallback}
           status={secretKeyStatus}
         />
       </div>
       <Button
-        text='Submit'
+        text="Submit"
         appearance={{ priority: 'primary', theme: 'pink' }}
         onClick={connectWalletCallback}
-        className='no-shrink'
+        className="no-shrink"
       />
-      { isAlertVisible &&
-        <Alert
-          type='red'
-          heading={alertHeading}
-          onClick={() => setIsAlertVisible(false)}
-        />
-      }
+      {isAlertVisible && <Alert type="red" heading={alertHeading} onClick={() => setIsAlertVisible(false)} />}
     </section>
   );
 };

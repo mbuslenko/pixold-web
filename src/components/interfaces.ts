@@ -19,8 +19,7 @@ export interface IButtonAppearance<P extends ElementPriority, T extends ButtonTh
 
 export interface IButtonProps {
   text: string;
-  appearance: IButtonAppearance<'primary', PrimaryButtonTheme> |
-              IButtonAppearance<'secondary', SecondaryButtonTheme>;
+  appearance: IButtonAppearance<'primary', PrimaryButtonTheme> | IButtonAppearance<'secondary', SecondaryButtonTheme>;
   className?: string;
   disabled?: boolean;
   disabledPopup?: string;
@@ -33,7 +32,7 @@ export interface IRadioButtonProps {
   name: string;
   value: string;
   checked?: boolean;
-  onChange: (value: string) => void
+  onChange: (value: string) => void;
 }
 
 export interface IRadioButtonGroupOption {
@@ -73,10 +72,10 @@ export interface IDropdownOption {
 
 export interface IDropdownProps {
   placeholder: string;
-  options: IDropdownOption[]
+  options: IDropdownOption[];
   disabled?: boolean;
   disabledPopup?: string;
-  onChange: (value: string) => void
+  onChange: (value: string) => void;
 }
 
 export interface ITabbedButtonGroupOption {

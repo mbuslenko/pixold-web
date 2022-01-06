@@ -9,20 +9,17 @@ const axiosInstance = axios.create({
 });
 
 export const useAxiosInstance = (navigate: NavigateFunction): AxiosInstanceFunction => {
-  return ({
-    requestConfig,
-    onResponse,
-    onError,
-  }) => {
+  return ({ requestConfig, onResponse, onError }) => {
     const accessToken = window.localStorage.getItem('accessToken');
 
     if (accessToken) {
       axiosInstance.defaults.headers.common.Authorization = accessToken;
     }
 
-    axiosInstance.request(requestConfig)
+    axiosInstance
+      .request(requestConfig)
       .then(onResponse)
-      .catch(error => {
+      .catch((error) => {
         if (error.response.status === 403 || error.response.status === 401) {
           navigate('/auth');
 

@@ -52,9 +52,7 @@ export const AuthLoadPage: React.FC = () => {
   return (
     <article className="loader-wrap">
       <img src={loaderLogo} alt="loader Logo" className="loader-logo" />
-      <div className="loader-text">
-        Loading...
-      </div>
+      <div className="loader-text">Loading...</div>
     </article>
   );
 };

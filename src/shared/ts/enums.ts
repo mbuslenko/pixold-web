@@ -14,5 +14,5 @@ export enum Color {
   YELLOW = '#ffec40',
   BLUE = '#3dacfd',
   PINK = '#f178b6',
-  GREY_DARK = '#2d3436'
+  GREY_DARK = '#2d3436',
 }
