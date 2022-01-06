@@ -48,17 +48,17 @@ export const UsernamePage: React.FC = () => {
   const submitCallback = () => {
     if (usernameStatus === 'invalid') {
       return;
-    } else {
-      request({
-        requestConfig: {
-          method: "post",
-          url: `/user/update/username`,
-          data: { username },
-        },
-        onResponse: () => navigate('/wallet'),
-        onError: checkPostErrorCallback,
-      });
     }
+
+    request({
+      requestConfig: {
+        method: 'post',
+        url: `/user/update/username`,
+        data: { username },
+      },
+      onResponse: () => navigate('/wallet'),
+      onError: checkPostErrorCallback,
+    });
   };
 
   return (
@@ -79,13 +79,12 @@ export const UsernamePage: React.FC = () => {
           appearance={{ priority: 'secondary', theme: 'black-white' }}
           onClick={checkUsernameCallback}
         />
-        <div className="username-submit-wrap">
-          <Button
-            text="Submit"
-            appearance={{ priority: 'primary' }}
-            onClick={submitCallback}
-          />
-        </div>
+        <Button
+          text="Submit"
+          appearance={{ priority: 'primary' }}
+          onClick={submitCallback}
+          className="username-btn-submit"
+        />
       </div>
     </div>
   );
