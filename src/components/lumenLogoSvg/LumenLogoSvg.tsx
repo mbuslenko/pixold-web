@@ -1,7 +1,9 @@
+import { Color } from '../../shared/ts/enums';
+
 import { LumenLogoSvgProps } from '../types';
 
 export const LumenLogoSvg: React.FC<LumenLogoSvgProps> = ({ color, className }) => {
-  const fillColor: string = color === 'pink' ? '#F178B6' : '#604AF7';
+  const fillColor: string = color === 'pink' ? Color.PINK : Color.PURPLE;
 
   return (
     <svg
