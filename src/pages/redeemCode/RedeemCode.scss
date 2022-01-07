@@ -46,18 +46,18 @@
 }
 
 @media screen and (max-width: $screen-max-width-small) {
-  .redeem-wrap {
+  .redeem-page {
     padding-left: 12.0625em;
   }
 }
 
 @media screen and (max-width: $screen-max-width-smallest) {
-  .redeem-wrap {
+  .redeem-page {
     background-image: none;
     padding-left: 3em;
   }
 
-  .redeem-content-wrap {
+  .redeem-content {
     max-width: 14.8125em;
   }
 
