@@ -59,23 +59,23 @@ export interface IGetResponseUsernameCheck {
 }
 
 export interface IReactFacebookFailureResponse {
-    status?: string | undefined;
+  status?: string | undefined;
 }
 
 export interface IReactFacebookLoginInfo {
-    id: string;
-    userID: string;
-    accessToken: string;
-    name: string;
-    email: string;
-    picture: {
-        data: {
-          height: number,
-          is_silhouette: boolean,
-          url: string,
-          width: number,
-      },
+  id: string;
+  userID: string;
+  accessToken: string;
+  name: string;
+  email: string;
+  picture: {
+    data: {
+      height: number;
+      is_silhouette: boolean;
+      url: string;
+      width: number;
     };
+  };
 }
 
 export interface IAxiosRequestConfig {
