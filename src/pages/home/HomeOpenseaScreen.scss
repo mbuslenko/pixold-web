@@ -1,0 +1,137 @@
+@import '../../shared/scss/variables.scss';
+
+.opensea-screen {
+  height: 830px;
+  display: grid;
+  grid-template-columns: 60% 40%;
+  padding: 38px 110px 38px 70px;
+}
+
+.opensea-screen-content {
+  align-self: center;
+}
+
+.opensea-screen-heading {
+  font: {
+    family: Montserrat;
+    weight: 900;
+    size: 40px;
+  }
+  margin-bottom: 48px;
+}
+
+.opensea-screen-text {
+  font-size: 24px;
+}
+
+.opensea-card-container {
+  z-index: -1;
+  position: relative;
+  grid-row: {
+    start: 1;
+    end: 3;
+  }
+}
+
+.opensea-background-card {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.opensea-card {
+  position: absolute;
+  transform: rotate(-24deg);
+  width: 450px;
+  border-radius: 51px;
+  background-color: $black;
+  padding: 15px 15px 30px;
+
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.opensea-card-img {
+  display: block;
+  width: 100%;
+  border-radius: 38px;
+}
+
+.opensea-card-name {
+  font-size: 100px;
+  // FIXME: color not in color pallet
+  background-image: linear-gradient(to right, #8796E6, $black);
+  background-clip: text;
+  color: transparent;
+  overflow-wrap: anywhere;
+  letter-spacing: -0.06em;
+}
+
+.opensea-card-info {
+  display: flex;
+  justify-content: space-between;
+}
+
+.opensea-screen-purchase-link {
+  justify-self: end;
+  align-self: end;
+  margin-right: 50px;
+}
+
+@media screen and (max-width: $screen-max-width-small) {
+  .opensea-screen {
+    height: auto;
+    padding: 125px 32px 176px;
+    grid-template-columns: 100%;
+    gap: 32px;
+  }
+
+  .opensea-screen-content {
+    text-align: center;
+  }
+
+  .opensea-card-container {
+    grid-row-start: unset;
+    grid-row-end: unset;
+  }
+
+  .opensea-card {
+    position: relative;
+    transform: unset;
+    width: 312px;
+    padding: 0;
+  }
+
+  .opensea-card-img {
+    border-radius: 0;
+  }
+
+  .opensea-card-text {
+    padding: 20px 16px;
+  }
+
+  .opensea-card-name {
+    color: $white;
+    font: {
+      weight: 700;
+      size: 20px;
+    }
+    margin-bottom: 14px;
+  }
+
+  .opensea-background-card {
+    display: none;
+  }
+
+  .opensea-screen-purchase-link {
+    justify-self: center;
+    margin-right: 0;
+  }
+}

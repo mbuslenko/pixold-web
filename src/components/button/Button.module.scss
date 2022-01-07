@@ -10,22 +10,28 @@
   color: $color;
 }
 
-@mixin primary-auth($icon-name) {
+@mixin primary-with-icon($color, $background-color) {
   position: relative;
-  background-color: $purple;
-  color: $white;
+  background-color: $background-color;
+  color: $color;
   padding-left: 42px;
   text-align: left;
+}
 
+@mixin before-icon($icon-name) {
   &::before {
-    content: url('../../assets/svg/' + $icon-name + '.svg');
+    @extend %icon;
 
-    display: inline-block;
-    height: 18px;
-    width: 18px;
-    position: absolute;
-    left: 18px;
+    content: url('../../assets/svg/' + $icon-name + '.svg');
   }
+}
+
+%icon {
+  display: inline-block;
+  height: 18px;
+  width: 18px;
+  position: absolute;
+  left: 18px;
 }
 
 .button {
@@ -59,11 +65,29 @@
   }
 
   &.google {
-    @include primary-auth('google-logo');
+    @include primary-with-icon($white, $purple);
+    @include before-icon('google-logo');
   }
 
   &.apple {
-    @include primary-auth('apple-logo');
+    @include primary-with-icon($white, $purple);
+    @include before-icon('apple-logo');
+  }
+
+  &.opensea-white {
+    @include primary-with-icon($black, $white);
+
+    & .opensea-logo {
+      @extend %icon;
+    }
+  }
+
+  &.opensea-black {
+    @include primary-with-icon($white, $black);
+
+    & .opensea-logo {
+      @extend %icon;
+    }
   }
 
   &:not(&:disabled):hover {

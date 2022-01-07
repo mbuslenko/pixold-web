@@ -12,12 +12,14 @@ import {
   IPostResponseAuth,
   IPostResponseWalletConnect,
   IAxiosInstanceProps,
+  IGetResponseHexagonFree,
 } from './interfaces';
 
 export type GetResponseFaq = AxiosResponse<IGetResponseFaqTopic[]>;
 export type GetResponseWallet = AxiosResponse<IGetResponseWallet>;
 export type GetResponseUsernameCheck = AxiosResponse<IGetResponseUsernameCheck>;
 export type GetResponseLoginGoogle = GoogleLoginResponse | GoogleLoginResponseOffline;
+export type GetResponseHexagonFree = AxiosResponse<IGetResponseHexagonFree>;
 
 export type PostResponseWalletConnect = AxiosResponse<IPostResponseWalletConnect>;
 export type PostResponseAuth = AxiosResponse<IPostResponseAuth>;

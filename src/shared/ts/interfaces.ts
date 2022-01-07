@@ -54,6 +54,12 @@ export interface IGetResponseUsernameCheck {
   result: boolean;
 }
 
+export interface IGetResponseHexagonFree {
+  name: string;
+  bid: string;
+  purchaseLink: string;
+}
+
 export interface IAxiosRequestConfig {
   method: 'post' | 'get';
   url: string;

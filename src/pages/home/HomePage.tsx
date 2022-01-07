@@ -1,14 +1,16 @@
 import React from 'react';
 
-import { HomeFooter } from './HomeFooter';
-import { HomeGetStartedScreen } from './HomeGetStartedScreen';
+import { HomeWelcomeScreen } from './HomeWelcomeScreen';
 import { HomeInfoScreen } from './HomeInfoScreen';
 import { HomeHexagonsScreen } from './HomeHexagonsScreen';
-import { HomeWelcomeScreen } from './HomeWelcomeScreen';
+import { HomeOpenseaScreen } from './HomeOpenseaScreen';
+import { HomeGetStartedScreen } from './HomeGetStartedScreen';
+import { HomeFooter } from './HomeFooter';
 
 export const HomePage: React.FC = () => {
   return (
     <>
+      <HomeOpenseaScreen />
       <HomeWelcomeScreen />
       <HomeInfoScreen />
       <HomeHexagonsScreen />

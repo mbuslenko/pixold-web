@@ -2,7 +2,7 @@ import React from 'react';
 import { useRef, useState } from 'react';
 
 import { ScreenMaxWidth } from '../../shared/ts/enums';
-import { blockScrolling, unblockScrolling } from '../../shared/ts/helperFunctions';
+import { blockScrolling, isScreen, unblockScrolling } from '../../shared/ts/helperFunctions';
 
 import { Button } from '../../components/button/Button';
 import { IModalPosition } from '../../components/interfaces';
@@ -60,7 +60,7 @@ export const HomeHexagonsScreen: React.FC = () => {
     });
   };
 
-  const isScreenMedium = (): boolean => window.innerWidth <= ScreenMaxWidth.MEDIUM;
+  const isScreenMedium = (): boolean => isScreen(ScreenMaxWidth.MEDIUM);
 
   const showInfoModal = (modalHeading: string, modalText: string): void => {
     setModalHeading(modalHeading);
