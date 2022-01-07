@@ -1,6 +1,6 @@
 @import '../../shared/scss/variables.scss';
 
-.error-wrap {
+.error-page {
   width: 100%;
   height: 100vh;
 
@@ -8,15 +8,16 @@
   overflow: hidden;
 }
 
-.hexagon1 {
+.hexagonTopLeft {
   height: 40%;
+  width: 19%;
   position: absolute;
   top: -17.2%;
   left: -3.85%;
   z-index: -1;
 }
 
-.hexagon2 {
+.hexagonTopRight {
   height: 19%;
   position: absolute;
   top: 3%;
@@ -25,7 +26,7 @@
   z-index: -1;
 }
 
-.hexagon3 {
+.hexagonBottomLeft {
   height: 19%;
   position: absolute;
   left: 3.125%;
@@ -34,15 +35,16 @@
   z-index: -1;
 }
 
-.hexagon4 {
+.hexagonBottomRight {
   height: 40%;
+  width: 19%;
   position: absolute;
   right: -3.85%;
   bottom: -17.2%;
   z-index: -1;
 }
 
-.error-svg {
+.error-bg {
   width: 116%;
   position: absolute;
   z-index: -2;
@@ -50,7 +52,7 @@
   left: -7%;
 }
 
-.error-vertical {
+.error-bg-vertical {
   display: none;
 }
 
@@ -81,36 +83,36 @@
 }
 
 @media screen and (max-width: $screen-max-width-small) {
-  .hexagon1 {
+  .hexagonTopLeft {
     height: 25%;
     top: -9%;
     left: -4%;
     transform: rotate(23.91deg);
   }
 
-  .hexagon2 {
+  .hexagonTopRight {
     display: none;
   }
 
-  .hexagon3 {
+  .hexagonBottomLeft {
     height: 15%;
     left: -2.5%;
     bottom: -2%;
     transform: rotate(15deg);
   }
 
-  .hexagon4 {
+  .hexagonBottomRight {
     height: 25%;
     transform: rotate(50.17deg);
     right: -10%;
     bottom: -8%;
   }
 
-  .error-svg {
+  .error-bg {
     display: none;
   }
 
-  .error-vertical {
+  .error-bg-vertical {
     width: 52%;
     height: 92%;
     display: block;
@@ -129,36 +131,38 @@
 }
 
 @media screen and (max-width: $screen-max-width-smallest) {
-  .hexagon1 {
+  .hexagonTopLeft {
     height: 25%;
+    width: 50%;
     top: -9%;
     left: -4%;
     transform: rotate(23.91deg);
   }
 
-  .hexagon2 {
+  .hexagonTopRight {
     display: none;
   }
 
-  .hexagon3 {
+  .hexagonBottomLeft {
     height: 15%;
-    left: -2.5%;
+    left: -9.5%;
     bottom: -2%;
     transform: rotate(15deg);
   }
 
-  .hexagon4 {
+  .hexagonBottomRight {
     height: 25%;
+    width: 50%;
     transform: rotate(50.17deg);
     right: -10%;
     bottom: -8%;
   }
 
-  .error-svg {
+  .error-bg {
     display: none;
   }
 
-  .error-vertical {
+  .error-bg-vertical {
     height: 756px;
     display: block;
     position: absolute;

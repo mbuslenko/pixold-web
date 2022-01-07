@@ -6,7 +6,7 @@ import { useAxiosInstance } from '../../shared/ts/axiosInstance';
 
 import { Button } from '../../components/button/Button';
 import { Input } from '../../components/input/Input';
-import { InputStatus } from '../../components/type';
+import { InputStatus } from '../../components/types';
 
 import './UsernamePage.scss';
 
@@ -33,7 +33,7 @@ export const UsernamePage: React.FC = () => {
   };
 
   const checkPostResponseCallback = (response: GetResponseUsernameCheck) => {
-    if (response.data.result === true) {
+    if (response.data.result) {
       setUsernameStatus('valid');
     } else {
       setUsernameStatus('invalid');
@@ -48,23 +48,23 @@ export const UsernamePage: React.FC = () => {
   const submitCallback = () => {
     if (usernameStatus === 'invalid') {
       return;
-    } else {
-      request({
-        requestConfig: {
-          method: "post",
-          url: `/user/update/username`,
-          data: { username },
-        },
-        onResponse: () => navigate('/wallet'),
-        onError: checkPostErrorCallback,
-      });
     }
+
+    request({
+      requestConfig: {
+        method: 'post',
+        url: `/user/update/username`,
+        data: { username },
+      },
+      onResponse: () => navigate('/wallet'),
+      onError: checkPostErrorCallback,
+    });
   };
 
   return (
-    <div className="username-wrap">
+    <section className="username-wrap">
       <h1 className="username-title">Set your username</h1>
-      <div className="username-controls-wrap">
+      <main className="username-controls-wrap">
         <div className="username-input-wrap">
           <Input
             type="text"
@@ -79,14 +79,13 @@ export const UsernamePage: React.FC = () => {
           appearance={{ priority: 'secondary', theme: 'black-white' }}
           onClick={checkUsernameCallback}
         />
-        <div className="username-submit-wrap">
-          <Button
-            text="Submit"
-            appearance={{ priority: 'primary' }}
-            onClick={submitCallback}
-          />
-        </div>
-      </div>
-    </div>
+        <Button
+          text="Submit"
+          appearance={{ priority: 'primary' }}
+          onClick={submitCallback}
+          className="username-btn-submit"
+        />
+      </main>
+    </section>
   );
 };

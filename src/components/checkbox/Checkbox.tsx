@@ -6,14 +6,12 @@ export const Checkbox: React.FC<ICheckboxProps> = ({ text, priority, value, chec
     <label className={styles['checkbox-label']}>
       <input
         className={`${styles.checkbox} ${styles[priority]}`}
-        type='checkbox'
+        type="checkbox"
         value={value}
         defaultChecked={checked}
         onChange={(e) => onChange(e.target.checked)}
       />
-      <span className={`${styles['checkbox-description']} ${styles[priority]}`}>
-        {text}
-      </span>
+      <span className={`${styles['checkbox-description']} ${styles[priority]}`}>{text}</span>
     </label>
   );
 };

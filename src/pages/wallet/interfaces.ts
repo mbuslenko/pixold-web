@@ -16,5 +16,5 @@ export interface WalletBalanceContainerProps {
 }
 
 export interface WalletSwitchProps {
-  onSubmit: () => void
+  onSubmit: () => void;
 }

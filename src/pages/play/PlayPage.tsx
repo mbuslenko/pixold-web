@@ -1,5 +1,8 @@
-import { complex } from 'mathjs'
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { complex } from 'mathjs';
+
+import './PlayPage.scss';
+import { PlayMenu } from './PlayMenu';
 import { HexMap } from './HexMap';
 
 export const PlayPage: React.FC = () => {
@@ -68,8 +71,10 @@ export const PlayPage: React.FC = () => {
   });
 
   return (
-    <div>
+    <section className="play-page">
       <canvas ref={canvasRef}/>
-    </div>
+      <PlayMenu />
+      <main></main>
+    </section>
   );
 };

@@ -33,10 +33,10 @@
 }
 
 .username-btn-check {
-  color: $grey-b4;
+  color: $grey;
 }
 
-.username-submit-wrap {
+.username-btn-submit {
   grid-column-start: 1;
   grid-column-end: 3;
 }
@@ -51,7 +51,7 @@
     grid-column-end: 3;
   }
 
-  .username-submit-wrap {
+  .username-btn-submit {
     grid-column-start: 2;
     grid-column-end: 3;
   }

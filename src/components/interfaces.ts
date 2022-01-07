@@ -10,7 +10,7 @@ import {
   ModalTheme,
   PrimaryButtonTheme,
   SecondaryButtonTheme,
-} from './type';
+} from './types';
 
 export interface IButtonAppearance<P extends ElementPriority, T extends ButtonTheme> {
   priority: P;
@@ -19,9 +19,8 @@ export interface IButtonAppearance<P extends ElementPriority, T extends ButtonTh
 
 export interface IButtonProps {
   text: string;
-  appearance: IButtonAppearance<'primary', PrimaryButtonTheme> |
-              IButtonAppearance<'secondary', SecondaryButtonTheme>;
-  addedClasses?: string;
+  appearance: IButtonAppearance<'primary', PrimaryButtonTheme> | IButtonAppearance<'secondary', SecondaryButtonTheme>;
+  className?: string;
   disabled?: boolean;
   disabledPopup?: string;
   onClick?: MouseEventHandler;
@@ -33,7 +32,7 @@ export interface IRadioButtonProps {
   name: string;
   value: string;
   checked?: boolean;
-  onChange: (value: string) => void
+  onChange: (value: string) => void;
 }
 
 export interface IRadioButtonGroupOption {
@@ -73,10 +72,10 @@ export interface IDropdownOption {
 
 export interface IDropdownProps {
   placeholder: string;
-  options: IDropdownOption[]
+  options: IDropdownOption[];
   disabled?: boolean;
   disabledPopup?: string;
-  onChange: (value: string) => void
+  onChange: (value: string) => void;
 }
 
 export interface ITabbedButtonGroupOption {
@@ -108,5 +107,15 @@ export interface IModalProps {
   positionType?: ModalPositionType;
   position?: IModalPosition;
   theme?: ModalTheme;
-  addedClasses?: string;
+  className?: string;
+}
+
+export interface ISvgProps<C extends string> {
+  color: C;
+  className?: string;
+}
+
+export interface IIconProps<I extends string> {
+  iconName: I;
+  className?: string;
 }

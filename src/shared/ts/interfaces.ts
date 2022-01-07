@@ -28,14 +28,14 @@ export interface IPostDataWalletConnect {
 
 export interface IPostResponseWalletConnect {
   id: string;
-  balanceInUSD: number
-  balanceInXLM: number
-  balanceInPXL: number
+  balanceInUSD: number;
+  balanceInXLM: number;
+  balanceInPXL: number;
 }
 
 export interface IPostDataAuth {
   email: string;
-  firstName: string,
+  firstName: string;
   lastName?: string;
   avatarUrl: string;
 }
@@ -51,18 +51,18 @@ export interface IPostDataUsername {
 }
 
 export interface IGetResponseUsernameCheck {
-  result: boolean
+  result: boolean;
 }
 
-export interface IAxiosInstanceConfig {
-  method: 'post' | 'get',
+export interface IAxiosRequestConfig {
+  method: 'post' | 'get';
   url: string;
   data?: RequestData;
   params?: any;
 }
 
 export interface IAxiosInstanceProps {
-  requestConfig: IAxiosInstanceConfig;
+  requestConfig: IAxiosRequestConfig;
   onResponse: (response: AxiosResponse) => void;
   onError?: (error: any) => void;
 }
