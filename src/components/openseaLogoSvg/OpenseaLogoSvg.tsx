@@ -2,8 +2,8 @@ import { Color } from '../../shared/ts/enums';
 import { OpenseaLogoSvgProps } from '../types';
 
 export const OpenseaLogoSvg: React.FC<OpenseaLogoSvgProps> = ({ className, color }) => {
-  const fillColor = color ? Color.WHITE : Color.BLACK;
-  const backgroundColor = color ? Color.BLACK : Color.WHITE;
+  const fillColor = color === 'white' ? Color.WHITE : Color.BLACK;
+  const backgroundColor = color === 'white' ? Color.BLACK : Color.WHITE;
 
   return (
     <svg

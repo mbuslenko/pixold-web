@@ -10,10 +10,10 @@ import { HomeFooter } from './HomeFooter';
 export const HomePage: React.FC = () => {
   return (
     <>
-      <HomeOpenseaScreen />
       <HomeWelcomeScreen />
       <HomeInfoScreen />
       <HomeHexagonsScreen />
+      <HomeOpenseaScreen />
       <HomeGetStartedScreen />
       <HomeFooter />
     </>

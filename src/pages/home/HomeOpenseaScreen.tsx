@@ -8,7 +8,8 @@ import { Button } from '../../components/button/Button';
 
 import './HomeOpenseaScreen.scss';
 import hexagonCardImg from '../../assets/svg/hexagon-card.svg';
-import hexagonBackgroundCardImg from '../../assets/svg/hexagon-background-card.svg';
+import hexagonCardBackgroundImg from '../../assets/svg/hexagon-card-background.svg';
+import hexagonScreenCardImg from '../../assets/svg/hexagon-screen-card.svg';
 
 export const HomeOpenseaScreen: React.FC = () => {
   const request = useAxiosInstance(useNavigate());
@@ -35,26 +36,35 @@ export const HomeOpenseaScreen: React.FC = () => {
         </p>
       </div>
       <div className="opensea-card-container">
-        <img className="opensea-background-card" src={hexagonBackgroundCardImg} />
-        <article className="opensea-card">
-          <img className="opensea-card-img" src={hexagonCardImg} />
-          <div className="opensea-card-text">
-            <h3 className="opensea-card-name">{hexagonInfo?.name}</h3>
-            <div className="opensea-card-info">
-              <div>
-                <h4>Current bid</h4>
-                <p>{hexagonInfo?.bid}</p>
-              </div>
-              <div>
-                <h4>Ending in</h4>
-                <p>52m 20s</p>
+        <img className="opensea-background-card" src={hexagonScreenCardImg} />
+        <img className="opensea-card-background" src={hexagonCardBackgroundImg} />
+        <div className="opensea-card-border">
+          <article className="opensea-card">
+            <img className="opensea-card-img" src={hexagonCardImg} />
+            <div className="opensea-card-content">
+              <h3 className="opensea-card-name">{hexagonInfo?.name}</h3>
+              <div className="opensea-card-info">
+                <p className="opensea-card-info-text">PIXOLD.IO</p>
+                <div>
+                  <h4 className="opensea-card-info-heading">Current bid</h4>
+                  <p className="opensea-card-info-text">{hexagonInfo?.bid}</p>
+                </div>
               </div>
             </div>
-          </div>
-        </article>
+          </article>
+        </div>
       </div>
       <a className="opensea-screen-purchase-link" target="_blank" href={hexagonInfo?.purchaseLink ?? ''}>
-        <Button text="Purchase on OpenSea" appearance={{ priority: 'primary', theme: 'opensea-white' }} />
+        <Button
+          className="opensea-screen-purchase-button"
+          text="Purchase on OpenSea"
+          appearance={{ priority: 'primary', theme: 'opensea-white' }}
+        />
+        <Button
+          className="opensea-screen-purchase-button-small"
+          text="Purchase on OpenSea"
+          appearance={{ priority: 'primary', theme: 'opensea-black' }}
+        />
       </a>
     </section>
   );
