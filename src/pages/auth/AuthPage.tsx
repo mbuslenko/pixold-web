@@ -1,8 +1,13 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import GoogleLogin from 'react-google-login';
+
+//eslint-disable-next-line
+//@ts-ignore
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
+import GoogleLogin, { GoogleLoginResponse } from 'react-google-login';
 
 import { GetResponseLoginGoogle } from '../../shared/ts/types';
+import { FacebookResponseData, IResponseData } from '../../components/interfaces';
 
 import { Button } from '../../components/button/Button';
 
@@ -17,13 +22,34 @@ export const AuthPage: React.FC = () => {
     }
   }, []);
 
-  const handleLoginSuccess = async (responseGoogleData: GetResponseLoginGoogle) => {
-    if (!('tokenId' in responseGoogleData)) {
-      return;
-    }
+  const handleGoogleAuthSuccess = async (responseGoogleData: GetResponseLoginGoogle) => {
+    responseGoogleData = responseGoogleData as unknown as GoogleLoginResponse; // :0
 
-    // TODO: Change to redux
-    window.localStorage.setItem('responseGoogleData', JSON.stringify(responseGoogleData));
+    const responseData: IResponseData = {
+      email: responseGoogleData.profileObj.email,
+      firstName: responseGoogleData.profileObj.givenName,
+      lastName: responseGoogleData.profileObj.familyName,
+      avatarUrl: responseGoogleData.profileObj.imageUrl,
+    };
+
+    window.localStorage.setItem('responseData', JSON.stringify(responseData));
+
+    navigate('/auth/load');
+  };
+
+  const handleFacebookAuthSuccess = async (facebookResponseData: FacebookResponseData.Response) => {
+    const firstName = facebookResponseData.name.split(' ')[0];
+    const lastName = facebookResponseData.name.split(' ')[1];
+
+    const responseData: IResponseData = {
+      email: facebookResponseData.email,
+      avatarUrl: facebookResponseData.picture.data.url,
+      firstName,
+      lastName,
+    };
+
+    window.localStorage.setItem('responseData', JSON.stringify(responseData));
+
     navigate('/auth/load');
   };
 
@@ -38,7 +64,19 @@ export const AuthPage: React.FC = () => {
         <div className="login-title">Authenticate</div>
         <div className="login-desc">You need to be authorized to play the play</div>
         <div className="login-btn-wrap">
-          <Button text="Continue with Apple" appearance={{ priority: 'primary', theme: 'apple' }} />
+          <FacebookLogin
+            appId={process.env.REACT_APP_FACEBOOK_CLIENT_ID}
+            autoLoad={false}
+            fields="name,email,picture"
+            callback={handleFacebookAuthSuccess}
+            render={(renderProps: any) => (
+              <Button
+                text="Continue with Facebook"
+                appearance={{ priority: 'primary', theme: 'apple' }}
+                onClick={renderProps.onClick}
+              />
+            )}
+          />
           <GoogleLogin
             clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID ?? ''}
             render={(renderProps) => (
@@ -49,7 +87,7 @@ export const AuthPage: React.FC = () => {
               />
             )}
             buttonText="Login"
-            onSuccess={handleLoginSuccess}
+            onSuccess={handleGoogleAuthSuccess}
             onFailure={handleLoginFailure}
             cookiePolicy={'single_host_origin'}
           />

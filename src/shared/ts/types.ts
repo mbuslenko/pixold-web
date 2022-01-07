@@ -26,3 +26,4 @@ export type PostResponseAuth = AxiosResponse<IPostResponseAuth>;
 export type RequestData = IPostDataAuth | IPostDataWalletConnect | IPostDataUsername | IPostDataRedeemCode;
 
 export type AxiosInstanceFunction = (payload: IAxiosInstanceProps) => void;
+
