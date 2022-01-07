@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { GoogleLoginResponse } from 'react-google-login';
 
 import { PostResponseAuth } from '../../shared/ts/types';
 import { useAxiosInstance } from '../../shared/ts/axiosInstance';
@@ -13,9 +12,7 @@ export const AuthLoadPage: React.FC = () => {
   const navigate = useNavigate();
   const request = useAxiosInstance(navigate);
 
-  const responseData: IResponseData = JSON.parse(
-    window.localStorage.getItem('responseData') as string,
-  )
+  const responseData: IResponseData = JSON.parse(window.localStorage.getItem('responseData') as string);
 
   if (!responseData) {
     navigate('/auth');
