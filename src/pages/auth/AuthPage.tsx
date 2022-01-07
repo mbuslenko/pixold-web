@@ -1,5 +1,9 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+//eslint-disable-next-line
+//@ts-ignore
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 import GoogleLogin from 'react-google-login';
 
 import { GetResponseLoginGoogle } from '../../shared/ts/types';
@@ -38,7 +42,17 @@ export const AuthPage: React.FC = () => {
         <div className="login-title">Authenticate</div>
         <div className="login-desc">You need to be authorized to play the play</div>
         <div className="login-btn-wrap">
-          <Button text="Continue with Apple" appearance={{ priority: 'primary', theme: 'apple' }} />
+          <FacebookLogin 
+            appId="441891864096517"
+            autoLoad={false}
+            fields="name,email,picture"
+            callback={(response: any) => {
+              console.log(response);
+            }}
+            render={(renderProps: any) => (
+              <Button text="Continue with Apple" appearance={{ priority: 'primary', theme: 'apple' }} onClick={renderProps.onClick} />
+            )}
+          />    
           <GoogleLogin
             clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID ?? ''}
             render={(renderProps) => (
