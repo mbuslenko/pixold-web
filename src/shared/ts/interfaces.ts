@@ -58,6 +58,28 @@ export interface IGetResponseUsernameCheck {
   result: boolean;
 }
 
+export interface ILoginFacebookPicture {
+  data: {
+    height: number;
+    is_silhouette: boolean;
+    url: string;
+    width: number;
+  }
+}
+
+export interface IGetResponseLoginFacebook {
+  name: string;
+  email: string;
+  picture: ILoginFacebookPicture;
+  id: string;
+  accessToken: string;
+  userID: string;
+  expiresIn: number;
+  signedRequest: string;
+  graphDomain: string;
+  data_access_expiration_time: number;
+}
+
 export interface IAxiosRequestConfig {
   method: 'post' | 'get';
   url: string;

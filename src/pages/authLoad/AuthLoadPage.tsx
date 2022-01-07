@@ -3,16 +3,15 @@ import { useNavigate } from 'react-router-dom';
 
 import { PostResponseAuth } from '../../shared/ts/types';
 import { useAxiosInstance } from '../../shared/ts/axiosInstance';
+import { IPostDataAuth } from '../../shared/ts/interfaces';
 
 import './AuthLoadPage.scss';
 import loaderLogo from '../../assets/svg/loader-logo.svg';
-import { IResponseData } from '../../components/interfaces';
 
 export const AuthLoadPage: React.FC = () => {
   const navigate = useNavigate();
   const request = useAxiosInstance(navigate);
-
-  const responseData: IResponseData = JSON.parse(window.localStorage.getItem('responseData') as string);
+  const responseData: IPostDataAuth = JSON.parse(window.localStorage.getItem('responseData') as string);
 
   if (!responseData) {
     navigate('/auth');

@@ -119,34 +119,3 @@ export interface IIconProps<I extends string> {
   iconName: I;
   className?: string;
 }
-
-export interface IResponseData {
-  email: string;
-  firstName: string;
-  lastName: string;
-  avatarUrl: string;
-}
-
-export namespace FacebookResponseData {
-  export interface Picture {
-    data: {
-      height: number;
-      is_silhouette: boolean;
-      url: string;
-      width: number;
-    };
-  }
-
-  export interface Response {
-    name: string;
-    email: string;
-    picture: Picture;
-    id: string;
-    accessToken: string;
-    userID: string;
-    expiresIn: number;
-    signedRequest: string;
-    graphDomain: string;
-    data_access_expiration_time: number;
-  }
-}
