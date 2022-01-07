@@ -12,6 +12,7 @@ import {
   IPostResponseAuth,
   IPostResponseWalletConnect,
   IAxiosInstanceProps,
+  IPostDataRedeemCode,
 } from './interfaces';
 
 export type GetResponseFaq = AxiosResponse<IGetResponseFaqTopic[]>;
@@ -22,6 +23,6 @@ export type GetResponseLoginGoogle = GoogleLoginResponse | GoogleLoginResponseOf
 export type PostResponseWalletConnect = AxiosResponse<IPostResponseWalletConnect>;
 export type PostResponseAuth = AxiosResponse<IPostResponseAuth>;
 
-export type RequestData = IPostDataAuth | IPostDataWalletConnect | IPostDataUsername;
+export type RequestData = IPostDataAuth | IPostDataWalletConnect | IPostDataUsername | IPostDataRedeemCode;
 
 export type AxiosInstanceFunction = (payload: IAxiosInstanceProps) => void;

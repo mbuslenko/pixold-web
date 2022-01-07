@@ -1,4 +1,4 @@
-@import '../../shared/scss/Variable.scss';
+@import '../../shared/scss/variables.scss';
 
 .redeem-page {
   max-width: 1920px;
@@ -38,10 +38,11 @@
 }
 
 .redeem-input-wrap {
-  margin-top: 50px;
+  margin-top: 3.125em;
   display: flex;
   flex-direction: column;
   gap: 3.125em;
+  align-items: flex-start;
 }
 
 @media screen and (max-width: $screen-max-width-small) {
