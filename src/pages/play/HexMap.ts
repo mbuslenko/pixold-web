@@ -29,6 +29,7 @@ export class HexMap {
   private _prevMouseState: Complex;
   private _mapTranslation: Matrix;
   private _mapScale: Matrix;
+  private _scale: number;
 
   constructor (ctx: CanvasRenderingContext2D) {
     this._ctx = ctx;
@@ -46,6 +47,7 @@ export class HexMap {
     this._prevMouseState = complex(0, 0);
     this._mapTranslation = identity(3) as Matrix;
     this._mapScale = identity(3) as Matrix;
+    this._scale = 1;
   }
 
   init (): void {
@@ -114,7 +116,9 @@ export class HexMap {
 
     // mapTransform = mapScale * mapTranslation;
 
-    this._ctx.scale(scaleFactor, scaleFactor);
+    // this._ctx.scale(scaleFactor, scaleFactor);
+
+    this._scale += 1 - scaleFactor;
 
     this.drawMap();
   }
@@ -127,7 +131,13 @@ export class HexMap {
 
     for (const { x, y } of this._map) {
       this._ctx.beginPath();
-      this._ctx.fillRect(x, y, width, height);
+      this._ctx.fillRect(
+        (x + this._xOffset) * this._scale,
+        (y + this._yOffset) * this._scale,
+        width * this._scale,
+        height * this._scale
+      );
+      // this._ctx.fillRect(x, y, width, height);
       // this._drawHex(this._ctx, x, y, width);
       this._ctx.fill();
       this._ctx.closePath();
@@ -151,7 +161,7 @@ export class HexMap {
     this._xOffset += moveX;
     this._yOffset += moveY;
 
-    this._ctx.translate(this._xFinal - this._xOffset, this._yFinal - this._yOffset);
+    // this._ctx.translate(this._xFinal - this._xOffset, this._yFinal - this._yOffset);
 
     this.drawMap();
 
@@ -175,23 +185,25 @@ export class HexMap {
   }
 
   click (x: number, y: number): void {
-    const xMouse = x * this._scaleFactor;
-    const yMouse = y * this._scaleFactor;
-    const width = this._hexSize.width * this._scaleFactor;
-    const height = this._hexSize.height * this._scaleFactor;
+    const xMouse = x;
+    const yMouse = y;
+    const widthHex = this._hexSize.width * this._scaleFactor;
+    const heightHex = this._hexSize.height * this._scaleFactor;
+
+    console.log(this._scale);
 
     for (const hex of this._map) {
-      const xHex = hex.x * this._scaleFactor;
-      const yHex = hex.y * this._scaleFactor;
+      const xHex = (hex.x + this._xOffset) * this._scaleFactor;
+      const yHex = (hex.y + this._yOffset) * this._scaleFactor;
 
       if (
-        (xMouse >= xHex && xMouse <= xHex + width) &&
-        (yMouse >= yHex && yMouse <= yHex + height)
+        (xMouse >= xHex && xMouse <= xHex + widthHex) &&
+        (yMouse >= yHex && yMouse <= yHex + heightHex)
       ) {
         console.log('find hex');
         this._ctx.fillStyle = 'green';
-        this._ctx.fillRect(xHex, yHex, width, height);
-        this._ctx.strokeRect(xHex - 1, yHex - 1, width + 1, height + 1);
+        this._ctx.fillRect(xHex, yHex, widthHex, heightHex);
+        this._ctx.strokeRect(xHex - 1, yHex - 1, widthHex + 1, heightHex + 1);
         this._ctx.fillStyle = 'grey';
       }
     }

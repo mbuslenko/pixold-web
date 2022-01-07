@@ -29,15 +29,15 @@ export const PlayPage: React.FC = () => {
 
     // console.log(map);
     map.init();
-    map.generateMap(30);
+    map.generateMap(3000);
     map.drawMap();
 
     window.onwheel = ({ deltaY }) => {
       // console.log('scroll');
-      if (deltaY < 0) {
+      if (deltaY > 0) {
         map.scale(1.2, complex(0, 0));
       } else {
-        map.scale(0.83, complex(0, 0));
+        map.scale(0.80, complex(0, 0));
       }
     };
 
@@ -52,16 +52,16 @@ export const PlayPage: React.FC = () => {
     window.onkeydown = ({ key }) => {
       switch (key) {
         case 'ArrowRight':
-          map.move(50, 0);
+          map.move(222, 0);
           break;
         case 'ArrowLeft':
-          map.move(-50, 0);
+          map.move(-222, 0);
           break;
         case 'ArrowUp':
-          map.move(0, -50);
+          map.move(0, -222);
           break;
         case 'ArrowDown':
-          map.move(0, 50);
+          map.move(0, 222);
           break;
       }
     };
