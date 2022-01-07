@@ -7,25 +7,19 @@ import { useAxiosInstance } from '../../shared/ts/axiosInstance';
 
 import './AuthLoadPage.scss';
 import loaderLogo from '../../assets/svg/loader-logo.svg';
+import { IResponseData } from '../../components/interfaces';
 
 export const AuthLoadPage: React.FC = () => {
   const navigate = useNavigate();
   const request = useAxiosInstance(navigate);
 
-  const responseGoogleData: GoogleLoginResponse = JSON.parse(
-    window.localStorage.getItem('responseGoogleData') as string,
-  );
+  const responseData: IResponseData = JSON.parse(
+    window.localStorage.getItem('responseData') as string,
+  )
 
-  if (!responseGoogleData) {
+  if (!responseData) {
     navigate('/auth');
   }
-
-  const responseData = {
-    email: responseGoogleData.profileObj.email,
-    firstName: responseGoogleData.profileObj.givenName,
-    lastName: responseGoogleData.profileObj.familyName,
-    avatarUrl: responseGoogleData.profileObj.imageUrl,
-  };
 
   const responseCallback = (response: PostResponseAuth) => {
     window.localStorage.setItem('userId', response.data.userId);
