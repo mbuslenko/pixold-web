@@ -1,9 +1,8 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-// FIXME: solve type issue
-// eslint-disable-next-line
-// @ts-ignore
+//eslint-disable-next-line
+//@ts-ignore
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 import GoogleLogin from 'react-google-login';
 
@@ -13,6 +12,7 @@ import { IPostDataAuth } from '../../shared/ts/interfaces';
 import { Button } from '../../components/button/Button';
 
 import './AuthPage.scss';
+import { IFacebookLoginRenderProps } from './interfaces';
 
 export const AuthPage: React.FC = () => {
   const navigate = useNavigate();
@@ -23,16 +23,16 @@ export const AuthPage: React.FC = () => {
     }
   }, []);
 
-  const handleGoogleAuthSuccess = async (responseGoogleData: GetResponseLoginGoogle) => {
-    if (!('tokenId' in responseGoogleData)) {
+  const handleGoogleAuthSuccess = async (responseGoogle: GetResponseLoginGoogle) => {
+    if (!('accessToken' in responseGoogle)) {
       return;
     }
 
     const responseData: IPostDataAuth = {
-      email: responseGoogleData.profileObj.email,
-      firstName: responseGoogleData.profileObj.givenName,
-      lastName: responseGoogleData.profileObj.familyName,
-      avatarUrl: responseGoogleData.profileObj.imageUrl,
+      email: responseGoogle.profileObj.email,
+      firstName: responseGoogle.profileObj.givenName,
+      lastName: responseGoogle.profileObj.familyName,
+      avatarUrl: responseGoogle.profileObj.imageUrl,
     };
 
     window.localStorage.setItem('responseData', JSON.stringify(responseData));
@@ -40,11 +40,15 @@ export const AuthPage: React.FC = () => {
     navigate('/auth/load');
   };
 
-  const handleFacebookAuthSuccess = async (facebookResponseData: GetResponseLoginFacebook) => {
-    const fullName = facebookResponseData.name.split(' ');
+  const handleFacebookAuthSuccess = async (responseFacebook: GetResponseLoginFacebook) => {
+    if (!('accessToken' in responseFacebook)) {
+      return;
+    }
+
+    const fullName = responseFacebook.name.split(' ');
     const responseData: IPostDataAuth = {
-      email: facebookResponseData.email,
-      avatarUrl: facebookResponseData.picture.data.url,
+      email: responseFacebook.email,
+      avatarUrl: responseFacebook.picture.data.url,
       firstName: fullName[0],
       lastName: fullName[1],
     };
@@ -75,12 +79,11 @@ export const AuthPage: React.FC = () => {
             cookiePolicy={'single_host_origin'}
           />
           <FacebookLogin
-            appId={process.env.REACT_APP_FACEBOOK_CLIENT_ID}
+            appId={process.env.REACT_APP_FACEBOOK_CLIENT_ID ?? ''}
             autoLoad={false}
             fields="name,email,picture"
             callback={handleFacebookAuthSuccess}
-            // FIXME: change any to specific type
-            render={(renderProps: any) => (
+            render={(renderProps: IFacebookLoginRenderProps) => (
               <Button
                 text="Continue with Facebook"
                 appearance={{ priority: 'primary', theme: 'facebook' }}
