@@ -13,6 +13,7 @@ import { AuthLoadPage } from './pages/authLoad/AuthLoadPage';
 import { UsernamePage } from './pages/username/UsernamePage';
 import { PlayersPage } from './pages/players/PlayersPage';
 import { PlayPage } from './pages/play/PlayPage';
+import { RedeemCode } from './pages/redeemCode/RedeemCode';
 
 export const App: React.FC = () => {
   return (
@@ -29,6 +30,7 @@ export const App: React.FC = () => {
         <Route path="/play" element={<PlayPage />} />
         <Route path="/players" element={<PlayersPage />} />
         <Route path="/username" element={<UsernamePage />} />
+        <Route path="/redeem" element={<RedeemCode />} />
         <Route path="/500" element={<Error500Page />} />
         <Route path="*" element={<Error404Page />} />
       </Routes>

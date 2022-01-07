@@ -50,6 +50,10 @@ export interface IPostDataUsername {
   username: string;
 }
 
+export interface IPostDataRedeemCode {
+  code: string;
+}
+
 export interface IGetResponseUsernameCheck {
   result: boolean;
 }
