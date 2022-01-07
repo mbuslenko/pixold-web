@@ -3,6 +3,7 @@ import { IInputProps } from '../interfaces';
 import { InputStatus } from '../types';
 import styles from './Input.module.scss';
 
+// TODO: add classname prop, set for input width 100%
 export const Input: React.FC<IInputProps> = ({ type, placeholder, description, status, disabledPopup, onInput }) => {
   const [inputStatus, changeInputStatus] = useState<InputStatus>();
   const inputPopup: string | undefined = status === 'disabled' && disabledPopup ? disabledPopup : undefined;
