@@ -64,19 +64,6 @@ export const AuthPage: React.FC = () => {
         <div className="login-title">Authenticate</div>
         <div className="login-desc">You need to be authorized to play the play</div>
         <div className="login-btn-wrap">
-          <FacebookLogin
-            appId={process.env.REACT_APP_FACEBOOK_CLIENT_ID}
-            autoLoad={false}
-            fields="name,email,picture"
-            callback={handleFacebookAuthSuccess}
-            render={(renderProps: any) => (
-              <Button
-                text="Continue with Facebook"
-                appearance={{ priority: 'primary', theme: 'apple' }}
-                onClick={renderProps.onClick}
-              />
-            )}
-          />
           <GoogleLogin
             clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID ?? ''}
             render={(renderProps) => (
@@ -90,6 +77,19 @@ export const AuthPage: React.FC = () => {
             onSuccess={handleGoogleAuthSuccess}
             onFailure={handleLoginFailure}
             cookiePolicy={'single_host_origin'}
+          />
+          <FacebookLogin
+            appId={process.env.REACT_APP_FACEBOOK_CLIENT_ID}
+            autoLoad={false}
+            fields="name,email,picture"
+            callback={handleFacebookAuthSuccess}
+            render={(renderProps: any) => (
+              <Button
+                text="Continue with Facebook"
+                appearance={{ priority: 'primary', theme: 'facebook' }}
+                onClick={renderProps.onClick}
+              />
+            )}
           />
         </div>
       </main>
