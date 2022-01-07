@@ -1,7 +1,7 @@
 // import { geoNaturalEarth1, geoPath } from 'd3-geo';
 // import topojson from 'topojson';
 
-import { matrix, Complex, complex, add, Matrix, subtract, identity, multiply } from 'mathjs';
+import { Complex, complex, add, Matrix, subtract, identity, multiply } from 'mathjs';
 
 export interface IPosition {
   x: number;
@@ -31,7 +31,7 @@ export class HexMap {
   private _mapScale: Matrix;
   private _scale: number;
 
-  constructor (ctx: CanvasRenderingContext2D) {
+  constructor(ctx: CanvasRenderingContext2D) {
     this._ctx = ctx;
     this._map = [];
     this._hexSize = { width: 12, height: 12 };
@@ -50,13 +50,13 @@ export class HexMap {
     this._scale = 1;
   }
 
-  init (): void {
+  init(): void {
     this._ctx.lineWidth = 2;
     this._ctx.strokeStyle = 'blue';
     this._ctx.fillStyle = 'grey';
   }
 
-  generateMap (hexCount = 100): void {
+  generateMap(hexCount = 100): void {
     const { width, height } = this._hexSize;
     let xOffset = 0;
     let row = 0;
@@ -78,17 +78,17 @@ export class HexMap {
     }
   }
 
-  private _drawHex (context: CanvasRenderingContext2D, x: number, y: number, r: number): void {
+  private _drawHex(context: CanvasRenderingContext2D, x: number, y: number, r: number): void {
     context.moveTo(x, y - r);
     for (let a = 1; a < 6; ++a) {
-      const angle = a * Math.PI / 3;
+      const angle = (a * Math.PI) / 3;
 
       context.lineTo(x + Math.sin(angle) * r, y - Math.cos(angle) * r);
     }
     context.closePath();
   }
 
-  mouseDrag (mousePosition: Complex): void {
+  mouseDrag(mousePosition: Complex): void {
     const diff = subtract(mousePosition, this._prevMouseState) as Complex;
 
     this._mapOrigin = add(this._mapOrigin, diff) as Complex;
@@ -101,7 +101,8 @@ export class HexMap {
     //     mapTranslation *= Matrix.CreateTranslation(new Vector3(diff, 0));
   }
 
-  scale (scaleFactor: number, mousePosition: Complex): void {
+  // scale(scaleFactor: number, mousePosition: Complex): void {
+  scale(scaleFactor: number): void {
     // const pivot = add(mousePosition, this._mapOrigin);
     // this._mapScale = multiply(this._mapScale, );
 
@@ -123,7 +124,7 @@ export class HexMap {
     this.drawMap();
   }
 
-  drawMap (): void {
+  drawMap(): void {
     const { width, height } = this._hexSize;
 
     this._ctx.clearRect(0, 0, window.innerWidth * 2, window.innerHeight * 2);
@@ -135,7 +136,7 @@ export class HexMap {
         (x + this._xOffset) * this._scale,
         (y + this._yOffset) * this._scale,
         width * this._scale,
-        height * this._scale
+        height * this._scale,
       );
       // this._ctx.fillRect(x, y, width, height);
       // this._drawHex(this._ctx, x, y, width);
@@ -144,7 +145,7 @@ export class HexMap {
     }
   }
 
-  move (x: number, y: number): void {
+  move(x: number, y: number): void {
     this._xFinal = this._xOffset + x;
     this._yFinal = this._yOffset + y;
 
@@ -154,7 +155,7 @@ export class HexMap {
     }
   }
 
-  private _smoothMove (): void {
+  private _smoothMove(): void {
     const moveX = (this._xFinal - this._xOffset) * this._offsetVelocity;
     const moveY = (this._yFinal - this._yOffset) * this._offsetVelocity;
 
@@ -169,10 +170,7 @@ export class HexMap {
     const yEnd: boolean = moveY > 0 ? this._yOffset >= this._yFinal - 1 : this._yOffset <= this._yFinal + 1;
 
     if (xEnd && yEnd) {
-      this._ctx.translate(
-        this._xFinal - this._xOffset,
-        this._yFinal - this._yOffset,
-      );
+      this._ctx.translate(this._xFinal - this._xOffset, this._yFinal - this._yOffset);
 
       this._xOffset = this._xFinal;
       this._yOffset = this._yFinal;
@@ -184,7 +182,7 @@ export class HexMap {
     requestAnimationFrame(this._smoothMove.bind(this));
   }
 
-  click (x: number, y: number): void {
+  click(x: number, y: number): void {
     const xMouse = x;
     const yMouse = y;
     const widthHex = this._hexSize.width * this._scaleFactor;
@@ -196,10 +194,7 @@ export class HexMap {
       const xHex = (hex.x + this._xOffset) * this._scaleFactor;
       const yHex = (hex.y + this._yOffset) * this._scaleFactor;
 
-      if (
-        (xMouse >= xHex && xMouse <= xHex + widthHex) &&
-        (yMouse >= yHex && yMouse <= yHex + heightHex)
-      ) {
+      if (xMouse >= xHex && xMouse <= xHex + widthHex && yMouse >= yHex && yMouse <= yHex + heightHex) {
         console.log('find hex');
         this._ctx.fillStyle = 'green';
         this._ctx.fillRect(xHex, yHex, widthHex, heightHex);

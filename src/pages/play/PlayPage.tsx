@@ -1,12 +1,11 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { complex } from 'mathjs';
+import { useLayoutEffect, useRef } from 'react';
 
 import './PlayPage.scss';
 import { PlayMenu } from './PlayMenu';
 import { HexMap } from './HexMap';
 
 export const PlayPage: React.FC = () => {
-  const [hexMap, setHexMap] = useState<HexMap>();
+  // const [hexMap, setHexMap] = useState<HexMap>();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   let ctx: CanvasRenderingContext2D | null | undefined;
 
@@ -38,9 +37,9 @@ export const PlayPage: React.FC = () => {
     window.onwheel = ({ deltaY }) => {
       // console.log('scroll');
       if (deltaY > 0) {
-        map.scale(1.2, complex(0, 0));
+        map.scale(1.2);
       } else {
-        map.scale(0.80, complex(0, 0));
+        map.scale(0.8);
       }
     };
 
@@ -72,7 +71,7 @@ export const PlayPage: React.FC = () => {
 
   return (
     <section className="play-page">
-      <canvas ref={canvasRef}/>
+      <canvas ref={canvasRef} />
       <PlayMenu />
       <main></main>
     </section>
