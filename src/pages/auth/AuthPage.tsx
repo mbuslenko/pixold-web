@@ -53,16 +53,6 @@ export const AuthPage: React.FC = () => {
     navigate('/auth/load');
   };
 
-  const handleGoogleLoginSuccess = async (responseGoogleData: GetResponseLoginGoogle) => {
-    if (!('tokenId' in responseGoogleData)) {
-      return;
-    }
-
-    // TODO: Change to redux
-    window.localStorage.setItem('responseGoogleData', JSON.stringify(responseGoogleData));
-    navigate('/auth/load');
-  };
-
   const handleLoginFailure = (e: any) => {
     console.log(e);
   };
