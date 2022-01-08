@@ -58,6 +58,14 @@ export interface IGetResponseUsernameCheck {
   result: boolean;
 }
 
+export interface IGetResponseUserData {
+  username: string;
+  firstName: string;
+  lastName: string;
+  avatarUrl: string;
+  wallet: string;
+}
+
 export interface IReactFacebookFailureResponse {
   status?: string | undefined;
 }
