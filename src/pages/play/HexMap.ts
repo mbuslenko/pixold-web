@@ -19,18 +19,22 @@ export class HexMap {
   private _offsetVelocity: number;
   private _finalPosition: IPosition;
   private _animate: boolean;
+  private _isDragged: boolean;
+  private _dragStartPosition: IPosition;
 
   constructor (ctx: CanvasRenderingContext2D) {
     this._ctx = ctx;
     this._map = [];
     this._hexSize = { width: 12, height: 12 };
     this._scale = 1;
-    this._scaleVelocity = 0.15;
+    this._scaleVelocity = 0.05;
     this._finalScale = 1;
     this._offset = { x: 0, y: 0 };
     this._offsetVelocity = 0.15;
     this._finalPosition = { x: 0, y: 0 };
     this._animate = false;
+    this._isDragged = false;
+    this._dragStartPosition = { x: 0, y: 0 };
   }
 
   private _drawHex (context: CanvasRenderingContext2D, x: number, y: number, r: number): void {
@@ -69,6 +73,10 @@ export class HexMap {
   }
 
   private _smoothMove (): void {
+    if (!this._animate) {
+      return;
+    }
+
     const moveX = (this._finalPosition.x - this._offset.x) * this._offsetVelocity;
     const moveY = (this._finalPosition.y - this._offset.y) * this._offsetVelocity;
 
@@ -77,26 +85,41 @@ export class HexMap {
 
     this.drawMap();
 
-    const endX: boolean = moveX > 0
-                          ? this._offset.x >= this._finalPosition.x - 1
-                          : this._offset.x <= this._finalPosition.x + 1;
-    const endY: boolean = moveY > 0
-                          ? this._offset.y >= this._finalPosition.y - 1
-                          : this._offset.y <= this._finalPosition.y + 1;
+    // const endX: boolean = moveX > 0
+    //                       ? this._offset.x >= this._finalPosition.x - 1
+    //                       : this._offset.x <= this._finalPosition.x + 1;
+    // const endY: boolean = moveY > 0
+    //                       ? this._offset.y >= this._finalPosition.y - 1
+    //                       : this._offset.y <= this._finalPosition.y + 1;
 
-    if (endX && endY) {
-      this._offset.x = this._finalPosition.x;
-      this._offset.y = this._finalPosition.y;
-      this._animate = false;
-      this.drawMap();
+    // if (endX && endY) {
+    //   this._offset.x = this._finalPosition.x;
+    //   this._offset.y = this._finalPosition.y;
+    //   this._animate = false;
+    //   this.drawMap();
 
-      return;
-    }
+    //   return;
+    // }
 
     requestAnimationFrame(this._smoothMove.bind(this));
   }
 
   private _smoothScaling (): void {
+    const scale = (this._finalScale - this._scale) * this._scaleVelocity;
+
+    this._scale += scale;
+    this.drawMap();
+
+    if (
+      scale >= 0 && this._scale >= this._finalScale - 0.01 ||
+      scale < 0 && this._scale <= this._finalScale + 0.01
+    ) {
+      this._scale = this._finalScale;
+      this.drawMap();
+
+      return;
+    }
+
     requestAnimationFrame(this._smoothScaling.bind(this));
   }
 
@@ -181,7 +204,46 @@ export class HexMap {
   }
 
   scale (scaleFactor: number): void {
-    this._scale += scaleFactor;
-    this.drawMap();
+    this._finalScale += scaleFactor;
+    this._smoothScaling();
+  }
+
+  dragStart (mousePosition: IPosition): void {
+    this._isDragged = true;
+    this._animate = true;
+    this._dragStartPosition = { x: mousePosition.x, y: mousePosition.y };
+    this._smoothMove();
+  }
+
+  dragMove (mousePosition: IPosition): void {
+    if (!this._isDragged) {
+      return;
+    }
+
+    this._finalPosition.x += (this._dragStartPosition.x - mousePosition.x) * this._offsetVelocity;
+    this._finalPosition.y += (this._dragStartPosition.y - mousePosition.y) * this._offsetVelocity;
+
+    // this._smoothMove();
+  }
+
+  dragEnd (mousePosition: IPosition): void {
+    if (!this._isDragged) {
+      return;
+    }
+
+    this._finalPosition.x += this._dragStartPosition.x - mousePosition.x;
+    this._finalPosition.y += this._dragStartPosition.y - mousePosition.y;
+    this._isDragged = false;
+    this._animate = false;
+
+    // this._smoothMove();
+  }
+
+  zoom (mousePosition: IPosition, scaleFactor: number): void {
+    this.move(
+      mousePosition.x - window.innerWidth,
+      mousePosition.y - window.innerHeight,
+    );
+    this.scale(scaleFactor);
   }
 }

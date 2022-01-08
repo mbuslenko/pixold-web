@@ -7,7 +7,6 @@ import { HexMap } from './HexMap';
 export const PlayPage: React.FC = () => {
   // const [hexMap, setHexMap] = useState<HexMap>();
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  let ctx: CanvasRenderingContext2D | null | undefined;
 
   useLayoutEffect(() => {
     console.log('effect');
@@ -17,7 +16,7 @@ export const PlayPage: React.FC = () => {
       return;
     }
 
-    ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d');
 
     if (!ctx) {
       return;
@@ -43,12 +42,26 @@ export const PlayPage: React.FC = () => {
       }
     };
 
-    window.onclick = (e) => {
-      const { clientX, clientY } = e;
-
+    window.onclick = ({ clientX, clientY }) => {
       // console.log(e);
 
       map.click({ x: clientX, y: clientY });
+    };
+
+    window.ondblclick = ({ clientX, clientY }) => {
+      map.zoom({ x: clientX, y: clientY }, 0.5);
+    };
+
+    window.onmousedown = e => {
+      map.dragStart({ x: e.clientX, y: e.clientY });
+    };
+
+    window.onmousemove = e => {
+      map.dragMove({ x: e.clientX, y: e.clientY });
+    };
+
+    window.onmouseup = e => {
+      map.dragEnd({ x: e.clientX, y: e.clientY });
     };
 
     window.onkeydown = ({ key }) => {
