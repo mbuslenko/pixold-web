@@ -39,7 +39,7 @@ export const FaqPage: React.FC = () => {
         method: 'get',
         url: '/faq',
       },
-      onResponse: (response) => setFaqTopicData(response.data),
+      onResponse: (response: GetResponseFaq) => setFaqTopicData(response.data),
     });
   }, [navigate]);
 

@@ -5,7 +5,7 @@ export const HomeInfoScreen: React.FC = () => {
   return (
     <section className="home-info">
       <div className="home-info-content">
-        <img src={hexagonMap} className="home-info-map" />
+        <img src={hexagonMap} alt='' className="home-info-map" />
         <h2 className="home-info-heading">There will be a header</h2>
         <p className="home-info-text">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Blandit ultricies aliquam quis in accumsan, vel ut.

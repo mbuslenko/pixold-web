@@ -72,7 +72,7 @@ export const SettingsPage: React.FC = () => {
 
       <main className="settings-content">
         <div>
-          <img src={avatarUrl} alt="User Photo" className="settings-user-photo" />
+          <img src={avatarUrl} alt="User Avatar" className="settings-user-photo" />
           <h2 className="settings-title-surname">{`${firstName} ${lastName}`}</h2>
           <p className="settings-surname">{username}</p>
           <Button

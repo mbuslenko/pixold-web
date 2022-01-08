@@ -23,7 +23,7 @@ export const PlayMenu: React.FC = () => {
       <section className={`play-menu ${menuIsVisible && 'is-visible'}`}>
         <h2 className="play-menu-heading">Navigate</h2>
         <nav className="play-menu-navigation">
-          <img className="play-menu-logo" src={logo} />
+          <img className="play-menu-logo" src={logo} alt='logo' />
           <div className="play-menu-link-container">
             <button className="play-menu-button" onClick={() => console.log(';)')}>
               <GameMenuIconSvg iconName="territory" className="play-menu-icon" />
@@ -53,7 +53,7 @@ export const PlayMenu: React.FC = () => {
             </Link>
           </div>
         </nav>
-        <img src={logo} className="play-menu-logo-small" />
+        <img src={logo} className="play-menu-logo-small" alt='logo' />
       </section>
       <button
         className={`play-menu-button show-menu-button ${menuIsVisible && 'is-active'}`}

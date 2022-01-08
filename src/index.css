@@ -1,5 +1,6 @@
 html {
   /* line-height: 1.15; */
+  box-sizing: border-box;
   -webkit-text-size-adjust: 100%;
 }
 
@@ -23,7 +24,7 @@ hr {
 }
 
 pre {
-  font-family: monospace, monospace;
+  font-family: monospace;
   font-size: 1em;
 }
 
@@ -45,7 +46,7 @@ strong {
 code,
 kbd,
 samp {
-  font-family: monospace, monospace;
+  font-family: monospace;
   font-size: 1em;
 }
 
@@ -188,6 +189,13 @@ template {
 @font-face {
   font-family: 'Inter';
   font-style: normal;
+  font-weight: 500;
+  src: local('Inter'), url('./assets/fonts/Inter-Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
   font-weight: 600;
   src: local('Inter'), url('./assets/fonts/Inter-SemiBold.ttf') format('truetype');
 }
@@ -239,10 +247,6 @@ template {
   font-style: normal;
   font-weight: 700;
   src: local('Roboto'), url('./assets/fonts/Roboto-Bold.ttf') format('truetype');
-}
-
-html {
-  box-sizing: border-box;
 }
 
 *,
