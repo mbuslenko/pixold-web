@@ -39,38 +39,34 @@ export const FaqPage: React.FC = () => {
         method: 'get',
         url: '/faq',
       },
-      onResponse: response => setFaqTopicData(response.data),
+      onResponse: (response) => setFaqTopicData(response.data),
     });
-  });
+  }, []);
 
   return (
     <section className="faq-page">
       <FaqHeader />
       <section className={`faq-page-content ${isVisibleModal && 'is-blurred'}`}>
-        <h1 className='faq-heading'>FAQ</h1>
-        <div className='faq-topic-container'>
+        <h1 className="faq-heading">FAQ</h1>
+        <main className="faq-topic-container">
           {faqTopicData.map(({ name, content }, index) => (
             <FaqTopic key={index} name={name} content={content} showInfoModalCallback={showInfoModal} />
           ))}
-        </div>
+        </main>
         <HomeFooter />
       </section>
-      { isVisibleModal &&
-        <div className='faq-info-modal-wrapper'>
-          <Modal
-            heading={modalHeading}
-            text={modalText}
-            className='faq-info-modal-size'
-          >
+      {isVisibleModal && (
+        <div className="faq-info-modal-wrapper">
+          <Modal heading={modalHeading} text={modalText} className="faq-info-modal-size">
             <Button
-              text='Close'
+              text="Close"
               appearance={{ priority: 'secondary', theme: 'black-white' }}
               onClick={hideInfoModal}
-              className='faq-button-small'
+              className="faq-button-small"
             />
           </Modal>
         </div>
-      }
+      )}
     </section>
   );
 };

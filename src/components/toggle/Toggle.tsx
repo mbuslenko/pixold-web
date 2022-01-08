@@ -14,17 +14,15 @@ export const Toggle: React.FC<ICheckboxProps> = ({ text, value, priority, checke
     <div className={styles['toggle-container']}>
       <label className={styles['toggle-label']}>
         <input
-          type='checkbox'
+          type="checkbox"
           className={`${styles.toggle} ${styles[priority]}`}
           value={value}
           checked={checked}
           onChange={onChangeCallback}
         />
-        <span className={`${styles['toggle-slider']} ${styles[priority]} ${isChecked ? styles.checked : ''}`}/>
+        <span className={`${styles['toggle-slider']} ${styles[priority]} ${isChecked ? styles.checked : ''}`} />
       </label>
-      <span className={`${styles['toggle-description']} ${styles[priority]}`}>
-        {text}
-      </span>
+      <span className={`${styles['toggle-description']} ${styles[priority]}`}>{text}</span>
     </div>
   );
 };

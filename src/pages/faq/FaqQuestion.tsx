@@ -2,7 +2,8 @@ import { useLayoutEffect, useRef, useState } from 'react';
 
 import { Button } from '../../components/button/Button';
 
-import { isSmallScreen } from '../../shared/ts/helperFunctions';
+import { isScreen } from '../../shared/ts/helperFunctions';
+import { ScreenMaxWidth } from '../../shared/ts/enums';
 
 import './FaqQuestion.scss';
 import { IFaqQuestionProps } from './interfaces';
@@ -15,36 +16,35 @@ export const FaqQuestion: React.FC<IFaqQuestionProps> = ({ question, answer, sho
   useLayoutEffect(() => {
     const answerDomHeight = answerRef.current?.offsetHeight ?? 0;
 
-    if (answerDomHeight > AnswerTextDomHeight.LARGE && !isSmallScreen()) {
+    console.log([answerRef.current, answerDomHeight]);
+
+    if (answerDomHeight > AnswerTextDomHeight.LARGE && !isScreen(ScreenMaxWidth.SMALL)) {
       setIsTextOverflow(true);
 
       return;
     }
 
-    if (answerDomHeight > AnswerTextDomHeight.SMALL && isSmallScreen()) {
+    if (answerDomHeight > AnswerTextDomHeight.SMALL && isScreen(ScreenMaxWidth.SMALL)) {
       setIsTextOverflow(true);
 
       return;
     }
-  });
-
+  }, []);
 
   return (
-    <div ref={answerRef}>
-      <h3 className='faq-question-heading'>
-        {question}
-      </h3>
-      <p className={`faq-question-text ${isTextOverflow && 'faq-short-text'}`}>
+    <section>
+      <h3 className="faq-question-heading">{question}</h3>
+      <p ref={answerRef} className={`faq-question-text ${isTextOverflow && 'faq-short-text'}`}>
         {answer}
       </p>
-      { isTextOverflow &&
+      {isTextOverflow && (
         <Button
-          text='Read more'
+          text="Read more"
           appearance={{ priority: 'secondary', theme: 'black-white' }}
-          className='faq-button-small'
+          className="faq-button-small"
           onClick={() => showInfoModalCallback(question, answer)}
         />
-      }
-    </div>
+      )}
+    </section>
   );
 };

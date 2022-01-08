@@ -27,25 +27,19 @@ export const WalletHeader: React.FC<WalletHeaderProps> = ({ username }) => {
   };
 
   return (
-    <header className='wallet-page-header'>
+    <header className="wallet-page-header">
       <Link to={'/play'}>
         <Button
-          text='← Back to game'
+          text="← Back to play"
           appearance={{ priority: 'secondary', theme: 'black-white' }}
-          className='header-button-big'
+          className="header-button-big"
         />
-        <Button
-          text='←'
-          appearance={{ priority: 'secondary', theme: 'black-white' }}
-          className='header-button-small'
-        />
+        <Button text="←" appearance={{ priority: 'secondary', theme: 'black-white' }} className="header-button-small" />
       </Link>
-      <div className='user-container'>
-        <span className='username'>
-          {adjustUsernameLength(username)}
-        </span>
+      <div className="user-container">
+        <span className="username">{adjustUsernameLength(username)}</span>
         <Link to={'/home'}>
-          <img className='header-logo' src={logoImg}/>
+          <img className="header-logo" src={logoImg} />
         </Link>
       </div>
     </header>

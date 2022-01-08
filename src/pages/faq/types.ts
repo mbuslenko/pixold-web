@@ -1,1 +1,1 @@
-export type ShowInfoModalCallback = (modalHeading: string, modalText: string) => void
+export type ShowInfoModalCallback = (modalHeading: string, modalText: string) => void;

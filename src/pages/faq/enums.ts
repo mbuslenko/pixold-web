@@ -1,4 +1,4 @@
 export enum AnswerTextDomHeight {
   LARGE = 250,
-  SMALL = 185
+  SMALL = 185,
 }

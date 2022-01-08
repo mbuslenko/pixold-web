@@ -33,11 +33,11 @@ export const WalletBalance: React.FC<WalletBalanceProps> = ({ balance, currency 
   const getImgFromCurrency = (currency: WalletBalanceCurrency): JSX.Element => {
     switch (currency) {
       case 'PXL':
-        return <PixelCoinLogoSvg className='wallet-balance-icon' color='purple' />;
+        return <PixelCoinLogoSvg className="wallet-balance-icon" color="purple" />;
       case 'USD':
-        return <img className='wallet-balance-icon' src={dollarSignImg} />;
+        return <img className="wallet-balance-icon" src={dollarSignImg} />;
       case 'XLM':
-        return <LumenLogoSvg className='wallet-balance-icon' color='purple' />;
+        return <LumenLogoSvg className="wallet-balance-icon" color="purple" />;
     }
   };
 
