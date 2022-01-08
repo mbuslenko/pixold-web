@@ -33,7 +33,7 @@ export const SettingsPage: React.FC = () => {
       },
       onResponse: getUserResponseCallback,
     });
-  }, []);
+  }, [navigate]);
 
   const changeUsernameBtnCallback = () => {
     navigate('/username');

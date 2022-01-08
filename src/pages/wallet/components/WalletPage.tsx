@@ -41,7 +41,7 @@ export const WalletPage: React.FC = () => {
       onResponse: getUserResponseCallback,
       onError: errorCallback,
     });
-  }, []);
+  }, [navigate]);
 
   return (
     <section>

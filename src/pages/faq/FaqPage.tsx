@@ -41,7 +41,7 @@ export const FaqPage: React.FC = () => {
       },
       onResponse: (response) => setFaqTopicData(response.data),
     });
-  }, []);
+  }, [navigate]);
 
   return (
     <section className="faq-page">

@@ -10,9 +10,10 @@ import loaderLogo from '../../assets/svg/loader-logo.svg';
 
 export const AuthLoadPage: React.FC = () => {
   const navigate = useNavigate();
-  const responseData: IPostDataAuth = JSON.parse(window.localStorage.getItem('responseData') as string);
 
   useEffect(() => {
+    const responseData: IPostDataAuth = JSON.parse(window.localStorage.getItem('responseData') as string);
+
     if (!responseData) {
       navigate('/auth');
     }
@@ -36,7 +37,7 @@ export const AuthLoadPage: React.FC = () => {
       },
       onResponse: responseCallback,
     });
-  }, []);
+  }, [navigate]);
 
   return (
     <article className="loader-wrap">

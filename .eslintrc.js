@@ -5,7 +5,10 @@ module.exports = {
     tsconfigRootDir: __dirname,
     sourceType: 'module',
   },
-  plugins: ['@typescript-eslint/eslint-plugin'],
+  plugins: [
+    '@typescript-eslint/eslint-plugin',
+    'react-hooks'
+  ],
   extends: ['plugin:@typescript-eslint/recommended'],
   root: true,
   env: {
@@ -30,5 +33,7 @@ module.exports = {
     semi: ['warn', 'always'],
     'object-curly-spacing': ['warn', 'always'],
     'newline-before-return': 'warn',
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn',
   },
 };
