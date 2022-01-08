@@ -2,7 +2,7 @@ import { useLayoutEffect, useRef } from 'react';
 
 import './PlayPage.scss';
 import { PlayMenu } from './PlayMenu';
-import { HexMap } from './HexMap';
+import { HexMap, IPosition } from './HexMap';
 
 export const PlayPage: React.FC = () => {
   // const [hexMap, setHexMap] = useState<HexMap>();
@@ -62,6 +62,21 @@ export const PlayPage: React.FC = () => {
 
     window.onmouseup = e => {
       map.dragEnd({ x: e.clientX, y: e.clientY });
+    };
+
+    let lastTouch: IPosition;
+
+    window.ontouchstart = ({ touches }) => {
+      map.dragStart({ x: touches[0].clientX, y: touches[0].clientY });
+    };
+
+    window.ontouchmove = ({ touches }) => {
+      lastTouch = { x: touches[0].clientX, y: touches[0].clientY };
+      map.dragMove(lastTouch);
+    };
+
+    window.ontouchend = () => {
+      map.dragEnd(lastTouch);
     };
 
     window.onkeydown = ({ key }) => {

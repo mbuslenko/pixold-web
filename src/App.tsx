@@ -20,7 +20,7 @@ export const App: React.FC = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navigate replace to="/home" />} />
+        <Route path="/" element={<Navigate replace to="/play" />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/faq" element={<FaqPage />} />
         <Route path="/auth" element={<AuthPage />} />
