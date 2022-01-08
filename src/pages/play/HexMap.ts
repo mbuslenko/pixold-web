@@ -1,14 +1,9 @@
-// import { geoNaturalEarth1, geoPath } from 'd3-geo';
-// import topojson from 'topojson';
-
-import { Complex, complex, add, Matrix, subtract, identity, multiply } from 'mathjs';
-
 export interface IPosition {
   x: number;
   y: number;
 }
 
-export interface IHexSize {
+export interface ISize {
   width: number;
   height: number;
 }
@@ -16,47 +11,102 @@ export interface IHexSize {
 export class HexMap {
   private _ctx: CanvasRenderingContext2D;
   private _map: IPosition[];
-  private _hexSize: IHexSize;
-  private _scaleFactor: number;
-  private _scaleVelocity: number;
-  private _xOffset: number;
-  private _yOffset: number;
-  private _xFinal: number;
-  private _yFinal: number;
-  private _offsetVelocity: number;
-  private _animate: boolean;
-  private _mapOrigin: Complex;
-  private _prevMouseState: Complex;
-  private _mapTranslation: Matrix;
-  private _mapScale: Matrix;
+  private _hexSize: ISize;
   private _scale: number;
+  private _scaleVelocity: number;
+  private _finalScale: number;
+  private _offset: IPosition;
+  private _offsetVelocity: number;
+  private _finalPosition: IPosition;
+  private _animate: boolean;
 
-  constructor(ctx: CanvasRenderingContext2D) {
+  constructor (ctx: CanvasRenderingContext2D) {
     this._ctx = ctx;
     this._map = [];
     this._hexSize = { width: 12, height: 12 };
-    this._scaleFactor = 1;
-    this._scaleVelocity = 0.15;
-    this._xOffset = 0;
-    this._yOffset = 0;
-    this._xFinal = 0;
-    this._yFinal = 0;
-    this._offsetVelocity = 0.15;
-    this._animate = false;
-    this._mapOrigin = complex(0, 0);
-    this._prevMouseState = complex(0, 0);
-    this._mapTranslation = identity(3) as Matrix;
-    this._mapScale = identity(3) as Matrix;
     this._scale = 1;
+    this._scaleVelocity = 0.15;
+    this._finalScale = 1;
+    this._offset = { x: 0, y: 0 };
+    this._offsetVelocity = 0.15;
+    this._finalPosition = { x: 0, y: 0 };
+    this._animate = false;
   }
 
-  init(): void {
+  private _drawHex (context: CanvasRenderingContext2D, x: number, y: number, r: number): void {
+    context.moveTo(x, y - r);
+    for (let a = 1; a < 6; ++a) {
+      const angle = (a * Math.PI) / 3;
+
+      context.lineTo(x + Math.sin(angle) * r, y - Math.cos(angle) * r);
+    }
+    context.closePath();
+  }
+
+  private _adjustPosition (position: IPosition): IPosition {
+    return {
+      x: position.x * this._scale + this._offset.x,
+      y: position.y * this._scale + this._offset.y,
+    };
+  }
+
+  private _adjustHexSize (): ISize {
+    return {
+      width: this._hexSize.width * this._scale,
+      height: this._hexSize.height * this._scale,
+    };
+  }
+
+  private _mouseInHex (mousePosition: IPosition, hexPosition: IPosition, hesSize: ISize): boolean {
+    const { x: mouseX, y: mouseY } = mousePosition;
+    const { x: hexX, y: hexY } = hexPosition;
+    const { width: hexWidth, height: hexHeight } = hesSize;
+
+    return (
+      mouseX >= hexX && mouseX <= hexX + hexWidth &&
+      mouseY >= hexY && mouseY <= hexY + hexHeight
+    );
+  }
+
+  private _smoothMove (): void {
+    const moveX = (this._finalPosition.x - this._offset.x) * this._offsetVelocity;
+    const moveY = (this._finalPosition.y - this._offset.y) * this._offsetVelocity;
+
+    this._offset.x += moveX;
+    this._offset.y += moveY;
+
+    this.drawMap();
+
+    const endX: boolean = moveX > 0
+                          ? this._offset.x >= this._finalPosition.x - 1
+                          : this._offset.x <= this._finalPosition.x + 1;
+    const endY: boolean = moveY > 0
+                          ? this._offset.y >= this._finalPosition.y - 1
+                          : this._offset.y <= this._finalPosition.y + 1;
+
+    if (endX && endY) {
+      this._offset.x = this._finalPosition.x;
+      this._offset.y = this._finalPosition.y;
+      this._animate = false;
+      this.drawMap();
+
+      return;
+    }
+
+    requestAnimationFrame(this._smoothMove.bind(this));
+  }
+
+  private _smoothScaling (): void {
+    requestAnimationFrame(this._smoothScaling.bind(this));
+  }
+
+  init (): void {
     this._ctx.lineWidth = 2;
     this._ctx.strokeStyle = 'blue';
     this._ctx.fillStyle = 'grey';
   }
 
-  generateMap(hexCount = 100): void {
+  generateMap (hexCount = 100): void {
     const { width, height } = this._hexSize;
     let xOffset = 0;
     let row = 0;
@@ -78,76 +128,51 @@ export class HexMap {
     }
   }
 
-  private _drawHex(context: CanvasRenderingContext2D, x: number, y: number, r: number): void {
-    context.moveTo(x, y - r);
-    for (let a = 1; a < 6; ++a) {
-      const angle = (a * Math.PI) / 3;
-
-      context.lineTo(x + Math.sin(angle) * r, y - Math.cos(angle) * r);
-    }
-    context.closePath();
-  }
-
-  mouseDrag(mousePosition: Complex): void {
-    const diff = subtract(mousePosition, this._prevMouseState) as Complex;
-
-    this._mapOrigin = add(this._mapOrigin, diff) as Complex;
-    // diff is Vector2 not Vector3
-    this._mapTranslation = multiply(this._mapTranslation, diff);
-
-    //     var diff = mouseState.Position.ToVector2() - prevMouseState.Position.ToVector2();
-    //     mapOrigin += diff;
-
-    //     mapTranslation *= Matrix.CreateTranslation(new Vector3(diff, 0));
-  }
-
-  // scale(scaleFactor: number, mousePosition: Complex): void {
-  scale(scaleFactor: number): void {
-    // const pivot = add(mousePosition, this._mapOrigin);
-    // this._mapScale = multiply(this._mapScale, );
-
-    // var wheelValue = Math.Sign(mouseState.ScrollWheelValue - prevMouseState.ScrollWheelValue) / 50.0f;
-
-    // var pivot = mouseState.Position.ToVector2() - mapOrigin;
-
-    // var T = Matrix.CreateTranslation(-new Vector3(pivot, 0));
-    // var Tinv = Matrix.CreateTranslation(new Vector3(pivot, 0));
-
-    // mapScale *= T * Matrix.CreateScale(1.0f + wheelValue) * Tinv;
-
-    // mapTransform = mapScale * mapTranslation;
-
-    // this._ctx.scale(scaleFactor, scaleFactor);
-
-    this._scale += 1 - scaleFactor;
-
-    this.drawMap();
-  }
-
-  drawMap(): void {
-    const { width, height } = this._hexSize;
-
+  drawMap (): void {
     this._ctx.clearRect(0, 0, window.innerWidth * 2, window.innerHeight * 2);
     // this._ctx.fillStyle = 'grey';
 
-    for (const { x, y } of this._map) {
+    const { width, height } = this._adjustHexSize();
+
+    for (const position of this._map) {
+      const { x, y } = this._adjustPosition(position);
+
       this._ctx.beginPath();
-      this._ctx.fillRect(
-        (x + this._xOffset) * this._scale,
-        (y + this._yOffset) * this._scale,
-        width * this._scale,
-        height * this._scale,
-      );
-      // this._ctx.fillRect(x, y, width, height);
+      this._ctx.fillRect(x, y, width, height);
       // this._drawHex(this._ctx, x, y, width);
       this._ctx.fill();
       this._ctx.closePath();
     }
   }
 
-  move(x: number, y: number): void {
-    this._xFinal = this._xOffset + x;
-    this._yFinal = this._yOffset + y;
+  click (mousePosition: IPosition): void {
+    const hexSize = this._adjustHexSize();
+
+    for (const hex of this._map) {
+      const hexPosition = this._adjustPosition(hex);
+
+      if (this._mouseInHex(mousePosition, hexPosition, hexSize)) {
+        this._ctx.fillStyle = 'green';
+        this._ctx.fillRect(
+          hexPosition.x,
+          hexPosition.y,
+          hexSize.width,
+          hexSize.height,
+        );
+        this._ctx.strokeRect(
+          hexPosition.x - 2,
+          hexPosition.y - 2,
+          hexSize.width + 2,
+          hexSize.height + 2,
+        );
+        this._ctx.fillStyle = 'grey';
+      }
+    }
+  }
+
+  move (offsetX: number, offsetY: number): void {
+    this._finalPosition.x += offsetX;
+    this._finalPosition.y += offsetY;
 
     if (!this._animate) {
       this._animate = true;
@@ -155,52 +180,8 @@ export class HexMap {
     }
   }
 
-  private _smoothMove(): void {
-    const moveX = (this._xFinal - this._xOffset) * this._offsetVelocity;
-    const moveY = (this._yFinal - this._yOffset) * this._offsetVelocity;
-
-    this._xOffset += moveX;
-    this._yOffset += moveY;
-
-    // this._ctx.translate(this._xFinal - this._xOffset, this._yFinal - this._yOffset);
-
+  scale (scaleFactor: number): void {
+    this._scale += scaleFactor;
     this.drawMap();
-
-    const xEnd: boolean = moveX > 0 ? this._xOffset >= this._xFinal - 1 : this._xOffset <= this._xFinal + 1;
-    const yEnd: boolean = moveY > 0 ? this._yOffset >= this._yFinal - 1 : this._yOffset <= this._yFinal + 1;
-
-    if (xEnd && yEnd) {
-      this._ctx.translate(this._xFinal - this._xOffset, this._yFinal - this._yOffset);
-
-      this._xOffset = this._xFinal;
-      this._yOffset = this._yFinal;
-      this._animate = false;
-
-      return;
-    }
-
-    requestAnimationFrame(this._smoothMove.bind(this));
-  }
-
-  click(x: number, y: number): void {
-    const xMouse = x;
-    const yMouse = y;
-    const widthHex = this._hexSize.width * this._scaleFactor;
-    const heightHex = this._hexSize.height * this._scaleFactor;
-
-    console.log(this._scale);
-
-    for (const hex of this._map) {
-      const xHex = (hex.x + this._xOffset) * this._scaleFactor;
-      const yHex = (hex.y + this._yOffset) * this._scaleFactor;
-
-      if (xMouse >= xHex && xMouse <= xHex + widthHex && yMouse >= yHex && yMouse <= yHex + heightHex) {
-        console.log('find hex');
-        this._ctx.fillStyle = 'green';
-        this._ctx.fillRect(xHex, yHex, widthHex, heightHex);
-        this._ctx.strokeRect(xHex - 1, yHex - 1, widthHex + 1, heightHex + 1);
-        this._ctx.fillStyle = 'grey';
-      }
-    }
   }
 }

@@ -37,9 +37,9 @@ export const PlayPage: React.FC = () => {
     window.onwheel = ({ deltaY }) => {
       // console.log('scroll');
       if (deltaY > 0) {
-        map.scale(1.2);
+        map.scale(-0.25);
       } else {
-        map.scale(0.8);
+        map.scale(0.25);
       }
     };
 
@@ -48,7 +48,7 @@ export const PlayPage: React.FC = () => {
 
       // console.log(e);
 
-      map.click(clientX, clientY);
+      map.click({ x: clientX, y: clientY });
     };
 
     window.onkeydown = ({ key }) => {
