@@ -11,7 +11,6 @@ import logo from '../../assets/svg/logo.svg';
 
 export const SettingsPage: React.FC = () => {
   const navigate = useNavigate();
-  const request = useAxiosInstance(navigate);
   const [firstName, setFirstName] = useState<string>('');
   const [lastName, setLastName] = useState<string>('');
   const [avatarUrl, setAvatarUrl] = useState<string>('');
@@ -27,7 +26,7 @@ export const SettingsPage: React.FC = () => {
   };
 
   useEffect(() => {
-    request({
+    useAxiosInstance(navigate)({
       requestConfig: {
         url: '/user/me',
         method: 'get',
