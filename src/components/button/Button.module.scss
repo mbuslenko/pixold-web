@@ -70,7 +70,8 @@
   }
 
   &.facebook {
-    @include primary-auth('facebook-logo');
+    @include primary-with-icon($white, $purple);
+    @include before-icon('facebook-logo');
   }
 
   &.opensea-white {
