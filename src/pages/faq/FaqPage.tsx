@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { blockScrolling, unblockScrolling } from '../../shared/ts/helperFunctions';
 import { GetResponseFaq } from '../../shared/ts/types';
-import { useAxiosInstance } from '../../shared/ts/axiosInstance';
+import { getAxiosInstance } from '../../shared/ts/axiosInstance';
 
 import { Button } from '../../components/button/Button';
 import { Modal } from '../../components/modal/Modal';
@@ -15,7 +15,7 @@ import { HomeFooter } from '../home/HomeFooter';
 import { ShowInfoModalCallback } from './types';
 
 export const FaqPage: React.FC = () => {
-  const request = useAxiosInstance(useNavigate());
+  const request = getAxiosInstance(useNavigate());
   const [faqTopicData, setFaqTopicData] = useState<GetResponseFaq['data']>([]);
   const [isVisibleModal, setIsVisibleModal] = useState<boolean>(false);
   const [modalHeading, setModalHeading] = useState<string>('');

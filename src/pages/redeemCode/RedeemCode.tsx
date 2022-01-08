@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { useAxiosInstance } from '../../shared/ts/axiosInstance';
+import { getAxiosInstance } from '../../shared/ts/axiosInstance';
 
 import { Button } from '../../components/button/Button';
 import { Input } from '../../components/input/Input';
@@ -12,7 +12,7 @@ import './RedeemCode.scss';
 
 export const RedeemCode: React.FC = () => {
   const navigate = useNavigate();
-  const request = useAxiosInstance(navigate);
+  const request = getAxiosInstance(navigate);
   const [redeemCodeKey, setRedeemCodeKey] = useState<string>('');
   const [redeemCodeStatus, setRedeemCodeStatus] = useState<InputStatus>();
   const [isAlertVisible, setIsAlertVisible] = useState<boolean>(false);

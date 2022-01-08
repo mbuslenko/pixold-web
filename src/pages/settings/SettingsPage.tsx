@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { useAxiosInstance } from '../../shared/ts/axiosInstance';
+import { getAxiosInstance } from '../../shared/ts/axiosInstance';
 import { GetResponseUserData } from '../../shared/ts/types';
 
 import { Button } from '../../components/button/Button';
@@ -26,7 +26,7 @@ export const SettingsPage: React.FC = () => {
   };
 
   useEffect(() => {
-    const request = useAxiosInstance(navigate);
+    const request = getAxiosInstance(navigate);
 
     request({
       requestConfig: {

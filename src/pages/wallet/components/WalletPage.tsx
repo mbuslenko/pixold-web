@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { useAxiosInstance } from '../../../shared/ts/axiosInstance';
+import { getAxiosInstance } from '../../../shared/ts/axiosInstance';
 import { GetResponseWallet } from '../../../shared/ts/types';
 
 import './WalletPage.scss';
@@ -12,7 +12,7 @@ import { WalletBalanceContainer } from './WalletBalanceContainer';
 
 export const WalletPage: React.FC = () => {
   const navigate = useNavigate();
-  const request = useAxiosInstance(navigate);
+  const request = getAxiosInstance(navigate);
   const [username, setUsername] = useState<string>('');
   const [pxl, setPxl] = useState<number>(0);
   const [xlm, setXlm] = useState<number>(0);

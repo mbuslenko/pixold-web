@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { PostResponseAuth } from '../../shared/ts/types';
-import { useAxiosInstance } from '../../shared/ts/axiosInstance';
+import { getAxiosInstance } from '../../shared/ts/axiosInstance';
 import { IPostDataAuth } from '../../shared/ts/interfaces';
 
 import './AuthLoadPage.scss';
@@ -10,7 +10,7 @@ import loaderLogo from '../../assets/svg/loader-logo.svg';
 
 export const AuthLoadPage: React.FC = () => {
   const navigate = useNavigate();
-  const request = useAxiosInstance(navigate);
+  const request = getAxiosInstance(navigate);
   const responseData: IPostDataAuth = JSON.parse(window.localStorage.getItem('responseData') as string);
 
   if (!responseData) {
