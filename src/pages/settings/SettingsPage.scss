@@ -77,6 +77,12 @@
   margin-top: 6.5em;
 }
 
+@media screen and (max-width: $screen-max-width-medium) {
+  .settings-btn-logout {
+    margin-top: 5.1875em;
+  }
+}
+
 @media screen and (max-width: $screen-max-width-smallest) {
   .settings-header {
     justify-content: flex-start;
@@ -101,9 +107,5 @@
 
   .settings-btn {
     margin-top: 1.5em;
-  }
-
-  .settings-btn-logout {
-    margin-top: 5.1875em;
   }
 }
