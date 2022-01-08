@@ -6,7 +6,7 @@ export type InputStatus = 'disabled' | 'valid' | 'invalid';
 export type InputType = 'text' | 'number' | 'password' | 'email';
 
 export type ButtonTheme = PrimaryButtonTheme | SecondaryButtonTheme;
-export type PrimaryButtonTheme = 'pink' | 'black-white' | 'google' | 'apple';
+export type PrimaryButtonTheme = 'pink' | 'black-white' | 'google' | 'facebook';
 export type SecondaryButtonTheme = 'black-white' | 'yellow' | 'red' | 'blue';
 
 export type ModalTheme = 'blue-dark';

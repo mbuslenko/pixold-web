@@ -50,8 +50,40 @@ export interface IPostDataUsername {
   username: string;
 }
 
+export interface IPostDataRedeemCode {
+  code: string;
+}
+
 export interface IGetResponseUsernameCheck {
   result: boolean;
+}
+
+export interface IGetResponseUserData {
+  username: string;
+  firstName: string;
+  lastName: string;
+  avatarUrl: string;
+  wallet: string;
+}
+
+export interface IReactFacebookFailureResponse {
+  status?: string | undefined;
+}
+
+export interface IReactFacebookLoginInfo {
+  id: string;
+  userID: string;
+  accessToken: string;
+  name: string;
+  email: string;
+  picture: {
+    data: {
+      height: number;
+      is_silhouette: boolean;
+      url: string;
+      width: number;
+    };
+  };
 }
 
 export interface IAxiosRequestConfig {

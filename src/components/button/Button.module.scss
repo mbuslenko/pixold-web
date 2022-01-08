@@ -62,8 +62,8 @@
     @include primary-auth('google-logo');
   }
 
-  &.apple {
-    @include primary-auth('apple-logo');
+  &.facebook {
+    @include primary-auth('facebook-logo');
   }
 
   &:not(&:disabled):hover {
