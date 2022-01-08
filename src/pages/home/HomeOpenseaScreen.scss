@@ -18,11 +18,11 @@
   overflow: clip visible;
 }
 
-.opensea-screen-content {
+.opensea-screen-info {
   align-self: end;
 }
 
-.opensea-screen-heading {
+.opensea-screen-info-heading {
   font: {
     family: Montserrat;
     weight: 900;
@@ -31,7 +31,7 @@
   margin-bottom: 48px;
 }
 
-.opensea-screen-text {
+.opensea-screen-info-text {
   font-size: 24px;
 }
 
@@ -44,7 +44,7 @@
   }
 }
 
-.opensea-background-card {
+.card-image {
   @include opensea-screen-card(-30%, 340px);
 }
 
@@ -73,16 +73,10 @@
   border-radius: 51px;
 }
 
-.opensea-card-img {
+.opensea-card-hexagon {
   display: block;
   width: 100%;
   border-radius: 38px;
-}
-
-.opensea-card-background {
-  position: absolute;
-  top: 0;
-  left: 0;
 }
 
 .opensea-card-content {
@@ -133,7 +127,7 @@
 }
 
 @media screen and (max-width: $screen-max-width-biggest) {
-  .opensea-background-card {
+  .card-image {
     left: 39%;
     right: unset;
     transform: unset;
@@ -141,7 +135,7 @@
 }
 
 @media screen and (max-width: $screen-max-width-big) {
-  .opensea-background-card {
+  .card-image {
     left: unset;
     right: -60%;
   }
@@ -152,12 +146,16 @@
     padding: 38px 20px 38px 0;
   }
 
+  .card-image {
+    display: none;
+  }
+
   .opensea-card-border {
     transform: unset;
   }
 
-  .opensea-background-card {
-    display: none;
+  .opensea-screen-purchase-link {
+    align-self: center;
   }
 }
 
@@ -169,22 +167,26 @@
     gap: 32px;
   }
 
-  .opensea-screen-content {
+  .opensea-screen-info {
     text-align: center;
   }
 
-  .opensea-screen-heading {
+  .opensea-screen-info-heading {
     font-size: 30px;
     margin-bottom: 20px;
   }
 
-  .opensea-screen-text {
+  .opensea-screen-info-text {
     font-size: 15px;
   }
 
   .opensea-card-container {
     grid-row-start: unset;
     grid-row-end: unset;
+  }
+
+  .card-image {
+    display: none;
   }
 
   .opensea-card-border {
@@ -203,12 +205,12 @@
     border-radius: 16px 16px 0 0;
   }
 
-  .opensea-card-info-heading {
-    display: block;
+  .opensea-card-hexagon {
+    border-radius: 0;
   }
 
-  .opensea-card-img {
-    border-radius: 0;
+  .opensea-card-content {
+    padding: 20px 16px;
   }
 
   .opensea-card-name {
@@ -226,6 +228,7 @@
   }
 
   .opensea-card-info-heading {
+    display: block;
     color: $font-black;
     margin-bottom: 8px;
     font: {
@@ -239,14 +242,6 @@
       weight: 600;
       size: 18px;
     }
-  }
-
-  .opensea-card-content {
-    padding: 20px 16px;
-  }
-
-  .opensea-background-card {
-    display: none;
   }
 
   .opensea-screen-purchase-link {

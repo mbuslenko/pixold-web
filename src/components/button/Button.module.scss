@@ -91,11 +91,11 @@
   }
 
   &:not(&:disabled):hover {
-    box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.25);
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.25);
   }
 
   &:not(&:disabled):active {
-    box-shadow: 0px 2px 5px rgba(255, 255, 255, 0.2);
+    box-shadow: 0 2px 5px rgba(255, 255, 255, 0.2);
   }
 
   &:disabled {

@@ -13,8 +13,8 @@ export const CoinPage: React.FC = () => {
   return (
     <section className="coin-page">
       <div className="coin-page-background">
-        <img src={pageBackgroundImg1} />
-        <img src={pageBackgroundImg2} />
+        <img src={pageBackgroundImg1} alt='' />
+        <img src={pageBackgroundImg2} alt='' />
       </div>
       <main className="coin-page-content">
         <div>
@@ -24,7 +24,7 @@ export const CoinPage: React.FC = () => {
         <div className="coin-page-text-container">
           <h1>Pixel coin</h1>
           <p>Take the play to real life</p>
-          <img className="pixel-coin-circle" src={pixelCoinCircleImg} />
+          <img className="pixel-coin-circle" src={pixelCoinCircleImg} alt='' />
         </div>
 
         <nav className="coin-page-navigation">

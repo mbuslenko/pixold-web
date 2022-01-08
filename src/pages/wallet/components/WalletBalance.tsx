@@ -35,7 +35,7 @@ export const WalletBalance: React.FC<WalletBalanceProps> = ({ balance, currency 
       case 'PXL':
         return <PixelCoinLogoSvg className="wallet-balance-icon" color="purple" />;
       case 'USD':
-        return <img className="wallet-balance-icon" src={dollarSignImg} />;
+        return <img className="wallet-balance-icon" alt='' src={dollarSignImg} />;
       case 'XLM':
         return <LumenLogoSvg className="wallet-balance-icon" color="purple" />;
     }

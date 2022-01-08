@@ -27,20 +27,20 @@ export const HomeOpenseaScreen: React.FC = () => {
 
   return (
     <section className="opensea-screen">
-      <div className="opensea-screen-content">
-        <h2 className="opensea-screen-heading">There will be a header</h2>
-        <p className="opensea-screen-text">
+      <div className="opensea-screen-info">
+        <h2 className="opensea-screen-info-heading">There will be a header</h2>
+        <p className="opensea-screen-info-text">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Blandit ultricies aliquam quis in accumsan, vel ut.
           Posuere suscipit neque scelerisque libero. Quisque ipsum tristique arcu velit facilisi nec lectus. Commodo sed
           elementum congue consequat.
         </p>
       </div>
       <div className="opensea-card-container">
-        <img className="opensea-background-card" src={hexagonScreenCardImg} />
-        <img className="opensea-card-background" src={hexagonCardBackgroundImg} />
-        <div className="opensea-card-border">
-          <article className="opensea-card">
-            <img className="opensea-card-img" src={hexagonCardImg} />
+        <img className="card-image" alt='' src={hexagonScreenCardImg} />
+        <img className="opensea-card-background" alt='' src={hexagonCardBackgroundImg} />
+        <article className="opensea-card-border">
+          <div className="opensea-card">
+            <img className="opensea-card-hexagon" alt='' src={hexagonCardImg} />
             <div className="opensea-card-content">
               <h3 className="opensea-card-name">{hexagonInfo?.name}</h3>
               <div className="opensea-card-info">
@@ -51,8 +51,8 @@ export const HomeOpenseaScreen: React.FC = () => {
                 </div>
               </div>
             </div>
-          </article>
-        </div>
+          </div>
+        </article>
       </div>
       <a className="opensea-screen-purchase-link" target="_blank" href={hexagonInfo?.purchaseLink ?? ''}>
         <Button
