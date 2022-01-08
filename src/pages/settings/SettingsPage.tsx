@@ -26,9 +26,7 @@ export const SettingsPage: React.FC = () => {
   };
 
   useEffect(() => {
-    const request = getAxiosInstance(navigate);
-
-    request({
+    getAxiosInstance(navigate)({
       requestConfig: {
         url: '/user/me',
         method: 'get',

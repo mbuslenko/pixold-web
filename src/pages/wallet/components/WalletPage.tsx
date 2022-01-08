@@ -12,7 +12,6 @@ import { WalletBalanceContainer } from './WalletBalanceContainer';
 
 export const WalletPage: React.FC = () => {
   const navigate = useNavigate();
-  const request = getAxiosInstance(navigate);
   const [username, setUsername] = useState<string>('');
   const [pxl, setPxl] = useState<number>(0);
   const [xlm, setXlm] = useState<number>(0);
@@ -27,14 +26,14 @@ export const WalletPage: React.FC = () => {
     setUsd(balanceInUSD);
   };
 
-  const errorCallback = (error: any): void => {
-    if (error.response.status === 400) {
-      navigate('/coin');
-    }
-  };
-
   useEffect(() => {
-    request({
+    const errorCallback = (error: any): void => {
+      if (error.response.status === 400) {
+        navigate('/coin');
+      }
+    };
+
+    getAxiosInstance(navigate)({
       requestConfig: {
         url: '/wallet',
         method: 'get',

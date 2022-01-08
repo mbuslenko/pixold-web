@@ -10,26 +10,25 @@ import loaderLogo from '../../assets/svg/loader-logo.svg';
 
 export const AuthLoadPage: React.FC = () => {
   const navigate = useNavigate();
-  const request = getAxiosInstance(navigate);
   const responseData: IPostDataAuth = JSON.parse(window.localStorage.getItem('responseData') as string);
 
-  if (!responseData) {
-    navigate('/auth');
-  }
-
-  const responseCallback = (response: PostResponseAuth) => {
-    window.localStorage.setItem('userId', response.data.userId);
-    window.localStorage.setItem('accessToken', response.data.accessToken);
-
-    if (response.data.updateUsername === true) {
-      return navigate('/username');
-    } else {
-      return navigate('/play');
-    }
-  };
-
   useEffect(() => {
-    request({
+    if (!responseData) {
+      navigate('/auth');
+    }
+
+    const responseCallback = (response: PostResponseAuth) => {
+      window.localStorage.setItem('userId', response.data.userId);
+      window.localStorage.setItem('accessToken', response.data.accessToken);
+
+      if (response.data.updateUsername === true) {
+        return navigate('/username');
+      } else {
+        return navigate('/play');
+      }
+    };
+
+    getAxiosInstance(navigate)({
       requestConfig: {
         method: 'post',
         url: '/auth',

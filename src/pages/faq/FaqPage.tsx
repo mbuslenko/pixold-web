@@ -15,7 +15,7 @@ import { HomeFooter } from '../home/HomeFooter';
 import { ShowInfoModalCallback } from './types';
 
 export const FaqPage: React.FC = () => {
-  const request = getAxiosInstance(useNavigate());
+  const navigate = useNavigate();
   const [faqTopicData, setFaqTopicData] = useState<GetResponseFaq['data']>([]);
   const [isVisibleModal, setIsVisibleModal] = useState<boolean>(false);
   const [modalHeading, setModalHeading] = useState<string>('');
@@ -34,7 +34,7 @@ export const FaqPage: React.FC = () => {
   };
 
   useEffect(() => {
-    request({
+    getAxiosInstance(navigate)({
       requestConfig: {
         method: 'get',
         url: '/faq',
