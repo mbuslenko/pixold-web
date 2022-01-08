@@ -8,7 +8,7 @@ const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL,
 });
 
-export const useAxiosInstance = (navigate: NavigateFunction): AxiosInstanceFunction => {
+export const getAxiosInstance = (navigate: NavigateFunction): AxiosInstanceFunction => {
   return ({ requestConfig, onResponse, onError }) => {
     const accessToken = window.localStorage.getItem('accessToken');
 
@@ -21,6 +21,7 @@ export const useAxiosInstance = (navigate: NavigateFunction): AxiosInstanceFunct
       .then(onResponse)
       .catch((error) => {
         if (error.response.status === 403 || error.response.status === 401) {
+          window.localStorage.removeItem('accessToken');
           navigate('/auth');
 
           return;

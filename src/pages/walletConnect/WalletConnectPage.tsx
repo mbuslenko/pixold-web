@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { useAxiosInstance } from '../../shared/ts/axiosInstance';
+import { getAxiosInstance } from '../../shared/ts/axiosInstance';
 
 import { Button } from '../../components/button/Button';
 import { Input } from '../../components/input/Input';
@@ -13,7 +13,7 @@ import './WalletConnectPage.scss';
 
 export const WalletConnectPage: React.FC = () => {
   const navigate = useNavigate();
-  const request = useAxiosInstance(navigate);
+  const request = getAxiosInstance(navigate);
   const [publicKey, setPublicKey] = useState<string>('');
   const [secretKey, setSecretKey] = useState<string>('');
   const [publicKeyStatus, setPublicKeyStatus] = useState<InputStatus>();

@@ -69,9 +69,8 @@
     @include before-icon('google-logo');
   }
 
-  &.apple {
-    @include primary-with-icon($white, $purple);
-    @include before-icon('apple-logo');
+  &.facebook {
+    @include primary-auth('facebook-logo');
   }
 
   &.opensea-white {

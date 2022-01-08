@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { GetResponseUsernameCheck } from '../../shared/ts/types';
-import { useAxiosInstance } from '../../shared/ts/axiosInstance';
+import { getAxiosInstance } from '../../shared/ts/axiosInstance';
 
 import { Button } from '../../components/button/Button';
 import { Input } from '../../components/input/Input';
@@ -12,7 +12,7 @@ import './UsernamePage.scss';
 
 export const UsernamePage: React.FC = () => {
   const navigate = useNavigate();
-  const request = useAxiosInstance(navigate);
+  const request = getAxiosInstance(navigate);
 
   const [username, setUsername] = useState<string>('');
   const [usernameStatus, setUsernameStatus] = useState<InputStatus>();
