@@ -15,10 +15,12 @@ export const SettingsPage: React.FC = () => {
   const [lastName, setLastName] = useState<string>('');
   const [avatarUrl, setAvatarUrl] = useState<string>('');
   const [wallet, setWallet] = useState<string>('');
+  const [username, setUsername] = useState<string>('');
 
   const getUserResponseCallback = (response: GetResponseUserData): void => {
-    const { avatarUrl, firstName, lastName, wallet } = response.data;
+    const { username, avatarUrl, firstName, lastName, wallet } = response.data;
 
+    setUsername(username);
     setAvatarUrl(avatarUrl);
     setFirstName(firstName);
     lastName === null ? setLastName('') : setLastName(lastName);
@@ -44,7 +46,7 @@ export const SettingsPage: React.FC = () => {
   };
 
   const logOutBtnCallback = () => {
-    window.localStorage.removeItem('accessToken');
+    window.localStorage.clear();
     navigate('/auth');
   };
 
@@ -71,8 +73,8 @@ export const SettingsPage: React.FC = () => {
       <main className="settings-content">
         <div>
           <img src={avatarUrl} alt="User Photo" className="settings-user-photo" />
-          <h2 className="settings-title-surname">Name Surname</h2>
-          <p className="settings-surname">{`${firstName} ${lastName}`}</p>
+          <h2 className="settings-title-surname">{`${firstName} ${lastName}`}</h2>
+          <p className="settings-surname">{username}</p>
           <Button
             text="Change username"
             appearance={{ priority: 'secondary', theme: 'black-white' }}
