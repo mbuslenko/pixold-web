@@ -1,40 +1,33 @@
-export interface IPosition {
-  x: number;
-  y: number;
-}
-
-export interface ISize {
-  width: number;
-  height: number;
-}
+import { Position } from './Position';
+import { Size } from './Size';
 
 export class HexMap {
   private _ctx: CanvasRenderingContext2D;
-  private _map: IPosition[];
-  private _hexSize: ISize;
+  private _map: Position[];
+  private _hexSize: Size;
   private _scale: number;
   private _scaleVelocity: number;
   private _finalScale: number;
-  private _offset: IPosition;
+  private _offset: Position;
   private _offsetVelocity: number;
-  private _finalPosition: IPosition;
+  private _finalPosition: Position;
   private _animate: boolean;
   private _isDragged: boolean;
-  private _dragStartPosition: IPosition;
+  private _dragStartPosition: Position;
 
   constructor (ctx: CanvasRenderingContext2D) {
     this._ctx = ctx;
     this._map = [];
-    this._hexSize = { width: 12, height: 12 };
+    this._hexSize = new Size(12, 12);
     this._scale = 1;
     this._scaleVelocity = 0.05;
     this._finalScale = 1;
-    this._offset = { x: 0, y: 0 };
+    this._offset = new Position(0, 0);
     this._offsetVelocity = 0.15;
-    this._finalPosition = { x: 0, y: 0 };
+    this._finalPosition = new Position(0, 0);
     this._animate = false;
     this._isDragged = false;
-    this._dragStartPosition = { x: 0, y: 0 };
+    this._dragStartPosition = new Position(0, 0);
   }
 
   private _drawHex (context: CanvasRenderingContext2D, x: number, y: number, r: number): void {
@@ -47,21 +40,20 @@ export class HexMap {
     context.closePath();
   }
 
-  private _adjustPosition (position: IPosition): IPosition {
-    return {
-      x: position.x * this._scale + this._offset.x,
-      y: position.y * this._scale + this._offset.y,
-    };
+  private _adjustPosition (position: Position): Position {
+    return position
+      .copy()
+      .scale(this._scale)
+      .add(this._offset);
   }
 
-  private _adjustHexSize (): ISize {
-    return {
-      width: this._hexSize.width * this._scale,
-      height: this._hexSize.height * this._scale,
-    };
+  private _adjustHexSize (): Size {
+    return this._hexSize
+      .copy()
+      .scale(this._scale);
   }
 
-  private _mouseInHex (mousePosition: IPosition, hexPosition: IPosition, hesSize: ISize): boolean {
+  private _mouseInHex (mousePosition: Position, hexPosition: Position, hesSize: Size): boolean {
     const { x: mouseX, y: mouseY } = mousePosition;
     const { x: hexX, y: hexY } = hexPosition;
     const { width: hexWidth, height: hexHeight } = hesSize;
@@ -77,13 +69,19 @@ export class HexMap {
       return;
     }
 
-    const moveX = (this._finalPosition.x - this._offset.x) * this._offsetVelocity;
-    const moveY = (this._finalPosition.y - this._offset.y) * this._offsetVelocity;
+    // const moveX = (this._finalPosition.x - this._offset.x) * this._offsetVelocity;
+    // const moveY = (this._finalPosition.y - this._offset.y) * this._offsetVelocity;
 
-    this._offset.x += moveX;
-    this._offset.y += moveY;
+    // this._offset.x += moveX;
+    // this._offset.y += moveY;
 
-    this.drawMap();
+    this._offset.add(
+      this._finalPosition
+        .subtract(this._offset)
+        .scale(this._offsetVelocity)
+    );
+
+    // this.drawMap();
 
     // const endX: boolean = moveX > 0
     //                       ? this._offset.x >= this._finalPosition.x - 1
@@ -147,7 +145,7 @@ export class HexMap {
 
       const y = row * height + row * height;
 
-      this._map.push({ x, y });
+      this._map.push(new Position(x, y));
     }
   }
 
@@ -168,7 +166,7 @@ export class HexMap {
     }
   }
 
-  click (mousePosition: IPosition): void {
+  click (mousePosition: Position): void {
     const hexSize = this._adjustHexSize();
 
     for (const hex of this._map) {
@@ -208,14 +206,14 @@ export class HexMap {
     this._smoothScaling();
   }
 
-  dragStart (mousePosition: IPosition): void {
+  dragStart (mousePosition: Position): void {
     this._isDragged = true;
     this._animate = true;
-    this._dragStartPosition = { x: mousePosition.x, y: mousePosition.y };
+    this._dragStartPosition = new Position(mousePosition.x, mousePosition.y);
     this._smoothMove();
   }
 
-  dragMove (mousePosition: IPosition): void {
+  dragMove (mousePosition: Position): void {
     if (!this._isDragged) {
       return;
     }
@@ -226,7 +224,7 @@ export class HexMap {
     // this._smoothMove();
   }
 
-  dragEnd (mousePosition: IPosition): void {
+  dragEnd (mousePosition: Position): void {
     if (!this._isDragged) {
       return;
     }
@@ -239,7 +237,7 @@ export class HexMap {
     // this._smoothMove();
   }
 
-  zoom (mousePosition: IPosition, scaleFactor: number): void {
+  zoom (mousePosition: Position, scaleFactor: number): void {
     this.move(
       mousePosition.x - window.innerWidth,
       mousePosition.y - window.innerHeight,

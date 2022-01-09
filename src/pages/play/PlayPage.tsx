@@ -2,7 +2,8 @@ import { useLayoutEffect, useRef } from 'react';
 
 import './PlayPage.scss';
 import { PlayMenu } from './PlayMenu';
-import { HexMap, IPosition } from './HexMap';
+import { HexMap } from './hexMap/HexMap';
+import { Position } from './hexMap/Position';
 
 export const PlayPage: React.FC = () => {
   // const [hexMap, setHexMap] = useState<HexMap>();
@@ -45,33 +46,33 @@ export const PlayPage: React.FC = () => {
     window.onclick = ({ clientX, clientY }) => {
       // console.log(e);
 
-      map.click({ x: clientX, y: clientY });
+      map.click(new Position(clientX, clientY));
     };
 
     window.ondblclick = ({ clientX, clientY }) => {
-      map.zoom({ x: clientX, y: clientY }, 0.5);
+      map.zoom(new Position(clientX, clientY), 0.5);
     };
 
     window.onmousedown = e => {
-      map.dragStart({ x: e.clientX, y: e.clientY });
+      map.dragStart(new Position(e.clientX, e.clientY));
     };
 
     window.onmousemove = e => {
-      map.dragMove({ x: e.clientX, y: e.clientY });
+      map.dragMove(new Position(e.clientX, e.clientY));
     };
 
     window.onmouseup = e => {
-      map.dragEnd({ x: e.clientX, y: e.clientY });
+      map.dragEnd(new Position(e.clientX, e.clientY));
     };
 
-    let lastTouch: IPosition;
+    let lastTouch: Position;
 
     window.ontouchstart = ({ touches }) => {
-      map.dragStart({ x: touches[0].clientX, y: touches[0].clientY });
+      map.dragStart(new Position(touches[0].clientX, touches[0].clientY));
     };
 
     window.ontouchmove = ({ touches }) => {
-      lastTouch = { x: touches[0].clientX, y: touches[0].clientY };
+      lastTouch = new Position(touches[0].clientX, touches[0].clientY);
       map.dragMove(lastTouch);
     };
 
