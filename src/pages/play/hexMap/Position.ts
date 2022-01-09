@@ -28,15 +28,19 @@ export class Position {
     return  this;
   }
 
-  isAfter (position: Position): boolean {
-    return this.x >= position.x && this.y >= position.y;
-  }
+  // isAfter (position: Position): boolean {
+  //   return this.x >= position.x && this.y >= position.y;
+  // }
 
-  isBefore (position: Position): boolean {
-    return this.x <= position.x && this.y <= position.y;
-  }
+  // isBefore (position: Position): boolean {
+  //   return this.x <= position.x && this.y <= position.y;
+  // }
 
   copy (): Position {
     return new Position(this.x, this.y);
+  }
+
+  static CreateFromMouseEvent (e: MouseEvent): Position {
+    return new Position(e.clientX, e.clientY);
   }
 }

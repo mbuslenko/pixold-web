@@ -8,6 +8,7 @@ import { Position } from './hexMap/Position';
 export const PlayPage: React.FC = () => {
   // const [hexMap, setHexMap] = useState<HexMap>();
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  let ctx;
 
   useLayoutEffect(() => {
     console.log('effect');
@@ -17,7 +18,7 @@ export const PlayPage: React.FC = () => {
       return;
     }
 
-    const ctx = canvas.getContext('2d');
+    ctx = canvas.getContext('2d');
 
     if (!ctx) {
       return;
@@ -29,10 +30,9 @@ export const PlayPage: React.FC = () => {
 
     const map = new HexMap(ctx);
 
-    // console.log(map);
     map.init();
     map.generateMap(3000);
-    map.drawMap();
+    // map.drawMap();
 
     window.onwheel = ({ deltaY }) => {
       // console.log('scroll');
@@ -43,26 +43,24 @@ export const PlayPage: React.FC = () => {
       }
     };
 
-    window.onclick = ({ clientX, clientY }) => {
-      // console.log(e);
-
-      map.click(new Position(clientX, clientY));
+    window.onclick = (e) => {
+      map.click(Position.CreateFromMouseEvent(e));
     };
 
-    window.ondblclick = ({ clientX, clientY }) => {
-      map.zoom(new Position(clientX, clientY), 0.5);
+    window.ondblclick = (e) => {
+      map.zoom(Position.CreateFromMouseEvent(e), 0.5);
     };
 
     window.onmousedown = e => {
-      map.dragStart(new Position(e.clientX, e.clientY));
+      map.dragStart(Position.CreateFromMouseEvent(e));
     };
 
     window.onmousemove = e => {
-      map.dragMove(new Position(e.clientX, e.clientY));
+      map.dragMove(Position.CreateFromMouseEvent(e));
     };
 
     window.onmouseup = e => {
-      map.dragEnd(new Position(e.clientX, e.clientY));
+      map.dragEnd(Position.CreateFromMouseEvent(e));
     };
 
     let lastTouch: Position;
