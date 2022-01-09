@@ -1,0 +1,41 @@
+@import '../../shared/scss/variables.scss';
+
+.faq-topic:not(.faq-topic:last-child) {
+  margin-bottom: 11.625em;
+}
+
+.faq-topic-heading {
+  color: $purple;
+  font: {
+    weight: 700;
+    size: 40px;
+  }
+  padding-bottom: 0.5em;
+  border-bottom: 2px solid $purple;
+}
+
+.faq-question-container {
+  padding: 5.25em 1.625em 0;
+  display: grid;
+  grid-template-columns: repeat(2, calc(50% - 4.875em));
+  gap: 4.625em 9.75em;
+}
+
+@media screen and (max-width: $screen-max-width-medium) {
+  .faq-question-container {
+    grid-template-columns: repeat(2, calc(50% - 2.3125em));
+    gap: 4.625em;
+  }
+}
+
+@media screen and (max-width: $screen-max-width-small) {
+  .faq-topic-heading {
+    font-size: 20px;
+  }
+
+  .faq-question-container {
+    padding: 2.75em 3.25em 0;
+    grid-template-columns: 100%;
+    gap: 4.625em 0;
+  }
+}

@@ -1,0 +1,37 @@
+@import '../../../shared/scss/variables.scss';
+
+.wallet-balance {
+  border: 1px solid $purple;
+  border-radius: 14px;
+  background-color: rgba($purple, 0.1);
+  padding-left: 0.4em;
+  height: 88px;
+  width: 414px;
+  line-height: 88px;
+  font: {
+    size: 50px;
+    weight: 600;
+  }
+}
+
+.wallet-balance-icon {
+  margin-right: 0.4em;
+  width: 34px;
+  height: 34px;
+}
+
+@media screen and (max-width: $screen-max-width-smallest) {
+  .wallet-balance {
+    width: 255px;
+    height: 46px;
+    line-height: 46px;
+    font-size: 25px;
+    padding-left: 0.48em;
+  }
+
+  .wallet-balance-icon {
+    margin-right: 0.48em;
+    height: 18px;
+    width: 18px;
+  }
+}

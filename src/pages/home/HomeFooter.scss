@@ -1,0 +1,52 @@
+@import '../../shared/scss/variables.scss';
+
+.home-footer {
+  max-width: 1440px;
+  padding: 0 107px 50px;
+  margin: 0 auto;
+  font-size: 15px;
+  line-height: 18px;
+  letter-spacing: -0.02em;
+  color: $font-black;
+  text-align: center;
+}
+
+.home-footer-top-text {
+  margin-bottom: 15px;
+}
+
+.home-footer-wrap {
+  margin-top: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 15px;
+}
+
+.home-footer-year {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 29px;
+}
+
+@media screen and (max-width: $screen-max-width-smallest) {
+  .home-footer {
+    padding: 0 14px 25px;
+    font-size: 10px;
+    line-height: 12px;
+  }
+
+  .home-footer-wrap {
+    margin-top: 30px;
+  }
+
+  .home-footer-year {
+    font-size: 10px;
+    line-height: 12px;
+  }
+
+  .home-footer-logo {
+    height: 38px;
+    width: 80px;
+  }
+}

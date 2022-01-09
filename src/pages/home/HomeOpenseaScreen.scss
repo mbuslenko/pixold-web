@@ -1,0 +1,263 @@
+@import '../../shared/scss/variables.scss';
+
+@mixin opensea-screen-card ($bottom: 0, $translateX: 0) {
+  position: absolute;
+  top: 0;
+  bottom: $bottom;
+  left: 0;
+  right: 0;
+  margin: auto;
+  transform: translateX($translateX);
+}
+
+.opensea-screen {
+  height: 830px;
+  display: grid;
+  grid-template-columns: 60% 40%;
+  padding: 38px 110px 38px 0;
+  overflow: clip visible;
+}
+
+.opensea-screen-info {
+  align-self: end;
+}
+
+.opensea-screen-info-heading {
+  font: {
+    family: Montserrat;
+    weight: 900;
+    size: 40px;
+  }
+  margin-bottom: 48px;
+}
+
+.opensea-screen-info-text {
+  font-size: 24px;
+}
+
+.opensea-card-container {
+  z-index: -1;
+  position: relative;
+  grid-row: {
+    start: 1;
+    end: 3;
+  }
+}
+
+.card-image {
+  @include opensea-screen-card(-30%, 340px);
+}
+
+.opensea-card-background {
+  @include opensea-screen-card;
+
+  z-index: -2;
+}
+
+.opensea-card-border {
+  @include opensea-screen-card;
+
+  transform: rotate(-24deg);
+  width: 454px;
+  padding: 2px;
+  background-image: linear-gradient(to top, rgba(#523E35, 0), #292929),
+                    linear-gradient(to bottom right, rgba($white, 0) 80%, rgba($white, 0.5));
+  border-radius: 51px;
+  height: max-content;
+  overflow: hidden;
+}
+
+.opensea-card {
+  background-color: #0F0F0F;
+  padding: 15px 15px 30px;
+  border-radius: 51px;
+}
+
+.opensea-card-hexagon {
+  display: block;
+  width: 100%;
+  border-radius: 38px;
+}
+
+.opensea-card-content {
+  padding-top: 15px;
+}
+
+.opensea-card-name {
+  font: {
+    size: 100px;
+    weight: 500;
+  }
+  background-image: linear-gradient(to right, #8796E6, $black);
+  background-clip: text;
+  color: transparent;
+  overflow-wrap: anywhere;
+  line-height: 80px;
+  letter-spacing: -0.06em;
+  margin-bottom: 28px;
+}
+
+.opensea-card-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0 15px;
+}
+
+.opensea-card-info-heading {
+  display: none;
+}
+
+.opensea-card-info-text {
+  font: {
+    weight: 500;
+    size: 22px;
+  }
+}
+
+.opensea-screen-purchase-link {
+  justify-self: end;
+  align-self: end;
+  margin-right: 50px;
+  text-decoration: none;
+}
+
+.opensea-screen-purchase-button-small {
+  display: none;
+}
+
+@media screen and (max-width: $screen-max-width-biggest) {
+  .card-image {
+    left: 39%;
+    right: unset;
+    transform: unset;
+  }
+}
+
+@media screen and (max-width: $screen-max-width-big) {
+  .card-image {
+    left: unset;
+    right: -60%;
+  }
+}
+
+@media screen and (max-width: $screen-max-width-medium) {
+  .opensea-screen {
+    padding: 38px 20px 38px 0;
+  }
+
+  .card-image {
+    display: none;
+  }
+
+  .opensea-card-border {
+    transform: unset;
+  }
+
+  .opensea-screen-purchase-link {
+    align-self: center;
+  }
+}
+
+@media screen and (max-width: $screen-max-width-small) {
+  .opensea-screen {
+    height: auto;
+    padding: 125px 32px 176px;
+    grid-template-columns: 100%;
+    gap: 32px;
+  }
+
+  .opensea-screen-info {
+    text-align: center;
+  }
+
+  .opensea-screen-info-heading {
+    font-size: 30px;
+    margin-bottom: 20px;
+  }
+
+  .opensea-screen-info-text {
+    font-size: 15px;
+  }
+
+  .opensea-card-container {
+    grid-row-start: unset;
+    grid-row-end: unset;
+  }
+
+  .card-image {
+    display: none;
+  }
+
+  .opensea-card-background {
+    display: none;
+  }
+
+  .opensea-card-border {
+    box-shadow: 0px 4px 200px #B0B3D1;
+    position: relative;
+    border-radius: 16px 16px 0 0;
+    padding: 0;
+    width: 312px;
+    background: none;
+    transform: unset;
+  }
+
+  .opensea-card {
+    position: relative;
+    padding: 0;
+    border-radius: 16px 16px 0 0;
+  }
+
+  .opensea-card-hexagon {
+    border-radius: 0;
+  }
+
+  .opensea-card-content {
+    padding: 20px 16px;
+  }
+
+  .opensea-card-name {
+    color: $white;
+    font: {
+      weight: 700;
+      size: 20px;
+    }
+    line-height: 16px;
+    margin-bottom: 14px;
+  }
+
+  .opensea-card-info {
+    padding: 0;
+  }
+
+  .opensea-card-info-heading {
+    display: block;
+    color: $font-black;
+    margin-bottom: 8px;
+    font: {
+      weight: 600;
+      size: 16px;
+    }
+  }
+
+  .opensea-card-info-text {
+    font: {
+      weight: 600;
+      size: 18px;
+    }
+  }
+
+  .opensea-screen-purchase-link {
+    justify-self: center;
+    margin-right: 0;
+  }
+
+  .opensea-screen-purchase-button {
+    display: none;
+  }
+
+  .opensea-screen-purchase-button-small {
+    display: inherit;
+  }
+}

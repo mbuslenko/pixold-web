@@ -1,0 +1,66 @@
+@import '../../shared/scss/variables.scss';
+
+.login-wrap {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.login-content {
+  padding-top: 136px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo {
+  width: 47px;
+  height: 54px;
+  background-image: url('../../assets/svg/logo.svg');
+  background-repeat: no-repeat;
+}
+
+.login-title {
+  font-family: Montserrat;
+  font-weight: bold;
+  font-size: 50px;
+  line-height: 61px;
+  letter-spacing: -0.02em;
+  padding-top: 144px;
+}
+
+.login-desc {
+  padding-top: 15px;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: -0.02em;
+  text-align: center;
+}
+
+.login-btn-wrap {
+  padding-top: 86px;
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+}
+
+@media screen and (max-width: $screen-max-width-smallest) {
+  .login-content {
+    padding-top: 98px;
+  }
+
+  .login-title {
+    font-size: 30px;
+    line-height: 37px;
+  }
+
+  .login-desc {
+    font-size: 15px;
+    line-height: 18px;
+    max-width: 183px;
+  }
+
+  .login-btn-wrap {
+    padding-top: 90px;
+  }
+}

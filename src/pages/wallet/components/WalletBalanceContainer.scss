@@ -1,0 +1,13 @@
+@import '../extends.scss';
+
+.wallet-balance-heading {
+  @extend %container-heading;
+
+  margin-bottom: 1em;
+}
+
+.wallet-balance-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.125em 0;
+}

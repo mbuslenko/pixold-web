@@ -1,0 +1,51 @@
+@import '../../../shared/scss/variables.scss';
+
+@import '../extends.scss';
+
+.wallet-page-main {
+  display: flex;
+  justify-content: center;
+  gap: 0 14.625em;
+  padding-top: 8.75em;
+}
+
+.wallet-page-background {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  z-index: -1;
+}
+
+@media screen and (max-width: $screen-max-width-medium) {
+  .wallet-page-main {
+    gap: 0 3em;
+  }
+}
+
+@media screen and (max-width: $screen-max-width-small) {
+  .wallet-page-main {
+    padding: 3.625em 0 0;
+    flex-direction: column;
+    justify-content: unset;
+    align-items: center;
+    gap: 3.375em 0;
+  }
+
+  .wallet-page-background {
+    position: relative;
+  }
+}
+
+@media screen and (max-width: $screen-max-width-smallest) {
+  .wallet-page-main {
+    padding: 3.625em 0 0;
+    flex-direction: column;
+    justify-content: unset;
+    align-items: center;
+    gap: 3.375em 0;
+  }
+
+  .wallet-page-background {
+    position: relative;
+  }
+}

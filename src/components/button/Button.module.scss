@@ -1,0 +1,149 @@
+@import '../../shared/scss/variables.scss';
+
+@mixin primary-color($background-color, $color) {
+  background-color: $background-color;
+  color: $color;
+}
+
+@mixin secondary-color($color) {
+  border-color: $color;
+  color: $color;
+}
+
+@mixin primary-with-icon($color, $background-color) {
+  position: relative;
+  background-color: $background-color;
+  color: $color;
+  padding-left: 42px;
+  text-align: left;
+}
+
+@mixin before-icon($icon-name) {
+  &::before {
+    @extend %icon;
+
+    content: url('../../assets/svg/' + $icon-name + '.svg');
+  }
+}
+
+%icon {
+  display: inline-block;
+  height: 18px;
+  width: 18px;
+  position: absolute;
+  left: 18px;
+}
+
+.button {
+  border-radius: 10px;
+  padding: 0 18px;
+  height: 44px;
+  font: {
+    size: 18px;
+    weight: 600;
+  }
+  cursor: pointer;
+
+  &:disabled {
+    cursor: default;
+  }
+}
+
+.primary {
+  border: none;
+
+  &.default {
+    @include primary-color($purple, $white);
+  }
+
+  &.black-white {
+    @include primary-color($white, $black);
+  }
+
+  &.pink {
+    @include primary-color($pink, $black);
+  }
+
+  &.google {
+    @include primary-with-icon($white, $purple);
+    @include before-icon('google-logo');
+  }
+
+  &.facebook {
+    @include primary-with-icon($white, $purple);
+    @include before-icon('facebook-logo');
+  }
+
+  &.opensea-white {
+    @include primary-with-icon($black, $white);
+
+    & .opensea-logo {
+      @extend %icon;
+    }
+  }
+
+  &.opensea-black {
+    @include primary-with-icon($white, $black);
+
+    & .opensea-logo {
+      @extend %icon;
+    }
+  }
+
+  &:not(&:disabled):hover {
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.25);
+  }
+
+  &:not(&:disabled):active {
+    box-shadow: 0 2px 5px rgba(255, 255, 255, 0.2);
+  }
+
+  &:disabled {
+    background-color: $grey-dark;
+    color: $grey;
+  }
+}
+
+.secondary {
+  background-color: transparent;
+  border: {
+    style: solid;
+    width: 2px;
+  }
+
+  &.default {
+    @include secondary-color($purple);
+  }
+
+  &.black-white {
+    @include secondary-color($white);
+  }
+
+  &.red {
+    @include secondary-color($red);
+  }
+
+  &.yellow {
+    @include secondary-color($yellow);
+  }
+
+  &.blue {
+    @include secondary-color($blue);
+  }
+
+  &:not(&:disabled):hover {
+    border-width: 4px;
+    padding: 0 16px;
+  }
+
+  &:not(&:disabled):active {
+    border-width: 3px;
+    padding: 0 17px;
+  }
+
+  &:disabled {
+    color: $grey;
+    background-color: $grey-dark;
+    border: 2px solid $grey;
+  }
+}
