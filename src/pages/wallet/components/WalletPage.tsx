@@ -5,7 +5,6 @@ import { getAxiosInstance } from '../../../shared/ts/axiosInstance';
 import { GetResponseWallet } from '../../../shared/ts/types';
 
 import './WalletPage.scss';
-import pageBackgroundImg from '../../../assets/svg/wallet-page-background.svg';
 import { WalletSwitch } from './WalletSwitch';
 import { WalletHeader } from './WalletHeader';
 import { WalletBalanceContainer } from './WalletBalanceContainer';
@@ -44,13 +43,13 @@ export const WalletPage: React.FC = () => {
   }, [navigate]);
 
   return (
-    <section>
+    <section className='wallet-page'>
       <WalletHeader username={username} />
       <main className="wallet-page-main">
         <WalletBalanceContainer pxl={pxl} xlm={xlm} usd={usd} />
         <WalletSwitch onSubmit={() => console.log('switch submit')} />
       </main>
-      <img className="wallet-page-background" alt="" src={pageBackgroundImg} />
+      <div className='wallet-page-background-div' />
     </section>
   );
 };
