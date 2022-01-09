@@ -43,13 +43,13 @@ export const WalletPage: React.FC = () => {
   }, [navigate]);
 
   return (
-    <section className='wallet-page'>
+    <section className="wallet-page">
       <WalletHeader username={username} />
       <main className="wallet-page-main">
         <WalletBalanceContainer pxl={pxl} xlm={xlm} usd={usd} />
         <WalletSwitch onSubmit={() => console.log('switch submit')} />
       </main>
-      <div className='wallet-page-background-div' />
+      <div className="wallet-page-background-div" />
     </section>
   );
 };

@@ -5,7 +5,7 @@ import './HomeInfoScreen.scss';
 export const HomeInfoScreen: React.FC = () => {
   return (
     <section className="home-info">
-      <img src={ homeInfoBackground } alt="" className="home-info-background" />
+      <img src={homeInfoBackground} alt="" className="home-info-background" />
       <div className="home-info-content">
         <img src={hexagonMap} alt="" className="home-info-map" />
         <h2 className="home-info-heading">There will be a header</h2>
