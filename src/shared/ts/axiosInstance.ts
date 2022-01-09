@@ -21,7 +21,8 @@ export const getAxiosInstance = (navigate: NavigateFunction): AxiosInstanceFunct
       .then(onResponse)
       .catch((error) => {
         if (error.response.status === 403 || error.response.status === 401) {
-          window.localStorage.removeItem('accessToken');
+          // window.localStorage.removeItem('accessToken');
+          window.localStorage.clear();
           navigate('/auth');
 
           return;

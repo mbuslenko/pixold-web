@@ -146,7 +146,7 @@ export const HomeHexagonsScreen: React.FC = () => {
       <h2 className="hexagon-content-heading">There will be a header</h2>
       <div className="hexagon hexagon-attack" ref={hexagonAttackRef}>
         <HexagonSvg className="hexagon-icon-small" color="red" />
-        <img src={hexagonRedImg} alt='' className="hexagon-icon-big" />
+        <img src={hexagonRedImg} alt="" className="hexagon-icon-big" />
         <div className="hexagon-title">Attack</div>
         <div className="hexagon-btn">
           <Button
@@ -169,7 +169,7 @@ export const HomeHexagonsScreen: React.FC = () => {
       </div>
       <div className="hexagon hexagon-defender" ref={hexagonDefenderRef}>
         <HexagonSvg color="blue" className="hexagon-icon-small" />
-        <img src={hexagonBlueImg} alt='' className="hexagon-icon-big" />
+        <img src={hexagonBlueImg} alt="" className="hexagon-icon-big" />
         <div className="hexagon-title">Defender</div>
         <div className="hexagon-btn">
           <Button

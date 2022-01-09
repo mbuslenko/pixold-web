@@ -36,11 +36,11 @@ export const HomeOpenseaScreen: React.FC = () => {
         </p>
       </div>
       <div className="opensea-card-container">
-        <img className="card-image" alt='' src={hexagonScreenCardImg} />
-        <img className="opensea-card-background" alt='' src={hexagonCardBackgroundImg} />
+        <img className="card-image" alt="" src={hexagonScreenCardImg} />
+        <img className="opensea-card-background" alt="" src={hexagonCardBackgroundImg} />
         <article className="opensea-card-border">
           <div className="opensea-card">
-            <img className="opensea-card-hexagon" alt='' src={hexagonCardImg} />
+            <img className="opensea-card-hexagon" alt="" src={hexagonCardImg} />
             <div className="opensea-card-content">
               <h3 className="opensea-card-name">{hexagonInfo?.name}</h3>
               <div className="opensea-card-info">
@@ -54,7 +54,12 @@ export const HomeOpenseaScreen: React.FC = () => {
           </div>
         </article>
       </div>
-      <a className="opensea-screen-purchase-link" target="_blank" href={hexagonInfo?.purchaseLink ?? ''}>
+      <a
+        className="opensea-screen-purchase-link"
+        target="_blank"
+        rel="noreferrer noopener"
+        href={hexagonInfo?.purchaseLink ?? ''}
+      >
         <Button
           className="opensea-screen-purchase-button"
           text="Purchase on OpenSea"

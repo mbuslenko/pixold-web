@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { isScreen } from '../../shared/ts/helperFunctions';
 import { ScreenMaxWidth } from '../../shared/ts/enums';
@@ -10,6 +10,7 @@ import { GameMenuShowIconSvg } from '../../components/gameMenuShowIconSvg/GameMe
 import { GameMenuIconSvg } from '../../components/gameMenuIconSvg/GameMenuIconSvg';
 
 export const PlayMenu: React.FC = () => {
+  const navigate = useNavigate();
   const [menuIsVisible, setMenuIsVisible] = useState<boolean>(true);
 
   useEffect(() => {
@@ -23,7 +24,7 @@ export const PlayMenu: React.FC = () => {
       <section className={`play-menu ${menuIsVisible && 'is-visible'}`}>
         <h2 className="play-menu-heading">Navigate</h2>
         <nav className="play-menu-navigation">
-          <img className="play-menu-logo" src={logo} alt='logo' />
+          <img className="play-menu-logo" src={logo} alt="logo" />
           <div className="play-menu-link-container">
             <button className="play-menu-button" onClick={() => console.log(';)')}>
               <GameMenuIconSvg iconName="territory" className="play-menu-icon" />
@@ -53,7 +54,7 @@ export const PlayMenu: React.FC = () => {
             </Link>
           </div>
         </nav>
-        <img src={logo} className="play-menu-logo-small" alt='logo' />
+        <img src={logo} className="play-menu-logo-small" alt="logo" />
       </section>
       <button
         className={`play-menu-button show-menu-button ${menuIsVisible && 'is-active'}`}

@@ -9,7 +9,7 @@ export const HomeWelcomeScreen: React.FC = () => {
   return (
     <div className="home-start-wrapper">
       <div className="home-start">
-        <img src={logoImg} alt='logo' />
+        <img src={logoImg} alt="logo" />
         <h1 className="home-start-title">There will be a slogan</h1>
         <Link to="/auth">
           <Button text="Get started" appearance={{ priority: 'primary' }} />
