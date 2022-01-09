@@ -6,6 +6,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 5.185vh;
 }
 
 .go-back-link {
@@ -16,12 +17,14 @@
 
 .wallet-connect-lumen-logo {
   width: 7.875em;
-  height: 7.875em;
-  margin-bottom: 2.8125em;
+  height: 11.555vh;
+  min-height: 72px;
+  margin-bottom: 4.5vh;
 }
 
 .wallet-connect-text-container {
-  margin-bottom: 3.5em;
+  text-align: center;
+  width: 17.625em;
 }
 
 .wallet-connect-heading {
@@ -30,19 +33,13 @@
     size: 30px;
     weight: 900;
   }
-  margin-bottom: 0 0 0.5em;
-}
-
-.wallet-connect-text {
-  width: 17.625em;
-  text-align: center;
+  margin: 0 0 0.5em;
 }
 
 .wallet-connect-input-container {
   display: flex;
   flex-direction: column;
   gap: 1.875em;
-  margin-bottom: 3.5em;
 }
 
 .no-shrink {
@@ -50,11 +47,6 @@
 }
 
 @media screen and (max-width: $screen-max-width-smallest) {
-  .wallet-connect-page {
-    justify-content: unset;
-    padding-top: 5.75em;
-  }
-
   .go-back-link {
     top: 1.55em;
     left: 1.75em;

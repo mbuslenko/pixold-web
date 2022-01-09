@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { isScreen } from '../../shared/ts/helperFunctions';
 import { ScreenMaxWidth } from '../../shared/ts/enums';
@@ -10,7 +10,6 @@ import { GameMenuShowIconSvg } from '../../components/gameMenuShowIconSvg/GameMe
 import { GameMenuIconSvg } from '../../components/gameMenuIconSvg/GameMenuIconSvg';
 
 export const PlayMenu: React.FC = () => {
-  const navigate = useNavigate();
   const [menuIsVisible, setMenuIsVisible] = useState<boolean>(true);
 
   useEffect(() => {

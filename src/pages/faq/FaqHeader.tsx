@@ -14,11 +14,7 @@ export const FaqHeader: React.FC = () => {
           <Button text="Home" appearance={{ priority: 'primary', theme: 'black-white' }} className="faq-button-small" />
         </Link>
         <Link to="/auth">
-          <Button
-            text="Get started"
-            appearance={{ priority: 'primary', theme: 'black-white' }}
-            className="faq-button-small"
-          />
+          <Button text="Play" appearance={{ priority: 'primary', theme: 'black-white' }} className="faq-button-small" />
         </Link>
       </nav>
     </header>

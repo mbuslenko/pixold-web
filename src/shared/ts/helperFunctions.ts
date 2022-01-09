@@ -19,7 +19,7 @@ export const unblockScrolling = (): void => {
 };
 
 export const redirect = (navigate: NavigateFunction, redirectTo: string): void => {
-  if (!window.localStorage.getItem('accessToken') && redirectTo === '/settings') {
+  if (!window.localStorage.getItem('accessToken') && redirectTo === '/play') {
     navigate('/auth');
 
     return;
