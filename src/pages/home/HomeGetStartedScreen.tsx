@@ -18,7 +18,7 @@ export const HomeGetStartedScreen: React.FC = () => {
           className="get-started-modal-size"
         >
           <Link to="/auth">
-            <Button text={'Get started'} appearance={{ priority: 'primary' }} className="get-started-screen-button" />
+            <Button text={'Get started'} appearance={{ priority: 'primary' }} className="get-started-screen-button" disabled disabledPopup='After development, all users will be able to play. We plan to release at the beginning of February this year.' />
           </Link>
         </Modal>
         <img src={imgWhale2} alt='' className="whale-img whale-bottom" />
