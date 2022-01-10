@@ -18,23 +18,23 @@ const hexagonAttackHeading = 'Attack';
 const hexagonMinerHeading = 'Miner';
 const hexagonDefenderHeading = 'Defender';
 
-const hexagonAttackText = `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                          Blandit ultricies aliquam quis in accumsan, vel ut.
-                          Posuere suscipit neque scelerisque libero.
-                          Quisque ipsum tristique arcu velit facilisi nec lectus.
-                          Commodo sed elementum congue consequat.`;
+const hexagonAttackText = `Its main function is to attack and rob. 
+                          With this hexagon you can take all the mined coins from your 
+                          enemies or simply disable them. With its pumping, the speed 
+                          of passing the hexagons will increase, and with it the chance 
+                          of a successful attack.`;
 
-const hexagonMinerText = `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                          Blandit ultricies aliquam quis in accumsan, vel ut.
-                          Posuere suscipit neque scelerisque libero.
-                          Quisque ipsum tristique arcu velit facilisi nec lectus.
-                          Commodo sed elementum congue consequat.`;
+const hexagonMinerText = `The main hexagon in the game. Every hour, with some chance, 
+                          it will mine coins for you, collecting them in its vault. You can 
+                          spend them on the needs of this or other hexagons, or transfer them 
+                          to another cryptocurrency. Along with pumping, the chance of 
+                          mining and the amount of production increase.`;
 
-const hexagonDefenderText = `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                          Blandit ultricies aliquam quis in accumsan, vel ut.
-                          Posuere suscipit neque scelerisque libero.
-                          Quisque ipsum tristique arcu velit facilisi nec lectus.
-                          Commodo sed elementum congue consequat.`;
+const hexagonDefenderText = `The defender ensures the safety of the rest of hexagons from attacking 
+                          enemies. Without them, looting your miners and incapacitating the 
+                          attackers will be a matter of a few minutes. Each level of pumping 
+                          increases the chance of repelling an attack and also slows it down, 
+                          which allows you to quickly take action to save the mined coins.`;
 
 export const HomeHexagonsScreen: React.FC = () => {
   const [modalPositionType, setModalPositionType] = useState<ModalPositionType>('absolute');
