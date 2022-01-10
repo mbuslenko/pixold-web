@@ -143,7 +143,7 @@ export const HomeHexagonsScreen: React.FC = () => {
           )}
         </Modal>
       )}
-      <h2 className="hexagon-content-heading">There will be a header</h2>
+      <h2 className="hexagon-content-heading">Hexagons</h2>
       <div className="hexagon hexagon-attack" ref={hexagonAttackRef}>
         <HexagonSvg className="hexagon-icon-small" color="red" />
         <img src={hexagonRedImg} alt='' className="hexagon-icon-big" />
