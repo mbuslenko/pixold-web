@@ -180,9 +180,7 @@ export const HomeHexagonsScreen: React.FC = () => {
         </div>
       </div>
       <div className="hexagon-content-desc">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Blandit ultricies aliquam quis in accumsan, vel ut.
-        Posuere suscipit neque scelerisque libero. Quisque ipsum tristique arcu velit facilisi nec lectus. Commodo sed
-        elementum congue consequat.
+      Hexagons are the main characters of this performance. You can purchase — as much as your heart desires, but the total amount is limited by the limits of the map. After purchase, you can choose the type and pump them to improve the characteristics.
       </div>
     </div>
   );
