@@ -11,17 +11,23 @@ export const HomeGetStartedScreen: React.FC = () => {
   return (
     <section className="get-started-screen">
       <div className="info-container">
-        <img className="whale-img whale-top" alt='' src={imgWhale1} />
+        <img className="whale-img whale-top" alt="" src={imgWhale1} />
         <Modal
           heading="Get ready to dive in!"
           text="We're working hard to make Pixold see the world faster. On February 4 this year, you will be able to dive into the world of new adventures and fight for the championship around the world. Get ready, because everyone else is not wasting time!"
           className="get-started-modal-size"
         >
           <Link to="/auth">
-            <Button text={'Get started'} appearance={{ priority: 'primary' }} className="get-started-screen-button" disabled disabledPopup='After development, all users will be able to play. We plan to release at the beginning of February this year.' />
+            <Button
+              text={'Get started'}
+              appearance={{ priority: 'primary' }}
+              className="get-started-screen-button"
+              disabled
+              disabledPopup="After development, all users will be able to play. We plan to release at the beginning of February this year."
+            />
           </Link>
         </Modal>
-        <img src={imgWhale2} alt='' className="whale-img whale-bottom" />
+        <img src={imgWhale2} alt="" className="whale-img whale-bottom" />
       </div>
     </section>
   );

@@ -5,12 +5,13 @@ export const HomeInfoScreen: React.FC = () => {
   return (
     <section className="home-info">
       <div className="home-info-content">
-        <img src={hexagonMap} alt='' className="home-info-map" />
-        <h2 className="home-info-heading">Build your kingdom <br /> on a real map</h2>
+        <img src={hexagonMap} alt="" className="home-info-map" />
+        <h2 className="home-info-heading">
+          Build your kingdom <br /> on a real map
+        </h2>
         <p className="home-info-text">
-        Master the territory and earn money, defend yourself from the attackers or 
-        become the attacker yourself and rob your neighbors. 
-        The whole map of the real world is in your hands!
+          Master the territory and earn money, defend yourself from the attackers or become the attacker yourself and
+          rob your neighbors. The whole map of the real world is in your hands!
         </p>
       </div>
     </section>
