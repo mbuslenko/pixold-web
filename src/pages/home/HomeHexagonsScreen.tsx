@@ -146,7 +146,7 @@ export const HomeHexagonsScreen: React.FC = () => {
       <h2 className="hexagon-content-heading">Hexagons</h2>
       <div className="hexagon hexagon-attack" ref={hexagonAttackRef}>
         <HexagonSvg className="hexagon-icon-small" color="red" />
-        <img src={hexagonRedImg} alt='' className="hexagon-icon-big" />
+        <img src={hexagonRedImg} alt="" className="hexagon-icon-big" />
         <div className="hexagon-title">Attack</div>
         <div className="hexagon-btn">
           <Button
@@ -169,7 +169,7 @@ export const HomeHexagonsScreen: React.FC = () => {
       </div>
       <div className="hexagon hexagon-defender" ref={hexagonDefenderRef}>
         <HexagonSvg color="blue" className="hexagon-icon-small" />
-        <img src={hexagonBlueImg} alt='' className="hexagon-icon-big" />
+        <img src={hexagonBlueImg} alt="" className="hexagon-icon-big" />
         <div className="hexagon-title">Defender</div>
         <div className="hexagon-btn">
           <Button
@@ -180,7 +180,9 @@ export const HomeHexagonsScreen: React.FC = () => {
         </div>
       </div>
       <div className="hexagon-content-desc">
-      Hexagons are the main characters of this performance. You can purchase — as much as your heart desires, but the total amount is limited by the limits of the map. After purchase, you can choose the type and pump them to improve the characteristics.
+        Hexagons are the main characters of this performance. You can purchase — as much as your heart desires, but the
+        total amount is limited by the limits of the map. After purchase, you can choose the type and pump them to
+        improve the characteristics.
       </div>
     </div>
   );

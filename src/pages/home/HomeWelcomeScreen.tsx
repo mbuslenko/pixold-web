@@ -9,10 +9,15 @@ export const HomeWelcomeScreen: React.FC = () => {
   return (
     <div className="home-start-wrapper">
       <div className="home-start">
-        <img src={logoImg} alt='logo' />
-        <h1 className="home-start-title">A place where time <br /> is really money</h1>
+        <img src={logoImg} alt="logo" />
+        <h1 className="home-start-title">A place where time is really money</h1>
         <Link to="/auth">
-          <Button text="Get started" appearance={{ priority: 'primary' }} disabled disabledPopup='After development, all users will be able to play. We plan to release at the beginning of February this year.' />
+          <Button
+            text="Get started"
+            appearance={{ priority: 'primary' }}
+            disabled
+            disabledPopup="After development, all users will be able to play. We plan to release at the beginning of February this year."
+          />
         </Link>
       </div>
     </div>

@@ -14,7 +14,9 @@ export const HomeFooter: React.FC = () => {
         investment and (or) transfer of funds to this asset is a purchase of in-game currency, for further transactions
         within Pixold.
       </p>
-      <p className="home-footer-bottom-text">For all questions, suggestions or complaints, you can contact hello@pixold.io</p>
+      <p className="home-footer-bottom-text">
+        For all questions, suggestions or complaints, you can contact hello@pixold.io
+      </p>
       <div className="home-footer-wrap">
         <LogoWithTextSvg color="grey" className="home-footer-logo" />
         <p className="home-footer-year">2022</p>

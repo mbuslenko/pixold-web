@@ -39,7 +39,7 @@ export const WalletHeader: React.FC<WalletHeaderProps> = ({ username }) => {
       <div className="user-container">
         <span className="username">{adjustUsernameLength(username)}</span>
         <Link to={'/home'}>
-          <img className="header-logo" src={logoImg} alt='logo' />
+          <img className="header-logo" src={logoImg} alt="logo" />
         </Link>
       </div>
     </header>
