@@ -11,11 +11,7 @@
   text-align: center;
 }
 
-.home-footer-top-text {
-  margin-bottom: 15px;
-}
-
-.home-footer-bottom-text {
+.home-footer > p:nth-child(n):not(p:first-child) {
   margin-top: 15px;
 }
 

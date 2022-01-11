@@ -18,8 +18,9 @@
 }
 
 .home-start-title {
-  max-width: 760px;
+  max-width: 770px;
   margin: 6vh 0 4.5vh;
+  padding: 0 2%;
   font-family: Montserrat;
   font-weight: bold;
   font-size: 70px;
@@ -31,6 +32,20 @@
 @media screen and (max-width: $screen-max-width-medium) {
   .home-start {
     background-size: cover;
+  }
+}
+
+@media screen and (max-width: $screen-max-width-small) {
+  .home-start-wrapper {
+    padding: 14vh 0 7vh;
+  }
+
+  .home-start {
+    height: 90vh;
+  }
+
+  .home-start-title {
+    font-size: 60px;
   }
 }
 
