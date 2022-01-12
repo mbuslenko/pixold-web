@@ -1,21 +1,22 @@
-import { Position } from './Position';
+import { Vector } from './Vector';
 import { Size } from './Size';
 
 export class HexMap {
   private _ctx: CanvasRenderingContext2D;
-  private _map: Position[];
+  private _map: Vector[];
   private _hexSize: Size;
   private _scale: number;
   private _scaleVelocity: number;
   private _finalScale: number;
-  private _offset: Position;
+  private _offset: Vector;
   private _offsetVelocity: number;
-  private _finalPosition: Position;
+  private _finalOffset: Vector;
   private _stopScaleAnimation: boolean;
   private _stopOffsetAnimation: boolean
   private _stopAnimation: boolean;
-  private _stopDragged: boolean;
-  private _dragStartPosition: Position;
+  private _stopDragging: boolean;
+  private _dragStartPosition: Vector;
+  private _dragStartOffset: Vector;
 
   constructor (ctx: CanvasRenderingContext2D) {
     this._ctx = ctx;
@@ -24,14 +25,15 @@ export class HexMap {
     this._scale = 1;
     this._scaleVelocity = 0.05;
     this._finalScale = 1;
-    this._offset = new Position(0, 0);
+    this._offset = new Vector(0, 0);
     this._offsetVelocity = 0.15;
-    this._finalPosition = new Position(0, 0);
+    this._finalOffset = new Vector(0, 0);
     this._stopScaleAnimation = true;
     this._stopOffsetAnimation = true;
     this._stopAnimation = true;
-    this._stopDragged = true;
-    this._dragStartPosition = new Position(0, 0);
+    this._stopDragging = true;
+    this._dragStartPosition = new Vector(0, 0);
+    this._dragStartOffset = new Vector(0, 0);
   }
 
   init (): void {
@@ -56,7 +58,7 @@ export class HexMap {
         x = i * width - xOffset + i * width;
       }
 
-      const position = new Position(
+      const position = new Vector(
         x,
         row * height + row * height,
       );
@@ -105,7 +107,7 @@ export class HexMap {
     context.closePath();
   }
 
-  private _adjustPosition (position: Position): Position {
+  private _adjustPosition (position: Vector): Vector {
     return position
       .copy()
       .scale(this._scale)
@@ -118,7 +120,7 @@ export class HexMap {
       .scale(this._scale);
   }
 
-  click (mousePosition: Position): void {
+  click (mousePosition: Vector): void {
     if (!this._stopAnimation) {
       return;
     }
@@ -147,7 +149,7 @@ export class HexMap {
     }
   }
 
-  private _mouseInHex (mousePosition: Position, hexPosition: Position, hesSize: Size): boolean {
+  private _mouseInHex (mousePosition: Vector, hexPosition: Vector, hesSize: Size): boolean {
     const { x: mouseX, y: mouseY } = mousePosition;
     const { x: hexX, y: hexY } = hexPosition;
     const { width: hexWidth, height: hexHeight } = hesSize;
@@ -158,9 +160,8 @@ export class HexMap {
     );
   }
 
-  move (offsetX: number, offsetY: number): void {
-    this._finalPosition.x += offsetX;
-    this._finalPosition.y += offsetY;
+  move (offset: Vector): void {
+    this._finalOffset.add(offset);
     this._stopOffsetAnimation = false;
 
     if (this._stopAnimation) {
@@ -174,18 +175,18 @@ export class HexMap {
       return;
     }
 
-    const move = this._finalPosition.subtract(this._offset);
+    const move = this._finalOffset.subtract(this._offset);
     const endX: boolean = move.x > 0
-                          ? this._offset.x >= this._finalPosition.x - 1
-                          : this._offset.x <= this._finalPosition.x + 1;
+                          ? this._offset.x >= this._finalOffset.x - 1
+                          : this._offset.x <= this._finalOffset.x + 1;
     const endY: boolean = move.x > 0
-                          ? this._offset.y >= this._finalPosition.y - 1
-                          : this._offset.y <= this._finalPosition.y + 1;
+                          ? this._offset.y >= this._finalOffset.y - 1
+                          : this._offset.y <= this._finalOffset.y + 1;
 
     this._offset.add(move.scale(this._offsetVelocity));
 
     if (endX && endY) {
-      this._offset = this._finalPosition;
+      this._offset = this._finalOffset;
       this._stopOffsetAnimation = true;
       this._stopAnimation = this._stopOffsetAnimation && this._stopScaleAnimation;
     }
@@ -211,8 +212,8 @@ export class HexMap {
     this._scale += scale;
 
     if (
-      scale >= 0 && this._scale >= this._finalScale - 0.01 ||
-      scale < 0 && this._scale <= this._finalScale + 0.01
+      scale >= 0 && this._scale >= this._finalScale - 0.001 ||
+      scale < 0 && this._scale <= this._finalScale + 0.001
     ) {
       this._scale = this._finalScale;
       this._stopScaleAnimation = true;
@@ -220,40 +221,38 @@ export class HexMap {
     }
   }
 
-  dragStart (mousePosition: Position): void {
-    this._stopDragged = false;
-    this._dragStartPosition = new Position(mousePosition.x, mousePosition.y);
+  dragStart (mousePosition: Vector): void {
+    this._stopDragging = false;
+    this._dragStartPosition = new Vector(mousePosition.x, mousePosition.y);
+    this._dragStartOffset = this._offset.copy();
   }
 
-  dragMove (mousePosition: Position): void {
-    if (this._stopDragged) {
+  dragMove (mousePosition: Vector): void {
+    if (this._stopDragging) {
       return;
     }
 
     this._stopOffsetAnimation = false;
     this._stopAnimation = false;
 
-    this._finalPosition.add(
+    this._finalOffset = this._dragStartOffset.add(
       this._dragStartPosition
         .subtract(mousePosition)
         .scale(this._offsetVelocity)
     );
   }
 
-  dragEnd (mousePosition: Position): void {
-    if (this._stopDragged) {
+  dragEnd (mousePosition: Vector): void {
+    if (this._stopDragging) {
       return;
     }
 
-    this._finalPosition.add(this._dragStartPosition.subtract(mousePosition));
-    this._stopDragged = true;
+    this._finalOffset.add(this._dragStartPosition.subtract(mousePosition));
+    this._stopDragging = true;
   }
 
-  zoom (mousePosition: Position, scaleFactor: number): void {
-    this.move(
-      mousePosition.x - window.innerWidth,
-      mousePosition.y - window.innerHeight,
-    );
+  zoom (mousePosition: Vector, scaleFactor: number): void {
+    this.move(mousePosition.subtractSize(Size.CreateFromWindow()));
     this.scale(scaleFactor);
   }
 }

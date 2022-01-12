@@ -17,4 +17,8 @@ export class Size {
   copy (): Size {
     return new Size(this.width, this.height);
   }
+
+  static CreateFromWindow (): Size {
+    return new Size(window.innerWidth, window.innerHeight);
+  }
 }

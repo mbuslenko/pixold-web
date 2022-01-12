@@ -3,7 +3,7 @@ import { useLayoutEffect, useRef } from 'react';
 import './PlayPage.scss';
 import { PlayMenu } from './PlayMenu';
 import { HexMap } from './hexMap/HexMap';
-import { Position } from './hexMap/Position';
+import { Vector } from './hexMap/Vector';
 
 export const PlayPage: React.FC = () => {
   // const [hexMap, setHexMap] = useState<HexMap>();
@@ -44,33 +44,33 @@ export const PlayPage: React.FC = () => {
     };
 
     window.onclick = (e) => {
-      map.click(Position.CreateFromMouseEvent(e));
+      map.click(Vector.CreateFromMouseEvent(e));
     };
 
     window.ondblclick = (e) => {
-      map.zoom(Position.CreateFromMouseEvent(e), 0.5);
+      map.zoom(Vector.CreateFromMouseEvent(e), 0.5);
     };
 
     window.onmousedown = e => {
-      map.dragStart(Position.CreateFromMouseEvent(e));
+      map.dragStart(Vector.CreateFromMouseEvent(e));
     };
 
     window.onmousemove = e => {
-      map.dragMove(Position.CreateFromMouseEvent(e));
+      map.dragMove(Vector.CreateFromMouseEvent(e));
     };
 
     window.onmouseup = e => {
-      map.dragEnd(Position.CreateFromMouseEvent(e));
+      map.dragEnd(Vector.CreateFromMouseEvent(e));
     };
 
-    let lastTouch: Position;
+    let lastTouch: Vector;
 
     window.ontouchstart = ({ touches }) => {
-      map.dragStart(new Position(touches[0].clientX, touches[0].clientY));
+      map.dragStart(new Vector(touches[0].clientX, touches[0].clientY));
     };
 
     window.ontouchmove = ({ touches }) => {
-      lastTouch = new Position(touches[0].clientX, touches[0].clientY);
+      lastTouch = new Vector(touches[0].clientX, touches[0].clientY);
       map.dragMove(lastTouch);
     };
 
@@ -81,16 +81,16 @@ export const PlayPage: React.FC = () => {
     window.onkeydown = ({ key }) => {
       switch (key) {
         case 'ArrowRight':
-          map.move(222, 0);
+          map.move(new Vector(222, 0));
           break;
         case 'ArrowLeft':
-          map.move(-222, 0);
+          map.move(new Vector(-222, 0));
           break;
         case 'ArrowUp':
-          map.move(0, -222);
+          map.move(new Vector(0, -222));
           break;
         case 'ArrowDown':
-          map.move(0, 222);
+          map.move(new Vector(0, 222));
           break;
       }
     };
