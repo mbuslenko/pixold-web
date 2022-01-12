@@ -18,23 +18,23 @@ const hexagonAttackHeading = 'Attack';
 const hexagonMinerHeading = 'Miner';
 const hexagonDefenderHeading = 'Defender';
 
-const hexagonAttackText = `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                          Blandit ultricies aliquam quis in accumsan, vel ut.
-                          Posuere suscipit neque scelerisque libero.
-                          Quisque ipsum tristique arcu velit facilisi nec lectus.
-                          Commodo sed elementum congue consequat.`;
+const hexagonAttackText = `Its main function is to attack and rob. 
+                          With this hexagon you can take all the mined coins from your 
+                          enemies or simply disable them. With its pumping, the speed 
+                          of passing the hexagons will increase, and with it the chance 
+                          of a successful attack.`;
 
-const hexagonMinerText = `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                          Blandit ultricies aliquam quis in accumsan, vel ut.
-                          Posuere suscipit neque scelerisque libero.
-                          Quisque ipsum tristique arcu velit facilisi nec lectus.
-                          Commodo sed elementum congue consequat.`;
+const hexagonMinerText = `The main hexagon in the game. Every hour, with some chance, 
+                          it will mine coins for you, collecting them in its vault. You can 
+                          spend them on the needs of this or other hexagons, or transfer them 
+                          to another cryptocurrency. Along with pumping, the chance of 
+                          mining and the amount of production increase.`;
 
-const hexagonDefenderText = `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                          Blandit ultricies aliquam quis in accumsan, vel ut.
-                          Posuere suscipit neque scelerisque libero.
-                          Quisque ipsum tristique arcu velit facilisi nec lectus.
-                          Commodo sed elementum congue consequat.`;
+const hexagonDefenderText = `The defender ensures the safety of the rest of hexagons from attacking 
+                          enemies. Without them, looting your miners and incapacitating the 
+                          attackers will be a matter of a few minutes. Each level of pumping 
+                          increases the chance of repelling an attack and also slows it down, 
+                          which allows you to quickly take action to save the mined coins.`;
 
 export const HomeHexagonsScreen: React.FC = () => {
   const [modalPositionType, setModalPositionType] = useState<ModalPositionType>('absolute');
@@ -143,10 +143,10 @@ export const HomeHexagonsScreen: React.FC = () => {
           )}
         </Modal>
       )}
-      <h2 className="hexagon-content-heading">There will be a header</h2>
+      <h2 className="hexagon-content-heading">Hexagons</h2>
       <div className="hexagon hexagon-attack" ref={hexagonAttackRef}>
         <HexagonSvg className="hexagon-icon-small" color="red" />
-        <img src={hexagonRedImg} alt='' className="hexagon-icon-big" />
+        <img src={hexagonRedImg} alt="" className="hexagon-icon-big" />
         <div className="hexagon-title">Attack</div>
         <div className="hexagon-btn">
           <Button
@@ -169,7 +169,7 @@ export const HomeHexagonsScreen: React.FC = () => {
       </div>
       <div className="hexagon hexagon-defender" ref={hexagonDefenderRef}>
         <HexagonSvg color="blue" className="hexagon-icon-small" />
-        <img src={hexagonBlueImg} alt='' className="hexagon-icon-big" />
+        <img src={hexagonBlueImg} alt="" className="hexagon-icon-big" />
         <div className="hexagon-title">Defender</div>
         <div className="hexagon-btn">
           <Button
@@ -180,9 +180,9 @@ export const HomeHexagonsScreen: React.FC = () => {
         </div>
       </div>
       <div className="hexagon-content-desc">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Blandit ultricies aliquam quis in accumsan, vel ut.
-        Posuere suscipit neque scelerisque libero. Quisque ipsum tristique arcu velit facilisi nec lectus. Commodo sed
-        elementum congue consequat.
+        Hexagons are the main characters of this performance. You can purchase — as much as your heart desires, but the
+        total amount is limited by the limits of the map. After purchase, you can choose the type and pump them to
+        improve the characteristics.
       </div>
     </div>
   );
