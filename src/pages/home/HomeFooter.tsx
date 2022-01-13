@@ -1,5 +1,9 @@
 import { LogoWithTextSvg } from '../../components/logoWithTextSvg/logoWithTextSvg';
+
 import './HomeFooter.scss';
+import discordIcon from '../../assets/svg/discord-icon.svg';
+import instagramIcon from '../../assets/svg/instagram-icon.svg';
+import telegramIcon from '../../assets/svg/telegram-icon.svg';
 
 export const HomeFooter: React.FC = () => {
   return (
@@ -15,8 +19,27 @@ export const HomeFooter: React.FC = () => {
         within Pixold.
       </p>
       <p>For all questions, suggestions or complaints, you can contact hello@pixold.io</p>
-      <div className="home-footer-wrap">
+      <div className="home-footer-social">
         <LogoWithTextSvg color="grey" className="home-footer-logo" />
+        <nav>
+          <ul className="home-footer-social-list">
+            <li>
+              <a href="https://discord.gg/v782DCSf9E" target="_blank" rel="noreferrer noopener">
+                <img src={discordIcon} alt="Discord" />
+              </a>
+            </li>
+            <li>
+              <a href="https://instagram.com/pixold.io" target="_blank" rel="noreferrer noopener">
+                <img src={instagramIcon} alt="Instagram" />
+              </a>
+            </li>
+            <li>
+              <a href="https://t.me/pixold_help_bot" target="_blank" rel="noreferrer noopener">
+                <img src={telegramIcon} alt="Telegram" />
+              </a>
+            </li>
+          </ul>
+        </nav>
         <p className="home-footer-year">2022</p>
       </div>
     </footer>

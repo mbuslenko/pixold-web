@@ -2,7 +2,7 @@
 
 .home-footer {
   max-width: 1440px;
-  padding: 0 107px 50px;
+  padding: 0 7.6vw 50px;
   margin: 0 auto;
   font-size: 15px;
   line-height: 18px;
@@ -15,12 +15,19 @@
   margin-top: 15px;
 }
 
-.home-footer-wrap {
+.home-footer-social {
   margin-top: 70px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-left: 15px;
+  padding: 0 15px;
+}
+
+.home-footer-social-list {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding-right: 75px;
 }
 
 .home-footer-year {
@@ -29,20 +36,26 @@
   line-height: 29px;
 }
 
+@media screen and (max-width: $screen-max-width-medium) {
+  .home-footer-social-list {
+    padding-right: 0;
+  }
+}
+
 @media screen and (max-width: $screen-max-width-smallest) {
   .home-footer {
     padding: 0 14px 25px;
-    font-size: 10px;
-    line-height: 12px;
+    font-size: 15px;
+    line-height: 18px;
   }
 
-  .home-footer-wrap {
+  .home-footer-social {
     margin-top: 30px;
   }
 
   .home-footer-year {
-    font-size: 10px;
-    line-height: 12px;
+    font-size: 15px;
+    line-height: 18px;
   }
 
   .home-footer-logo {
