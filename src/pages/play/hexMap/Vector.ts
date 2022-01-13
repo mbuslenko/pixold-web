@@ -1,4 +1,4 @@
-import { Size } from './Size'
+import { Size } from './Size';
 
 export class Vector {
   x: number;
@@ -51,5 +51,13 @@ export class Vector {
 
   static CreateFromMouseEvent (e: MouseEvent): Vector {
     return new Vector(e.clientX, e.clientY);
+  }
+
+  static CreateFromWindowEndPosition (): Vector {
+    return new Vector(window.innerWidth, window.innerHeight);
+  }
+
+  static CreateInScreenCenter (): Vector {
+    return new Vector(window.innerWidth / 2, window.innerHeight / 2);
   }
 }

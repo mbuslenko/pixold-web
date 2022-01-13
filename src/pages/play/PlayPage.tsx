@@ -30,12 +30,10 @@ export const PlayPage: React.FC = () => {
 
     const map = new HexMap(ctx);
 
-    map.init();
-    map.generateMap(3000);
+    map.run();
     // map.drawMap();
 
     window.onwheel = ({ deltaY }) => {
-      // console.log('scroll');
       if (deltaY > 0) {
         map.scale(-0.25);
       } else {
@@ -44,11 +42,11 @@ export const PlayPage: React.FC = () => {
     };
 
     window.onclick = (e) => {
-      map.click(Vector.CreateFromMouseEvent(e));
+      // map.click(Vector.CreateFromMouseEvent(e));
     };
 
     window.ondblclick = (e) => {
-      map.zoom(Vector.CreateFromMouseEvent(e), 0.5);
+      map.zoom(0.5, Vector.CreateFromMouseEvent(e));
     };
 
     window.onmousedown = e => {
@@ -66,16 +64,16 @@ export const PlayPage: React.FC = () => {
     let lastTouch: Vector;
 
     window.ontouchstart = ({ touches }) => {
-      map.dragStart(new Vector(touches[0].clientX, touches[0].clientY));
+      // map.dragStart(new Vector(touches[0].clientX, touches[0].clientY));
     };
 
     window.ontouchmove = ({ touches }) => {
-      lastTouch = new Vector(touches[0].clientX, touches[0].clientY);
-      map.dragMove(lastTouch);
+      // lastTouch = new Vector(touches[0].clientX, touches[0].clientY);
+      // map.dragMove(lastTouch);
     };
 
     window.ontouchend = () => {
-      map.dragEnd(lastTouch);
+      // map.dragEnd(lastTouch);
     };
 
     window.onkeydown = ({ key }) => {
