@@ -24,21 +24,10 @@
 .username-controls-wrap {
   padding-top: 85px;
   max-width: 400px;
-  display: grid;
-  grid-template-columns: auto auto;
-  grid-auto-columns: 100%;
-  justify-content: center;
-  gap: 98px 19px;
-  justify-items: center;
-}
-
-.username-btn-check {
-  color: $grey;
 }
 
 .username-btn-submit {
-  grid-column-start: 1;
-  grid-column-end: 3;
+  margin-left: 20px;
 }
 
 @media screen and (max-width: $screen-max-width-smallest) {
@@ -46,13 +35,8 @@
     max-width: 300px;
   }
 
-  .username-input-wrap {
-    grid-column-start: 1;
-    grid-column-end: 3;
-  }
-
   .username-btn-submit {
-    grid-column-start: 2;
-    grid-column-end: 3;
+    display: block;
+    margin: 24px auto 0;
   }
 }

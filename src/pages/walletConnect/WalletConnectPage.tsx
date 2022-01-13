@@ -81,9 +81,9 @@ export const WalletConnectPage: React.FC = () => {
       <Link className="go-back-link" to="/coin">
         <Button text="←" appearance={{ priority: 'secondary', theme: 'black-white' }} />
       </Link>
-      <LumenLogoSvg color="pink" className="wallet-connect-lumen-logo no-shrink" />
 
       <div className="wallet-connect-text-container">
+        <LumenLogoSvg color="pink" className="wallet-connect-lumen-logo" />
         <h1 className="wallet-connect-heading">Connect a wallet</h1>
         <p className="wallet-connect-text">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Blandit ultricies aliquam quis in accumsan, vel ut.

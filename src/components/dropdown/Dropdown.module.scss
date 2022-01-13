@@ -27,7 +27,7 @@
   &.disabled {
     color: $grey;
     background-color: $grey-dark;
-    cursor: default;
+    cursor: not-allowed;
   }
 }
 

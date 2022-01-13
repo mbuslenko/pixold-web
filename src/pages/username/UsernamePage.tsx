@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { GetResponseUsernameCheck } from '../../shared/ts/types';
 import { getAxiosInstance } from '../../shared/ts/axiosInstance';
+import { GetResponseUsernameCheck } from '../../shared/ts/types';
 
 import { Button } from '../../components/button/Button';
 import { Input } from '../../components/input/Input';
@@ -17,38 +17,31 @@ export const UsernamePage: React.FC = () => {
   const [username, setUsername] = useState<string>('');
   const [usernameStatus, setUsernameStatus] = useState<InputStatus>();
 
-  const checkPostErrorCallback = () => {
-    setUsernameStatus('invalid');
-  };
+  const submitUsernameCallback = () => {
+    if (username.length === 0 || usernameStatus === 'invalid') {
+      setUsernameStatus('invalid');
 
-  const checkUsernameCallback = () => {
+      return;
+    }
+
     request({
       requestConfig: {
         method: 'get',
         url: `/user/check/username/${username}`,
       },
-      onResponse: checkPostResponseCallback,
-      onError: checkPostErrorCallback,
+      onResponse: submitUsernameResponseCallback,
+      onError: () => setUsernameStatus('invalid'),
     });
   };
 
-  const checkPostResponseCallback = (response: GetResponseUsernameCheck) => {
-    if (response.data.result) {
-      setUsernameStatus('valid');
-    } else {
+  const submitUsernameResponseCallback = (response: GetResponseUsernameCheck) => {
+    if (!response.data.result) {
       setUsernameStatus('invalid');
-    }
-  };
 
-  const onInputCallback = (text: string, status: InputStatus | undefined) => {
-    setUsername(text);
-    setUsernameStatus(status);
-  };
-
-  const submitCallback = () => {
-    if (usernameStatus === 'invalid') {
       return;
     }
+
+    setUsernameStatus('valid');
 
     request({
       requestConfig: {
@@ -57,32 +50,29 @@ export const UsernamePage: React.FC = () => {
         data: { username },
       },
       onResponse: () => navigate('/wallet'),
-      onError: checkPostErrorCallback,
     });
+  };
+
+  const inputCallback = (text: string, status: InputStatus | undefined) => {
+    setUsername(text);
+    setUsernameStatus(status);
   };
 
   return (
     <section className="username-wrap">
       <h1 className="username-title">Set your username</h1>
       <main className="username-controls-wrap">
-        <div className="username-input-wrap">
-          <Input
-            type="text"
-            placeholder="Please enter username"
-            description="Username"
-            onInput={onInputCallback}
-            status={usernameStatus}
-          />
-        </div>
-        <Button
-          text="Check"
-          appearance={{ priority: 'secondary', theme: 'black-white' }}
-          onClick={checkUsernameCallback}
+        <Input
+          type="text"
+          placeholder="Please enter username"
+          description="Username"
+          onInput={inputCallback}
+          status={usernameStatus}
         />
         <Button
           text="Submit"
           appearance={{ priority: 'primary' }}
-          onClick={submitCallback}
+          onClick={submitUsernameCallback}
           className="username-btn-submit"
         />
       </main>

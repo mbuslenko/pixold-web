@@ -54,7 +54,12 @@ export const HomeOpenseaScreen: React.FC = () => {
           </div>
         </article>
       </div>
-      <a className="opensea-screen-purchase-link" target="_blank" href={hexagonInfo?.purchaseLink ?? ''}>
+      <a
+        className="opensea-screen-purchase-link"
+        target="_blank"
+        rel="noreferrer noopener"
+        href={hexagonInfo?.purchaseLink ?? ''}
+      >
         <Button
           className="opensea-screen-purchase-button"
           text="Purchase on OpenSea"

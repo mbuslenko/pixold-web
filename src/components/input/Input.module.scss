@@ -11,6 +11,25 @@
   }
 }
 
+.input-label {
+  width: 255px;
+  display: inline-flex;
+  flex-direction: column;
+  cursor: text;
+
+  &.disabled {
+    cursor: not-allowed;
+  }
+
+  &.valid {
+    color: $green-light;
+  }
+
+  &.invalid {
+    color: $red-light;
+  }
+}
+
 .input {
   border: 1px solid $grey;
   border-radius: 4px;
@@ -23,6 +42,7 @@
 
   &:disabled {
     background-color: $grey-dark;
+    cursor: not-allowed;
   }
 
   &:focus {
@@ -50,25 +70,6 @@
     @include inputStatusIcon('cross-icon');
 
     position: relative;
-  }
-}
-
-.input-label {
-  width: 255px;
-  display: inline-flex;
-  flex-direction: column;
-  cursor: text;
-
-  &.disabled {
-    cursor: default;
-  }
-
-  &.valid {
-    color: $green-light;
-  }
-
-  &.invalid {
-    color: $red-light;
   }
 }
 
