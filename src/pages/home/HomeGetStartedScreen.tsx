@@ -16,8 +16,8 @@ export const HomeGetStartedScreen: React.FC = () => {
       <div className="info-container">
         <img src={imgWhale1} alt="" className="whale-img whale-top" />
         <Modal
-          heading="Let’s dive in!"
-          text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Blandit ultricies aliquam quis in accumsan, vel ut. Posuere suscipit neque scelerisque libero. Quisque ipsum tristique arcu velit facilisi nec lectus. Commodo sed elementum congue consequat."
+          heading="Get ready to dive in!"
+          text="We're working hard to make Pixold see the world faster. On February 4 this year, you will be able to dive into the world of new adventures and fight for the championship around the world. Get ready, because everyone else is not wasting time!"
           className="get-started-modal-size"
         >
           <Button

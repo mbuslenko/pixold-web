@@ -14,7 +14,7 @@ export const HomeWelcomeScreen: React.FC = () => {
     <div className="home-start-wrapper">
       <div className="home-start">
         <img src={logoImg} alt="logo" />
-        <h1 className="home-start-title">There will be a slogan</h1>
+        <h1 className="home-start-title">A place where time is really money</h1>
         <Button text="Get started" appearance={{ priority: 'primary' }} onClick={() => redirect(navigate, '/play')} />
       </div>
     </div>

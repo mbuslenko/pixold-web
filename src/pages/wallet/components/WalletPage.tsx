@@ -49,7 +49,7 @@ export const WalletPage: React.FC = () => {
         <WalletBalanceContainer pxl={pxl} xlm={xlm} usd={usd} />
         <WalletSwitch onSubmit={() => console.log('switch submit')} />
       </main>
-      <div className="wallet-page-background-div" />
+      <div className="wallet-page-background" />
     </section>
   );
 };

@@ -1,7 +1,7 @@
 @import '../../shared/scss/variables.scss';
 
 .home-start-wrapper {
-  padding: 150px 0 240px;
+  padding: 14vh 0 22vh;
 }
 
 .home-start {
@@ -13,16 +13,18 @@
   background-size: contain;
   background-image: url('../../assets/svg/mapbase.svg');
   background-repeat: no-repeat;
-  height: 642px;
-  padding-top: 100px;
+  height: 66.5vh;
+  padding-top: 9.3vh;
 }
 
 .home-start-title {
-  margin-top: 66px;
+  max-width: 770px;
+  margin: 6vh 0 4.5vh;
+  padding: 0 2%;
   font-family: Montserrat;
   font-weight: bold;
   font-size: 70px;
-  line-height: 85px;
+  line-height: 100%;
   text-align: center;
   letter-spacing: -0.02em;
 }
@@ -33,13 +35,26 @@
   }
 }
 
-@media screen and (max-width: $screen-max-width-smallest) {
+@media screen and (max-width: $screen-max-width-small) {
   .home-start-wrapper {
-    padding: 136px 0 20px;
+    padding: 14vh 0 7vh;
+  }
+
+  .home-start {
+    height: 90vh;
+  }
+
+  .home-start-title {
+    font-size: 60px;
+  }
+}
+
+@media screen and (max-width: $screen-max-width-smallest) {
+  .home-start {
+    height: 83.5vh;
   }
 
   .home-start-title {
     font-size: 40px;
-    line-height: 49px;
   }
 }
