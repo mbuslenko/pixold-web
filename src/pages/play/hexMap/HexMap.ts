@@ -16,8 +16,6 @@ export class HexMap {
     this._sceneSystem = new SceneSystem();
     this._updateSystem = new UpdateSystem();
     this._renderSystem = new RenderSystem(this._ctx);
-
-    this._sceneSystem.generateMap(3000, new Size(12, 12));
   }
 
   run (): void {
@@ -34,8 +32,8 @@ export class HexMap {
 
       const hexSize = this._updateSystem.adjustHexSize(this._sceneSystem.hexSize);
 
-      for (const hexPosition of this._sceneSystem.scene) {
-        this._renderSystem.drawHex(this._updateSystem.adjustPosition(hexPosition), hexSize);
+      for (const hex of this._sceneSystem.getVisibleCells(this._updateSystem.scaleFactor, this._updateSystem.offset)) {
+        this._renderSystem.drawHex(this._updateSystem.adjustPosition(hex), hexSize);
       }
 
       requestAnimationFrame(animate);
@@ -69,12 +67,12 @@ export class HexMap {
   }
 
   click (position: Vector): void {
-    for (let i = 0; i < this._sceneSystem.scene.length; i++) {
-      const hexPosition = this._sceneSystem.scene[i];
+    // for (let i = 0; i < this._sceneSystem.scene.length; i++) {
+    //   const hexPosition = this._sceneSystem.scene[i];
 
-      if (this._updateSystem.positionInHex(position, hexPosition, this._sceneSystem.hexSize)) {
-        this._sceneSystem.activeHexIndex = i;
-      }
-    }
+    //   if (this._updateSystem.positionInHex(position, hexPosition, this._sceneSystem.hexSize)) {
+    //     this._sceneSystem.activeHexIndex = i;
+    //   }
+    // }
   }
 }

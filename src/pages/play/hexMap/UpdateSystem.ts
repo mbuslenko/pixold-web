@@ -8,7 +8,7 @@ export class UpdateSystem {
   private _stopOffsetAnimation: boolean
   private _stopDragAnimation: boolean;
 
-  private _scale: number;
+  private _scaleFactor: number;
   private _scaleVelocity: number;
   private _finalScale: number;
   private _offset: Vector;
@@ -17,6 +17,14 @@ export class UpdateSystem {
   private _dragPrevPosition: Vector;
   private _dragStartPosition: Vector;
 
+  get scaleFactor (): number {
+    return this._scaleFactor;
+  }
+
+  get offset (): Vector {
+    return this._offset;
+  }
+
   constructor () {
     this.stopAnimation = true;
 
@@ -24,7 +32,7 @@ export class UpdateSystem {
     this._stopOffsetAnimation = true;
     this._stopDragAnimation = true;
 
-    this._scale = 1;
+    this._scaleFactor = 1;
     this._scaleVelocity = 0.05;
     this._finalScale = 1;
     this._offset = new Vector(0, 0);
@@ -37,14 +45,14 @@ export class UpdateSystem {
   adjustPosition (position: Vector): Vector {
     return position
       .copy()
-      .scale(this._scale)
+      .scale(this._scaleFactor)
       .add(this._offset);
   }
 
   adjustHexSize (hexSize: Size): Size {
     return hexSize
       .copy()
-      .scale(this._scale);
+      .scale(this._scaleFactor);
   }
 
   click (mousePosition: Vector): void {
@@ -130,15 +138,15 @@ export class UpdateSystem {
       return;
     }
 
-    const scale = (this._finalScale - this._scale) * this._scaleVelocity;
+    const scale = (this._finalScale - this._scaleFactor) * this._scaleVelocity;
 
-    this._scale += scale;
+    this._scaleFactor += scale;
 
     if (
-      scale >= 0 && this._scale >= this._finalScale - 0.001 ||
-      scale < 0 && this._scale <= this._finalScale + 0.001
+      scale >= 0 && this._scaleFactor >= this._finalScale - 0.001 ||
+      scale < 0 && this._scaleFactor <= this._finalScale + 0.001
     ) {
-      this._scale = this._finalScale;
+      this._scaleFactor = this._finalScale;
       this._stopScaleAnimation = true;
       this._stopAnimation();
     }
