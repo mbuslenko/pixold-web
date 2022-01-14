@@ -30,10 +30,9 @@ export const HomeOpenseaScreen: React.FC = () => {
       <div className="opensea-screen-info">
         <h2 className="opensea-screen-info-heading">Make the game a reality</h2>
         <p className="opensea-screen-info-text">
-        After buying a hexagon on the NFT marketplace, you will receive a code that you 
-        can redeem in the game so that you get a hexagon in your territory. It can be 
-        resold at any time, each new owner will receive a hexagon with the same level and 
-        characteristics as the previous one.
+          After buying a hexagon on the NFT marketplace, you will receive a code that you can redeem in the game so that
+          you get a hexagon in your territory. It can be resold at any time, each new owner will receive a hexagon with
+          the same level and characteristics as the previous one.
         </p>
       </div>
       <div className="opensea-card-container">
