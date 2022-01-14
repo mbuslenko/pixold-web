@@ -1,5 +1,6 @@
-import { IButtonProps } from '../interfaces';
 import styles from './Button.module.scss';
+import { IButtonProps } from '../interfaces';
+import { OpenseaLogoSvg } from '../openseaLogoSvg/OpenseaLogoSvg';
 
 export const Button: React.FC<IButtonProps> = ({
   text,
@@ -12,6 +13,19 @@ export const Button: React.FC<IButtonProps> = ({
   const buttonTheme: string = theme ? styles[theme] : styles.default;
   const buttonPopup: string | undefined = disabled && disabledPopup ? disabledPopup : undefined;
   const buttonClassName: string = className ?? '';
+  let iconComponent: JSX.Element | undefined;
+
+  switch (theme) {
+    case 'opensea-white':
+      iconComponent = <OpenseaLogoSvg color="white" className={styles['opensea-logo']} />;
+      break;
+    case 'opensea-black':
+      iconComponent = <OpenseaLogoSvg color="black" className={styles['opensea-logo']} />;
+      break;
+    default:
+      iconComponent = undefined;
+      break;
+  }
 
   return (
     <button
@@ -20,6 +34,7 @@ export const Button: React.FC<IButtonProps> = ({
       disabled={disabled}
       title={buttonPopup}
     >
+      {iconComponent}
       {text}
     </button>
   );

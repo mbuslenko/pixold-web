@@ -13,6 +13,7 @@ import {
   IPostResponseAuth,
   IPostResponseWalletConnect,
   IAxiosInstanceProps,
+  IGetResponseHexagonFree,
   IPostDataRedeemCode,
   IReactFacebookFailureResponse,
   IReactFacebookLoginInfo,
@@ -23,6 +24,7 @@ export type GetResponseWallet = AxiosResponse<IGetResponseWallet>;
 export type GetResponseUsernameCheck = AxiosResponse<IGetResponseUsernameCheck>;
 export type GetResponseUserData = AxiosResponse<IGetResponseUserData>;
 export type GetResponseLoginGoogle = GoogleLoginResponse | GoogleLoginResponseOffline;
+export type GetResponseHexagonFree = AxiosResponse<IGetResponseHexagonFree>;
 export type GetResponseLoginFacebook = IReactFacebookLoginInfo | IReactFacebookFailureResponse;
 
 export type PostResponseWalletConnect = AxiosResponse<IPostResponseWalletConnect>;

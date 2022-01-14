@@ -37,7 +37,8 @@
   grid-area: defender;
 }
 
-.hexagon-icon, .hexagon-icon-big {
+.hexagon-icon,
+.hexagon-icon-big {
   height: 285px;
   width: 265px;
 }
@@ -46,7 +47,8 @@
   display: none;
 }
 
-.hexagon-title, .hexagon-content-desc {
+.hexagon-title,
+.hexagon-content-desc {
   font-size: 24px;
   line-height: 29px;
 }
@@ -107,7 +109,7 @@
     grid-template-rows: 110px;
   }
 
- .hexagon-content-heading {
+  .hexagon-content-heading {
     font-size: 30px;
     line-height: 37px;
 

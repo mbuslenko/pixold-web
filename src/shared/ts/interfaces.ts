@@ -58,6 +58,12 @@ export interface IGetResponseUsernameCheck {
   result: boolean;
 }
 
+export interface IGetResponseHexagonFree {
+  name: string;
+  bid: string;
+  purchaseLink: string;
+}
+
 export interface IGetResponseUserData {
   username: string;
   firstName: string;

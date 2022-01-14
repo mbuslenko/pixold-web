@@ -50,7 +50,7 @@ export const WalletPage: React.FC = () => {
         <WalletBalanceContainer pxl={pxl} xlm={xlm} usd={usd} />
         <WalletSwitch onSubmit={() => console.log('switch submit')} />
       </main>
-      <img className="wallet-page-background" src={pageBackgroundImg} />
+      <img className="wallet-page-background" alt="" src={pageBackgroundImg} />
     </section>
   );
 };
