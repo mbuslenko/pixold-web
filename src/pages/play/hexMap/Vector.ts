@@ -30,6 +30,18 @@ export class Vector {
     return this;
   }
 
+  divideByValue (value: number): Vector {
+    this.x /= value;
+    this.y /= value;
+
+    return this;
+  }
+
+  equal (vector: Vector): boolean {
+    // HACK: after i change animation function i need to remove Math.round()
+    return Math.round(this.x) === Math.round(vector.x) && Math.round(this.y) === Math.round(vector.y);
+  }
+
   scale (scaleFactor: number): Vector {
     this.x *= scaleFactor;
     this.y *= scaleFactor;
@@ -49,15 +61,19 @@ export class Vector {
     return new Vector(this.x, this.y);
   }
 
-  static CreateFromMouseEvent (e: MouseEvent): Vector {
+  static FromMouseEvent (e: MouseEvent): Vector {
     return new Vector(e.clientX, e.clientY);
   }
 
-  static CreateFromWindowEndPosition (): Vector {
+  static FromTouch (touche: Touch): Vector {
+    return new Vector(touche.clientX, touche.clientY);
+  }
+
+  static FromWindowEndPosition (): Vector {
     return new Vector(window.innerWidth, window.innerHeight);
   }
 
-  static CreateInScreenCenter (): Vector {
+  static InScreenCenter (): Vector {
     return new Vector(window.innerWidth / 2, window.innerHeight / 2);
   }
 }

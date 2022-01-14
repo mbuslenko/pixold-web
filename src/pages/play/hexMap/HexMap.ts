@@ -3,6 +3,7 @@ import { Size } from './Size';
 import { UpdateSystem } from './UpdateSystem';
 import { SceneSystem } from './SceneSystem';
 import { RenderSystem } from './RenderSystem';
+import { Grid } from './Grid';
 
 export class HexMap {
   private _ctx: CanvasRenderingContext2D;
@@ -27,13 +28,17 @@ export class HexMap {
       }
 
       this._renderSystem.drawSetup();
-      this._updateSystem.makeScaleStep();
       this._updateSystem.makeMoveStep();
+      this._updateSystem.makeScaleStep();
 
       const hexSize = this._updateSystem.adjustHexSize(this._sceneSystem.hexSize);
 
       for (const hex of this._sceneSystem.getVisibleCells(this._updateSystem.scaleFactor, this._updateSystem.offset)) {
         this._renderSystem.drawHex(this._updateSystem.adjustPosition(hex), hexSize);
+      }
+
+      if (this._sceneSystem.activeHex) {
+        this._renderSystem.drawActiveHex(this._updateSystem.adjustPosition(this._sceneSystem.activeHex), hexSize, this._updateSystem.scaleFactor);
       }
 
       requestAnimationFrame(animate);
@@ -47,7 +52,7 @@ export class HexMap {
   }
 
   zoom (scaleFactor: number, mousePosition: Vector): void {
-    this._updateSystem.zoom(mousePosition, scaleFactor);
+    this._updateSystem.zoom(mousePosition, scaleFactor, this._sceneSystem.sceneCenter);
   }
 
   move (offset: Vector): void {
@@ -62,17 +67,34 @@ export class HexMap {
     this._updateSystem.dragMove(mousePosition);
   }
 
-  dragEnd (mousePosition: Vector): void {
-    this._updateSystem.dragEnd(mousePosition);
+  dragEnd (): void {
+    this._updateSystem.dragEnd();
+  }
+
+  private _positionInHex (position: Vector, hexPosition: Vector, hesSize: Size): boolean {
+    const { x, y } = this._updateSystem.adjustPosition(position);
+    const { x: hexX, y: hexY } = this._updateSystem.adjustPosition(hexPosition);
+    const { width: hexWidth, height: hexHeight } = this._updateSystem.adjustHexSize(hesSize);
+
+    return (
+      x >= hexX && x <= hexX + hexWidth &&
+      y >= hexY && y <= hexY + hexHeight
+    );
   }
 
   click (position: Vector): void {
-    // for (let i = 0; i < this._sceneSystem.scene.length; i++) {
-    //   const hexPosition = this._sceneSystem.scene[i];
+    for (const hex of this._sceneSystem.getVisibleCells(this._updateSystem.scaleFactor, this._updateSystem.offset)) {
+      if (this._positionInHex(position, hex, this._sceneSystem.hexSize)) {
+        this._sceneSystem.activeHex = hex;
+        // HACK: after test need to change click draw logic
+        this._renderSystem.drawActiveHex(
+          this._updateSystem.adjustPosition(this._sceneSystem.activeHex),
+          this._updateSystem.adjustHexSize(this._sceneSystem.hexSize),
+          this._updateSystem.scaleFactor
+        );
 
-    //   if (this._updateSystem.positionInHex(position, hexPosition, this._sceneSystem.hexSize)) {
-    //     this._sceneSystem.activeHexIndex = i;
-    //   }
-    // }
+        return;
+      }
+    }
   }
 }

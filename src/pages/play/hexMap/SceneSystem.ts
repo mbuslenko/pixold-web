@@ -6,10 +6,14 @@ export class SceneSystem {
   private _scene: Grid;
   private _cellSize: number;
   private _hexSize: Size;
-  activeHexIndex?: number;
+  activeHex?: Vector;
 
   get hexSize (): Size {
     return this._hexSize;
+  }
+
+  get sceneCenter (): Vector {
+    return this._scene.center;
   }
 
   constructor () {
@@ -49,7 +53,7 @@ export class SceneSystem {
     for (let row = 0; row < this._scene.cells.length; row++) {
       for (let column = 0; column < this._scene.cells[row].length; column++) {
         if (this._isHexInColumn(hexPosition, row, column)) {
-          this._scene.cells[row][column].push(hexPosition);
+          this._scene.addHex(row, column, hexPosition);
 
           return;
         }
@@ -78,6 +82,8 @@ export class SceneSystem {
 
       this._addHex(hexPosition);
     }
+
+    this._scene.calcWidth();
   }
 
   getVisibleCells (scaleFactor: number, offset: Vector): Grid {

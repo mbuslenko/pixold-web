@@ -29,6 +29,26 @@ export class RenderSystem {
     this._ctx.closePath();
   }
 
+  drawActiveHex (hexPosition: Vector, hexSize: Size, scaleFactor: number): void {
+    const lineWidth = 2 * scaleFactor;
+
+    this._ctx.lineWidth = lineWidth;
+    this._ctx.fillStyle = 'green';
+    this._ctx.fillRect(
+      hexPosition.x,
+      hexPosition.y,
+      hexSize.width,
+      hexSize.height,
+    );
+    this._ctx.strokeRect(
+      hexPosition.x - lineWidth,
+      hexPosition.y - lineWidth,
+      hexSize.width + lineWidth,
+      hexSize.height + lineWidth,
+    );
+    this._ctx.fillStyle = 'grey';
+  }
+
   private _drawHex (ctx: CanvasRenderingContext2D, position: Vector, r: number): void {
     ctx.beginPath();
     ctx.moveTo(position.x, position.y - r);
