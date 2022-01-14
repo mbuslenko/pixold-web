@@ -15,7 +15,6 @@ export class UpdateSystem {
   private _finalOffset: Vector;
   private _offsetStep: Vector;
   private _dragPrevPosition: Vector;
-  private _dragStartPosition: Vector;
 
   get scaleFactor (): number {
     return this._scaleFactor;
@@ -39,7 +38,6 @@ export class UpdateSystem {
     this._finalOffset = new Vector(0, 0);
     this._offsetStep = new Vector(0, 0);
     this._dragPrevPosition = new Vector(0, 0);
-    this._dragStartPosition = new Vector(0, 0);
   }
 
   adjustPosition (position: Vector): Vector {
@@ -60,6 +58,7 @@ export class UpdateSystem {
   }
 
   move (offset: Vector): void {
+    console.log(offset);
     this._finalOffset.add(offset);
     this._offsetStep = this._finalOffset.copy().subtract(this._offset).divideByValue(this._animationDuration);
     this._stopOffsetAnimation = false;
@@ -104,7 +103,6 @@ export class UpdateSystem {
   dragStart (mousePosition: Vector): void {
     this._stopDragAnimation = false;
     this._dragPrevPosition = mousePosition;
-    this._dragStartPosition = this._offset.copy();
   }
 
   dragMove (mousePosition: Vector): void {
@@ -115,12 +113,9 @@ export class UpdateSystem {
     this._stopOffsetAnimation = false;
     this.stopAnimation = false;
 
-    // FIXME: after few drags it will start movement from wrong position
-    this.move(mousePosition
-      .subtract(this._dragPrevPosition)
-      .subtract(this._dragStartPosition)
-      .subtract(this._finalOffset)
-    );
+    this.move(mousePosition.copy().subtract(this._dragPrevPosition));
+
+    this._dragPrevPosition = mousePosition;
   }
 
   dragEnd (): void {

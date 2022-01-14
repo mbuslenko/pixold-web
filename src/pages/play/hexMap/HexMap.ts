@@ -3,7 +3,6 @@ import { Size } from './Size';
 import { UpdateSystem } from './UpdateSystem';
 import { SceneSystem } from './SceneSystem';
 import { RenderSystem } from './RenderSystem';
-import { Grid } from './Grid';
 
 export class HexMap {
   private _ctx: CanvasRenderingContext2D;
