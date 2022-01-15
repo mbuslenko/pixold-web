@@ -16,6 +16,12 @@ export class Vector {
     return this;
   }
 
+  addY (y: number): Vector {
+    this.y += y;
+
+    return this;
+  }
+
   subtract (vector: Vector): Vector {
     this.x -= vector.x;
     this.y -= vector.y;
@@ -38,8 +44,8 @@ export class Vector {
   }
 
   equal (vector: Vector): boolean {
-    // HACK: after i change animation function i need to remove Math.round()
-    return Math.round(this.x) === Math.round(vector.x) && Math.round(this.y) === Math.round(vector.y);
+    return (this.x >= vector.x - 1 && this.x <= vector.x + 1) &&
+           (this.y >= vector.y - 1 && this.y <= vector.y + 1);
   }
 
   scale (scaleFactor: number): Vector {
@@ -49,13 +55,19 @@ export class Vector {
     return  this;
   }
 
-  // isAfter (position: Position): boolean {
-  //   return this.x >= position.x && this.y >= position.y;
-  // }
+  max (xMax: number, yMax: number): Vector {
+    this.x = Math.max(this.x, xMax);
+    this.y = Math.max(this.y, yMax);
 
-  // isBefore (position: Position): boolean {
-  //   return this.x <= position.x && this.y <= position.y;
-  // }
+    return this;
+  }
+
+  min (xMin: number, yMin: number): Vector {
+    this.x = Math.min(this.x, xMin);
+    this.y = Math.min(this.y, yMin);
+
+    return this;
+  }
 
   copy (): Vector {
     return new Vector(this.x, this.y);

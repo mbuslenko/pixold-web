@@ -24,9 +24,8 @@ export const PlayMenu: React.FC = () => {
         <h2 className="play-menu-heading">Navigate</h2>
         <nav className="play-menu-navigation">
           <Link to="/home">
-            <img className="play-menu-logo" src={logo} alt="" />
+            <img className="play-menu-logo" src={logo} alt="logo" />
           </Link>
-          <img className="play-menu-logo" src={logo} alt="logo" />
           <div className="play-menu-link-container">
             <button className="play-menu-button" onClick={() => console.log(';)')}>
               <GameMenuIconSvg iconName="territory" className="play-menu-icon" />

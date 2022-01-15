@@ -16,6 +16,10 @@ export class SceneSystem {
     return this._scene.center;
   }
 
+  get sceneSize (): Size {
+    return this._scene.size;
+  }
+
   constructor () {
     this._cellSize = 200;
     this._hexSize = new Size(12, 12);
@@ -86,10 +90,30 @@ export class SceneSystem {
     this._scene.calcWidth();
   }
 
-  getVisibleCells (scaleFactor: number, offset: Vector): Grid {
-    // TODO: add only visible cells
-    // const visibleCells: Grid = new Grid();
-    // return visibleCells;
-    return this._scene;
+  getVisibleHexes (scaleFactor: number, offset: Vector): Vector[] {
+    const { x, y } = offset.copy().scale(scaleFactor);
+    const { width: widthWindow, height: heightWindow } = Size.CreateFromWindow();
+    const cellSize = this._cellSize * scaleFactor;
+    let visibleCells: Vector[] = [];
+    let notVisibleCells = 0;
+
+    // TODO: search can be optimized
+    for (let row = 0; row < this._scene.cells.length; row++) {
+      for (let column = 0; column < this._scene.cells[row].length; column++) {
+        if (
+          (x + column * cellSize + cellSize >= 0 && x + column * cellSize <= widthWindow) &&
+          (y + row * cellSize + cellSize >= 0 && y + row * cellSize <= heightWindow)
+        ) {
+          visibleCells = visibleCells.concat(this._scene.cells[row][column]);
+        } else {
+          // HACK: just for test
+          notVisibleCells++;
+        }
+      }
+    }
+
+    console.log(`visible: ${this._scene.cells.flat().length}; not visible: ${notVisibleCells}`);
+
+    return visibleCells;
   }
 }

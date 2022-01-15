@@ -1,12 +1,13 @@
 import { Size } from './Size';
 import { Vector } from './Vector';
 
+// TODO: add boundaries for scale() and move()
 export class UpdateSystem {
-  stopAnimation: boolean;
+  stopTransformAnimation: boolean;
 
   private _stopScaleAnimation: boolean;
   private _stopOffsetAnimation: boolean
-  private _stopDragAnimation: boolean;
+  private _stopDragging: boolean;
   private _animationDuration: number;
   private _scaleFactor: number;
   private _finalScaleFactor: number;
@@ -25,11 +26,11 @@ export class UpdateSystem {
   }
 
   constructor () {
-    this.stopAnimation = true;
+    this.stopTransformAnimation = true;
 
     this._stopScaleAnimation = true;
     this._stopOffsetAnimation = true;
-    this._stopDragAnimation = true;
+    this._stopDragging = true;
     this._animationDuration = 10;
     this._scaleFactor = 1;
     this._finalScaleFactor = 1;
@@ -54,15 +55,14 @@ export class UpdateSystem {
   }
 
   private _stopAnimation (): void {
-    this.stopAnimation = this._stopOffsetAnimation && this._stopScaleAnimation && this._stopDragAnimation;
+    this.stopTransformAnimation = this._stopOffsetAnimation && this._stopScaleAnimation;
   }
 
   move (offset: Vector): void {
-    console.log(offset);
     this._finalOffset.add(offset);
     this._offsetStep = this._finalOffset.copy().subtract(this._offset).divideByValue(this._animationDuration);
     this._stopOffsetAnimation = false;
-    this.stopAnimation = false;
+    this.stopTransformAnimation = false;
   }
 
   makeMoveStep (): void {
@@ -73,6 +73,7 @@ export class UpdateSystem {
     this._offset.add(this._offsetStep);
 
     if (this._offset.equal(this._finalOffset)) {
+      this._offset = this._finalOffset.copy();
       this._stopOffsetAnimation = true;
       this._stopAnimation();
     }
@@ -82,7 +83,7 @@ export class UpdateSystem {
     this._finalScaleFactor = Math.max(this._finalScaleFactor + scaleFactor, 0.25);
     this._scaleStep = (this._finalScaleFactor - this._scaleFactor) / this._animationDuration;
     this._stopScaleAnimation = false;
-    this.stopAnimation = false;
+    this.stopTransformAnimation = false;
   }
 
   makeScaleStep (): void {
@@ -90,10 +91,12 @@ export class UpdateSystem {
       return;
     }
 
-
     this._scaleFactor += this._scaleStep;
 
-    if (this._scaleFactor >= this._finalScaleFactor - 0.005 && this._scaleFactor <= this._finalScaleFactor + 0.005) {
+    if (
+      this._scaleFactor >= this._finalScaleFactor - 0.05 &&
+      this._scaleFactor <= this._finalScaleFactor + 0.05
+    ) {
       this._scaleFactor = this._finalScaleFactor;
       this._stopScaleAnimation = true;
       this._stopAnimation();
@@ -101,17 +104,17 @@ export class UpdateSystem {
   }
 
   dragStart (mousePosition: Vector): void {
-    this._stopDragAnimation = false;
+    this._stopDragging = false;
     this._dragPrevPosition = mousePosition;
   }
 
   dragMove (mousePosition: Vector): void {
-    if (this._stopDragAnimation) {
+    if (this._stopDragging) {
       return;
     }
 
     this._stopOffsetAnimation = false;
-    this.stopAnimation = false;
+    this.stopTransformAnimation = false;
 
     this.move(mousePosition.copy().subtract(this._dragPrevPosition));
 
@@ -119,23 +122,18 @@ export class UpdateSystem {
   }
 
   dragEnd (): void {
-    if (this._stopDragAnimation) {
-      return;
-    }
-
-    this._stopDragAnimation = true;
-    this._stopAnimation();
+    this._stopDragging = true;
   }
 
-  zoom (mousePosition: Vector, scaleFactor: number, gridCenter: Vector): void {
+  zoom (mousePosition: Vector, scaleFactor: number, gridCenter: Vector, gridSize: Size): void {
     // TODO: need to zoom point where position to center, not center to position
     // FIXME: movement while zooming is weird
+
     this.scale(scaleFactor);
-    this.move(
-      mousePosition
-        .subtract(this._finalOffset.copy().scale(this._finalScaleFactor))
-        .subtract(gridCenter.copy().scale(this._finalScaleFactor))
-        .divideByValue(this._finalScaleFactor)
-    );
+
+    const mousePositionInGrid = mousePosition.subtract(this._finalOffset.copy());
+    const gridPointToCenterDistance = Vector.InScreenCenter().subtract(mousePositionInGrid);
+
+    this.move(gridPointToCenterDistance);
   }
 }

@@ -1,18 +1,14 @@
+import { Size } from './Size';
 import { Vector } from './Vector';
 
 export class Grid {
   cells: Vector[][][];
 
-  private _width: number;
-  private _height: number;
+  private _size: Size;
   private _center: Vector;
 
-  get width (): number {
-    return this._width;
-  }
-
-  get height (): number {
-    return this._height;
+  get size (): Size {
+    return this._size;
   }
 
   get center (): Vector {
@@ -21,8 +17,7 @@ export class Grid {
 
   constructor () {
     this.cells = [];
-    this._width = 0;
-    this._height = 0;
+    this._size = new Size(0, 0);
     this._center = new Vector(0, 0);
   }
 
@@ -54,8 +49,7 @@ export class Grid {
     const lastHex = lastColumn[lastColumn.length - 1];
     const difference = lastHex.copy().subtract(this.cells[0][0][0]);
 
-    this._width = difference.x;
-    this._height = difference.y;
+    this._size = new Size(difference.x, difference.y);
     this._center = difference.divideByValue(2);
   }
 }
