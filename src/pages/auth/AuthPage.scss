@@ -3,10 +3,10 @@
 .login-wrap {
   max-width: 1440px;
   margin: 0 auto;
+  padding-top: 12.5vh;
 }
 
 .login-content {
-  padding-top: 136px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -26,7 +26,7 @@
   font-size: 50px;
   line-height: 61px;
   letter-spacing: -0.02em;
-  padding-top: 144px;
+  padding-top: 13.5vh;
 }
 
 .login-desc {
@@ -38,7 +38,7 @@
 }
 
 .login-btn-wrap {
-  padding-top: 86px;
+  padding-top: 7.96vh;
   display: flex;
   flex-direction: column;
   gap: 17px;

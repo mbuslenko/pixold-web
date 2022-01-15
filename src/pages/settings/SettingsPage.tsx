@@ -55,7 +55,7 @@ export const SettingsPage: React.FC = () => {
       <header className="settings-header">
         <Link to="/play">
           <Button
-            text="← Back to game"
+            text="← Back to play"
             appearance={{ priority: 'secondary', theme: 'black-white' }}
             className="settings-btn-back-game"
           />
