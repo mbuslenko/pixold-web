@@ -76,6 +76,7 @@
 .opensea-card-hexagon {
   display: block;
   width: 100%;
+  height: 392px;
   border-radius: 38px;
 }
 
@@ -93,6 +94,7 @@
   color: transparent;
   overflow-wrap: anywhere;
   line-height: 80px;
+  height: 160px;
   letter-spacing: -0.06em;
   margin-bottom: 28px;
 }
@@ -211,6 +213,7 @@
 
   .opensea-card-hexagon {
     border-radius: 0;
+    height: 291px;
   }
 
   .opensea-card-content {
@@ -223,12 +226,14 @@
       weight: 700;
       size: 20px;
     }
+    height: 16px;
     line-height: 16px;
     margin-bottom: 14px;
   }
 
   .opensea-card-info {
     padding: 0;
+    height: 49px;
   }
 
   .opensea-card-info-heading {
@@ -242,6 +247,7 @@
   }
 
   .opensea-card-info-text {
+    height: 22px;
     font: {
       weight: 600;
       size: 18px;
