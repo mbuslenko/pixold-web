@@ -2,7 +2,9 @@ import { AxiosResponse } from 'axios';
 
 import { RequestData } from './types';
 
+//TODO: remove id after test
 export interface IGetResponseFaqContent {
+  id: string;
   question: string;
   answer: string;
 }

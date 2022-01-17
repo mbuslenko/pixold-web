@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 import { Button } from '../../components/button/Button';
 
@@ -9,14 +9,12 @@ import './FaqQuestion.scss';
 import { IFaqQuestionProps } from './interfaces';
 import { AnswerTextDomHeight } from './enums';
 
-export const FaqQuestion: React.FC<IFaqQuestionProps> = ({ question, answer, showInfoModalCallback }) => {
+export const FaqQuestion: React.FC<IFaqQuestionProps> = ({ id, question, answer, showInfoModalCallback }) => {
   const answerRef = useRef<HTMLDivElement>(null);
   const [isTextOverflow, setIsTextOverflow] = useState<boolean>(false);
 
   useLayoutEffect(() => {
     const answerDomHeight = answerRef.current?.offsetHeight ?? 0;
-
-    console.log([answerRef.current, answerDomHeight]);
 
     if (answerDomHeight > AnswerTextDomHeight.LARGE && !isScreen(ScreenMaxWidth.SMALL)) {
       setIsTextOverflow(true);
@@ -32,7 +30,7 @@ export const FaqQuestion: React.FC<IFaqQuestionProps> = ({ question, answer, sho
   }, []);
 
   return (
-    <section>
+    <section id={id}>
       <h3 className="faq-question-heading">{question}</h3>
       <p ref={answerRef} className={`faq-question-text ${isTextOverflow && 'faq-short-text'}`}>
         {answer}

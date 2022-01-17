@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { blockScrolling, unblockScrolling } from '../../shared/ts/helperFunctions';
@@ -23,6 +23,9 @@ export const FaqPage: React.FC = () => {
   const [modalHeading, setModalHeading] = useState<string>('');
   const [modalText, setModalText] = useState<string>('');
 
+  const [linkHref, setLinkHref] = useState<string>('');
+  const linkRef = useRef<HTMLAnchorElement>(null);
+
   const showInfoModal: ShowInfoModalCallback = (modalHeading, modalText) => {
     blockScrolling();
     setModalHeading(modalHeading);
@@ -41,62 +44,43 @@ export const FaqPage: React.FC = () => {
         method: 'get',
         url: '/faq',
       },
-      onResponse: (response: GetResponseFaq) => setFaqTopicData(response.data),
+      onResponse: (response: GetResponseFaq) => {
+        setFaqTopicData(response.data);
+        setLinkHref('#PXL CoinThere are question header');
+        linkRef.current?.click();
+      },
     });
   }, [navigate]);
-
-  // const [scrollY, setScrollY] = useState(0);
-
-  // setScrollY(window.pageYOffset);
-  // const isScrolled = () => {
-  //   if (isScreen(480) && window.pageYOffset === 2500) {
-  //     console.log('here');
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   function watchScroll() {
-  //     window.addEventListener('scroll', isScrolled);
-  //   }
-  //   watchScroll();
-  //   // Remove listener (like componentWillUnmount)
-
-  //   return () => {
-  //     window.removeEventListener('scroll', isScrolled);
-  //   };
-  // }, []);
 
   return (
     <section className="faq-page">
       <FaqHeader />
+      <a href={linkHref} ref={linkRef}>
+        Link to 7 question
+      </a>
       <section className={`faq-page-content ${isVisibleModal && 'is-blurred'}`}>
         <h1 className="faq-heading">FAQ</h1>
         <main className="faq-topic-container">
           {faqTopicData.map(({ name, content }, index) => (
             <FaqTopic key={index} name={name} content={content} showInfoModalCallback={showInfoModal} />
           ))}
+          <div className="faq-support-wrapper">
+            <nav className="faq-page-support">
+              <a
+                href="mailto:hello@pixold.io"
+                className="faq-page-support-email"
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                {/* <img src={emailSvg} alt="Email" className="faq-page-support-email-icon" /> */}
+              </a>
+              <a href="https://t.me/pixold_help_bot" target="_blank" rel="noreferrer noopener">
+                <img src={telegramSvg} alt="Telegram" className="faq-page-support-telegram-icon" />
+              </a>
+            </nav>
+          </div>
         </main>
-        <ul className="faq-page-support-links">
-          {/* <img src={emailSvg} alt="" className="faq-page-support-email" /> */}
-          <li>
-            <a
-              href="mailto:hello@pixold.io"
-              className="faq-page-support-email"
-              target="_blank"
-              rel="noreferrer noopener"
-            ></a>
-          </li>
-          <li>
-            <a
-              href="https://t.me/pixold_help_bot"
-              className="faq-page-support-telegram"
-              target="_blank"
-              rel="noreferrer noopener"
-            >
-              <img src={telegramSvg} alt="" />
-            </a>
-          </li>
-        </ul>
+
         <HomeFooter />
       </section>
       {isVisibleModal && (
