@@ -13,6 +13,8 @@ import { FaqHeader } from './FaqHeader';
 import { FaqTopic } from './FaqTopic';
 import { HomeFooter } from '../home/HomeFooter';
 import { ShowInfoModalCallback } from './types';
+// import emailSvg from '../../assets/svg/mail-btn.svg';
+import telegramSvg from '../../assets/svg/telegram-btn.svg';
 
 export const FaqPage: React.FC = () => {
   const navigate = useNavigate();
@@ -43,6 +45,27 @@ export const FaqPage: React.FC = () => {
     });
   }, [navigate]);
 
+  // const [scrollY, setScrollY] = useState(0);
+
+  // setScrollY(window.pageYOffset);
+  // const isScrolled = () => {
+  //   if (isScreen(480) && window.pageYOffset === 2500) {
+  //     console.log('here');
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   function watchScroll() {
+  //     window.addEventListener('scroll', isScrolled);
+  //   }
+  //   watchScroll();
+  //   // Remove listener (like componentWillUnmount)
+
+  //   return () => {
+  //     window.removeEventListener('scroll', isScrolled);
+  //   };
+  // }, []);
+
   return (
     <section className="faq-page">
       <FaqHeader />
@@ -53,6 +76,27 @@ export const FaqPage: React.FC = () => {
             <FaqTopic key={index} name={name} content={content} showInfoModalCallback={showInfoModal} />
           ))}
         </main>
+        <ul className="faq-page-support-links">
+          {/* <img src={emailSvg} alt="" className="faq-page-support-email" /> */}
+          <li>
+            <a
+              href="mailto:hello@pixold.io"
+              className="faq-page-support-email"
+              target="_blank"
+              rel="noreferrer noopener"
+            ></a>
+          </li>
+          <li>
+            <a
+              href="https://t.me/pixold_help_bot"
+              className="faq-page-support-telegram"
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              <img src={telegramSvg} alt="" />
+            </a>
+          </li>
+        </ul>
         <HomeFooter />
       </section>
       {isVisibleModal && (

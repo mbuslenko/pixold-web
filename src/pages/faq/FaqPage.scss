@@ -20,6 +20,35 @@
   padding: 0 6.875em 14.125em;
 }
 
+// .faq-page-support-links {
+//   padding: 0 6.875em;
+// }
+
+.faq-page-support-email {
+  width: 45px;
+  height: 45px;
+  background-color: $white;
+  border-radius: 50%;
+
+  position: fixed;
+  display: block;
+  right: 406px;
+  // bottom: 354px;
+  bottom: 32.8vh;
+  z-index: 5;
+}
+
+.faq-page-support-telegram {
+  position: fixed;
+  display: block;
+  width: 52px;
+  height: 52px;
+  right: 346px;
+  // bottom: 350px;
+  bottom: 32.4vh;
+  z-index: 5;
+}
+
 .faq-info-modal-wrapper {
   position: fixed;
   top: 0;
@@ -31,6 +60,26 @@
   align-items: center;
 }
 
+@media screen and (max-width: $screen-max-width-biggest) {
+  .faq-page-support-email {
+    right: 166px;
+  }
+
+  .faq-page-support-telegram {
+    right: 106px;
+  }
+}
+
+@media screen and (max-width: $screen-max-width-medium) {
+  .faq-page-support-email {
+    bottom: 37.8vh;
+  }
+
+  .faq-page-support-telegram {
+    bottom: 37.8vh;
+  }
+}
+
 @media screen and (max-width: $screen-max-width-smallest) {
   .faq-heading {
     font-size: 50px;
@@ -39,6 +88,16 @@
 
   .faq-topic-container {
     padding: 0 2.25em 5.375em;
+  }
+
+  .faq-page-support-email {
+    right: 6em;
+    top: 285px;
+  }
+
+  .faq-page-support-telegram {
+    right: 2.25em;
+    top: 282px;
   }
 
   .faq-button-small {
