@@ -1,22 +1,23 @@
 import { HexMap } from './HexMap';
+import { TouchGroup } from './TouchGroup';
 import { Vector } from './Vector';
 
 export class EventManager {
   private _map: HexMap;
+  private _isDragging: boolean;
+  private _touchGroup: TouchGroup | null;
 
-  constructor (map: HexMap) {
+  constructor(map: HexMap) {
     this._map = map;
+    this._isDragging = false;
+    this._touchGroup = null;
   }
 
-  private _wheelCallback (e: WheelEvent): void {
-    if (e.deltaY > 0) {
-      this._map.zoom(-0.25, Vector.FromMouseEvent(e));
-    } else {
-      this._map.zoom(0.25, Vector.FromMouseEvent(e));
-    }
+  private _wheelCallback(e: WheelEvent): void {
+    this._map.zoom(e.deltaY, new Vector(e.clientX, e.clientY));
   }
 
-  private _keyDownCallback (e: KeyboardEvent): void {
+  private _keyDownCallback(e: KeyboardEvent): void {
     switch (e.key) {
       case 'ArrowRight':
         this._map.move(new Vector(222, 0));
@@ -33,45 +34,67 @@ export class EventManager {
     }
   }
 
-  setWindowEvents (): void {
+  private _mouseDownCallback = (e: MouseEvent): void => {
+    if (e.shiftKey) {
+      this._isDragging = true;
+      this._map.dragStart(Vector.FromEventPosition(e));
+    }
+  };
+  private _mouseMoveCallback = (e: MouseEvent): void => {
+    if (this._isDragging) {
+      this._map.dragMove(Vector.FromEventPosition(e));
+    }
+  };
+  private _mouseUpCallback = (e: MouseEvent): void => {
+    if (this._isDragging) {
+      this._isDragging = false;
+
+      return;
+    }
+
+    this._map.click(Vector.FromEventPosition(e));
+  };
+
+  setWindowEvents(): void {
     window.onkeydown = this._keyDownCallback.bind(this);
 
     window.onwheel = this._wheelCallback.bind(this);
 
-    window.onclick = (e) => this._map.click(Vector.FromMouseEvent(e));
-    window.ondblclick = (e) => this._map.zoom(0.25, Vector.FromMouseEvent(e));
-
-    window.onmousedown = e => this._map.dragStart(Vector.FromMouseEvent(e));
-    window.onmousemove = e => this._map.dragMove(Vector.FromMouseEvent(e));
-    window.onmouseup = () => this._map.dragEnd();
+    window.onmousedown = this._mouseDownCallback.bind(this);
+    window.onmousemove = this._mouseMoveCallback.bind(this);
+    window.onmouseup = this._mouseUpCallback.bind(this);
 
     window.ontouchstart = ({ touches }) => {
       if (touches.length === 1) {
-        this._map.dragStart(Vector.FromTouch(touches[0]));
+        this._map.dragStart(Vector.FromEventPosition(touches[0]));
 
         return;
       }
 
-      // TODO: after test need to replace scale() to zoom()
-      this._map.scale(
-        Vector.FromTouch(touches[0])
-          .subtract(Vector.FromTouch(touches[1]))
-          .x
-      );
+      this._touchGroup = TouchGroup.FromTouchList(touches);
     };
     window.ontouchmove = ({ touches }) => {
-      if (touches.length === 1) {
-        this._map.dragMove(Vector.FromTouch(touches[0]));
+      if (!this._touchGroup) {
+        this._map.dragMove(Vector.FromEventPosition(touches[0]));
 
         return;
       }
 
-      this._map.scale(
-        Vector.FromTouch(touches[0])
-          .subtract(Vector.FromTouch(touches[1]))
-          .x
-      );
+      const firstDistanceX = touches[0].clientX - this._touchGroup.firstTouch.x;
+      const secondDistanceX = touches[1].clientX - this._touchGroup.secondTouch.x;
+      const scaleFactor = (firstDistanceX + secondDistanceX) / 10;
+
+      this._map.zoom(scaleFactor, this._touchGroup.middlePoint);
+
+      this._touchGroup.firstTouch = Vector.FromEventPosition(touches[0]);
+      this._touchGroup.secondTouch = Vector.FromEventPosition(touches[1]);
     };
-    window.ontouchend = () => this._map.dragEnd();
+    window.ontouchend = ({ touches }) => {
+      if (touches.length > 0) {
+        return;
+      }
+
+      this._touchGroup = null;
+    };
   }
 }

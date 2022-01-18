@@ -1,58 +1,81 @@
 import { Vector } from './Vector';
-import { Size } from './Size';
-import { UpdateSystem } from './UpdateSystem';
 import { SceneSystem } from './SceneSystem';
 import { RenderSystem } from './RenderSystem';
+import { Matrix } from './Matrix';
 
 export class HexMap {
   private _ctx: CanvasRenderingContext2D;
+
   private _sceneSystem: SceneSystem;
-  private _updateSystem: UpdateSystem;
   private _renderSystem: RenderSystem;
 
-  constructor (ctx: CanvasRenderingContext2D) {
+  private _scaleFactor: number;
+  private _mapOrigin: Vector;
+  private _mapTranslation: Matrix;
+  private _mapScale: Matrix;
+  private _mapTransform: Matrix;
+
+  private _prevMousePosition: Vector;
+
+  constructor(ctx: CanvasRenderingContext2D) {
     this._ctx = ctx;
 
     this._sceneSystem = new SceneSystem();
-    this._updateSystem = new UpdateSystem();
     this._renderSystem = new RenderSystem(this._ctx);
 
-    // HACK: for test purposes
-    for (const hex of this._sceneSystem.getVisibleHexes(this._updateSystem.scaleFactor, this._updateSystem.offset)) {
-      this._renderSystem.drawHex(this._updateSystem.adjustPosition(hex), this._sceneSystem.hexSize);
-    }
+    this._scaleFactor = 0;
+    this._mapOrigin = new Vector(0, 0);
+    this._mapTranslation = Matrix.CreateIdentity();
+    this._mapScale = Matrix.CreateIdentity();
+    this._mapTransform = Matrix.CreateIdentity();
+
+    this._prevMousePosition = new Vector(0, 0);
   }
 
-  run (): void {
+  private _update(): void {
+    const pivot = this._prevMousePosition.copy().subtract(this._mapOrigin);
+    const translation = Matrix.CreateTranslate(pivot);
+    const translationInv = Matrix.CreateTranslate(pivot.multiplyByValue(-1));
+
+    this._mapScale.multiply(translation.multiply(Matrix.CreateScale(1 + this._scaleFactor)).multiply(translationInv));
+
+    // TODO: use to clamp mapScale
+    // Math.min(2, Math.max(1, scale));
+
+    this._mapTransform = this._mapScale.copy().multiply(this._mapTranslation);
+    this._scaleFactor = 0;
+  }
+
+  run(): void {
     const animate = () => {
-      if (this._updateSystem.stopTransformAnimation) {
-        requestAnimationFrame(animate);
-
-        return;
-      }
-
       this._renderSystem.clear();
-      this._updateSystem.makeMoveStep();
-      this._updateSystem.makeScaleStep();
+      this._renderSystem.setupForHex();
 
-      const hexSize = this._updateSystem.adjustHexSize(this._sceneSystem.hexSize);
-      const visibleHex = this._sceneSystem.getVisibleHexes(this._updateSystem.scaleFactor, this._updateSystem.offset);
+      this._update();
+      this._sceneSystem.updateScene(this._mapTransform);
 
-      for (const hex of visibleHex) {
-        this._renderSystem.drawHex(this._updateSystem.adjustPosition(hex), hexSize);
+      this._renderSystem.setTransform(this._mapTransform);
+
+      for (const hex of this._sceneSystem.visibleScene) {
+        this._renderSystem.drawHex(hex, this._sceneSystem.hexSize);
       }
 
-      // HACK: for test purposes
+      this._renderSystem.setupForActiveHex();
+
       if (this._sceneSystem.activeHex) {
-        this._renderSystem.drawActiveHex(this._updateSystem.adjustPosition(this._sceneSystem.activeHex), hexSize, this._updateSystem.scaleFactor);
+        this._renderSystem.drawActiveHex(this._sceneSystem.activeHex, this._sceneSystem.hexSize);
       }
 
-      // HACK: for test purposes
-      this._renderSystem.drawAttackLine(
-        this._updateSystem.adjustPosition(visibleHex[0]),
-        this._updateSystem.adjustPosition(visibleHex[visibleHex.length - 1]),
-        this._updateSystem.scaleFactor
-      );
+      this._renderSystem.setupForLine();
+
+      for (const { attacker, defender } of this._sceneSystem.attackingHexes) {
+        this._renderSystem.drawAttackLine(attacker, defender);
+      }
+
+      // HACK: test
+      this._ctx.strokeRect(0, 0, window.innerWidth, window.innerHeight);
+
+      this._ctx.lineDashOffset -= 2 % 4;
 
       requestAnimationFrame(animate);
     };
@@ -60,66 +83,61 @@ export class HexMap {
     animate();
   }
 
-  scale (scaleFactor: number): void {
-    this._updateSystem.scale(scaleFactor);
+  zoom(scaleFactor: number, position: Vector): void {
+    this._scaleFactor = -Math.sign(scaleFactor) / 10;
+    this._prevMousePosition = position;
   }
 
-  zoom (scaleFactor: number, mousePosition: Vector): void {
-    this._updateSystem.zoom(mousePosition, scaleFactor, this._sceneSystem.sceneCenter, this._sceneSystem.sceneSize);
+  move(offset: Vector): void {
+    // const scaledSceneSize = this._sceneSystem.sceneSize.copy().scale(this._scaleFactor);
+    // const windowEndPosition = Vector.FromWindowEndPosition();
+    // const { x: xOffsetMax, y: yOffsetMax } = windowEndPosition.copy().subtractSize(scaledSceneSize).abs();
+    // const x = offset.x + this._mapTransform.get([0, 2]);
+    // const y = offset.y + this._mapTransform.get([1, 2]);
+
+    // // TODO: need refactoring
+    // if (x < -xOffsetMax) {
+    //   offset.x -= (x + xOffsetMax) / this._scaleFactor;
+    // } else if (x > 0) {
+    //   offset.x -= x / this._scaleFactor;
+    // }
+
+    // if (y < -yOffsetMax) {
+    //   offset.y -= (y + yOffsetMax) / this._scaleFactor;
+    // } else if (y > 0) {
+    //   offset.y -= y / this._scaleFactor;
+    // }
+
+    this._mapOrigin.add(offset);
+    this._mapTranslation.multiply(Matrix.CreateTranslate(offset));
   }
 
-  move (offset: Vector): void {
-    this._updateSystem.move(offset);
+  dragStart(mousePosition: Vector): void {
+    this._prevMousePosition = mousePosition;
   }
 
-  dragStart (mousePosition: Vector): void {
-    this._updateSystem.dragStart(mousePosition);
+  dragMove(position: Vector): void {
+    this.move(position.copy().subtract(this._prevMousePosition));
+    this._prevMousePosition = position;
   }
 
-  dragMove (mousePosition: Vector): void {
-    this._updateSystem.dragMove(mousePosition);
-  }
+  click(position: Vector): void {
+    const { width: hexWidth, height: hexHeight } = this._sceneSystem.hexSize;
+    const { x, y } = position
+      .subtract(this._mapTransform.getTranslation())
+      .divideByValue(this._mapTransform.getScaleFactor());
 
-  dragEnd (): void {
-    this._updateSystem.dragEnd();
-  }
+    for (const hex of this._sceneSystem.visibleScene) {
+      const { x: xHex, y: yHex } = hex;
 
-  private _cursorInHex (cursorPosition: Vector, hexPosition: Vector, hesSize: Size): boolean {
-    const { x, y } = cursorPosition;
-    const { x: hexX, y: hexY } = this._updateSystem.adjustPosition(hexPosition);
-    const { width: hexWidth, height: hexHeight } = this._updateSystem.adjustHexSize(hesSize);
-
-    return (
-      x >= hexX && x <= hexX + hexWidth &&
-      y >= hexY && y <= hexY + hexHeight
-    );
-  }
-
-  click (position: Vector): void {
-    for (const hex of this._sceneSystem.getVisibleHexes(this._updateSystem.scaleFactor, this._updateSystem.offset)) {
-      if (this._cursorInHex(position, hex, this._sceneSystem.hexSize)) {
-        if (this._sceneSystem.activeHex) {
-          this._renderSystem.clearActiveHex(
-            this._updateSystem.adjustPosition(this._sceneSystem.activeHex),
-            this._updateSystem.adjustHexSize(this._sceneSystem.hexSize),
-            this._updateSystem.scaleFactor
-          );
-
-          this._renderSystem.drawHex(
-            this._updateSystem.adjustPosition(this._sceneSystem.activeHex),
-            this._updateSystem.adjustHexSize(this._sceneSystem.hexSize),
-          );
-        }
+      if (x >= xHex && x <= xHex + hexWidth && y >= yHex && y <= yHex + hexHeight) {
+        // if (y < -Math.sqrt(3) * xHex - y + Math.sqrt(3) / 2) {
         this._sceneSystem.activeHex = hex;
-        // HACK: after test need to change click draw logic
-        this._renderSystem.drawActiveHex(
-          this._updateSystem.adjustPosition(this._sceneSystem.activeHex),
-          this._updateSystem.adjustHexSize(this._sceneSystem.hexSize),
-          this._updateSystem.scaleFactor
-        );
 
         return;
       }
     }
+
+    this._sceneSystem.activeHex = null;
   }
 }

@@ -12,7 +12,6 @@
     "@types/react-dom": "^17.0.11",
     "axios": "^0.24.0",
     "d3-geo": "^3.0.1",
-    "mathjs": "^10.0.2",
     "prettier": "^2.5.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
