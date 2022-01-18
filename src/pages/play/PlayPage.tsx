@@ -6,38 +6,34 @@ import { HexMap } from './hexMap/HexMap';
 import { EventManager } from './hexMap/EventManager';
 
 export const PlayPage: React.FC = () => {
-  // const [hexMap, setHexMap] = useState<HexMap>();
+  const canvasWrapperRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  let ctx;
 
   useLayoutEffect(() => {
-    console.log('effect');
     const { current: canvas } = canvasRef;
+    const { current: canvasWrapper } = canvasWrapperRef;
 
-    if (!canvas) {
-      return;
-    }
-
-    ctx = canvas.getContext('2d');
-
-    if (!ctx) {
+    if (!canvas || !canvasWrapper) {
       return;
     }
 
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     canvas.style.display = 'block';
+    canvas.style.transformOrigin = '0 0';
 
-    const map = new HexMap(ctx);
-    const eventManager = new EventManager(map);
+    const map = new HexMap(canvas);
+    const eventManager = new EventManager(canvasWrapper, map);
 
     map.run();
     eventManager.setWindowEvents();
-  });
+  }, []);
 
   return (
     <section className="play-page">
-      <canvas ref={canvasRef} />
+      <div ref={canvasWrapperRef}>
+        <canvas ref={canvasRef} />
+      </div>
       <PlayMenu />
       <main></main>
     </section>

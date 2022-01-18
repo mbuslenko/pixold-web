@@ -92,7 +92,7 @@ export class Vector {
     return new Vector(this.x, this.y);
   }
 
-  static FromEventPosition(e: MouseEvent | Touch): Vector {
+  static FromEventPosition(e: MouseEvent | Touch | WheelEvent): Vector {
     return new Vector(e.clientX, e.clientY);
   }
 

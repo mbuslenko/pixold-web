@@ -4,6 +4,7 @@ import { RenderSystem } from './RenderSystem';
 import { Matrix } from './Matrix';
 
 export class HexMap {
+  private _canvas: HTMLCanvasElement;
   private _ctx: CanvasRenderingContext2D;
 
   private _sceneSystem: SceneSystem;
@@ -17,7 +18,15 @@ export class HexMap {
 
   private _prevMousePosition: Vector;
 
-  constructor(ctx: CanvasRenderingContext2D) {
+  constructor(canvas: HTMLCanvasElement) {
+    this._canvas = canvas;
+
+    const ctx = this._canvas.getContext('2d');
+
+    if (!ctx) {
+      throw new Error('no ctx');
+    }
+
     this._ctx = ctx;
 
     this._sceneSystem = new SceneSystem();
@@ -33,6 +42,7 @@ export class HexMap {
   }
 
   private _update(): void {
+    // TODO: doesn't work after changing pivot
     const pivot = this._prevMousePosition.copy().subtract(this._mapOrigin);
     const translation = Matrix.CreateTranslate(pivot);
     const translationInv = Matrix.CreateTranslate(pivot.multiplyByValue(-1));
@@ -40,9 +50,20 @@ export class HexMap {
     this._mapScale.multiply(translation.multiply(Matrix.CreateScale(1 + this._scaleFactor)).multiply(translationInv));
 
     // TODO: use to clamp mapScale
-    // Math.min(2, Math.max(1, scale));
+    // Math.min(2, Math.max(1, this._mapScale.getScaleFactor() * (1 + this._scaleFactor)));
+    // console.log(this._mapScale.getScaleFactor());
 
     this._mapTransform = this._mapScale.copy().multiply(this._mapTranslation);
+
+    console.log(this._mapScale.getScaleFactor());
+
+    // this._canvas.width *= 1 + this._scaleFactor;
+    // this._canvas.height *= 1 + this._scaleFactor;
+    this._canvas.style.transform = `scale(${this._mapTransform.getScaleFactor()})`;
+    const { x: left, y: top } = this._mapTransform.getTranslation();
+
+    this._canvas.scroll({ left, top });
+
     this._scaleFactor = 0;
   }
 
@@ -54,7 +75,7 @@ export class HexMap {
       this._update();
       this._sceneSystem.updateScene(this._mapTransform);
 
-      this._renderSystem.setTransform(this._mapTransform);
+      // this._renderSystem.setTransform(this._mapScale);
 
       for (const hex of this._sceneSystem.visibleScene) {
         this._renderSystem.drawHex(hex, this._sceneSystem.hexSize);

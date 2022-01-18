@@ -3,18 +3,16 @@ import { TouchGroup } from './TouchGroup';
 import { Vector } from './Vector';
 
 export class EventManager {
+  private _context: HTMLElement;
   private _map: HexMap;
   private _isDragging: boolean;
   private _touchGroup: TouchGroup | null;
 
-  constructor(map: HexMap) {
+  constructor(context: HTMLElement, map: HexMap) {
+    this._context = context;
     this._map = map;
     this._isDragging = false;
     this._touchGroup = null;
-  }
-
-  private _wheelCallback(e: WheelEvent): void {
-    this._map.zoom(e.deltaY, new Vector(e.clientX, e.clientY));
   }
 
   private _keyDownCallback(e: KeyboardEvent): void {
@@ -31,6 +29,13 @@ export class EventManager {
       case 'ArrowDown':
         this._map.move(new Vector(0, 222));
         break;
+    }
+  }
+
+  private _mouseWheelCallback = (e: WheelEvent): void => {
+    if (e.ctrlKey) {
+      e.preventDefault();
+      this._map.zoom(e.deltaY, Vector.FromEventPosition(e));
     }
   }
 
@@ -56,15 +61,15 @@ export class EventManager {
   };
 
   setWindowEvents(): void {
-    window.onkeydown = this._keyDownCallback.bind(this);
+    this._context.onkeydown = this._keyDownCallback.bind(this);
 
-    window.onwheel = this._wheelCallback.bind(this);
+    this._context.onwheel = this._mouseWheelCallback.bind(this);
 
-    window.onmousedown = this._mouseDownCallback.bind(this);
-    window.onmousemove = this._mouseMoveCallback.bind(this);
-    window.onmouseup = this._mouseUpCallback.bind(this);
+    this._context.onmousedown = this._mouseDownCallback.bind(this);
+    this._context.onmousemove = this._mouseMoveCallback.bind(this);
+    this._context.onmouseup = this._mouseUpCallback.bind(this);
 
-    window.ontouchstart = ({ touches }) => {
+    this._context.ontouchstart = ({ touches }) => {
       if (touches.length === 1) {
         this._map.dragStart(Vector.FromEventPosition(touches[0]));
 
@@ -73,7 +78,7 @@ export class EventManager {
 
       this._touchGroup = TouchGroup.FromTouchList(touches);
     };
-    window.ontouchmove = ({ touches }) => {
+    this._context.ontouchmove = ({ touches }) => {
       if (!this._touchGroup) {
         this._map.dragMove(Vector.FromEventPosition(touches[0]));
 
@@ -89,7 +94,7 @@ export class EventManager {
       this._touchGroup.firstTouch = Vector.FromEventPosition(touches[0]);
       this._touchGroup.secondTouch = Vector.FromEventPosition(touches[1]);
     };
-    window.ontouchend = ({ touches }) => {
+    this._context.ontouchend = ({ touches }) => {
       if (touches.length > 0) {
         return;
       }

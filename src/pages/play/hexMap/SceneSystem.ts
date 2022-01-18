@@ -112,6 +112,10 @@ export class SceneSystem {
   }
 
   updateScene(mapTransform: Matrix): void {
+    // HACK: test
+    this._visibleScene = [...this._scene];
+    return;
+
     const { x, y } = mapTransform.getTranslation();
     const { width: widthWindow, height: heightWindow } = Size.FromWindow();
     const cellSize = this._cellSize * mapTransform.getScaleFactor();
