@@ -16,7 +16,7 @@ export class SceneSystem {
   attackingHexes: HexAttack[];
   activeHex: Vector | null;
 
-  get visibleScene (): Vector[] {
+  get visibleScene(): Vector[] {
     return this._visibleScene;
   }
 

@@ -19,8 +19,8 @@ export class Matrix {
       for (let columnIndex = 0; columnIndex < row.length; columnIndex++) {
         newRow.push(
           row[0] * matrix.values[0][columnIndex] +
-          row[1] * matrix.values[1][columnIndex] +
-          row[2] * matrix.values[2][columnIndex],
+            row[1] * matrix.values[1][columnIndex] +
+            row[2] * matrix.values[2][columnIndex],
         );
       }
 
