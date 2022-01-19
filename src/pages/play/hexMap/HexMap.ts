@@ -51,18 +51,8 @@ export class HexMap {
 
     // TODO: use to clamp mapScale
     // Math.min(2, Math.max(1, this._mapScale.getScaleFactor() * (1 + this._scaleFactor)));
-    // console.log(this._mapScale.getScaleFactor());
 
     this._mapTransform = this._mapScale.copy().multiply(this._mapTranslation);
-
-    console.log(this._mapScale.getScaleFactor());
-
-    // this._canvas.width *= 1 + this._scaleFactor;
-    // this._canvas.height *= 1 + this._scaleFactor;
-    this._canvas.style.transform = `scale(${this._mapTransform.getScaleFactor()})`;
-    const { x: left, y: top } = this._mapTransform.getTranslation();
-
-    this._canvas.scroll({ left, top });
 
     this._scaleFactor = 0;
   }
@@ -74,8 +64,7 @@ export class HexMap {
 
       this._update();
       this._sceneSystem.updateScene(this._mapTransform);
-
-      // this._renderSystem.setTransform(this._mapScale);
+      this._renderSystem.setTransform(this._mapTransform);
 
       for (const hex of this._sceneSystem.visibleScene) {
         this._renderSystem.drawHex(hex, this._sceneSystem.hexSize);
