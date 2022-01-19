@@ -16,7 +16,7 @@ export class EventManager {
   }
 
   private _keyDownCallback(e: KeyboardEvent): void {
-    console.log('key down')
+    console.log('key down');
     switch (e.key) {
       case 'ArrowRight':
         this._map.move(new Vector(222, 0));

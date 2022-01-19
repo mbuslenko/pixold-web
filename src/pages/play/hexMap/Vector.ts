@@ -16,6 +16,13 @@ export class Vector {
     return this;
   }
 
+  addSize(size: Size): Vector {
+    this.x += size.width;
+    this.y += size.height;
+
+    return this;
+  }
+
   addX(x: number): Vector {
     this.x += x;
 

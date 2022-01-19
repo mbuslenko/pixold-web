@@ -1,7 +1,8 @@
-import { Color } from '../../../shared/ts/enums'
-import { IGetResponseAllHexagonOwned } from '../../../shared/ts/interfaces'
+import { Color } from '../../../shared/ts/enums';
+import { IGetResponseAllHexagonOwned } from '../../../shared/ts/interfaces';
 import { Grid } from './Grid';
-import { Hexagon } from './Hexagon'
+import { Hexagon } from './Hexagon';
+import { mapData } from './mapData';
 import { Matrix } from './Matrix';
 import { Size } from './Size';
 import { Vector } from './Vector';
@@ -15,7 +16,8 @@ export class SceneSystem {
   private _scene: Grid;
   private _visibleScene: Hexagon[];
   private _cellSize: number;
-  private _hexSize: Size;
+  // private _hexSize: Size;
+  private _hexagonRadius: number;
   attackingHexes: HexAttack[];
   activeHex: Hexagon | null;
 
@@ -23,13 +25,13 @@ export class SceneSystem {
     return this._visibleScene;
   }
 
-  get hexSize(): Size {
-    return this._hexSize;
+  get hexagonRadius(): number {
+    return this._hexagonRadius;
   }
 
-  get sceneCenter(): Vector {
-    return this._scene.center;
-  }
+  // get hexSize(): Size {
+  //   return this._hexSize;
+  // }
 
   get sceneSize(): Size {
     return this._scene.size;
@@ -39,14 +41,15 @@ export class SceneSystem {
     this._cellSize = 200;
     this._scene = this._generateGrid(this._cellSize);
     this._visibleScene = [];
-    this._hexSize = new Size(12, 12);
+    // this._hexSize = new Size(12, 12);
+    this._hexagonRadius = 5;
     this.attackingHexes = [];
     this.activeHex = null;
     this._fillGrid();
   }
 
   private _generateRandomColor(): string {
-    const randomColor = '#' + Math.floor(Math.random()*16777215).toString(16);
+    const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
 
     if (randomColor === Color.PURPLE) {
       return this._generateRandomColor();
@@ -93,38 +96,16 @@ export class SceneSystem {
   }
 
   private _fillGrid(): void {
-    const { width, height } = this._hexSize;
-    let xOffset = 0;
-    let row = 0;
+    let hexagonIndex = 0;
 
-    for (let i = 0; i < 3000; i++) {
-      let x = i * width - xOffset + i * width;
-
-      if (x >= window.innerWidth) {
-        xOffset += window.innerWidth;
-        row++;
-        x = i * width - xOffset + i * width;
-      }
-
-      const hexPosition = new Vector(x, row * height + row * height);
-
-      this._addHex(hexPosition, Color.PURPLE, i);
+    for (const hexagon of mapData) {
+      this._addHex(new Vector(hexagon.x, hexagon.y), Color.PURPLE, hexagonIndex++);
     }
 
-    this._scene.calcWidth();
-
-    // HACK: test
-    const lastRow = this._scene.cells[this._scene.cells.length - 1];
-    const lastColumn = lastRow[lastRow.length - 1];
-    const lastHex = lastColumn[lastColumn.length - 1];
-
-    this.attackingHexes.push({
-      attacker: this._scene.cells[0][0][0],
-      defender: lastHex,
-    });
+    // this._scene.calcWidth(this._hexSize);
   }
 
-  setAllOwnedHexagons (allOwnedHexagons: IGetResponseAllHexagonOwned): void {
+  setAllOwnedHexagons(allOwnedHexagons: IGetResponseAllHexagonOwned): void {
     for (const owner of Object.values(allOwnedHexagons)) {
       const hexagonColor = this._generateRandomColor();
 

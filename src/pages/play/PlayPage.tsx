@@ -4,9 +4,9 @@ import './PlayPage.scss';
 import { PlayMenu } from './PlayMenu';
 import { HexMap } from './hexMap/HexMap';
 import { EventManager } from './hexMap/EventManager';
-import { getAxiosInstance } from '../../shared/ts/axiosInstance'
-import { useNavigate } from 'react-router-dom'
-import { GetResponseAllHexagonOwned } from '../../shared/ts/types'
+import { getAxiosInstance } from '../../shared/ts/axiosInstance';
+import { useNavigate } from 'react-router-dom';
+import { GetResponseAllHexagonOwned } from '../../shared/ts/types';
 
 export const PlayPage: React.FC = () => {
   const navigate = useNavigate();
@@ -26,18 +26,15 @@ export const PlayPage: React.FC = () => {
 
     const axiosInstance = getAxiosInstance(navigate);
     // HACK: test
-    const map = new HexMap(
-      canvas,
-      (hexagonId: number) => {
-        axiosInstance({
-          requestConfig: {
-            method: 'get',
-            url: `/hexagon/${hexagonId}`,
-          },
-          onResponse: (response: GetResponseAllHexagonOwned) => console.log(response),
-        });
-      }
-    );
+    const map = new HexMap(canvas, (hexagonId: number) => {
+      axiosInstance({
+        requestConfig: {
+          method: 'get',
+          url: `/hexagon/${hexagonId}`,
+        },
+        onResponse: (response: GetResponseAllHexagonOwned) => console.log(response),
+      });
+    });
     const eventManager = new EventManager(canvas, map);
 
     axiosInstance({

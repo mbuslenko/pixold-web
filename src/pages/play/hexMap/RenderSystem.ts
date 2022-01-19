@@ -1,6 +1,6 @@
-import { Hexagon } from './Hexagon'
+import { Hexagon } from './Hexagon';
 import { Matrix } from './Matrix';
-import { HexAttack } from './SceneSystem'
+import { HexAttack } from './SceneSystem';
 import { Size } from './Size';
 import { Vector } from './Vector';
 
@@ -10,9 +10,9 @@ export class RenderSystem {
 
   constructor(ctx: CanvasRenderingContext2D) {
     this._ctx = ctx;
-    this._lineWidth = 2;
+    this._lineWidth = 1;
     this._ctx.strokeStyle = 'blue';
-    this._ctx.lineWidth = 2;
+    this._ctx.lineWidth = this._lineWidth;
   }
 
   clear(): void {
@@ -50,25 +50,20 @@ export class RenderSystem {
     this._ctx.setLineDash([]);
   }
 
-  drawHex(hexagon: Hexagon, hexSize: Size): void {
+  drawHex(hexagon: Hexagon, hexagonRadius: number): void {
     this._ctx.beginPath();
     this._ctx.fillStyle = hexagon.color;
-    this._ctx.fillRect(hexagon.position.x, hexagon.position.y, hexSize.width, hexSize.height);
-    // this._drawHexPath(hexPosition, hexSize.width);
+    this._drawHexPath(hexagon, hexagonRadius);
     this._ctx.fill();
     this._ctx.closePath();
   }
 
-  drawActiveHex(hexagon: Hexagon, hexSize: Size): void {
+  drawActiveHex(hexagon: Hexagon, hexagonRadius: number): void {
     this._ctx.beginPath();
     this._ctx.fillStyle = hexagon.color;
-    this._ctx.fillRect(hexagon.position.x, hexagon.position.y, hexSize.width, hexSize.height);
-    this._ctx.strokeRect(
-      hexagon.position.x - this._ctx.lineWidth / 2,
-      hexagon.position.y - this._ctx.lineWidth / 2,
-      hexSize.width + this._ctx.lineWidth,
-      hexSize.height + this._ctx.lineWidth,
-    );
+    this._drawHexPath(hexagon, hexagonRadius);
+    this._ctx.stroke();
+    this._ctx.closePath();
   }
 
   setupForLine(): void {
@@ -84,17 +79,18 @@ export class RenderSystem {
     this._ctx.moveTo(attacker.position.x, attacker.position.y);
     this._ctx.quadraticCurveTo(middlePoint.x, middlePoint.y, defender.position.x, defender.position.y);
     this._ctx.stroke();
-    this._ctx.fillRect(defender.position.x, defender.position.y, 12, 12);
   }
 
-  private _drawHexPath(position: Vector, r: number): void {
+  private _drawHexPath(hexagon: Hexagon, r: number): void {
+    const { x, y } = hexagon.position;
+
     this._ctx.beginPath();
-    this._ctx.moveTo(position.x, position.y - r);
+    this._ctx.moveTo(x, y - r);
 
     for (let a = 1; a < 6; ++a) {
       const angle = (a * Math.PI) / 3;
 
-      this._ctx.lineTo(position.x + Math.sin(angle) * r, position.y - Math.cos(angle) * r);
+      this._ctx.lineTo(x + Math.sin(angle) * r, y - Math.cos(angle) * r);
     }
 
     this._ctx.closePath();

@@ -73,7 +73,7 @@ export interface IGetResponseUserData {
 }
 
 // HACK: temporary
-export type IGetResponseAllHexagonOwned = Record<string, number[]>
+export type IGetResponseAllHexagonOwned = Record<string, number[]>;
 
 export interface IReactFacebookFailureResponse {
   status?: string | undefined;

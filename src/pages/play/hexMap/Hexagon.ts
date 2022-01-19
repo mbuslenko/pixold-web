@@ -5,9 +5,9 @@ export class Hexagon {
   color: string;
   id: number;
 
-  constructor (position: Vector, color: string, id: number) {
-    this.position = position
-    this.color = color
-    this.id = id
+  constructor(position: Vector, color: string, id: number) {
+    this.position = position;
+    this.color = color;
+    this.id = id;
   }
 }

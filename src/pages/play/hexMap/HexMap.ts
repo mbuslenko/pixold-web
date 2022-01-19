@@ -2,7 +2,7 @@ import { Vector } from './Vector';
 import { SceneSystem } from './SceneSystem';
 import { RenderSystem } from './RenderSystem';
 import { Matrix } from './Matrix';
-import { IGetResponseAllHexagonOwned } from '../../../shared/ts/interfaces'
+import { IGetResponseAllHexagonOwned } from '../../../shared/ts/interfaces';
 
 export class HexMap {
   private _canvas: HTMLCanvasElement;
@@ -17,7 +17,7 @@ export class HexMap {
   private _mapTransform: Matrix;
 
   private _prevMousePosition: Vector;
-  private _clickCallback: (hexagonId: number) => void
+  private _clickCallback: (hexagonId: number) => void;
 
   constructor(canvas: HTMLCanvasElement, clickCallback: (hexagonId: number) => void) {
     this._canvas = canvas;
@@ -72,13 +72,13 @@ export class HexMap {
       this._renderSystem.setTransform(this._mapTransform);
 
       for (const hex of this._sceneSystem.visibleScene) {
-        this._renderSystem.drawHex(hex, this._sceneSystem.hexSize);
+        this._renderSystem.drawHex(hex, this._sceneSystem.hexagonRadius);
       }
 
       this._renderSystem.setupForActiveHex();
 
       if (this._sceneSystem.activeHex) {
-        this._renderSystem.drawActiveHex(this._sceneSystem.activeHex, this._sceneSystem.hexSize);
+        this._renderSystem.drawActiveHex(this._sceneSystem.activeHex, this._sceneSystem.hexagonRadius);
       }
 
       this._renderSystem.setupForLine();
@@ -88,7 +88,7 @@ export class HexMap {
       }
 
       // HACK: test
-      this._ctx.strokeRect(0, 0, window.innerWidth, window.innerHeight);
+      this._ctx.strokeRect(0, 0, this._sceneSystem.sceneSize.width, this._sceneSystem.sceneSize.height);
 
       this._ctx.lineDashOffset -= 2 % 4;
 
@@ -103,8 +103,8 @@ export class HexMap {
     this._prevMousePosition = position;
   }
 
-  setAllOwnedHexagons (allOwnedHexagons: IGetResponseAllHexagonOwned): void {
-    console.log(allOwnedHexagons)
+  setAllOwnedHexagons(allOwnedHexagons: IGetResponseAllHexagonOwned): void {
+    console.log(allOwnedHexagons);
     this._sceneSystem.setAllOwnedHexagons(allOwnedHexagons);
   }
 
@@ -141,7 +141,7 @@ export class HexMap {
   }
 
   click(position: Vector): void {
-    const { width: hexWidth, height: hexHeight } = this._sceneSystem.hexSize;
+    // const { width: hexWidth, height: hexHeight } = this._sceneSystem.hexSize;
     const { x, y } = position
       .subtract(this._mapTransform.getTranslation())
       .divideByValue(this._mapTransform.getScaleFactor());
@@ -149,7 +149,13 @@ export class HexMap {
     for (const hex of this._sceneSystem.visibleScene) {
       const { x: xHex, y: yHex } = hex.position;
 
-      if (x >= xHex && x <= xHex + hexWidth && y >= yHex && y <= yHex + hexHeight) {
+      // HACK: test
+      if (
+        x >= xHex - this._sceneSystem.hexagonRadius &&
+        x <= xHex + this._sceneSystem.hexagonRadius &&
+        y >= yHex - this._sceneSystem.hexagonRadius &&
+        y <= yHex + this._sceneSystem.hexagonRadius
+      ) {
         // if (y < -Math.sqrt(3) * xHex - y + Math.sqrt(3) / 2) {
         this._sceneSystem.activeHex = hex;
 
