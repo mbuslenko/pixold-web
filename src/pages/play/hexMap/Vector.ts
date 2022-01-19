@@ -96,10 +96,6 @@ export class Vector {
     return new Vector(e.clientX, e.clientY);
   }
 
-  static FromWheelDelta(e: WheelEvent): Vector {
-    return new Vector(e.deltaX, e.deltaY);
-  }
-
   static FromWindowEndPosition(): Vector {
     return new Vector(window.innerWidth, window.innerHeight);
   }

@@ -16,6 +16,7 @@ export class EventManager {
   }
 
   private _keyDownCallback(e: KeyboardEvent): void {
+    console.log('key down')
     switch (e.key) {
       case 'ArrowRight':
         this._map.move(new Vector(222, 0));
@@ -47,7 +48,7 @@ export class EventManager {
       return;
     }
 
-    this._map.move(Vector.FromWheelDelta(e).multiplyByValue(-1));
+    this._map.move(new Vector(e.deltaX, -e.deltaY));
   };
 
   private _mouseDownCallback = (e: MouseEvent): void => {
@@ -72,7 +73,7 @@ export class EventManager {
   };
 
   setEvents(): void {
-    this._canvas.onkeydown = this._keyDownCallback.bind(this);
+    window.onkeydown = this._keyDownCallback.bind(this);
 
     this._canvas.onwheel = this._mouseWheelCallback.bind(this);
 

@@ -11,7 +11,6 @@ export class HexMap {
   private _renderSystem: RenderSystem;
 
   private _scaleFactor: number;
-  private _mapOrigin: Vector;
   private _mapTranslation: Matrix;
   private _mapScale: Matrix;
   private _mapTransform: Matrix;
@@ -33,7 +32,6 @@ export class HexMap {
     this._renderSystem = new RenderSystem(this._ctx);
 
     this._scaleFactor = 0;
-    this._mapOrigin = new Vector(0, 0);
     this._mapTranslation = Matrix.CreateIdentity();
     this._mapScale = Matrix.CreateIdentity();
     this._mapTransform = Matrix.CreateIdentity();
@@ -42,15 +40,19 @@ export class HexMap {
   }
 
   private _update(): void {
-    // TODO: doesn't work after changing pivot
-    const pivot = this._prevMousePosition.copy().subtract(this._mapOrigin);
+    const pivot = this._prevMousePosition
+      .copy()
+      .subtract(this._mapTransform.getTranslation())
+      .divideByValue(this._mapTransform.getScaleFactor())
+      .add(this._mapTranslation.getTranslation());
+
     const translation = Matrix.CreateTranslate(pivot);
     const translationInv = Matrix.CreateTranslate(pivot.multiplyByValue(-1));
 
     this._mapScale.multiply(translation.multiply(Matrix.CreateScale(1 + this._scaleFactor)).multiply(translationInv));
 
     // TODO: use to clamp mapScale
-    // Math.min(2, Math.max(1, this._mapScale.getScaleFactor() * (1 + this._scaleFactor)));
+    // Math.min(2, Math.max(1, scale));
 
     this._mapTransform = this._mapScale.copy().multiply(this._mapTranslation);
 
@@ -118,12 +120,11 @@ export class HexMap {
     //   offset.y -= y / this._scaleFactor;
     // }
 
-    this._mapOrigin.add(offset);
     this._mapTranslation.multiply(Matrix.CreateTranslate(offset));
   }
 
-  dragStart(mousePosition: Vector): void {
-    this._prevMousePosition = mousePosition;
+  dragStart(position: Vector): void {
+    this._prevMousePosition = position;
   }
 
   dragMove(position: Vector): void {
