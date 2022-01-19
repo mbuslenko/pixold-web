@@ -1,6 +1,5 @@
 import { Hexagon } from './Hexagon';
 import { Size } from './Size';
-import { Vector } from './Vector';
 
 export class Grid {
   cells: Hexagon[][][];
@@ -39,8 +38,6 @@ export class Grid {
       hexagonId++;
     }
 
-    // HACK: i try to get index greater than Grid
-    // return this.cells[0][0][0];
     throw new Error(`there is no hexagon on id:${id}`);
   }
 
