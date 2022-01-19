@@ -2,6 +2,7 @@ import { Vector } from './Vector';
 import { SceneSystem } from './SceneSystem';
 import { RenderSystem } from './RenderSystem';
 import { Matrix } from './Matrix';
+import { IGetResponseAllHexagonOwned } from '../../../shared/ts/interfaces'
 
 export class HexMap {
   private _canvas: HTMLCanvasElement;
@@ -16,8 +17,9 @@ export class HexMap {
   private _mapTransform: Matrix;
 
   private _prevMousePosition: Vector;
+  private _clickCallback: (hexagonId: number) => void
 
-  constructor(canvas: HTMLCanvasElement) {
+  constructor(canvas: HTMLCanvasElement, clickCallback: (hexagonId: number) => void) {
     this._canvas = canvas;
 
     const ctx = this._canvas.getContext('2d');
@@ -37,6 +39,7 @@ export class HexMap {
     this._mapTransform = Matrix.CreateIdentity();
 
     this._prevMousePosition = new Vector(0, 0);
+    this._clickCallback = clickCallback;
   }
 
   private _update(): void {
@@ -80,8 +83,8 @@ export class HexMap {
 
       this._renderSystem.setupForLine();
 
-      for (const { attacker, defender } of this._sceneSystem.attackingHexes) {
-        this._renderSystem.drawAttackLine(attacker, defender);
+      for (const hexagonAttack of this._sceneSystem.attackingHexes) {
+        this._renderSystem.drawAttackLine(hexagonAttack);
       }
 
       // HACK: test
@@ -98,6 +101,11 @@ export class HexMap {
   zoom(scaleFactor: number, position: Vector): void {
     this._scaleFactor = -Math.sign(scaleFactor) / 10;
     this._prevMousePosition = position;
+  }
+
+  setAllOwnedHexagons (allOwnedHexagons: IGetResponseAllHexagonOwned): void {
+    console.log(allOwnedHexagons)
+    this._sceneSystem.setAllOwnedHexagons(allOwnedHexagons);
   }
 
   move(offset: Vector): void {
@@ -139,11 +147,13 @@ export class HexMap {
       .divideByValue(this._mapTransform.getScaleFactor());
 
     for (const hex of this._sceneSystem.visibleScene) {
-      const { x: xHex, y: yHex } = hex;
+      const { x: xHex, y: yHex } = hex.position;
 
       if (x >= xHex && x <= xHex + hexWidth && y >= yHex && y <= yHex + hexHeight) {
         // if (y < -Math.sqrt(3) * xHex - y + Math.sqrt(3) / 2) {
         this._sceneSystem.activeHex = hex;
+
+        this._clickCallback(hex.id);
 
         return;
       }
