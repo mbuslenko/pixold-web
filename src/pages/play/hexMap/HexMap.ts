@@ -42,9 +42,17 @@ export class HexMap {
     this._mapTransform = Matrix.CreateIdentity();
 
     this._clickCallback = clickCallback;
+
+    this.move(
+      new Vector(
+        (window.innerWidth - this._sceneSystem.sceneSize.width * (1 + this._scaleFactor)) / 2,
+        (window.innerHeight - this._sceneSystem.sceneSize.height * (1 + this._scaleFactor)) / 2,
+      ),
+    );
   }
 
   private _getInitialScaleFactor(sceneSize: Size): number {
+    // TODO: replace to zoom()
     if (window.innerWidth >= ScreenMaxWidth.MEDIUM) {
       return -1 + window.innerWidth / sceneSize.width;
     }
@@ -63,10 +71,6 @@ export class HexMap {
     const translationInv = Matrix.CreateTranslate(pivot.multiplyByValue(-1));
 
     this._mapScale.multiply(translation.multiply(Matrix.CreateScale(1 + this._scaleFactor)).multiply(translationInv));
-
-    // TODO: use to clamp mapScale
-    // Math.min(2, Math.max(1, scale));
-
     this._mapTransform = this._mapScale.copy().multiply(this._mapTranslation);
 
     this._scaleFactor = 0;
@@ -93,7 +97,7 @@ export class HexMap {
 
       this._renderSystem.setupForLine();
 
-      this._renderSystem.drawAttackLines (
+      this._renderSystem.drawAttackLines(
         this._sceneSystem.leftAttackingHexagons,
         this._sceneSystem.rightAttackingHexagons,
       );
@@ -108,7 +112,10 @@ export class HexMap {
   }
 
   zoom(scaleFactor: number, position: Vector): void {
-    this._scaleFactor = -Math.sign(scaleFactor) / 10;
+    this._scaleFactor = Math.min(
+      10 / this._mapScale.getScaleFactor() - 1,
+      Math.max(0.5 / this._mapScale.getScaleFactor() - 1, -Math.sign(scaleFactor) / 10),
+    );
     this._prevMousePosition = position;
   }
 
@@ -117,24 +124,19 @@ export class HexMap {
   }
 
   move(offset: Vector): void {
-    // const scaledSceneSize = this._sceneSystem.sceneSize.copy().scale(this._scaleFactor);
-    // const windowEndPosition = Vector.FromWindowEndPosition();
-    // const { x: xOffsetMax, y: yOffsetMax } = windowEndPosition.copy().subtractSize(scaledSceneSize).abs();
-    // const x = offset.x + this._mapTransform.get([0, 2]);
-    // const y = offset.y + this._mapTransform.get([1, 2]);
+    const { width, height } = this._sceneSystem.sceneSize.copy().multiplyByValue(this._mapTransform.getScaleFactor());
 
-    // // TODO: need refactoring
-    // if (x < -xOffsetMax) {
-    //   offset.x -= (x + xOffsetMax) / this._scaleFactor;
-    // } else if (x > 0) {
-    //   offset.x -= x / this._scaleFactor;
-    // }
+    offset.x = Math.min(
+      width - this._mapTransform.getTranslation().x,
+      Math.max(offset.x, -width - this._mapTransform.getTranslation().x),
+    );
 
-    // if (y < -yOffsetMax) {
-    //   offset.y -= (y + yOffsetMax) / this._scaleFactor;
-    // } else if (y > 0) {
-    //   offset.y -= y / this._scaleFactor;
-    // }
+    offset.y = Math.min(
+      height - this._mapTransform.getTranslation().y,
+      Math.max(offset.y, -height - this._mapTransform.getTranslation().y),
+    );
+
+    console.log([`final x: ${offset.x}`, `final y: ${offset.y}`]);
 
     this._mapTranslation.multiply(Matrix.CreateTranslate(offset.divideByValue(this._mapTransform.getScaleFactor())));
   }
@@ -183,5 +185,12 @@ export class HexMap {
     this._mapTranslation = Matrix.CreateIdentity();
     this._mapScale = Matrix.CreateIdentity();
     this._mapTransform = Matrix.CreateIdentity();
+
+    this.move(
+      new Vector(
+        (window.innerWidth - this._sceneSystem.sceneSize.width * (1 + this._scaleFactor)) / 2,
+        (window.innerHeight - this._sceneSystem.sceneSize.height * (1 + this._scaleFactor)) / 2,
+      ),
+    );
   }
 }

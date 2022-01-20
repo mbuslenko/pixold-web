@@ -110,6 +110,7 @@ export class RenderSystem {
   }
 
   private _drawHexPath(hexagon: Hexagon, r: number): void {
+    // TODO: optimize this function. it is heavy to calculate;
     const { x, y } = hexagon.position;
 
     this._ctx.beginPath();

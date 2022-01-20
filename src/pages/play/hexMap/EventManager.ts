@@ -7,6 +7,7 @@ export class EventManager {
   private _map: HexMap;
   private _isDragging: boolean;
   private _touchGroup: TouchGroup | null;
+  private _lastTouch: Vector;
   private _touchClick: boolean;
   private _touchClickTimer: number;
 
@@ -15,6 +16,7 @@ export class EventManager {
     this._map = map;
     this._isDragging = false;
     this._touchGroup = null;
+    this._lastTouch = new Vector(0, 0);
     this._touchClick = false;
     this._touchClickTimer = 0;
   }
@@ -56,6 +58,8 @@ export class EventManager {
   };
 
   private _mouseDownCallback = (e: MouseEvent): void => {
+    e.preventDefault();
+
     if (e.shiftKey) {
       this._isDragging = true;
       this._map.dragStart(Vector.FromEventPosition(e));
@@ -63,12 +67,16 @@ export class EventManager {
   };
 
   private _mouseMoveCallback = (e: MouseEvent): void => {
+    e.preventDefault();
+
     if (this._isDragging) {
       this._map.dragMove(Vector.FromEventPosition(e));
     }
   };
 
   private _mouseUpCallback = (e: MouseEvent): void => {
+    e.preventDefault();
+
     if (this._isDragging) {
       this._isDragging = false;
 
@@ -87,7 +95,7 @@ export class EventManager {
       this._map.dragStart(Vector.FromEventPosition(touches[0]));
 
       this._touchClick = true;
-      this._touchClickTimer = window.setTimeout(() => (this._touchClick = false), 200);
+      this._touchClickTimer = window.setTimeout(() => (this._touchClick = false), 500);
 
       return;
     }
@@ -101,13 +109,16 @@ export class EventManager {
     // TODO: check if e.preventDefault() even necessary now
     e.preventDefault();
 
+    const firstTouch = Vector.FromEventPosition(touches[0]);
+
+    this._lastTouch = firstTouch;
+
     if (!this._touchGroup) {
-      this._map.dragMove(Vector.FromEventPosition(touches[0]));
+      this._map.dragMove(firstTouch);
 
       return;
     }
 
-    const firstTouch = Vector.FromEventPosition(touches[0]);
     const secondTouch = Vector.FromEventPosition(touches[1]);
     const distanceToMiddle =
       firstTouch.distance(this._touchGroup.middlePoint) + secondTouch.distance(this._touchGroup.middlePoint);
@@ -119,13 +130,11 @@ export class EventManager {
     this._touchGroup.distanceToMiddle = distanceToMiddle;
   };
 
-  private _touchEndCallback(e: TouchEvent): void {
-    e.preventDefault();
-
+  private _touchEndCallback(): void {
     if (!this._touchGroup && this._touchClick) {
       clearTimeout(this._touchClickTimer);
       this._touchClick = false;
-      this._map.click(Vector.FromEventPosition(e.touches[0]));
+      this._map.click(this._lastTouch);
     }
 
     this._touchGroup = null;

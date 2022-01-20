@@ -46,7 +46,7 @@ export class SceneSystem {
   constructor() {
     this._scene = [];
     this._sceneSize = new Size(1920, 860);
-    // add clamp() to cellSize
+    // TODO: add clamp() to cellSize
     this._cellSize = new Size(Math.ceil(window.innerWidth / 10), Math.ceil(window.innerHeight / 5));
     this._sceneGrid = this._generateGrid(this._cellSize);
     this._visibleScene = [];
@@ -184,10 +184,10 @@ export class SceneSystem {
     for (let row = 0; row < this._sceneGrid.cells.length; row++) {
       for (let column = 0; column < this._sceneGrid.cells[row].length; column++) {
         if (
-          x + column * cellSize.width + cellSize.width >= 0 &&
-          x + column * cellSize.width <= widthWindow &&
-          y + row * cellSize.height + cellSize.height >= 0 &&
-          y + row * cellSize.height <= heightWindow
+          x + column * cellSize.width + cellSize.width * 2 >= 0 &&
+          x + column * cellSize.width - cellSize.width <= widthWindow &&
+          y + row * cellSize.height + cellSize.height * 2 >= 0 &&
+          y + row * cellSize.height - cellSize.height <= heightWindow
         ) {
           this._visibleScene = this._visibleScene.concat(this._sceneGrid.cells[row][column]);
         }
