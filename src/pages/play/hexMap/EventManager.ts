@@ -81,7 +81,7 @@ export class EventManager {
     this._canvas.onmousemove = this._mouseMoveCallback.bind(this);
     this._canvas.onmouseup = this._mouseUpCallback.bind(this);
 
-    window.ontouchstart = (e) => {
+    this._canvas.ontouchstart = (e) => {
       const { touches } = e;
 
       e.preventDefault();
@@ -94,7 +94,7 @@ export class EventManager {
 
       this._touchGroup = TouchGroup.FromTouchList(touches);
     };
-    window.ontouchmove = (e) => {
+    this._canvas.ontouchmove = (e) => {
       const { touches } = e;
 
       e.preventDefault();
@@ -114,8 +114,8 @@ export class EventManager {
       this._touchGroup.firstTouch = Vector.FromEventPosition(touches[0]);
       this._touchGroup.secondTouch = Vector.FromEventPosition(touches[1]);
     };
-    window.ontouchend = (e) => {
-      e.preventDefault;
+    this._canvas.ontouchend = (e) => {
+      e.preventDefault();
       this._touchGroup = null;
     };
   }
