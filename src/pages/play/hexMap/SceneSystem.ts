@@ -46,6 +46,7 @@ export class SceneSystem {
   constructor() {
     this._scene = [];
     this._sceneSize = new Size(1920, 860);
+    // add clamp() to cellSize
     this._cellSize = new Size(Math.ceil(window.innerWidth / 10), Math.ceil(window.innerHeight / 5));
     this._sceneGrid = this._generateGrid(this._cellSize);
     this._visibleScene = [];
@@ -61,7 +62,10 @@ export class SceneSystem {
     this._cellSize = new Size(Math.ceil(window.innerWidth / 10), Math.ceil(window.innerHeight / 5));
     this._sceneGrid = this._generateGrid(this._cellSize);
     this._visibleScene = [];
-    this._setSceneData();
+
+    for (const hexagon of this._scene) {
+      this._addHexagonToGrid(hexagon);
+    }
   }
 
   // HACK: test
@@ -117,7 +121,7 @@ export class SceneSystem {
       }
     }
 
-    console.log(grid);
+    // console.log(grid);
 
     return grid;
   }
@@ -131,14 +135,10 @@ export class SceneSystem {
     return hexPosition.x >= startX && hexPosition.x <= endX && hexPosition.y >= startY && hexPosition.y <= endY;
   }
 
-  private _addHex(hexPosition: Vector, color: string, id: number): void {
-    const hexagon = new Hexagon(hexPosition, color, id);
-
-    this._scene.push(hexagon);
-
+  private _addHexagonToGrid(hexagon: Hexagon): void {
     for (let row = 0; row < this._sceneGrid.cells.length; row++) {
       for (let column = 0; column < this._sceneGrid.cells[row].length; column++) {
-        if (this._isHexInColumn(hexPosition, row, column)) {
+        if (this._isHexInColumn(hexagon.position, row, column)) {
           this._sceneGrid.addHex(row, column, hexagon);
 
           return;
@@ -150,8 +150,12 @@ export class SceneSystem {
   private _setSceneData(): void {
     let hexagonIndex = 0;
 
-    for (const hexagon of mapData) {
-      this._addHex(new Vector(hexagon.x, hexagon.y), Color.PURPLE, hexagonIndex++);
+    for (const hexagonData of mapData) {
+      const hexagon = new Hexagon(new Vector(hexagonData.x, hexagonData.y), Color.PURPLE, hexagonIndex++);
+
+      this._scene.push(hexagon);
+
+      this._addHexagonToGrid(hexagon);
     }
   }
 
@@ -171,34 +175,29 @@ export class SceneSystem {
   updateScene(mapTransform: Matrix): void {
     const { x, y } = mapTransform.getTranslation();
     const { width: widthWindow, height: heightWindow } = Size.FromWindow();
-    const cellSize = this._cellSize.multiplyByValue(mapTransform.getScaleFactor());
+    const cellSize = this._cellSize.copy().multiplyByValue(mapTransform.getScaleFactor());
     // let notVisibleCells = 0;
-
-    // HACK: test
-    this._visibleScene = this._scene;
-
-    return;
 
     this._visibleScene = [];
 
     // TODO: search can be optimized
     for (let row = 0; row < this._sceneGrid.cells.length; row++) {
       for (let column = 0; column < this._sceneGrid.cells[row].length; column++) {
-        // FIXME: triggers when cells IS visible
         if (
-          x + column * cellSize.width * 2 >= 0 &&
+          x + column * cellSize.width + cellSize.width >= 0 &&
           x + column * cellSize.width <= widthWindow &&
-          y + row * cellSize.height * 2 >= 0 &&
+          y + row * cellSize.height + cellSize.height >= 0 &&
           y + row * cellSize.height <= heightWindow
         ) {
           this._visibleScene = this._visibleScene.concat(this._sceneGrid.cells[row][column]);
-        } else {
-          // HACK: just for test
-          // notVisibleCells++;
         }
+        // } else {
+        //   // HACK: just for test
+        //   notVisibleCells++;
+        // }
       }
     }
 
-    // console.log(`visible: ${this._scene.cells.flat().length}; not visible: ${notVisibleCells}`);
+    // console.log(`visible: ${this._sceneGrid.cells.flat().length}; not visible: ${notVisibleCells}`);
   }
 }

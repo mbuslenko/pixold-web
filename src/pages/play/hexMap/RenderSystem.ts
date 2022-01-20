@@ -22,7 +22,7 @@ export class RenderSystem {
 
   clear(sceneSize: Size): void {
     // FIXME: if clear only window by window size
-    this._ctx.clearRect(-2, -2, sceneSize.width + 4, sceneSize.height + 4);
+    this._ctx.clearRect(-200, -200, sceneSize.width + 400, sceneSize.height + 400);
   }
 
   clearActiveHex(hexPosition: Vector, hexSize: Size, scaleFactor: number): void {
@@ -57,7 +57,6 @@ export class RenderSystem {
   }
 
   drawHex(hexagon: Hexagon, hexagonRadius: number): void {
-    // FIXME: after resize hex color become purple again
     this._ctx.beginPath();
     this._ctx.fillStyle = hexagon.color;
     this._drawHexPath(hexagon, hexagonRadius);
@@ -78,15 +77,14 @@ export class RenderSystem {
 
   private _drawHexagonAttack(hexagonAttack: HexagonAttack) {
     const { attacker, defender } = hexagonAttack;
-    // const middlePoint = defender.position.copy().add(attacker.position).divideByValue(2).addY(-200);
 
     const { x, y } = defender.position.copy().subtract(attacker.position);
     const middlePoint = defender.position
       .copy()
       .add(attacker.position)
       .divideByValue(2)
-      .addX(y / 3)
-      .addY(x / 3);
+      .addX(-y / 3)
+      .addY(-x / 3);
 
     this._ctx.beginPath();
     this._ctx.moveTo(attacker.position.x, attacker.position.y);
