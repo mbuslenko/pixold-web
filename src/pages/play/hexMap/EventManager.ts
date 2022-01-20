@@ -52,7 +52,7 @@ export class EventManager {
       return;
     }
 
-    this._map.move(new Vector(e.deltaX, -e.deltaY));
+    this._map.move(new Vector(-e.deltaX, -e.deltaY));
   };
 
   private _mouseDownCallback = (e: MouseEvent): void => {
