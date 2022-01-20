@@ -81,7 +81,11 @@ export class EventManager {
     this._canvas.onmousemove = this._mouseMoveCallback.bind(this);
     this._canvas.onmouseup = this._mouseUpCallback.bind(this);
 
-    this._canvas.ontouchstart = ({ touches }) => {
+    window.ontouchstart = (e) => {
+      const { touches } = e;
+
+      e.preventDefault();
+
       if (touches.length === 1) {
         this._map.dragStart(Vector.FromEventPosition(touches[0]));
 
@@ -90,7 +94,11 @@ export class EventManager {
 
       this._touchGroup = TouchGroup.FromTouchList(touches);
     };
-    this._canvas.ontouchmove = ({ touches }) => {
+    window.ontouchmove = (e) => {
+      const { touches } = e;
+
+      e.preventDefault();
+
       if (!this._touchGroup) {
         this._map.dragMove(Vector.FromEventPosition(touches[0]));
 
@@ -106,7 +114,8 @@ export class EventManager {
       this._touchGroup.firstTouch = Vector.FromEventPosition(touches[0]);
       this._touchGroup.secondTouch = Vector.FromEventPosition(touches[1]);
     };
-    this._canvas.ontouchend = () => {
+    window.ontouchend = (e) => {
+      e.preventDefault;
       this._touchGroup = null;
     };
   }

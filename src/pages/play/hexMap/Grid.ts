@@ -38,6 +38,11 @@ export class Grid {
       hexagonId++;
     }
 
+    // HACK: i get error when trying to get hexagon out of visible grid
+    for (const hexagon of this) {
+      return hexagon;
+    }
+
     throw new Error(`there is no hexagon on id:${id}`);
   }
 
