@@ -148,10 +148,10 @@ $assets-path: '../../assets/svg/';
     width: 90%;
     left: 5%;
     bottom: 5vh;
-    height: clamp(480px, 90vh, 1000px);
   }
 
   .play-menu {
+    height: clamp(480px, 90vh, 1000px);
     flex-direction: column;
     padding: 34px 24px 12px;
     justify-content: space-between;
