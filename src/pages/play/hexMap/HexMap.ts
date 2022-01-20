@@ -93,14 +93,13 @@ export class HexMap {
 
       this._renderSystem.setupForLine();
 
-      for (const hexagonAttack of this._sceneSystem.rightAttackingHexagons) {
-        this._renderSystem.drawAttackLine(hexagonAttack);
-      }
+      this._renderSystem.drawAttackLines (
+        this._sceneSystem.leftAttackingHexagons,
+        this._sceneSystem.rightAttackingHexagons
+      );
 
       // HACK: test
       this._ctx.strokeRect(0, 0, this._sceneSystem.sceneSize.width, this._sceneSystem.sceneSize.height);
-
-      this._ctx.lineDashOffset -= 2 % 4;
 
       requestAnimationFrame(animate);
     };

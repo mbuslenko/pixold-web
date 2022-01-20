@@ -60,7 +60,6 @@ export class RenderSystem {
     this._ctx.fillStyle = hexagon.color;
     this._drawHexPath(hexagon, hexagonRadius);
     this._ctx.fill();
-    this._ctx.closePath();
   }
 
   drawActiveHex(hexagon: Hexagon, hexagonRadius: number): void {
@@ -68,7 +67,6 @@ export class RenderSystem {
     this._ctx.fillStyle = hexagon.color;
     this._drawHexPath(hexagon, hexagonRadius);
     this._ctx.stroke();
-    this._ctx.closePath();
   }
 
   setupForLine(): void {
@@ -76,14 +74,31 @@ export class RenderSystem {
     this._ctx.setLineDash([100, 50]);
   }
 
-  drawAttackLine(hexagonAttack: HexagonAttack): void {
+  private _drawHexagonAttack (hexagonAttack: HexagonAttack) {
     const { attacker, defender } = hexagonAttack;
     const middlePoint = defender.position.copy().add(attacker.position).divideByValue(2).addY(-200);
 
     this._ctx.beginPath();
     this._ctx.moveTo(attacker.position.x, attacker.position.y);
     this._ctx.quadraticCurveTo(middlePoint.x, middlePoint.y, defender.position.x, defender.position.y);
+    // this._ctx.strokeStyle = attacker.color;
     this._ctx.stroke();
+  }
+
+  drawAttackLines(leftHexagonAttacks: HexagonAttack[], rightHexagonAttacks: HexagonAttack[]): void {
+    this._leftAttackLineOffset -= 2 % 4;
+    this._ctx.lineDashOffset = this._leftAttackLineOffset;
+
+    for (const attack of leftHexagonAttacks) {
+      this._drawHexagonAttack(attack);
+    }
+
+    this._rightAttackLineOffset += 2 % 4;
+    this._ctx.lineDashOffset = this._rightAttackLineOffset;
+
+    for (const attack of rightHexagonAttacks) {
+      this._drawHexagonAttack(attack);
+    }
   }
 
   private _drawHexPath(hexagon: Hexagon, r: number): void {
