@@ -8,6 +8,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   font-style: normal;
   font-weight: normal;
+  overscroll-behavior: contain;
 
   background-color: $black;
   color: $white;

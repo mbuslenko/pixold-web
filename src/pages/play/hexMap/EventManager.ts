@@ -105,9 +105,10 @@ export class EventManager {
         return;
       }
 
+      // TODO: include y axe + invert scaling
       const firstDistanceX = touches[0].clientX - this._touchGroup.firstTouch.x;
       const secondDistanceX = touches[1].clientX - this._touchGroup.secondTouch.x;
-      const scaleFactor = firstDistanceX + secondDistanceX;
+      const scaleFactor = (firstDistanceX + secondDistanceX) / 10;
 
       this._map.zoom(scaleFactor, this._touchGroup.middlePoint);
 
