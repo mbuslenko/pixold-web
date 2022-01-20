@@ -91,6 +91,13 @@ export class Vector {
     return this;
   }
 
+  distance(vector: Vector): number {
+    const xDifference = this.x - vector.x;
+    const yDifference = this.y - vector.y;
+
+    return Math.sqrt(xDifference * xDifference + yDifference * yDifference);
+  }
+
   getMiddle(vector: Vector): Vector {
     return this.add(vector).divideByValue(2);
   }

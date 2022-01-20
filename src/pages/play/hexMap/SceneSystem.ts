@@ -15,8 +15,8 @@ export interface HexAttack {
 export class SceneSystem {
   private _scene: Grid;
   private _visibleScene: Hexagon[];
-  private _cellSize: number;
-  // private _hexSize: Size;
+  private _sceneSize: Size;
+  private _cellSize: Size;
   private _hexagonRadius: number;
   attackingHexes: HexAttack[];
   activeHex: Hexagon | null;
@@ -29,22 +29,31 @@ export class SceneSystem {
     return this._hexagonRadius;
   }
 
-  // get hexSize(): Size {
-  //   return this._hexSize;
-  // }
-
   get sceneSize(): Size {
-    return this._scene.size;
+    return this._sceneSize;
   }
 
   constructor() {
-    this._cellSize = 200;
+    this._sceneSize = new Size(1920, 860);
+    this._cellSize = new Size(
+      Math.ceil(window.innerWidth / 10),
+      Math.ceil(window.innerHeight / 5),
+    );
     this._scene = this._generateGrid(this._cellSize);
     this._visibleScene = [];
-    // this._hexSize = new Size(12, 12);
     this._hexagonRadius = 5;
     this.attackingHexes = [];
     this.activeHex = null;
+    this._fillGrid();
+  }
+
+  resize (): void {
+    this._cellSize = new Size(
+      Math.ceil(window.innerWidth / 10),
+      Math.ceil(window.innerHeight / 5),
+    );
+    this._scene = this._generateGrid(this._cellSize);
+    this._visibleScene = [];
     this._fillGrid();
   }
 
@@ -58,10 +67,12 @@ export class SceneSystem {
     return randomColor;
   }
 
-  private _generateGrid(cellSize: number): Grid {
+  private _generateGrid(cellSize: Size): Grid {
+    // TODO: generate cellSize from window size
+    // TODO: generate rowCount/columnCount from data, NOT from window size
     const grid: Grid = new Grid();
-    const gridRowCount: number = Math.ceil(window.innerHeight / cellSize);
-    const gridColumnCount: number = Math.ceil(window.innerWidth / cellSize);
+    const gridRowCount: number = Math.ceil(this._sceneSize.height / cellSize.height);
+    const gridColumnCount: number = Math.ceil(this._sceneSize.width / cellSize.width);
 
     for (let row = 0; row < gridRowCount; row++) {
       grid.addRow([]);
@@ -71,14 +82,16 @@ export class SceneSystem {
       }
     }
 
+    console.log(grid);
+
     return grid;
   }
 
   private _isHexInColumn(hexPosition: Vector, rowIndex: number, columnIndex: number): boolean {
-    const startX: number = columnIndex * this._cellSize;
-    const startY: number = rowIndex * this._cellSize;
-    const endX: number = startX + this._cellSize;
-    const endY: number = startY + this._cellSize;
+    const startX: number = columnIndex * this._cellSize.width;
+    const startY: number = rowIndex * this._cellSize.height;
+    const endX: number = startX + this._cellSize.width;
+    const endY: number = startY + this._cellSize.height;
 
     return hexPosition.x >= startX && hexPosition.x <= endX && hexPosition.y >= startY && hexPosition.y <= endY;
   }
@@ -101,8 +114,6 @@ export class SceneSystem {
     for (const hexagon of mapData) {
       this._addHex(new Vector(hexagon.x, hexagon.y), Color.PURPLE, hexagonIndex++);
     }
-
-    // this._scene.calcWidth(this._hexSize);
   }
 
   setAllOwnedHexagons(allOwnedHexagons: IGetResponseAllHexagonOwned[]): void {
@@ -120,19 +131,24 @@ export class SceneSystem {
   updateScene(mapTransform: Matrix): void {
     const { x, y } = mapTransform.getTranslation();
     const { width: widthWindow, height: heightWindow } = Size.FromWindow();
-    const cellSize = this._cellSize * mapTransform.getScaleFactor();
+    const cellSize = this._cellSize.multiplyByValue(mapTransform.getScaleFactor());
     // let notVisibleCells = 0;
+
+    // HACK: test
+    this._visibleScene = [...this._scene];
+    return
 
     this._visibleScene = [];
 
     // TODO: search can be optimized
     for (let row = 0; row < this._scene.cells.length; row++) {
       for (let column = 0; column < this._scene.cells[row].length; column++) {
+        // FIXME: triggers when cells IS visible
         if (
-          x + column * cellSize + cellSize >= 0 &&
-          x + column * cellSize <= widthWindow &&
-          y + row * cellSize + cellSize >= 0 &&
-          y + row * cellSize <= heightWindow
+          x + column * cellSize.width * 2 >= 0 &&
+          x + column * cellSize.width <= widthWindow &&
+          y + row * cellSize.height * 2 >= 0 &&
+          y + row * cellSize.height <= heightWindow
         ) {
           this._visibleScene = this._visibleScene.concat(this._scene.cells[row][column]);
         } else {

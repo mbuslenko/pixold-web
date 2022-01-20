@@ -1,18 +1,10 @@
 import { Hexagon } from './Hexagon';
-import { Size } from './Size';
 
 export class Grid {
   cells: Hexagon[][][];
 
-  private _size: Size;
-
-  get size(): Size {
-    return this._size;
-  }
-
   constructor() {
     this.cells = [];
-    this._size = new Size(0, 0);
   }
 
   *[Symbol.iterator](): IterableIterator<Hexagon> {
@@ -56,17 +48,5 @@ export class Grid {
 
   addHex(row: number, column: number, hexagon: Hexagon): void {
     this.cells[row][column].push(hexagon);
-  }
-
-  // TODO: find better solution than passing hexSize to calcWidth
-  calcWidth(hexSize: Size): void {
-    const lastRow = this.cells[this.cells.length - 1];
-    const lastColumn = lastRow[lastRow.length - 1];
-    const lastHex = lastColumn[lastColumn.length - 1];
-    const difference = lastHex.position.copy().addSize(hexSize).subtract(this.cells[0][0][0].position);
-
-    // HACK: test
-    this._size = Size.FromWindow();
-    this._size = new Size(difference.x, difference.y);
   }
 }

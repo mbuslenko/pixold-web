@@ -3,6 +3,8 @@ import { SceneSystem } from './SceneSystem';
 import { RenderSystem } from './RenderSystem';
 import { Matrix } from './Matrix';
 import { IGetResponseAllHexagonOwned } from '../../../shared/ts/interfaces';
+import { Size } from './Size'
+import { ScreenMaxWidth } from '../../../shared/ts/enums'
 
 export class HexMap {
   private _canvas: HTMLCanvasElement;
@@ -33,13 +35,22 @@ export class HexMap {
     this._sceneSystem = new SceneSystem();
     this._renderSystem = new RenderSystem(this._ctx);
 
-    this._scaleFactor = 0;
+    this._scaleFactor = this._getInitialScaleFactor(this._sceneSystem.sceneSize);
     this._mapTranslation = Matrix.CreateIdentity();
     this._mapScale = Matrix.CreateIdentity();
     this._mapTransform = Matrix.CreateIdentity();
 
     this._prevMousePosition = new Vector(0, 0);
+    // this._prevMousePosition = Vector.InScreenCenter();
     this._clickCallback = clickCallback;
+  }
+
+  private _getInitialScaleFactor (sceneSize: Size): number {
+    if (window.innerWidth > ScreenMaxWidth.MEDIUM) {
+      return -1 + window.innerWidth / sceneSize.width;
+    }
+
+    return -1 + window.innerHeight / sceneSize.height;
   }
 
   private _update(): void {
@@ -64,7 +75,7 @@ export class HexMap {
 
   run(): void {
     const animate = () => {
-      this._renderSystem.clear();
+      this._renderSystem.clear(this._sceneSystem.sceneSize);
       this._renderSystem.setupForHex();
 
       this._update();
@@ -165,5 +176,19 @@ export class HexMap {
     }
 
     this._sceneSystem.activeHex = null;
+  }
+
+  resize (): void {
+    this._canvas.width = window.innerWidth;
+    this._canvas.height = window.innerHeight;
+
+    this._sceneSystem.resize();
+
+    this._scaleFactor = this._getInitialScaleFactor(this._sceneSystem.sceneSize);
+    this._mapTranslation = Matrix.CreateIdentity();
+    this._mapScale = Matrix.CreateIdentity();
+    this._mapTransform = Matrix.CreateIdentity();
+
+    this._prevMousePosition = new Vector(0, 0);
   }
 }

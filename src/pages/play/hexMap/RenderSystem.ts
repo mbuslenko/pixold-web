@@ -15,8 +15,9 @@ export class RenderSystem {
     this._ctx.lineWidth = this._lineWidth;
   }
 
-  clear(): void {
-    this._ctx.clearRect(-2, -2, window.innerWidth * 2, window.innerHeight * 2);
+  clear(sceneSize: Size): void {
+    // FIXME: if clear only window by window size
+    this._ctx.clearRect(-2, -2, sceneSize.width + 4, sceneSize.height + 4);
   }
 
   clearActiveHex(hexPosition: Vector, hexSize: Size, scaleFactor: number): void {

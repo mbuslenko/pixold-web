@@ -7,7 +7,7 @@ export class Size {
     this.height = height;
   }
 
-  scale(scaleFactor: number): Size {
+  multiplyByValue(scaleFactor: number): Size {
     this.width *= scaleFactor;
     this.height *= scaleFactor;
 
