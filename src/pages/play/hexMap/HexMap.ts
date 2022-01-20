@@ -3,8 +3,8 @@ import { SceneSystem } from './SceneSystem';
 import { RenderSystem } from './RenderSystem';
 import { Matrix } from './Matrix';
 import { IGetResponseAllHexagonOwned } from '../../../shared/ts/interfaces';
-import { Size } from './Size'
-import { ScreenMaxWidth } from '../../../shared/ts/enums'
+import { Size } from './Size';
+import { ScreenMaxWidth } from '../../../shared/ts/enums';
 
 export class HexMap {
   private _canvas: HTMLCanvasElement;
@@ -35,18 +35,17 @@ export class HexMap {
     this._sceneSystem = new SceneSystem();
     this._renderSystem = new RenderSystem(this._ctx);
 
+    this._prevMousePosition = new Vector(0, 0);
     this._scaleFactor = this._getInitialScaleFactor(this._sceneSystem.sceneSize);
     this._mapTranslation = Matrix.CreateIdentity();
     this._mapScale = Matrix.CreateIdentity();
     this._mapTransform = Matrix.CreateIdentity();
 
-    this._prevMousePosition = new Vector(0, 0);
-    // this._prevMousePosition = Vector.InScreenCenter();
     this._clickCallback = clickCallback;
   }
 
-  private _getInitialScaleFactor (sceneSize: Size): number {
-    if (window.innerWidth > ScreenMaxWidth.MEDIUM) {
+  private _getInitialScaleFactor(sceneSize: Size): number {
+    if (window.innerWidth >= ScreenMaxWidth.MEDIUM) {
       return -1 + window.innerWidth / sceneSize.width;
     }
 
@@ -151,7 +150,6 @@ export class HexMap {
   }
 
   click(position: Vector): void {
-    // const { width: hexWidth, height: hexHeight } = this._sceneSystem.hexSize;
     const { x, y } = position
       .subtract(this._mapTransform.getTranslation())
       .divideByValue(this._mapTransform.getScaleFactor());
@@ -159,14 +157,12 @@ export class HexMap {
     for (const hex of this._sceneSystem.visibleScene) {
       const { x: xHex, y: yHex } = hex.position;
 
-      // HACK: test
       if (
         x >= xHex - this._sceneSystem.hexagonRadius &&
         x <= xHex + this._sceneSystem.hexagonRadius &&
         y >= yHex - this._sceneSystem.hexagonRadius &&
         y <= yHex + this._sceneSystem.hexagonRadius
       ) {
-        // if (y < -Math.sqrt(3) * xHex - y + Math.sqrt(3) / 2) {
         this._sceneSystem.activeHex = hex;
 
         this._clickCallback(hex.id);
@@ -178,7 +174,7 @@ export class HexMap {
     this._sceneSystem.activeHex = null;
   }
 
-  resize (): void {
+  resize(): void {
     this._canvas.width = window.innerWidth;
     this._canvas.height = window.innerHeight;
 
@@ -188,7 +184,5 @@ export class HexMap {
     this._mapTranslation = Matrix.CreateIdentity();
     this._mapScale = Matrix.CreateIdentity();
     this._mapTransform = Matrix.CreateIdentity();
-
-    this._prevMousePosition = new Vector(0, 0);
   }
 }

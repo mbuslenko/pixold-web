@@ -28,6 +28,7 @@ $assets-path: '../../assets/svg/';
 
 .play-menu-wrapper {
   width: 654px;
+  border-radius: 15px;
   position: absolute;
   left: calc(50% - 327px);
   bottom: 34px;
@@ -70,17 +71,36 @@ $assets-path: '../../assets/svg/';
 
 .play-menu-button {
   font: inherit;
-  color: inherit;
+  color: $purple;
   border: none;
   background-color: transparent;
   cursor: pointer;
+
+  &:hover {
+    color: $white;
+
+    // TODO: remake svg icons by replacing mouseEvents to css classes like (icon, background)
+    // & .play-menu-icon {
+    //   & .background {
+    //     opacity: 1;
+    //   }
+
+    //   & .icon {
+    //     color: $white;
+    //   }
+    // }
+  }
 }
 
 .play-menu-link {
-  color: inherit;
+  color: $purple;
   text: {
     align: center;
     decoration: none;
+  }
+
+  &:hover {
+    color: $white;
   }
 }
 
@@ -111,7 +131,19 @@ $assets-path: '../../assets/svg/';
   height: 20px;
 }
 
-@media screen and (max-width: $screen-max-width-smallest) {
+@supports (backdrop-filter: blur()) {
+  .play-menu-wrapper {
+    backdrop-filter: blur(3px)
+  }
+}
+
+@supports not (backdrop-filter: blur()) {
+  .play-menu-wrapper {
+    background-color: pink;
+  }
+}
+
+@media screen and (max-width: $screen-max-width-medium) {
   .play-menu-wrapper {
     width: 90%;
     left: 5%;

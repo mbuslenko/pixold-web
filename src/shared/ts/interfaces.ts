@@ -73,7 +73,6 @@ export interface IGetResponseUserData {
 }
 
 // HACK: temporary
-// TODO: i don't event need username, i only need arrays with id separated by users
 export type IGetResponseAllHexagonOwned = Record<string, number[]>;
 
 export interface IReactFacebookFailureResponse {

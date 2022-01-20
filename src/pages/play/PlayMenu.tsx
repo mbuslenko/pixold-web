@@ -10,13 +10,21 @@ import { GameMenuShowIconSvg } from '../../components/gameMenuShowIconSvg/GameMe
 import { GameMenuIconSvg } from '../../components/gameMenuIconSvg/GameMenuIconSvg';
 
 export const PlayMenu: React.FC = () => {
-  const [menuIsVisible, setMenuIsVisible] = useState<boolean>(true);
+  const [menuIsVisible, setMenuIsVisible] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (isScreen(ScreenMaxWidth.SMALL)) {
+  const showMenuCallback = () => {
+    if (isScreen(ScreenMaxWidth.MEDIUM)) {
       setMenuIsVisible(false);
+
+      return;
     }
-  }, []);
+
+    setMenuIsVisible(true);
+  };
+
+  window.addEventListener('resize', showMenuCallback);
+
+  useEffect(showMenuCallback, []);
 
   return (
     <div className="play-menu-wrapper">

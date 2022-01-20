@@ -23,16 +23,16 @@ export class EventManager {
     console.log('key down');
     switch (e.key) {
       case 'ArrowRight':
-        this._map.move(new Vector(-222, 0));
+        this._map.move(new Vector(-180, 0));
         break;
       case 'ArrowLeft':
-        this._map.move(new Vector(222, 0));
+        this._map.move(new Vector(180, 0));
         break;
       case 'ArrowUp':
-        this._map.move(new Vector(0, -222));
+        this._map.move(new Vector(0, 100));
         break;
       case 'ArrowDown':
-        this._map.move(new Vector(0, 222));
+        this._map.move(new Vector(0, -100));
         break;
     }
   }
@@ -87,7 +87,7 @@ export class EventManager {
       this._map.dragStart(Vector.FromEventPosition(touches[0]));
 
       this._touchClick = true;
-      this._touchClickTimer = window.setTimeout(() => this._touchClick = false, 200);
+      this._touchClickTimer = window.setTimeout(() => (this._touchClick = false), 200);
 
       return;
     }
