@@ -89,7 +89,7 @@ export const RedeemCode: React.FC = () => {
             <Button text="Submit" appearance={{ priority: 'primary' }} onClick={redeemCodeSubmitCallback} />
             <Button
               text="Cancel"
-              appearance={{ priority: 'secondary', theme: 'black-white' }}
+              appearance={{ priority: 'secondary', theme: 'grey' }}
               onClick={redeemCodeCancelCallback}
             />
           </div>
