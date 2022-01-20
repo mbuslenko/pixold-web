@@ -99,18 +99,14 @@ export class EventManager {
 
       const firstDistanceX = touches[0].clientX - this._touchGroup.firstTouch.x;
       const secondDistanceX = touches[1].clientX - this._touchGroup.secondTouch.x;
-      const scaleFactor = (firstDistanceX + secondDistanceX) / 10;
+      const scaleFactor = firstDistanceX + secondDistanceX;
 
       this._map.zoom(scaleFactor, this._touchGroup.middlePoint);
 
       this._touchGroup.firstTouch = Vector.FromEventPosition(touches[0]);
       this._touchGroup.secondTouch = Vector.FromEventPosition(touches[1]);
     };
-    this._canvas.ontouchend = ({ touches }) => {
-      if (touches.length > 0) {
-        return;
-      }
-
+    this._canvas.ontouchend = () => {
       this._touchGroup = null;
     };
   }

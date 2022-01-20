@@ -103,8 +103,7 @@ export class HexMap {
     this._prevMousePosition = position;
   }
 
-  setAllOwnedHexagons(allOwnedHexagons: IGetResponseAllHexagonOwned): void {
-    console.log(allOwnedHexagons);
+  setAllOwnedHexagons(allOwnedHexagons: IGetResponseAllHexagonOwned[]): void {
     this._sceneSystem.setAllOwnedHexagons(allOwnedHexagons);
   }
 
@@ -128,7 +127,7 @@ export class HexMap {
     //   offset.y -= y / this._scaleFactor;
     // }
 
-    this._mapTranslation.multiply(Matrix.CreateTranslate(offset));
+    this._mapTranslation.multiply(Matrix.CreateTranslate(offset.divideByValue(this._mapTransform.getScaleFactor())));
   }
 
   dragStart(position: Vector): void {

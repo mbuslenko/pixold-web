@@ -105,12 +105,14 @@ export class SceneSystem {
     // this._scene.calcWidth(this._hexSize);
   }
 
-  setAllOwnedHexagons(allOwnedHexagons: IGetResponseAllHexagonOwned): void {
-    for (const owner of Object.values(allOwnedHexagons)) {
+  setAllOwnedHexagons(allOwnedHexagons: IGetResponseAllHexagonOwned[]): void {
+    for (const owner of allOwnedHexagons) {
       const hexagonColor = this._generateRandomColor();
 
-      for (const hexagonId of owner) {
-        this._scene.getHexagon(hexagonId).color = hexagonColor;
+      for (const hexagons of Object.values(owner)) {
+        for (const hexagonId of hexagons) {
+          this._scene.getHexagon(hexagonId).color = hexagonColor;
+        }
       }
     }
   }

@@ -27,7 +27,7 @@ export type GetResponseUserData = AxiosResponse<IGetResponseUserData>;
 export type GetResponseLoginGoogle = GoogleLoginResponse | GoogleLoginResponseOffline;
 export type GetResponseHexagonFree = AxiosResponse<IGetResponseHexagonFree>;
 export type GetResponseLoginFacebook = IReactFacebookLoginInfo | IReactFacebookFailureResponse;
-export type GetResponseAllHexagonOwned = AxiosResponse<IGetResponseAllHexagonOwned>;
+export type GetResponseAllHexagonOwned = AxiosResponse<IGetResponseAllHexagonOwned[]>;
 
 export type PostResponseWalletConnect = AxiosResponse<IPostResponseWalletConnect>;
 export type PostResponseAuth = AxiosResponse<IPostResponseAuth>;
