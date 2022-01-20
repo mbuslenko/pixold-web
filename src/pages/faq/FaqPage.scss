@@ -75,15 +75,12 @@
     flex-direction: column;
     align-items: center;
     margin-right: 0;
+    top: 285px;
+    bottom: unset;
   }
 
   .faq-topic-container {
     padding: 0 2.25em 5.375em;
-  }
-
-  .faq-page-support {
-    top: 285px;
-    bottom: unset;
   }
 
   .faq-button-small {
