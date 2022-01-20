@@ -147,7 +147,7 @@ export const HomeHexagonsScreen: React.FC = () => {
       <div className="hexagon hexagon-attack" ref={hexagonAttackRef}>
         <HexagonSvg className="hexagon-icon-small" color="red" />
         <img src={hexagonRedImg} alt="" className="hexagon-icon-big" />
-        <div className="hexagon-title">Attack</div>
+        <div className="hexagon-title">Attacker</div>
         <div className="hexagon-btn">
           <Button
             text="Read more"
