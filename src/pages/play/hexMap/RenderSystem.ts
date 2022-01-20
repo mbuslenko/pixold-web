@@ -7,8 +7,8 @@ import { Vector } from './Vector';
 export class RenderSystem {
   private _ctx: CanvasRenderingContext2D;
   private _lineWidth: number;
-  private _leftAttackLineOffset: number
-  private _rightAttackLineOffset: number
+  private _leftAttackLineOffset: number;
+  private _rightAttackLineOffset: number;
 
   constructor(ctx: CanvasRenderingContext2D) {
     this._ctx = ctx;
@@ -74,12 +74,17 @@ export class RenderSystem {
     this._ctx.setLineDash([100, 50]);
   }
 
-  private _drawHexagonAttack (hexagonAttack: HexagonAttack) {
+  private _drawHexagonAttack(hexagonAttack: HexagonAttack) {
     const { attacker, defender } = hexagonAttack;
     // const middlePoint = defender.position.copy().add(attacker.position).divideByValue(2).addY(-200);
 
     const { x, y } = defender.position.copy().subtract(attacker.position);
-    const middlePoint = defender.position.copy().add(attacker.position).divideByValue(2).addX(y / 3).addY(x / 3);
+    const middlePoint = defender.position
+      .copy()
+      .add(attacker.position)
+      .divideByValue(2)
+      .addX(y / 3)
+      .addY(x / 3);
 
     this._ctx.beginPath();
     this._ctx.moveTo(attacker.position.x, attacker.position.y);

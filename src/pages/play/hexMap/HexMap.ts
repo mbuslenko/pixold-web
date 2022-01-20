@@ -93,9 +93,9 @@ export class HexMap {
 
       this._renderSystem.setupForLine();
 
-      this._renderSystem.drawAttackLines (
+      this._renderSystem.drawAttackLines(
         this._sceneSystem.leftAttackingHexagons,
-        this._sceneSystem.rightAttackingHexagons
+        this._sceneSystem.rightAttackingHexagons,
       );
 
       // HACK: test

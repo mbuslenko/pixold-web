@@ -66,7 +66,7 @@ export class SceneSystem {
 
   // HACK: test
   private _generateRandomAttacks(): void {
-    const randomHex = () => Math.floor(Math.random() * this._scene.length)
+    const randomHex = () => Math.floor(Math.random() * this._scene.length);
 
     for (let i = 0; i < 30; i++) {
       const attacker = this._scene[randomHex()];
@@ -82,7 +82,7 @@ export class SceneSystem {
     }
   }
 
-  private _addAttackingHexagon (attackingHexagon: HexagonAttack): void {
+  private _addAttackingHexagon(attackingHexagon: HexagonAttack): void {
     const { attacker, defender } = attackingHexagon;
 
     if (attacker.position <= defender.position) {
