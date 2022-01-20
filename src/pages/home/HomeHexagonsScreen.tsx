@@ -14,7 +14,7 @@ import './HomeHexagonsScreen.scss';
 import hexagonRedImg from '../../assets/svg/hexagon-red.svg';
 import hexagonBlueImg from '../../assets/svg/hexagon-blue.svg';
 
-const hexagonAttackHeading = 'Attack';
+const hexagonAttackHeading = 'Attacker';
 const hexagonMinerHeading = 'Miner';
 const hexagonDefenderHeading = 'Defender';
 
