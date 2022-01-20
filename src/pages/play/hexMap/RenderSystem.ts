@@ -76,12 +76,15 @@ export class RenderSystem {
 
   private _drawHexagonAttack (hexagonAttack: HexagonAttack) {
     const { attacker, defender } = hexagonAttack;
-    const middlePoint = defender.position.copy().add(attacker.position).divideByValue(2).addY(-200);
+    // const middlePoint = defender.position.copy().add(attacker.position).divideByValue(2).addY(-200);
+
+    const { x, y } = defender.position.copy().subtract(attacker.position);
+    const middlePoint = defender.position.copy().add(attacker.position).divideByValue(2).addX(y / 3).addY(x / 3);
 
     this._ctx.beginPath();
     this._ctx.moveTo(attacker.position.x, attacker.position.y);
     this._ctx.quadraticCurveTo(middlePoint.x, middlePoint.y, defender.position.x, defender.position.y);
-    // this._ctx.strokeStyle = attacker.color;
+    this._ctx.strokeStyle = attacker.color;
     this._ctx.stroke();
   }
 

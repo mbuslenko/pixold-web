@@ -69,9 +69,15 @@ export class SceneSystem {
     const randomHex = () => Math.floor(Math.random() * this._scene.length)
 
     for (let i = 0; i < 30; i++) {
+      const attacker = this._scene[randomHex()];
+      const defender = this._scene[randomHex()];
+
+      attacker.color = this._generateRandomColor();
+      defender.color = this._generateRandomColor();
+
       this._addAttackingHexagon({
-        attacker: this._scene[randomHex()],
-        defender: this._scene[randomHex()],
+        attacker,
+        defender,
       });
     }
   }
