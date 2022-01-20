@@ -35,17 +35,28 @@
   margin-right: -85px;
 }
 
-.faq-page-support-email-icon {
+.faq-page-support-link {
   width: 30px;
   height: 30px;
+  background-color: $white;
   border-radius: 50%;
-  display: inline-block;
+  text-align: center;
+  padding-top: 6px;
+}
+
+.faq-page-support-email-icon {
+  width: 17px;
+  height: 17px;
+}
+
+.faq-page-support-link.faq-page-support-link-telegram {
+  text-align: initial;
+  padding-left: 6px;
 }
 
 .faq-page-support-telegram-icon {
-  width: 35px;
-  height: 35px;
-  display: block;
+  width: 15px;
+  height: 15px;
 }
 
 .faq-info-modal-wrapper {
@@ -73,6 +84,7 @@
 
   .faq-page-support {
     flex-direction: column;
+    gap: 15px 0;
     align-items: center;
     margin-right: 0;
     top: 285px;

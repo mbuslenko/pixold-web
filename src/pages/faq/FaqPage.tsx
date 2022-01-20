@@ -9,8 +9,8 @@ import { Button } from '../../components/button/Button';
 import { Modal } from '../../components/modal/Modal';
 
 import './FaqPage.scss';
-import emailSvg from '../../assets/svg/mail-btn.svg';
-import telegramSvg from '../../assets/svg/telegram-btn.svg';
+import emailSvg from '../../assets/svg/mail-icon.svg';
+import telegramSvg from '../../assets/svg/telegram-icon2.svg';
 import { FaqHeader } from './FaqHeader';
 import { FaqTopic } from './FaqTopic';
 import { HomeFooter } from '../home/HomeFooter';
@@ -56,10 +56,20 @@ export const FaqPage: React.FC = () => {
           ))}
           <div className="faq-support-wrapper">
             <nav className="faq-page-support">
-              <a href="mailto:hello@pixold.io" target="_blank" rel="noreferrer noopener">
+              <a
+                href="mailto:hello@pixold.io"
+                className="faq-page-support-link"
+                target="_blank"
+                rel="noreferrer noopener"
+              >
                 <img src={emailSvg} alt="Email" className="faq-page-support-email-icon" />
               </a>
-              <a href="https://t.me/pixold_help_bot" target="_blank" rel="noreferrer noopener">
+              <a
+                href="https://t.me/pixold_help_bot"
+                className="faq-page-support-link faq-page-support-link-telegram"
+                target="_blank"
+                rel="noreferrer noopener"
+              >
                 <img src={telegramSvg} alt="Telegram" className="faq-page-support-telegram-icon" />
               </a>
             </nav>
