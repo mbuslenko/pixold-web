@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { blockScrolling, unblockScrolling } from '../../shared/ts/helperFunctions';
@@ -9,12 +9,12 @@ import { Button } from '../../components/button/Button';
 import { Modal } from '../../components/modal/Modal';
 
 import './FaqPage.scss';
+import emailSvg from '../../assets/svg/mail-btn.svg';
+import telegramSvg from '../../assets/svg/telegram-btn.svg';
 import { FaqHeader } from './FaqHeader';
 import { FaqTopic } from './FaqTopic';
 import { HomeFooter } from '../home/HomeFooter';
 import { ShowInfoModalCallback } from './types';
-import emailSvg from '../../assets/svg/mail-btn.svg';
-import telegramSvg from '../../assets/svg/telegram-btn.svg';
 
 export const FaqPage: React.FC = () => {
   const navigate = useNavigate();
@@ -22,9 +22,6 @@ export const FaqPage: React.FC = () => {
   const [isVisibleModal, setIsVisibleModal] = useState<boolean>(false);
   const [modalHeading, setModalHeading] = useState<string>('');
   const [modalText, setModalText] = useState<string>('');
-
-  const [linkHref, setLinkHref] = useState<string>('');
-  const linkRef = useRef<HTMLAnchorElement>(null);
 
   const showInfoModal: ShowInfoModalCallback = (modalHeading, modalText) => {
     blockScrolling();
@@ -44,13 +41,7 @@ export const FaqPage: React.FC = () => {
         method: 'get',
         url: '/faq',
       },
-      onResponse: (response: GetResponseFaq) => {
-        setFaqTopicData(response.data);
-
-        // TODO: change reflink
-        setLinkHref('#PXL CoinThere are question header');
-        linkRef.current?.click();
-      },
+      onResponse: (response: GetResponseFaq) => setFaqTopicData(response.data),
     });
   }, [navigate]);
 
@@ -73,9 +64,6 @@ export const FaqPage: React.FC = () => {
               </a>
             </nav>
           </div>
-          <a href={linkHref} ref={linkRef} className="invisible-link">
-            Link to question
-          </a>
         </main>
         <HomeFooter />
       </section>

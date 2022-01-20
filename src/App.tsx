@@ -22,7 +22,9 @@ export const App: React.FC = () => {
       <Routes>
         <Route path="/" element={<Navigate replace to="/home" />} />
         <Route path="/home" element={<HomePage />} />
-        <Route path="/faq/:id" element={<FaqPage />} />
+        <Route path="/faq" element={<FaqPage />}>
+          <Route path=":questionId" element={<FaqPage />} />
+        </Route>
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/auth/load" element={<AuthLoadPage />} />
         <Route path="/coin" element={<CoinPage />} />
