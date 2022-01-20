@@ -132,13 +132,13 @@ $assets-path: '../../assets/svg/';
 }
 
 @supports (backdrop-filter: blur()) {
-  .play-menu-wrapper {
+  .play-menu {
     backdrop-filter: blur(3px)
   }
 }
 
 @supports not (backdrop-filter: blur()) {
-  .play-menu-wrapper {
+  .play-menu {
     background-color: pink;
   }
 }

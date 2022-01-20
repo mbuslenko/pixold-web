@@ -7,7 +7,7 @@ import { Matrix } from './Matrix';
 import { Size } from './Size';
 import { Vector } from './Vector';
 
-export interface HexAttack {
+export interface HexagonAttack {
   attacker: Hexagon;
   defender: Hexagon;
 }
@@ -19,7 +19,8 @@ export class SceneSystem {
   private _sceneSize: Size;
   private _cellSize: Size;
   private _hexagonRadius: number;
-  attackingHexes: HexAttack[];
+  private _leftAttackingHexagons: HexagonAttack[];
+  private _rightAttackingHexagons: HexagonAttack[];
   activeHex: Hexagon | null;
 
   get visibleScene(): Hexagon[] {
@@ -34,6 +35,14 @@ export class SceneSystem {
     return this._sceneSize;
   }
 
+  get leftAttackingHexagons(): HexagonAttack[] {
+    return this._leftAttackingHexagons;
+  }
+
+  get rightAttackingHexagons(): HexagonAttack[] {
+    return this._rightAttackingHexagons;
+  }
+
   constructor() {
     this._scene = [];
     this._sceneSize = new Size(1920, 860);
@@ -41,16 +50,42 @@ export class SceneSystem {
     this._sceneGrid = this._generateGrid(this._cellSize);
     this._visibleScene = [];
     this._hexagonRadius = 5;
-    this.attackingHexes = [];
+    this._leftAttackingHexagons = [];
+    this._rightAttackingHexagons = [];
     this.activeHex = null;
-    this._fillGrid();
+    this._setSceneData();
+    this._generateRandomAttacks();
   }
 
   resize(): void {
     this._cellSize = new Size(Math.ceil(window.innerWidth / 10), Math.ceil(window.innerHeight / 5));
     this._sceneGrid = this._generateGrid(this._cellSize);
     this._visibleScene = [];
-    this._fillGrid();
+    this._setSceneData();
+  }
+
+  // HACK: test
+  private _generateRandomAttacks(): void {
+    const randomHex = () => Math.floor(Math.random() * this._scene.length)
+
+    for (let i = 0; i < 30; i++) {
+      this._addAttackingHexagon({
+        attacker: this._scene[randomHex()],
+        defender: this._scene[randomHex()],
+      });
+    }
+  }
+
+  private _addAttackingHexagon (attackingHexagon: HexagonAttack): void {
+    const { attacker, defender } = attackingHexagon;
+
+    if (attacker.position <= defender.position) {
+      this._leftAttackingHexagons.push(attackingHexagon);
+
+      return;
+    }
+
+    this._rightAttackingHexagons.push(attackingHexagon);
   }
 
   private _generateRandomColor(): string {
@@ -106,7 +141,7 @@ export class SceneSystem {
     }
   }
 
-  private _fillGrid(): void {
+  private _setSceneData(): void {
     let hexagonIndex = 0;
 
     for (const hexagon of mapData) {

@@ -93,7 +93,7 @@ export class HexMap {
 
       this._renderSystem.setupForLine();
 
-      for (const hexagonAttack of this._sceneSystem.attackingHexes) {
+      for (const hexagonAttack of this._sceneSystem.rightAttackingHexagons) {
         this._renderSystem.drawAttackLine(hexagonAttack);
       }
 

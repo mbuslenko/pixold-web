@@ -1,18 +1,22 @@
 import { Hexagon } from './Hexagon';
 import { Matrix } from './Matrix';
-import { HexAttack } from './SceneSystem';
+import { HexagonAttack } from './SceneSystem';
 import { Size } from './Size';
 import { Vector } from './Vector';
 
 export class RenderSystem {
   private _ctx: CanvasRenderingContext2D;
   private _lineWidth: number;
+  private _leftAttackLineOffset: number
+  private _rightAttackLineOffset: number
 
   constructor(ctx: CanvasRenderingContext2D) {
     this._ctx = ctx;
     this._lineWidth = 1;
     this._ctx.strokeStyle = 'blue';
     this._ctx.lineWidth = this._lineWidth;
+    this._rightAttackLineOffset = 0;
+    this._leftAttackLineOffset = 0;
   }
 
   clear(sceneSize: Size): void {
@@ -72,7 +76,7 @@ export class RenderSystem {
     this._ctx.setLineDash([100, 50]);
   }
 
-  drawAttackLine(hexagonAttack: HexAttack): void {
+  drawAttackLine(hexagonAttack: HexagonAttack): void {
     const { attacker, defender } = hexagonAttack;
     const middlePoint = defender.position.copy().add(attacker.position).divideByValue(2).addY(-200);
 
