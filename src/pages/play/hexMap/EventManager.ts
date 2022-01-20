@@ -107,13 +107,12 @@ export class EventManager {
       return;
     }
 
-    // const scaleFactor = this._touchGroup.firstTouch.distance(this._touchGroup.secondTouch) / 10;
     const firstTouch = Vector.FromEventPosition(touches[0]);
     const secondTouch = Vector.FromEventPosition(touches[1]);
     const distanceToMiddle =
       firstTouch.distance(this._touchGroup.middlePoint) + secondTouch.distance(this._touchGroup.middlePoint);
 
-    this._map.zoom((distanceToMiddle - this._touchGroup.distanceToMiddle) / 10, this._touchGroup.middlePoint);
+    this._map.zoom(-(distanceToMiddle - this._touchGroup.distanceToMiddle) / 10, this._touchGroup.middlePoint);
 
     this._touchGroup.firstTouch = firstTouch;
     this._touchGroup.secondTouch = secondTouch;

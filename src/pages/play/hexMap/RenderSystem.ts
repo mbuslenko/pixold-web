@@ -15,6 +15,7 @@ export class RenderSystem {
     this._lineWidth = 1;
     this._ctx.strokeStyle = 'blue';
     this._ctx.lineWidth = this._lineWidth;
+    this._ctx.lineCap = 'round';
     this._rightAttackLineOffset = 0;
     this._leftAttackLineOffset = 0;
   }
@@ -56,6 +57,7 @@ export class RenderSystem {
   }
 
   drawHex(hexagon: Hexagon, hexagonRadius: number): void {
+    // FIXME: after resize hex color become purple again
     this._ctx.beginPath();
     this._ctx.fillStyle = hexagon.color;
     this._drawHexPath(hexagon, hexagonRadius);

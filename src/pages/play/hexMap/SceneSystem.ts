@@ -68,7 +68,7 @@ export class SceneSystem {
   private _generateRandomAttacks(): void {
     const randomHex = () => Math.floor(Math.random() * this._scene.length);
 
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < 50; i++) {
       const attacker = this._scene[randomHex()];
       const defender = this._scene[randomHex()];
 
