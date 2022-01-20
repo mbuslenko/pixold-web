@@ -7,8 +7,14 @@ export const FaqTopic: React.FC<IFaqTopicProps> = ({ name, content, showInfoModa
     <section className="faq-topic">
       <h2 className="faq-topic-heading">{name}</h2>
       <div className="faq-question-container">
-        {content.map(({ question, answer }, index) => (
-          <FaqQuestion question={question} answer={answer} showInfoModalCallback={showInfoModalCallback} key={index} />
+        {content.map(({ id, question, answer }, index) => (
+          <FaqQuestion
+            id={id}
+            question={question}
+            answer={answer}
+            showInfoModalCallback={showInfoModalCallback}
+            key={index}
+          />
         ))}
       </div>
     </section>

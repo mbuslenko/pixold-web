@@ -120,3 +120,7 @@ export interface IIconProps<I extends string> {
   iconName: I;
   className?: string;
 }
+
+export interface ILinkToFaqProps {
+  questionId: string;
+}

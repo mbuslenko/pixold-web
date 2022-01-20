@@ -45,9 +45,33 @@
   align-items: flex-start;
 }
 
+.redeem-buttons-wrap {
+  display: flex;
+  gap: 64px;
+}
+
+.redeem-page .redeem-button-opensea {
+  margin-top: 8.5vh;
+  position: absolute;
+  right: 65px;
+}
+
+.redeem-button-opensea-small {
+  display: none;
+}
+
 @media screen and (max-width: $screen-max-width-small) {
   .redeem-page {
     padding-left: 12.0625em;
+  }
+
+  .redeem-button-opensea {
+    display: none;
+  }
+
+  .redeem-button-opensea-small {
+    margin-top: 8.5vh;
+    display: initial;
   }
 }
 
