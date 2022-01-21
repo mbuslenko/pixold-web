@@ -53,7 +53,7 @@ export const CareersPage = () => {
           <div>
             <h3 className="careers-page-vacancy-title-small">Description</h3>
             <p className="careers-page-vacancy-desc">
-              Developer with knowledge of Javascript or other OOP programming language, no commercial experience to work on a project with: TypeScript, NestJS and PostgreSQL
+              Developer with knowledge of Javascript or other OOP programming language, no commercial experience
             </p>
           </div>
         </CareerVacancy>
