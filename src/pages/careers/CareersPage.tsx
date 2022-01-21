@@ -21,8 +21,8 @@ export const CareersPage = () => {
         <div className="careers-page-open">
           <h2 className="careers-page-open-title">Open roles</h2>
           <p className="careers-page-open-desc">
-            We want to add to the team people with "burning eyes", which we are. So if you want to work at Pixold, but
-            don't see a suitable role in the list on the right, feel free to email us at hello@pixold.io
+            We are looking for people like us with «burning eyes» to join our team. So if you would
+             like to work at Pixold but don't see a suitable position on the list, please contact us at hello@pixold.io
           </p>
         </div>
         <a href="#ui-vacancy" className="careers-page-arrow-down">
@@ -37,8 +37,7 @@ export const CareersPage = () => {
           <div>
             <h3 className="careers-page-vacancy-title-small">Description</h3>
             <p className="careers-page-vacancy-desc">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Blandit ultricies aliquam quis in accumsan, vel
-              ut. Posuere suscipit neque scelerisque libero.
+              Web designer with good knowledge of Figma, knowledge of modern UI/UX approaches for the Web and sense of style, composition, form and color. Portfolio is required.
             </p>
           </div>
         </CareerVacancy>
@@ -54,7 +53,7 @@ export const CareersPage = () => {
           <div>
             <h3 className="careers-page-vacancy-title-small">Description</h3>
             <p className="careers-page-vacancy-desc">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Blandit ultricies aliquam quis
+              Developer with knowledge of Javascript or other OOP programming language, no commercial experience to work on a project with: TypeScript, NestJS and PostgreSQL
             </p>
           </div>
         </CareerVacancy>
