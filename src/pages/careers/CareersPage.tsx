@@ -6,15 +6,18 @@ import { CareerVacancy } from './CareerVacancy';
 
 export const CareersPage = () => {
   return (
-    // <div className="careers-page">
     <>
-      <section className="careers-page-team">
-        <div className="careers-page-heading">Pixold Careers</div>
-        <h1 className="careers-page-title">Join the team</h1>
-        <p className="careers-page-desc">Even if you have little experience or skills</p>
-        <Button text="Contact us" appearance={{ priority: 'primary', theme: 'black' }} />
+      <section className="careers-page-intro">
+        <header className="careers-page-header">Pixold Careers</header>
+        <div className="careers-page-intro-content">
+          <h1 className="careers-page-title">Join the team</h1>
+          <p className="careers-page-desc">Even if you have little experience or skills</p>
+          <a href="mailto:hello@pixold.io" target="_blank" rel="noreferrer noopener">
+            <Button text="Contact us" appearance={{ priority: 'primary', theme: 'black' }} />
+          </a>
+        </div>
       </section>
-      <section className="careers-page-roles">
+      <section className="careers-page-vacancies">
         <div className="careers-page-open">
           <h2 className="careers-page-open-title">Open roles</h2>
           <p className="careers-page-open-desc">
@@ -23,7 +26,7 @@ export const CareersPage = () => {
           </p>
         </div>
         <a href="#ui-vacancy" className="careers-page-arrow-down">
-          <img src={arrowDownSvg} alt="" />
+          <img src={arrowDownSvg} alt="Arrow down" />
         </a>
         <CareerVacancy
           id="ui-vacancy"
@@ -57,6 +60,5 @@ export const CareersPage = () => {
         </CareerVacancy>
       </section>
     </>
-    /* </div> */
   );
 };

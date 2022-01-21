@@ -1,11 +1,6 @@
 @import '../../shared/scss/variables.scss';
 
-/* .careers-page {
-  max-width: 1920px;
-  margin: 0 auto;
-} */
-
-.careers-page-team {
+.careers-page-intro {
   height: 100vh;
   color: $black;
   text-align: center;
@@ -17,12 +12,15 @@
     #918ff4 183.75deg,
     #7cce7f 360deg
   );
-  // display: flex;
-  // flex-direction: column;
-  // align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.careers-page-heading {
+.careers-page-header {
+  position: absolute;
+  top: 0;
   background: rgba(1, 0, 16, 0.5);
   font-weight: bold;
   font-size: 25px;
@@ -34,27 +32,25 @@
 }
 
 .careers-page-title {
-  margin: 19.3vh 0 0;
   font-weight: bold;
   font-size: 90px;
   line-height: 106%;
   letter-spacing: -0.02em;
+  margin: 0;
 }
 
 .careers-page-desc {
   font-size: 40px;
   line-height: 106%;
   letter-spacing: -0.02em;
-  margin: 1.9vh auto 12vh;
+  margin: 21px auto 12vh;
   max-width: 548px;
 }
 
-.careers-page-roles {
+.careers-page-vacancies {
   height: 100vh;
   max-width: 1920px;
   margin: 0 auto;
-  // padding: 0 5.7vw;
-  // padding: 22.75vh 5.7vw 16.875vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -100,8 +96,7 @@
     font-size: 25px;
   }
 
-  .careers-page-roles {
-    // padding: 29vh 0 6.2vh;
+  .careers-page-vacancies {
     padding: 240px 0 50px;
     height: 100%;
     flex-direction: column;
