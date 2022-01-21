@@ -1,0 +1,54 @@
+@import '../../shared/scss/variables.scss';
+
+.careers-page-vacancy {
+  width: 322px;
+  height: 483px;
+  border: 2px solid $white;
+  padding: 58px 30px 40px;
+  color: $black;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;
+}
+
+.careers-page-vacancy-ui-bg {
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)),
+    linear-gradient(90deg, #4255ff 0%, #ff6d4d 18.95%, #84ff9f 31.31%, #e4d290 33.36%, #ff5a36 50.3%);
+}
+
+.careers-page-vacancy-back-bg {
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)),
+    linear-gradient(177.48deg, #ce7cad 6.72%, #ff5f3c 48.69%, #f7df0a 77.98%);
+}
+
+.careers-page-vacancy-title {
+  width: 202px;
+  font-weight: bold;
+  font-size: 30px;
+  line-height: 106%;
+  letter-spacing: -0.02em;
+  // margin-bottom: 3.8vh;
+}
+
+.careers-page-vacancy-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.careers-page-vacancy-title-small {
+  font-weight: bold;
+  font-size: 10px;
+  line-height: 106%;
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+}
+
+.careers-page-vacancy-desc {
+  font-size: 20px;
+  line-height: 106%;
+  letter-spacing: -0.02em;
+}

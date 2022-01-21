@@ -9,7 +9,7 @@ export type ButtonTheme = PrimaryButtonTheme | SecondaryButtonTheme;
 export type PrimaryButtonTheme =
   | 'pink'
   | 'black-white'
-  | 'white-black'
+  | 'black'
   | 'google'
   | 'facebook'
   | 'opensea-white'

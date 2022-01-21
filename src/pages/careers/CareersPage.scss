@@ -17,9 +17,9 @@
     #918ff4 183.75deg,
     #7cce7f 360deg
   );
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  // display: flex;
+  // flex-direction: column;
+  // align-items: center;
 }
 
 .careers-page-heading {
@@ -45,7 +45,7 @@
   font-size: 40px;
   line-height: 106%;
   letter-spacing: -0.02em;
-  margin: 1.9vh 0 12vh;
+  margin: 1.9vh auto 12vh;
   max-width: 548px;
 }
 
@@ -53,7 +53,8 @@
   height: 100vh;
   max-width: 1920px;
   margin: 0 auto;
-  padding: 0 5.7vw;
+  // padding: 0 5.7vw;
+  // padding: 22.75vh 5.7vw 16.875vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -79,30 +80,14 @@
   margin-top: 3vh;
 }
 
-.careers-page-vacancy {
-  width: 322px;
-  height: 483px;
-  background: linear-gradient(0deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)),
-    linear-gradient(90deg, #4255ff 0%, #ff6d4d 18.95%, #84ff9f 31.31%, #e4d290 33.36%, #ff5a36 50.3%);
-  border: 2px solid $white;
-  padding: 5.4vh 33px 4vh;
-  color: $black;
+.careers-page-arrow-down {
+  display: none;
 }
 
-.careers-page-vacancy-title {
-  font-weight: bold;
-  font-size: 30px;
-  line-height: 106%;
-  letter-spacing: -0.02em;
-
-  margin-bottom: 3.8vh;
-}
-
-.careers-page-vacancy-title-small {
-  font-weight: bold;
-  font-size: 10px;
-  line-height: 106%;
-  letter-spacing: -0.02em;
+@media screen and (max-width: $screen-max-width-big) {
+  .careers-page-open {
+    margin-right: 0;
+  }
 }
 
 @media screen and (max-width: $screen-max-width-small) {
@@ -116,14 +101,20 @@
   }
 
   .careers-page-roles {
-    padding: 29vh 0 6.2vh;
+    // padding: 29vh 0 6.2vh;
+    padding: 240px 0 50px;
     height: 100%;
     flex-direction: column;
     justify-content: center;
-    gap: 8vh 0;
+    gap: 66px 0;
   }
 
   .careers-page-open {
-    margin-right: 0;
+    margin-bottom: 79px;
+  }
+
+  .careers-page-arrow-down {
+    display: initial;
+    margin-bottom: 54px;
   }
 }

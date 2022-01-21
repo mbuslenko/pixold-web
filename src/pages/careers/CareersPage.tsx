@@ -1,5 +1,8 @@
 import { Button } from '../../components/button/Button';
+
 import './CareersPage.scss';
+import arrowDownSvg from '../../assets/svg/arrow-down.svg';
+import { CareerVacancy } from './CareerVacancy';
 
 export const CareersPage = () => {
   return (
@@ -9,7 +12,7 @@ export const CareersPage = () => {
         <div className="careers-page-heading">Pixold Careers</div>
         <h1 className="careers-page-title">Join the team</h1>
         <p className="careers-page-desc">Even if you have little experience or skills</p>
-        <Button text="Contact us" appearance={{ priority: 'primary', theme: 'white-black' }} />
+        <Button text="Contact us" appearance={{ priority: 'primary', theme: 'black' }} />
       </section>
       <section className="careers-page-roles">
         <div className="careers-page-open">
@@ -19,33 +22,39 @@ export const CareersPage = () => {
             don't see a suitable role in the list on the right, feel free to email us at hello@pixold.io
           </p>
         </div>
-        <div className="careers-page-vacancy">
-          <h2 className="careers-page-vacancy-title">
-            UI/UX <br />
-            Designer
-          </h2>
-          <h3 className="careers-page-vacancy-title-small">Description</h3>
-          <p className="careers-page-vacancy-desc">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Blandit ultricies aliquam quis in accumsan, vel ut.
-            Posuere suscipit neque scelerisque libero.
-          </p>
-          <Button text="Apply" appearance={{ priority: 'primary', theme: 'white-black' }} />
-        </div>
-        <div className="careers-page-vacancy">
-          <h2 className="careers-page-vacancy-title">
-            Backend
-            <br /> Developer
-          </h2>
-          <h3 className="careers-page-vacancy-title-small">Language</h3>
-          <p className="careers-page-vacancy-desc">Node.JS</p>
-          <h3 className="careers-page-vacancy-title-small">Level</h3>
-          <p className="careers-page-vacancy-desc">Trainee</p>
-          <h3 className="careers-page-vacancy-title-small">Description</h3>
-          <p className="careers-page-vacancy-desc">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Blandit ultricies aliquam quis
-          </p>
-          <Button text="Apply" appearance={{ priority: 'primary', theme: 'white-black' }} />
-        </div>
+        <a href="#ui-vacancy" className="careers-page-arrow-down">
+          <img src={arrowDownSvg} alt="" />
+        </a>
+        <CareerVacancy
+          id="ui-vacancy"
+          className="careers-page-vacancy-ui-bg"
+          title="UI/UX Designer"
+          applyLink="hello@pixold.io"
+        >
+          <div>
+            <h3 className="careers-page-vacancy-title-small">Description</h3>
+            <p className="careers-page-vacancy-desc">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Blandit ultricies aliquam quis in accumsan, vel
+              ut. Posuere suscipit neque scelerisque libero.
+            </p>
+          </div>
+        </CareerVacancy>
+        <CareerVacancy className="careers-page-vacancy-back-bg" title="Backend Developer" applyLink="hello@pixold.io">
+          <div>
+            <h3 className="careers-page-vacancy-title-small">Language</h3>
+            <p className="careers-page-vacancy-desc">Node.JS</p>
+          </div>
+          <div>
+            <h3 className="careers-page-vacancy-title-small">Level</h3>
+            <p className="careers-page-vacancy-desc">Trainee</p>
+          </div>
+          <div>
+            <h3 className="careers-page-vacancy-title-small">Description</h3>
+            <p className="careers-page-vacancy-desc">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Blandit ultricies aliquam quis
+            </p>
+          </div>
+        </CareerVacancy>
       </section>
     </>
     /* </div> */
