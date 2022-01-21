@@ -64,6 +64,10 @@
     @include primary-color($pink, $black);
   }
 
+  &.white-black {
+    @include primary-color($black, $white);
+  }
+
   &.google {
     @include primary-with-icon($white, $purple);
     @include before-icon('google-logo');
