@@ -9,6 +9,7 @@ body {
   font-style: normal;
   font-weight: normal;
   overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
 
   background-color: $black;
   color: $white;
