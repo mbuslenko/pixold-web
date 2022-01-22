@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { getAxiosInstance } from '../../shared/ts/axiosInstance';
@@ -6,11 +6,13 @@ import { GetResponseAllHexagonOwned } from '../../shared/ts/types';
 
 import './PlayPage.scss';
 import { PlayMenu } from './PlayMenu';
+import { PlayPagePopup } from './PlayPagePopup';
 import { HexagonMap } from './hexagonMap/HexagonMap';
 import { EventManager } from './hexagonMap/EventManager';
 
 export const PlayPage: React.FC = () => {
   const navigate = useNavigate();
+  const [isVisiblePopup, setIsVisiblePopup] = useState(false);
   const playPageRef = useRef<HTMLElement>(null);
   const canvasHexagonRef = useRef<HTMLCanvasElement>(null);
   const canvasLineRef = useRef<HTMLCanvasElement>(null);
@@ -32,7 +34,7 @@ export const PlayPage: React.FC = () => {
           method: 'get',
           url: `/hexagon/${hexagonId}`,
         },
-        onResponse: (response: GetResponseAllHexagonOwned) => console.log(response),
+        onResponse: (response: GetResponseAllHexagonOwned) => { console.log(response); setIsVisiblePopup(true); },
       });
     });
     const eventManager = new EventManager(playPage, map);
@@ -58,6 +60,7 @@ export const PlayPage: React.FC = () => {
     <section className="play-page" ref={playPageRef}>
       <canvas className="play-page-canvas-hexagon" ref={canvasHexagonRef} />
       <canvas className="play-page-canvas-line" ref={canvasLineRef} />
+      <PlayPagePopup closePopupCallback={() => {setIsVisiblePopup(false)}} />
       <PlayMenu />
     </section>
   );
