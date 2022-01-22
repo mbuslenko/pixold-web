@@ -8,8 +8,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
   font-style: normal;
   font-weight: normal;
-  overscroll-behavior: contain;
-  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: none;
+  touch-action: none;
+  -webkit-overflow-scrolling: none;
+  overflow: hidden;
 
   background-color: $black;
   color: $white;
