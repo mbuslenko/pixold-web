@@ -1,18 +1,18 @@
-import { HexMap } from './HexMap';
+import { HexagonMap } from './HexagonMap';
 import { TouchGroup } from './TouchGroup';
 import { Vector } from './Vector';
 
 export class EventManager {
-  private _canvas: HTMLCanvasElement;
-  private _map: HexMap;
+  private _context: HTMLElement;
+  private _map: HexagonMap;
   private _isDragging: boolean;
   private _touchGroup: TouchGroup | null;
   private _lastTouch: Vector;
   private _touchClick: boolean;
   private _touchClickTimer: number;
 
-  constructor(canvas: HTMLCanvasElement, map: HexMap) {
-    this._canvas = canvas;
+  constructor(context: HTMLElement, map: HexagonMap) {
+    this._context = context;
     this._map = map;
     this._isDragging = false;
     this._touchGroup = null;
@@ -106,7 +106,6 @@ export class EventManager {
   private _touchMoveCallback = (e: TouchEvent): void => {
     const { touches } = e;
 
-    // TODO: check if e.preventDefault() even necessary now
     e.preventDefault();
 
     const firstTouch = Vector.FromEventPosition(touches[0]);
@@ -141,18 +140,34 @@ export class EventManager {
   }
 
   setEvents(): void {
-    window.onresize = () => this._map.resize();
+    window.onresize = this._map.resize.bind(this._map);
 
     window.onkeydown = this._keyDownCallback.bind(this);
 
-    this._canvas.onwheel = this._mouseWheelCallback.bind(this);
+    this._context.onwheel = this._mouseWheelCallback.bind(this);
 
-    this._canvas.onmousedown = this._mouseDownCallback.bind(this);
-    this._canvas.onmousemove = this._mouseMoveCallback.bind(this);
-    this._canvas.onmouseup = this._mouseUpCallback.bind(this);
+    this._context.onmousedown = this._mouseDownCallback.bind(this);
+    this._context.onmousemove = this._mouseMoveCallback.bind(this);
+    this._context.onmouseup = this._mouseUpCallback.bind(this);
 
     window.ontouchstart = this._touchStartCallback.bind(this);
     window.ontouchmove = this._touchMoveCallback.bind(this);
     window.ontouchend = this._touchEndCallback.bind(this);
+  }
+
+  unsetEvents(): void {
+    window.onresize = null;
+
+    window.onkeydown = null;
+
+    this._context.onwheel = null;
+
+    this._context.onmousedown = null;
+    this._context.onmousemove = null;
+    this._context.onmouseup = null;
+
+    window.ontouchstart = null;
+    window.ontouchmove = null;
+    window.ontouchend = null;
   }
 }

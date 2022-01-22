@@ -1,3 +1,4 @@
+import { HexagonMapData } from './interfaces';
 import { Size } from './Size';
 
 export class Vector {
@@ -12,13 +13,6 @@ export class Vector {
   add(vector: Vector): Vector {
     this.x += vector.x;
     this.y += vector.y;
-
-    return this;
-  }
-
-  addSize(size: Size): Vector {
-    this.x += size.width;
-    this.y += size.height;
 
     return this;
   }
@@ -49,13 +43,6 @@ export class Vector {
     return this;
   }
 
-  divide(vector: Vector): Vector {
-    this.x /= vector.x;
-    this.y /= vector.y;
-
-    return this;
-  }
-
   divideByValue(value: number): Vector {
     this.x /= value;
     this.y /= value;
@@ -66,27 +53,6 @@ export class Vector {
   multiplyByValue(scaleFactor: number): Vector {
     this.x *= scaleFactor;
     this.y *= scaleFactor;
-
-    return this;
-  }
-
-  max(xMax: number, yMax: number): Vector {
-    this.x = Math.max(this.x, xMax);
-    this.y = Math.max(this.y, yMax);
-
-    return this;
-  }
-
-  min(xMin: number, yMin: number): Vector {
-    this.x = Math.min(this.x, xMin);
-    this.y = Math.min(this.y, yMin);
-
-    return this;
-  }
-
-  abs(): Vector {
-    this.x = Math.abs(this.x);
-    this.y = Math.abs(this.y);
 
     return this;
   }
@@ -106,15 +72,15 @@ export class Vector {
     return new Vector(this.x, this.y);
   }
 
+  static FromHexagonData(hexagonData: HexagonMapData): Vector {
+    return new Vector(hexagonData.x, hexagonData.y);
+  }
+
   static FromEventPosition(e: MouseEvent | Touch | WheelEvent): Vector {
     return new Vector(e.clientX, e.clientY);
   }
 
   static FromWindowEndPosition(): Vector {
     return new Vector(window.innerWidth, window.innerHeight);
-  }
-
-  static InScreenCenter(): Vector {
-    return new Vector(window.innerWidth / 2, window.innerHeight / 2);
   }
 }

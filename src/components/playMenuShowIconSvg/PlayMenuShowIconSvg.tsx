@@ -1,7 +1,7 @@
 import { Color } from '../../shared/ts/enums';
 import { GameMenuShowSvgProps } from '../types';
 
-export const GameMenuShowIconSvg: React.FC<GameMenuShowSvgProps> = ({ color, className }) => {
+export const PlayMenuShowIconSvg: React.FC<GameMenuShowSvgProps> = ({ color, className }) => {
   const fillColor = color === 'purple' ? Color.PURPLE : Color.WHITE;
 
   return (

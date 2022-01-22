@@ -27,3 +27,5 @@ export const redirect = (navigate: NavigateFunction, redirectTo: string): void =
 
   navigate(redirectTo);
 };
+
+export const clamp = (num: number, min: number, max: number) => Math.min(max, Math.max(num, min));

@@ -1,1 +1,14 @@
+%canvas {
+  display: block;
+}
 
+.play-page-canvas-hexagon {
+  @extend %canvas;
+}
+
+.play-page-canvas-line {
+  @extend %canvas;
+
+  position: absolute;
+  inset: 0 auto auto 0;
+}

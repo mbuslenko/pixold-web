@@ -26,7 +26,7 @@ export const ErrorPage: React.FC<IErrorPageProps> = ({
 
       <main className="error-content">
         <h1 className="error-title">{title}</h1>
-        {React.Children.map(children, (value) => value)}
+        {children}
         <div className="error-btn-wrap">
           <Link to="/home">
             <Button text="Home" appearance={{ priority: 'primary', theme: 'black-white' }} />

@@ -1,31 +1,5 @@
 @import '../../shared/scss/variables.scss';
 
-$assets-path: '../../assets/svg/';
-
-@mixin nav-link-icon($icon-name) {
-  &::before {
-    content: url($assets-path + $icon-name + '.svg');
-  }
-
-  &:hover::before {
-    content: url($assets-path + $icon-name + '-hover.svg');
-  }
-
-  @media screen and (max-width: $screen-max-width-smallest) {
-    &::before {
-      content: url($assets-path + $icon-name + '-hover.svg');
-      display: inline-block;
-    }
-  }
-}
-
-.play-menu-icon {
-  display: block;
-  width: 36px;
-  height: 30px;
-  margin: 0 auto 6px;
-}
-
 .play-menu-wrapper {
   width: 654px;
   border-radius: 15px;
@@ -69,38 +43,48 @@ $assets-path: '../../assets/svg/';
   align-items: center;
 }
 
-.play-menu-button {
-  font: inherit;
+.play-menu-button, .play-menu-link {
   color: $purple;
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
 
   &:hover {
     color: $white;
 
-    // TODO: remake svg icons by replacing mouseEvents to css classes like (icon, background)
-    // & .play-menu-icon {
-    //   & .background {
-    //     opacity: 1;
-    //   }
+    & .play-menu-icon-path {
+      fill: $white;
+    }
 
-    //   & .icon {
-    //     color: $white;
-    //   }
-    // }
+    & .play-menu-icon-background {
+      opacity: 1;
+    }
   }
 }
 
+.play-menu-button {
+  font: inherit;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
 .play-menu-link {
-  color: $purple;
   text: {
     align: center;
     decoration: none;
   }
+}
 
-  &:hover {
-    color: $white;
+.play-menu-icon {
+  display: block;
+  width: 36px;
+  height: 30px;
+  margin: 0 auto 6px;
+
+  & .play-menu-icon-path {
+    fill: $purple;
+  }
+
+  & .play-menu-icon-background {
+    opacity: 0.5;
   }
 }
 
@@ -132,14 +116,18 @@ $assets-path: '../../assets/svg/';
 }
 
 @supports (backdrop-filter: blur()) {
-  .play-menu {
+  .play-menu, .show-menu-button {
     backdrop-filter: blur(3px)
   }
 }
 
 @supports not (backdrop-filter: blur()) {
-  .play-menu {
-    background-color: pink;
+  .play-menu, .show-menu-button {
+    background-color: $blue-dark;
+  }
+
+  .show-menu-button.is-active {
+    background: none;
   }
 }
 

@@ -1,53 +1,53 @@
 import { Vector } from './Vector';
 
 export class Matrix {
-  values: number[][];
+  value: number[][];
 
   constructor(data: number[][]) {
-    this.values = data;
+    this.value = data;
   }
 
   copy(): Matrix {
-    return new Matrix([...[...this.values]]);
+    return new Matrix([...[...this.value]]);
   }
 
   multiply(matrix: Matrix): Matrix {
-    for (let rowIndex = 0; rowIndex < this.values.length; rowIndex++) {
-      const row = this.values[rowIndex];
+    for (let rowIndex = 0; rowIndex < this.value.length; rowIndex++) {
+      const row = this.value[rowIndex];
       const newRow = [];
 
       for (let columnIndex = 0; columnIndex < row.length; columnIndex++) {
         newRow.push(
-          row[0] * matrix.values[0][columnIndex] +
-            row[1] * matrix.values[1][columnIndex] +
-            row[2] * matrix.values[2][columnIndex],
+          row[0] * matrix.value[0][columnIndex] +
+            row[1] * matrix.value[1][columnIndex] +
+            row[2] * matrix.value[2][columnIndex],
         );
       }
 
-      this.values[rowIndex] = newRow;
+      this.value[rowIndex] = newRow;
     }
 
     return this;
   }
 
   getTranslation(): Vector {
-    return new Vector(this.values[0][2], this.values[1][2]);
+    return new Vector(this.value[0][2], this.value[1][2]);
   }
 
   setTranslation(vector: Vector): Matrix {
-    this.values[0][2] = vector.x;
-    this.values[1][2] = vector.y;
+    this.value[0][2] = vector.x;
+    this.value[1][2] = vector.y;
 
     return this;
   }
 
   getScaleFactor(): number {
-    return this.values[0][0];
+    return this.value[0][0];
   }
 
   setScaleFactor(scaleFactor: number): Matrix {
-    this.values[0][0] = scaleFactor;
-    this.values[1][1] = scaleFactor;
+    this.value[0][0] = scaleFactor;
+    this.value[1][1] = scaleFactor;
 
     return this;
   }
@@ -74,5 +74,16 @@ export class Matrix {
       [0, 1, 0],
       [0, 0, 1],
     ]);
+  }
+
+  static SetMatrixToContext(matrix: Matrix, context: CanvasRenderingContext2D): void {
+    context.setTransform(
+      matrix.value[0][0],
+      matrix.value[1][0],
+      matrix.value[0][1],
+      matrix.value[1][1],
+      matrix.value[0][2],
+      matrix.value[1][2],
+    );
   }
 }
