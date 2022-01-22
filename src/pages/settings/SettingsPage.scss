@@ -80,12 +80,20 @@
 }
 
 .settings-btn-logout {
-  margin-top: 10.8vh;
+  margin-top: 8vh;
 }
 
-@media screen and (max-width: $screen-max-width-medium) {
-  .settings-btn-logout {
-    margin-top: 5.1875em;
+@media screen and (max-height: 700px) {
+ .settings-header {
+    padding: 20px 4.875em 0;
+  }
+
+  .settings-content {
+    padding-top: 0;
+  }
+
+  .settings-title-surname {
+    margin-top: 0.2em;
   }
 }
 
@@ -108,7 +116,7 @@
   }
 
   .settings-wallet {
-    max-width: 248px;
+    padding: 0 28px;
     height: 72px;
   }
 
