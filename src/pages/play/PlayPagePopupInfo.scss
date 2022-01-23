@@ -3,7 +3,7 @@
 @import './mixins.scss';
 
 .play-page-popup-info-content {
-  @include play-page-popup-content(clamp(25px, 9vw, 85px) 1.5vw 0);
+  @include play-page-popup-content(clamp(25px, 9vh, 85px) 1.5vw 0);
 }
 
 .play-page-popup-info-hexagon-id {
@@ -12,4 +12,14 @@
 
 .play-page-popup-info-attack-button {
   justify-self: center;
+}
+
+@media screen and (max-width: $screen-max-width-medium) {
+  .play-page-popup-info-content {
+    padding: 4vh 0 0;
+  }
+
+  .play-page-popup-info-attack-button {
+    justify-self: unset;
+  }
 }

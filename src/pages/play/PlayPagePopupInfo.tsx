@@ -1,5 +1,5 @@
 import { Button } from '../../components/button/Button';
-import { PlayPagePopupInfoProps } from './interfaces'
+import { PlayPagePopupInfoProps } from './interfaces';
 
 import './PlayPagePopupInfo.scss';
 

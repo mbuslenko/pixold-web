@@ -37,7 +37,13 @@ export const PlayPage: React.FC = () => {
         },
         onResponse: (response: GetResponseHexagonInfo) => {
           console.log(response);
-          setInfoPopup(<PlayPagePopup hexagonId={hexagonId} hexagonInfo={response.data} closePopupCallback={() => setInfoPopup(null)} />);
+          setInfoPopup(
+            <PlayPagePopup
+              hexagonId={hexagonId}
+              hexagonInfo={response.data}
+              closePopupCallback={() => setInfoPopup(null)}
+            />,
+          );
         },
       });
     });
@@ -67,7 +73,8 @@ export const PlayPage: React.FC = () => {
     <section className="play-page" ref={playPageRef}>
       <canvas className="play-page-canvas-hexagon" ref={canvasHexagonRef} />
       <canvas className="play-page-canvas-line" ref={canvasLineRef} />
-      {/* {isVisiblePopup &&
+      {
+        /* {isVisiblePopup &&
         <PlayPagePopup
           closePopupCallback={() => {
             setIsVisiblePopup(false);

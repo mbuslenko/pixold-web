@@ -1,4 +1,4 @@
-import { IGetResponseHexagonInfo } from '../../shared/ts/interfaces'
+import { IGetResponseHexagonInfo } from '../../shared/ts/interfaces';
 
 export interface IPlayPagePopupProps {
   hexagonId: number;

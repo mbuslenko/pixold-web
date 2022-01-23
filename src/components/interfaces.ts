@@ -52,6 +52,7 @@ export interface ICheckboxProps {
   text: string;
   priority: ElementPriority;
   value: string;
+  className?: string;
   checked?: boolean;
   onChange: (isChecked: boolean) => void;
 }

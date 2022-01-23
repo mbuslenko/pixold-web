@@ -1,7 +1,9 @@
+@import '../../shared/scss/variables.scss';
+
 @import './mixins.scss';
 
 .play-page-popup-level-content {
-  @include play-page-popup-content(clamp(25px, 9vw, 85px) 0 0 0.5vw);
+  @include play-page-popup-content(clamp(25px, 9vh, 85px) 0 0 0.5vw);
 }
 
 .play-page-popup-level-list {
@@ -9,5 +11,11 @@
 
   & .play-page-popup-content-text {
     letter-spacing: -0.04em;
+  }
+}
+
+@media screen and (max-width: $screen-max-width-medium) {
+  .play-page-popup-level-content {
+    padding-top: 4vh;
   }
 }

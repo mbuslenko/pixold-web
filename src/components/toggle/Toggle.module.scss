@@ -10,6 +10,7 @@
   box-sizing: border-box;
   width: 38px;
   height: 24px;
+  flex-shrink: 0;
   border: {
     width: 1px;
     style: solid;

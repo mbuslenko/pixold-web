@@ -112,7 +112,7 @@ export const WalletConnectPage: React.FC = () => {
         text="Submit"
         appearance={{ priority: 'primary', theme: 'pink' }}
         onClick={connectWalletCallback}
-        className="no-shrink"
+        className="wallet-submit-button"
       />
       {isAlertVisible && <Alert type="red" heading={alertHeading} onClick={() => setIsAlertVisible(false)} />}
     </section>

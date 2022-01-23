@@ -14,10 +14,10 @@ export const PlayPagePopup: React.FC<IPlayPagePopupProps> = ({ hexagonId, hexago
   const onChangeTabCallback = (value: string) => {
     switch (value) {
       case 'level':
-        setPlayPagePopupTab(<PlayPagePopupLevel/>);
+        setPlayPagePopupTab(<PlayPagePopupLevel />);
         break;
       case 'settings':
-        setPlayPagePopupTab(<PlayPagePopupSettings/>);
+        setPlayPagePopupTab(<PlayPagePopupSettings />);
         break;
       default:
         setPlayPagePopupTab(<PlayPagePopupInfo hexagonId={hexagonId} />);

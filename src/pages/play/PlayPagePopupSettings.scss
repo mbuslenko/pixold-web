@@ -10,7 +10,7 @@
 .play-page-popup-settings-type-selection {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
   gap: 0 30px;
 }
 
@@ -18,4 +18,10 @@
   @extend .play-page-popup-content-text;
 
   color: $purple;
+}
+
+@media screen {
+  .play-page-popup-settings-content {
+    padding: 8.5vh 0 0;
+  }
 }
