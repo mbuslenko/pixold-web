@@ -67,6 +67,7 @@ export class HexagonMap {
     };
     this._updateHexagonMap = this._updateHexagonMapCallback;
 
+    this._updateMapTransform();
     this._centerMap();
   }
 
@@ -78,11 +79,9 @@ export class HexagonMap {
   }
 
   private _centerMap(): void {
-    const scaleValue = 1 + this._scaleFactor;
-
     this.move(
       Vector.FromWindowEndPosition()
-        .subtractSize(this._mapSystem.mapSize.copy().multiplyByValue(scaleValue))
+        .subtractSize(this._mapSystem.mapSize.copy().multiplyByValue(this._mapTransform.getScale()))
         .divideByValue(2),
     );
   }
@@ -93,11 +92,13 @@ export class HexagonMap {
     this._mapSystem.resize();
     this._renderSystem.resize();
 
+    this._prevMousePosition = new Vector(0, 0);
     this._scaleFactor = this._getNewInitialScaleFactor(this._mapSystem.mapSize);
     this._mapTranslation = Matrix.CreateIdentity();
     this._mapScale = Matrix.CreateIdentity();
     this._mapTransform = Matrix.CreateIdentity();
 
+    this._updateMapTransform();
     this._centerMap();
   }
 
@@ -113,7 +114,7 @@ export class HexagonMap {
     const pivot = this._prevMousePosition
       .copy()
       .subtract(this._mapTransform.getTranslation())
-      .divideByValue(this._mapTransform.getScaleFactor())
+      .divideByValue(this._mapTransform.getScale())
       .add(this._mapTranslation.getTranslation());
 
     const translation = Matrix.CreateTranslate(pivot);
@@ -164,8 +165,8 @@ export class HexagonMap {
   zoom(scaleFactor: number, position: Vector): void {
     this._scaleFactor = clamp(
       -Math.sign(scaleFactor) / 10,
-      0.5 / this._mapScale.getScaleFactor() - 1,
-      10 / this._mapScale.getScaleFactor() - 1,
+      0.25 / this._mapScale.getScale() - 1,
+      10 / this._mapScale.getScale() - 1,
     );
     this._prevMousePosition = position;
 
@@ -178,12 +179,22 @@ export class HexagonMap {
 
   move(offset: Vector): void {
     const { width: windowWidth, height: windowHeight } = Size.FromWindow();
+    const { width: mapWidth, height: mapHeight } = this._mapSystem.mapSize
+      .copy()
+      .multiplyByValue(this._mapTransform.getScale());
     const { x, y } = this._mapTransform.getTranslation();
 
-    offset.x = clamp(offset.x, -windowWidth - x, windowWidth - x);
-    offset.y = clamp(offset.y, -windowHeight - y, windowHeight - y);
+    offset.divideByValue(this._mapTransform.getScale());
 
-    this._mapTranslation.multiply(Matrix.CreateTranslate(offset.divideByValue(this._mapTransform.getScaleFactor())));
+    if (window.innerWidth >= ScreenMaxWidth.MEDIUM) {
+      offset.x = clamp(offset.x, -x - mapWidth, windowWidth - x);
+      offset.y = clamp(offset.y, -y - mapHeight, windowHeight - y);
+    } else {
+      offset.x = clamp(offset.x, -mapWidth - x, windowWidth - x);
+      offset.y = clamp(offset.y, -mapHeight - y, windowHeight - y);
+    }
+
+    this._mapTranslation.multiply(Matrix.CreateTranslate(offset));
 
     this._updateHexagonMap = this._updateHexagonMapCallback;
   }
@@ -210,7 +221,7 @@ export class HexagonMap {
   }
 
   click(position: Vector): void {
-    position.subtract(this._mapTransform.getTranslation()).divideByValue(this._mapTransform.getScaleFactor());
+    position.subtract(this._mapTransform.getTranslation()).divideByValue(this._mapTransform.getScale());
 
     this._updateHexagonMap = this._updateHexagonMapCallback;
 
