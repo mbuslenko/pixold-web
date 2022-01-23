@@ -1,5 +1,7 @@
+@import '../../shared/scss/variables.scss';
+
 .play-page-popup-tab {
-  padding: clamp(20px, 12vh, 110px) 1vw;
+  padding: clamp(20px, 12vh, 110px) 1vw 0;
 }
 
 .play-page-popup-heading {
@@ -16,4 +18,10 @@
 .play-page-popup-content-text {
   font-weight: 600;
   font-size: 25px;
+}
+
+@media screen and (max-width: $screen-max-width-medium) {
+  .play-page-popup-heading {
+    font-size: 25px;
+  }
 }

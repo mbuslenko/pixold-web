@@ -46,3 +46,9 @@
     weight: 600;
   }
 }
+
+@media screen and (max-width: $screen-max-width-small) {
+  .description {
+    font-size: 14px;
+  }
+}

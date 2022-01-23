@@ -78,6 +78,15 @@ export interface IGetResponseOwnedHexagonAll {
   numericIds: number[];
 }
 
+export interface IGetResponseHexagonInfo {
+  type: string;
+  level: string;
+  coinsInStorage: number;
+  owner: string;
+  canAttack: boolean;
+  coinsToUpgrade: number;
+}
+
 export interface IReactFacebookFailureResponse {
   status?: string | undefined;
 }

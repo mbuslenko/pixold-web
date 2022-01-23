@@ -18,6 +18,7 @@ import {
   IReactFacebookFailureResponse,
   IReactFacebookLoginInfo,
   IGetResponseOwnedHexagonAll,
+  IGetResponseHexagonInfo,
 } from './interfaces';
 
 export type GetResponseFaq = AxiosResponse<IGetResponseFaqTopic[]>;
@@ -28,6 +29,7 @@ export type GetResponseLoginGoogle = GoogleLoginResponse | GoogleLoginResponseOf
 export type GetResponseHexagonFree = AxiosResponse<IGetResponseHexagonFree>;
 export type GetResponseLoginFacebook = IReactFacebookLoginInfo | IReactFacebookFailureResponse;
 export type GetResponseAllHexagonOwned = AxiosResponse<IGetResponseOwnedHexagonAll[]>;
+export type GetResponseHexagonInfo = AxiosResponse<IGetResponseHexagonInfo>;
 
 export type PostResponseWalletConnect = AxiosResponse<IPostResponseWalletConnect>;
 export type PostResponseAuth = AxiosResponse<IPostResponseAuth>;

@@ -8,19 +8,19 @@ import { PlayPagePopupInfo } from './PlayPagePopupInfo';
 import { PlayPagePopupLevel } from './PlayPagePopupLevel';
 import { PlayPagePopupSettings } from './PlayPagePopupSettings';
 
-export const PlayPagePopup: React.FC<IPlayPagePopupProps> = ({ closePopupCallback }) => {
-  const [playPagePopupTab, setPlayPagePopupTab] = useState<React.FC>(PlayPagePopupSettings);
+export const PlayPagePopup: React.FC<IPlayPagePopupProps> = ({ hexagonId, hexagonInfo, closePopupCallback }) => {
+  const [playPagePopupTab, setPlayPagePopupTab] = useState<JSX.Element>();
 
   const onChangeTabCallback = (value: string) => {
     switch (value) {
       case 'level':
-        setPlayPagePopupTab(PlayPagePopupLevel);
+        setPlayPagePopupTab(<PlayPagePopupLevel/>);
         break;
       case 'settings':
-        setPlayPagePopupTab(PlayPagePopupSettings);
+        setPlayPagePopupTab(<PlayPagePopupSettings/>);
         break;
       default:
-        setPlayPagePopupTab(PlayPagePopupInfo);
+        setPlayPagePopupTab(<PlayPagePopupInfo hexagonId={hexagonId} />);
         break;
     }
   };

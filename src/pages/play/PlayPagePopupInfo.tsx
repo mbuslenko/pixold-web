@@ -1,12 +1,13 @@
 import { Button } from '../../components/button/Button';
+import { PlayPagePopupInfoProps } from './interfaces'
 
 import './PlayPagePopupInfo.scss';
 
-export const PlayPagePopupInfo: React.FC = () => {
+export const PlayPagePopupInfo: React.FC<PlayPagePopupInfoProps> = ({ hexagonId }) => {
   return (
     <section className="play-page-popup-tab">
-      <h2 className="play-page-popup-info-hexagon-name">
-        Hexagon <span className="play-page-popup-info-hexagon-id">{`#${'2678'}`}</span>
+      <h2 className="play-page-popup-heading">
+        Hexagon <span className="play-page-popup-info-hexagon-id">{`#${hexagonId}`}</span>
       </h2>
       <div className="play-page-popup-info-content">
         <div>

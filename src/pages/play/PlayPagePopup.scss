@@ -7,7 +7,10 @@
   width: clamp(300px, 40vw, 590px);
   height: 100%;
   background-color: $black;
-  border-left: 2px solid $purple;
+  border: {
+    left: 2px solid $purple;
+    right: 2px solid $purple;
+  }
   padding: clamp(20px, 8.8vh, 80px) clamp(5px, 3.8vw, 55px) clamp(20px, 8.8vh, 80px) clamp(25px, 5.8vw, 85px);
 }
 
@@ -27,4 +30,25 @@
   font-weight: 600;
   font-size: 18px;
   cursor: pointer;
+}
+
+@media screen and (max-width: $screen-max-width-big) {
+  .play-page-popup {
+    padding: {
+      left: 15px;
+      right: 15px;
+    };
+  }
+}
+
+@media screen and (max-width: $screen-max-width-medium) {
+  .play-page-popup {
+    height: fit-content;
+    width: 100%;
+    padding: 4.8vh 6.6vw;
+    border: {
+      bottom: 2px solid $purple;
+    };
+    border-radius: 0 0 33px 33px;
+  }
 }

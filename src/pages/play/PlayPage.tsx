@@ -1,8 +1,8 @@
-import { useLayoutEffect, useRef, useState } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { getAxiosInstance } from '../../shared/ts/axiosInstance';
-import { GetResponseAllHexagonOwned } from '../../shared/ts/types';
+import { GetResponseHexagonInfo, GetResponseAllHexagonOwned } from '../../shared/ts/types';
 
 import './PlayPage.scss';
 import { PlayMenu } from './PlayMenu';
@@ -12,7 +12,8 @@ import { EventManager } from './hexagonMap/EventManager';
 
 export const PlayPage: React.FC = () => {
   const navigate = useNavigate();
-  const [isVisiblePopup, setIsVisiblePopup] = useState(false);
+  // const [isVisiblePopup, setIsVisiblePopup] = useState(false);
+  const [infoPopup, setInfoPopup] = useState<JSX.Element | null>(null);
   const playPageRef = useRef<HTMLElement>(null);
   const canvasHexagonRef = useRef<HTMLCanvasElement>(null);
   const canvasLineRef = useRef<HTMLCanvasElement>(null);
@@ -34,9 +35,9 @@ export const PlayPage: React.FC = () => {
           method: 'get',
           url: `/hexagon/${hexagonId}`,
         },
-        onResponse: (response: GetResponseAllHexagonOwned) => {
+        onResponse: (response: GetResponseHexagonInfo) => {
           console.log(response);
-          setIsVisiblePopup(true);
+          setInfoPopup(<PlayPagePopup hexagonId={hexagonId} hexagonInfo={response.data} closePopupCallback={() => setInfoPopup(null)} />);
         },
       });
     });
@@ -63,11 +64,15 @@ export const PlayPage: React.FC = () => {
     <section className="play-page" ref={playPageRef}>
       <canvas className="play-page-canvas-hexagon" ref={canvasHexagonRef} />
       <canvas className="play-page-canvas-line" ref={canvasLineRef} />
-      <PlayPagePopup
-        closePopupCallback={() => {
-          setIsVisiblePopup(false);
-        }}
-      />
+      {/* {isVisiblePopup &&
+        <PlayPagePopup
+          closePopupCallback={() => {
+            setIsVisiblePopup(false);
+          }}
+        />
+      } */
+        infoPopup
+      }
       <PlayMenu />
     </section>
   );
