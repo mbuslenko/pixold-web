@@ -43,6 +43,8 @@ export const PlayPage: React.FC = () => {
     });
     const eventManager = new EventManager(playPage, map);
 
+    document.body.style.overflow = 'hidden';
+
     axiosInstance({
       requestConfig: {
         method: 'get',
@@ -57,6 +59,7 @@ export const PlayPage: React.FC = () => {
     return () => {
       map.stop();
       eventManager.unsetEvents();
+      document.body.style.overflow = 'unset';
     };
   });
 
