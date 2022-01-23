@@ -7,7 +7,7 @@ export type InputType = 'text' | 'number' | 'password' | 'email';
 
 export type ButtonTheme = PrimaryButtonTheme | SecondaryButtonTheme;
 export type PrimaryButtonTheme = 'pink' | 'black-white' | 'google' | 'facebook' | 'opensea-white' | 'opensea-black';
-export type SecondaryButtonTheme = 'black-white' | 'yellow' | 'red' | 'blue';
+export type SecondaryButtonTheme = 'black-white' | 'yellow' | 'red' | 'blue' | 'grey';
 
 export type ModalTheme = 'blue-dark';
 export type ModalPositionType = 'absolute' | 'fixed' | 'relative';
