@@ -1,3 +1,3 @@
 export interface IPlayPagePopupProps {
-  closePopupCallback: () => void
+  closePopupCallback: () => void;
 }

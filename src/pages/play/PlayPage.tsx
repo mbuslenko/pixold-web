@@ -34,7 +34,10 @@ export const PlayPage: React.FC = () => {
           method: 'get',
           url: `/hexagon/${hexagonId}`,
         },
-        onResponse: (response: GetResponseAllHexagonOwned) => { console.log(response); setIsVisiblePopup(true); },
+        onResponse: (response: GetResponseAllHexagonOwned) => {
+          console.log(response);
+          setIsVisiblePopup(true);
+        },
       });
     });
     const eventManager = new EventManager(playPage, map);
@@ -60,7 +63,11 @@ export const PlayPage: React.FC = () => {
     <section className="play-page" ref={playPageRef}>
       <canvas className="play-page-canvas-hexagon" ref={canvasHexagonRef} />
       <canvas className="play-page-canvas-line" ref={canvasLineRef} />
-      <PlayPagePopup closePopupCallback={() => {setIsVisiblePopup(false)}} />
+      <PlayPagePopup
+        closePopupCallback={() => {
+          setIsVisiblePopup(false);
+        }}
+      />
       <PlayMenu />
     </section>
   );

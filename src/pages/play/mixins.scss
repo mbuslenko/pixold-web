@@ -1,0 +1,7 @@
+@mixin play-page-popup-content($padding, $template-columns: repeat(2, auto)) {
+  padding: $padding;
+  display: grid;
+  grid-template-columns: $template-columns;
+  justify-items: start;
+  gap: clamp(5px, 4.4vh, 40px) 0;
+}

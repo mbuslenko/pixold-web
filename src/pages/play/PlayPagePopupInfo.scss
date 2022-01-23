@@ -1,0 +1,20 @@
+@import '../../shared/scss/variables.scss';
+@import './extends.scss';
+@import './mixins.scss';
+
+.play-page-popup-info-content {
+  @include play-page-popup-content(clamp(25px, 9vw, 85px) 1.5vw 0);
+}
+
+.play-page-popup-info-hexagon-name {
+  font-weight: 600;
+  font-size: 50px;
+}
+
+.play-page-popup-info-hexagon-id {
+  color: $purple;
+}
+
+.play-page-popup-info-attack-button {
+  justify-self: center;
+}
