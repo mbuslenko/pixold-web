@@ -41,7 +41,7 @@ export class Matrix {
     return this;
   }
 
-  getScaleFactor(): number {
+  getScale(): number {
     return this.value[0][0];
   }
 

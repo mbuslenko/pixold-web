@@ -63,8 +63,8 @@ export const PlayMenuIconSvg: React.FC<GameMenuIconSvgProps> = ({ iconName, clas
         fill="#604AF7"
         className="play-menu-icon-background"
       />
-      {iconPath.map((value) => (
-        <path d={value} className="play-menu-icon-path" />
+      {iconPath.map((value, index) => (
+        <path d={value} key={index} className="play-menu-icon-path" />
       ))}
     </svg>
   );
