@@ -11,13 +11,13 @@ body {
   overscroll-behavior: none;
   touch-action: none;
   -webkit-overflow-scrolling: none;
-  overflow: hidden;
 
   background-color: $black;
   color: $white;
 }
 
 a {
+  color: $purple;
   text-decoration: none;
 }
 
