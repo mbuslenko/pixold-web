@@ -1,33 +1,8 @@
 @import '../../shared/scss/variables.scss';
 
-$assets-path: '../../assets/svg/';
-
-@mixin nav-link-icon($icon-name) {
-  &::before {
-    content: url($assets-path + $icon-name + '.svg');
-  }
-
-  &:hover::before {
-    content: url($assets-path + $icon-name + '-hover.svg');
-  }
-
-  @media screen and (max-width: $screen-max-width-smallest) {
-    &::before {
-      content: url($assets-path + $icon-name + '-hover.svg');
-      display: inline-block;
-    }
-  }
-}
-
-.play-menu-icon {
-  display: block;
-  width: 36px;
-  height: 30px;
-  margin: 0 auto 6px;
-}
-
 .play-menu-wrapper {
   width: 654px;
+  border-radius: 15px;
   position: absolute;
   left: calc(50% - 327px);
   bottom: 34px;
@@ -68,19 +43,48 @@ $assets-path: '../../assets/svg/';
   align-items: center;
 }
 
+.play-menu-button, .play-menu-link {
+  color: $purple;
+
+  &:hover {
+    color: $white;
+
+    & .play-menu-icon-path {
+      fill: $white;
+    }
+
+    & .play-menu-icon-background {
+      opacity: 1;
+    }
+  }
+}
+
 .play-menu-button {
   font: inherit;
-  color: inherit;
   border: none;
   background-color: transparent;
   cursor: pointer;
 }
 
 .play-menu-link {
-  color: inherit;
   text: {
     align: center;
     decoration: none;
+  }
+}
+
+.play-menu-icon {
+  display: block;
+  width: 36px;
+  height: 30px;
+  margin: 0 auto 6px;
+
+  & .play-menu-icon-path {
+    fill: $purple;
+  }
+
+  & .play-menu-icon-background {
+    opacity: 0.5;
   }
 }
 
@@ -111,15 +115,31 @@ $assets-path: '../../assets/svg/';
   height: 20px;
 }
 
-@media screen and (max-width: $screen-max-width-smallest) {
+@supports (backdrop-filter: blur()) {
+  .play-menu, .show-menu-button {
+    backdrop-filter: blur(3px)
+  }
+}
+
+@supports not (backdrop-filter: blur()) {
+  .play-menu, .show-menu-button {
+    background-color: $blue-dark;
+  }
+
+  .show-menu-button.is-active {
+    background: none;
+  }
+}
+
+@media screen and (max-width: $screen-max-width-medium) {
   .play-menu-wrapper {
     width: 90%;
     left: 5%;
     bottom: 5vh;
-    height: clamp(480px, 90vh, 1000px);
   }
 
   .play-menu {
+    height: clamp(480px, 90vh, 1000px);
     flex-direction: column;
     padding: 34px 24px 12px;
     justify-content: space-between;

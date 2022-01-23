@@ -73,6 +73,11 @@ export interface IGetResponseUserData {
   wallet: string;
 }
 
+export interface IGetResponseOwnedHexagonAll {
+  username: string;
+  numericIds: number[];
+}
+
 export interface IReactFacebookFailureResponse {
   status?: string | undefined;
 }

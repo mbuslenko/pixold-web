@@ -14,7 +14,7 @@ export const Modal: React.FC<IModalProps> = ({ heading, text, children, position
     <div style={modalStyle} className={`${styles.container} ${modalTheme} ${modalClassName}`}>
       <h2 className={styles.heading}>{heading}</h2>
       <p className={styles.text}>{text}</p>
-      {children && <div className={styles['button-container']}>{React.Children.map(children, (value) => value)}</div>}
+      {children && <div className={styles['button-container']}>{children}</div>}
     </div>
   );
 };
