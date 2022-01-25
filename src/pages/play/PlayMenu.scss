@@ -37,13 +37,18 @@
   justify-content: space-between;
 }
 
+.play-menu-logo {
+  pointer-events: none;
+}
+
 .play-menu-link-container {
   display: flex;
   gap: 0 2.8em;
   align-items: center;
 }
 
-.play-menu-button, .play-menu-link {
+.play-menu-button,
+.play-menu-link {
   color: $purple;
 
   &:hover {
@@ -116,13 +121,15 @@
 }
 
 @supports (backdrop-filter: blur()) {
-  .play-menu, .show-menu-button {
-    backdrop-filter: blur(3px)
+  .play-menu,
+  .show-menu-button {
+    backdrop-filter: blur(3px);
   }
 }
 
 @supports not (backdrop-filter: blur()) {
-  .play-menu, .show-menu-button {
+  .play-menu,
+  .show-menu-button {
     background-color: $blue-dark;
   }
 

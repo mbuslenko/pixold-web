@@ -38,7 +38,6 @@ export const PlayMenu: React.FC = () => {
         <h2 className="play-menu-heading">Navigate</h2>
         <nav className="play-menu-navigation">
           <Link to="/home">
-            {/* <img className="play-menu-logo" src={logo} alt="logo" /> */}
             <object className="play-menu-logo" data={logo} type="image/svg+xml" title="Logo" />
           </Link>
           <div className="play-menu-link-container">
