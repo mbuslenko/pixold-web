@@ -45,6 +45,8 @@ export interface IPostResponseAuth {
   userId: string;
   accessToken: string;
   updateUsername: boolean;
+  username: string;
+  wallet: IGetResponseWallet;
 }
 
 export interface IPostDataUsername {
@@ -53,6 +55,15 @@ export interface IPostDataUsername {
 
 export interface IPostDataRedeemCode {
   code: string;
+}
+
+export interface IPostDataHexagonSendCoins {
+  numericId: number;
+}
+
+export interface IPostDataHexagonChangeType {
+  numericId: number;
+  type: string;
 }
 
 export interface IGetResponseUsernameCheck {
@@ -78,9 +89,16 @@ export interface IGetResponseOwnedHexagonAll {
   numericIds: number[];
 }
 
+export enum HexagonLevel {
+  starter,
+  middle,
+  pro,
+  supreme,
+}
+
 export interface IGetResponseHexagonInfo {
-  type: string;
-  level: string;
+  type: 'attack' | 'defender' | 'miner';
+  level: keyof typeof HexagonLevel;
   coinsInStorage: number;
   owner: string;
   canAttack: boolean;

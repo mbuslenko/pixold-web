@@ -27,6 +27,7 @@ export class HexagonMap {
   private _requestAnimationFrameId: number;
 
   private _clickOnHexagonCallback: (hexagonId: number) => void;
+  private _clickOutsideHexagonCallback: () => void;
   private _updateHexagonMap: () => void;
   private _sleepHexagonSceneCallback: () => void;
 
@@ -34,6 +35,7 @@ export class HexagonMap {
     canvasHexagon: HTMLCanvasElement,
     canvasLine: HTMLCanvasElement,
     clickOnHexagonCallback: (hexagonId: number) => void,
+    clickOutsideHexagonCallback: () => void,
   ) {
     this._canvasHexagon = canvasHexagon;
     this._canvasLine = canvasLine;
@@ -62,6 +64,7 @@ export class HexagonMap {
     this._requestAnimationFrameId = 0;
 
     this._clickOnHexagonCallback = clickOnHexagonCallback;
+    this._clickOutsideHexagonCallback = clickOutsideHexagonCallback;
     this._sleepHexagonSceneCallback = () => {
       // I made empty function to eliminate if() in each frame inside of animate()
     };
@@ -229,12 +232,13 @@ export class HexagonMap {
       if (this._isPositionInHexagon(position, hexagon)) {
         this._mapSystem.activeHexagon = hexagon;
 
-        this._clickOnHexagonCallback(hexagon.id + 1);
+        this._clickOnHexagonCallback(hexagon.id);
 
         return;
       }
     }
 
     this._mapSystem.removeActiveHexagon();
+    this._clickOutsideHexagonCallback();
   }
 }

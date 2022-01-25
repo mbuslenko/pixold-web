@@ -7,6 +7,14 @@ export class Grid {
     this.value = [];
   }
 
+  get rowCount(): number {
+    return this.value.length;
+  }
+
+  get columnCount(): number {
+    return this.value[0].length;
+  }
+
   *[Symbol.iterator](): IterableIterator<Hexagon> {
     for (let row = 0; row < this.value.length; row++) {
       for (let column = 0; column < this.value[row].length; column++) {

@@ -1,10 +1,14 @@
+import { useState } from 'react';
 import { Button } from '../../components/button/Button';
 import { Dropdown } from '../../components/dropdown/Dropdown';
 import { Toggle } from '../../components/toggle/Toggle';
+import { IPlayPagePopupSettingsProps } from './interfaces';
 
 import './PlayPagePopupSettings.scss';
 
-export const PlayPagePopupSettings: React.FC = () => {
+export const PlayPagePopupSettings: React.FC<IPlayPagePopupSettingsProps> = ({ changeHexagonTypeCallback, setAlertPropsCallback }) => {
+  const [newHexagonType, setNewHexagon] = useState<string>();
+
   return (
     <section className="play-page-popup-settings-content">
       <div className="play-page-popup-settings-type-selection">
@@ -13,33 +17,27 @@ export const PlayPagePopupSettings: React.FC = () => {
           <Dropdown
             placeholder="Choose new type"
             options={[
-              { text: 'Attacker', value: 'attacker' },
+              { text: 'Attacker', value: 'attack' },
               { text: 'Defender', value: 'defender' },
               { text: 'Miner', value: 'miner' },
             ]}
-            onChange={() => {
-              /*  */
-            }}
+            onChange={(value: string) => setNewHexagon(value)}
           />
         </div>
-        <Button text="Save" appearance={{ priority: 'secondary' }} />
+        <Button text="Save" appearance={{ priority: 'secondary' }} onClick={() => changeHexagonTypeCallback(newHexagonType)} />
       </div>
 
       <Toggle
         text={'Notify me when hexagon is attacked'}
         priority={'secondary'}
         value={'true'}
-        onChange={(isChecked: boolean) => {
-          console.log(isChecked);
-        }}
+        onChange={(isChecked: boolean) => console.log(['notify me when hexagon is attacked', isChecked])}
       />
       <Toggle
         text={'Notify me when storage is full'}
         priority={'secondary'}
         value={'true'}
-        onChange={(isChecked: boolean) => {
-          console.log(isChecked);
-        }}
+        onChange={(isChecked: boolean) => console.log(['notify me when storage is full', isChecked])}
       />
 
       <div>

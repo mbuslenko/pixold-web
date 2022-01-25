@@ -20,7 +20,9 @@ export class SceneSystem {
   private _leftAttackingHexagonAll: HexagonAttack[];
   private _rightAttackingHexagonAll: HexagonAttack[];
 
+  private _ownedHexagonAll: Hexagon[];
   private _invisibleActiveHexagon: Hexagon;
+  // TODO: when need to show owned hexagons i will add them to activeHexagon and change it to Hexagon[];
   activeHexagon: Hexagon;
 
   get map(): Hexagon[] {
@@ -29,6 +31,10 @@ export class SceneSystem {
 
   get visibleMap(): Hexagon[] {
     return this._visibleMap;
+  }
+
+  get ownedHexagonAll(): Hexagon[] {
+    return this._ownedHexagonAll;
   }
 
   get mapSize(): Size {
@@ -58,6 +64,7 @@ export class SceneSystem {
     this._setSceneData();
     this._generateRandomAttacks();
 
+    this._ownedHexagonAll = [];
     // I made _invisibleActiveHexagon to eliminate if() in each frame inside of HexagonMap animate()
     this._invisibleActiveHexagon = new Hexagon(
       new Vector(-(this._mapSize.width / 0.25) - Hexagon.radius * 2, 0),
@@ -167,11 +174,16 @@ export class SceneSystem {
   }
 
   setOwnedHexagonAll(ownedHexagonAll: IGetResponseOwnedHexagonAll[]): void {
-    // TODO: for showing owners territory I need to get username from auth
-    // for (const { username, numericIds: hexagonIdAll } of ownedHexagonAll) {
-    // if (username === localStorage.username) { this._ownedHexagonAll = numericIds }
+    this._ownedHexagonAll = [];
 
-    for (const { numericIds: hexagonIdAll } of ownedHexagonAll) {
+    for (const { username, numericIds: hexagonIdAll } of ownedHexagonAll) {
+      // TODO: refactoring;
+      if (username === localStorage.username) {
+        for (const hexagonId of hexagonIdAll) {
+          this._ownedHexagonAll.push(this._map[hexagonId]);
+        }
+      }
+
       const hexagonColor = this._generateRandomColor();
 
       for (const hexagonId of hexagonIdAll) {
@@ -188,11 +200,8 @@ export class SceneSystem {
     const startRow = Math.max(Math.floor(-y / gridCellSize.height - 1), 0);
     const startColumn = Math.max(Math.floor(-x / gridCellSize.width - 1), 0);
 
-    const endRow = Math.min(Math.floor((heightWindow - y) / gridCellSize.height + 1), this._mapGrid.value.length - 1);
-    const endColumn = Math.min(
-      Math.floor((widthWindow - x) / gridCellSize.width + 1),
-      this._mapGrid.value[0].length - 1,
-    );
+    const endRow = Math.min(Math.floor((heightWindow - y) / gridCellSize.height + 1), this._mapGrid.rowCount - 1);
+    const endColumn = Math.min(Math.floor((widthWindow - x) / gridCellSize.width + 1), this._mapGrid.columnCount - 1);
 
     this._visibleMap = [];
 

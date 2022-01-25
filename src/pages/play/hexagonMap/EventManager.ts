@@ -10,6 +10,7 @@ export class EventManager {
   private _lastTouch: Vector;
   private _touchClick: boolean;
   private _touchClickTimer: number;
+  private _isPressedSpace: boolean;
 
   constructor(context: HTMLElement, map: HexagonMap) {
     this._context = context;
@@ -19,11 +20,11 @@ export class EventManager {
     this._lastTouch = new Vector(0, 0);
     this._touchClick = false;
     this._touchClickTimer = 0;
+    this._isPressedSpace = false;
   }
 
   private _keyDownCallback(e: KeyboardEvent): void {
-    console.log('key down');
-    switch (e.key) {
+    switch (e.code) {
       case 'ArrowRight':
         this._map.move(new Vector(-180, 0));
         break;
@@ -36,6 +37,20 @@ export class EventManager {
       case 'ArrowDown':
         this._map.move(new Vector(0, -100));
         break;
+      case 'Space':
+        this._context.style.cursor = 'grab';
+        this._isPressedSpace = true;
+        break;
+    }
+  }
+
+  private _keyUpCallback(e: KeyboardEvent): void {
+    if (e.code === 'Space') {
+      this._isPressedSpace = false;
+
+      if (!this._isDragging) {
+        this._context.style.cursor = 'default';
+      }
     }
   }
 
@@ -60,7 +75,7 @@ export class EventManager {
   private _mouseDownCallback = (e: MouseEvent): void => {
     e.preventDefault();
 
-    if (e.shiftKey) {
+    if (this._isPressedSpace) {
       this._isDragging = true;
       this._map.dragStart(Vector.FromEventPosition(e));
     }
@@ -79,6 +94,7 @@ export class EventManager {
 
     if (this._isDragging) {
       this._isDragging = false;
+      this._context.style.cursor = 'default';
 
       return;
     }
@@ -94,8 +110,10 @@ export class EventManager {
     if (touches.length === 1) {
       this._map.dragStart(Vector.FromEventPosition(touches[0]));
 
+      // FIXME: touch in emulation doesn't work most of the time
       this._touchClick = true;
-      this._touchClickTimer = window.setTimeout(() => (this._touchClick = false), 500);
+      // I use window.setTimeout instead of setTimeout because I need setTimeout to return type number instead of NodeJS.Timeout
+      this._touchClickTimer = window.setTimeout(() => (this._touchClick = false), 250);
 
       return;
     }
@@ -143,6 +161,7 @@ export class EventManager {
     window.onresize = this._map.resize.bind(this._map);
 
     window.onkeydown = this._keyDownCallback.bind(this);
+    window.onkeyup = this._keyUpCallback.bind(this);
 
     this._context.onwheel = this._mouseWheelCallback.bind(this);
 
@@ -150,15 +169,18 @@ export class EventManager {
     this._context.onmousemove = this._mouseMoveCallback.bind(this);
     this._context.onmouseup = this._mouseUpCallback.bind(this);
 
-    window.ontouchstart = this._touchStartCallback.bind(this);
-    window.ontouchmove = this._touchMoveCallback.bind(this);
-    window.ontouchend = this._touchEndCallback.bind(this);
+    this._context.ontouchstart = this._touchStartCallback.bind(this);
+    this._context.ontouchmove = this._touchMoveCallback.bind(this);
+    this._context.ontouchend = this._touchEndCallback.bind(this);
+
+    document.body.style.overflow = 'hidden';
   }
 
   unsetEvents(): void {
     window.onresize = null;
 
     window.onkeydown = null;
+    window.onkeyup = null;
 
     this._context.onwheel = null;
 
@@ -166,8 +188,11 @@ export class EventManager {
     this._context.onmousemove = null;
     this._context.onmouseup = null;
 
-    window.ontouchstart = null;
-    window.ontouchmove = null;
-    window.ontouchend = null;
+    this._context.ontouchstart = null;
+    this._context.ontouchmove = null;
+    this._context.ontouchend = null;
+
+    document.body.style.overflow = 'unset';
+    this._context.style.cursor = 'default';
   }
 }

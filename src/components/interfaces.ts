@@ -87,6 +87,8 @@ export interface ITabbedButtonGroupOption {
 
 export interface ITabbedButtonGroupProps {
   name: string;
+  value?: string;
+  disabled?: boolean;
   options: ITabbedButtonGroupOption[];
   onChange: (value: string) => void;
 }

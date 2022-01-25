@@ -14,6 +14,10 @@
   }
 }
 
+.play-page-popup-current-level {
+  color: $purple;
+}
+
 @media screen and (max-width: $screen-max-width-medium) {
   .play-page-popup-level-content {
     padding-top: 4vh;

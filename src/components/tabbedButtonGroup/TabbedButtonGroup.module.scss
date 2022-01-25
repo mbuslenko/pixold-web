@@ -16,6 +16,10 @@
   &:not(&:last-child) {
     border-right: 1px solid $purple;
   }
+
+  &.disabled {
+    cursor: not-allowed;
+  }
 }
 
 .input {
@@ -27,14 +31,15 @@
     color: $white;
 
     &::before {
-      content: '';
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
       background-color: $purple;
-      z-index: -1;
+    }
+  }
+
+  &:disabled + .description {
+    color: $purple;
+
+    &::before {
+      background-color: $grey-dark;
     }
   }
 }
@@ -44,6 +49,16 @@
   font: {
     size: 18px;
     weight: 600;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
   }
 }
 

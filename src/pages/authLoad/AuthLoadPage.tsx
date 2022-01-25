@@ -21,6 +21,7 @@ export const AuthLoadPage: React.FC = () => {
     const responseCallback = (response: PostResponseAuth) => {
       window.localStorage.setItem('userId', response.data.userId);
       window.localStorage.setItem('accessToken', response.data.accessToken);
+      window.localStorage.setItem('username', response.data.username);
 
       if (response.data.updateUsername === true) {
         return navigate('/username');

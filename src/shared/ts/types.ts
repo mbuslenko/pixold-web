@@ -19,6 +19,8 @@ import {
   IReactFacebookLoginInfo,
   IGetResponseOwnedHexagonAll,
   IGetResponseHexagonInfo,
+  IPostDataHexagonChangeType,
+  IPostDataHexagonSendCoins,
 } from './interfaces';
 
 export type GetResponseFaq = AxiosResponse<IGetResponseFaqTopic[]>;
@@ -34,6 +36,12 @@ export type GetResponseHexagonInfo = AxiosResponse<IGetResponseHexagonInfo>;
 export type PostResponseWalletConnect = AxiosResponse<IPostResponseWalletConnect>;
 export type PostResponseAuth = AxiosResponse<IPostResponseAuth>;
 
-export type RequestData = IPostDataAuth | IPostDataWalletConnect | IPostDataUsername | IPostDataRedeemCode;
+export type RequestData =
+  | IPostDataAuth
+  | IPostDataWalletConnect
+  | IPostDataUsername
+  | IPostDataRedeemCode
+  | IPostDataHexagonChangeType
+  | IPostDataHexagonSendCoins;
 
 export type AxiosInstanceFunction = (payload: IAxiosInstanceProps) => void;
