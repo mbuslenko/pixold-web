@@ -9,8 +9,9 @@ import { PlayMenuShowIconSvg } from '../../components/playMenuShowIconSvg/PlayMe
 
 import './PlayMenu.scss';
 import logo from '../../assets/svg/logo.svg';
+import { IPlayMenuCallback } from './interfaces';
 
-export const PlayMenu: React.FC = () => {
+export const PlayMenu: React.FC<IPlayMenuCallback> = ({ showMyTerritoryCallback }) => {
   const [menuIsVisible, setMenuIsVisible] = useState<boolean>(false);
 
   const showMenuCallback = () => {
@@ -41,7 +42,7 @@ export const PlayMenu: React.FC = () => {
             <img className="play-menu-logo" src={logo} alt="logo" />
           </Link>
           <div className="play-menu-link-container">
-            <button className="play-menu-button" onClick={() => console.log(';)')}>
+            <button className="play-menu-button" onClick={showMyTerritoryCallback}>
               <PlayMenuIconSvg iconName="territory" className="play-menu-icon" />
               My territory
             </button>

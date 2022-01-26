@@ -1,26 +1,12 @@
 import { Link } from 'react-router-dom';
-import { Button } from '../../components/button/Button';
+
 import { HexagonLevel } from '../../shared/ts/interfaces';
-import { IPlayPagePopupLevelProps } from './interfaces';
+
+import { Button } from '../../components/button/Button';
 
 import './PlayPagePopupLevel.scss';
-
-const hexagonLevelInfo = {
-  miner: {
-    description: 'Chance to mine',
-    levelAll: ['15%', '40%', '50%', '65%'],
-  },
-  attack: { description: 'Chance of a successful attack', levelAll: ['15%-30%', '15%-45%', '15%-60%', '15%-80%'] },
-  defender: { description: 'Change of repel an attack', levelAll: ['50%', '70%', '90%', '98%'] },
-};
-const levelNameAll: Record<keyof typeof HexagonLevel, string> = {
-  starter: 'Starter',
-  middle: 'Middle',
-  pro: 'Pro',
-  supreme: 'Supreme',
-};
-
-const getNextItem = (array: any[], index: number) => array[Math.min(array.length - 1, index + 1)];
+import { hexagonLevelInfo, levelNameAll, getNextItem } from './hexagonInfoData';
+import { IPlayPagePopupLevelProps } from './interfaces';
 
 export const PlayPagePopupLevel: React.FC<IPlayPagePopupLevelProps> = ({ hexagonInfo, setModalIsVisibleCallback }) => {
   const info = hexagonLevelInfo['attack'];

@@ -1,9 +1,13 @@
 import { useNavigate } from 'react-router-dom';
-import { Button } from '../../components/button/Button';
+
 import { getAxiosInstance } from '../../shared/ts/axiosInstance';
+
+import { Button } from '../../components/button/Button';
+
 import { IPlayPagePopupInfoProps } from './interfaces';
 
 import './PlayPagePopupInfo.scss';
+import { levelNameAll } from './hexagonInfoData';
 
 export const PlayPagePopupInfo: React.FC<IPlayPagePopupInfoProps> = ({
   hexagonId,
@@ -24,7 +28,9 @@ export const PlayPagePopupInfo: React.FC<IPlayPagePopupInfoProps> = ({
       <div className="play-page-popup-info-content">
         <div>
           <h3 className="play-page-popup-content-heading">Type</h3>
-          <p className="play-page-popup-content-text">{hexagonInfo?.type}</p>
+          <p className="play-page-popup-content-text">
+            {(hexagonInfo?.type.slice(0, 1).toUpperCase() ?? '') + hexagonInfo?.type.slice(1)}
+          </p>
         </div>
         <Button
           text={'Change'}
@@ -34,7 +40,7 @@ export const PlayPagePopupInfo: React.FC<IPlayPagePopupInfoProps> = ({
         />
         <div>
           <h3 className="play-page-popup-content-heading">Level</h3>
-          <p className="play-page-popup-content-text">{hexagonInfo?.level}</p>
+          <p className="play-page-popup-content-text">{levelNameAll[hexagonInfo?.level ?? 'starter']}</p>
         </div>
         <Button
           text={'Upgrade'}
@@ -63,7 +69,8 @@ export const PlayPagePopupInfo: React.FC<IPlayPagePopupInfoProps> = ({
                   type: 'green',
                   heading: 'The coins were successfully delivered to your wallet',
                 }),
-              onError: ({ message }) => setAlertPropsCallback({ type: 'red', heading: 'Error', text: message }),
+              onError: (error) =>
+                setAlertPropsCallback({ type: 'red', heading: 'Error', text: error.response.data.message }),
             })
           }
         />

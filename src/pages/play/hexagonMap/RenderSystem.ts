@@ -63,9 +63,11 @@ export class RenderSystem {
     }
   }
 
-  drawActiveHexagon(hexagon: Hexagon): void {
-    this._contextHexagon.fillStyle = hexagon.color;
-    this._contextHexagon.stroke(this._hexagonPathAll[hexagon.id]);
+  drawActiveHexagonAll(hexagonAll: Hexagon[]): void {
+    for (const hexagon of hexagonAll) {
+      this._contextHexagon.fillStyle = hexagon.color;
+      this._contextHexagon.stroke(this._hexagonPathAll[hexagon.id]);
+    }
   }
 
   private _drawHexagonAttack(hexagonAttack: HexagonAttack) {

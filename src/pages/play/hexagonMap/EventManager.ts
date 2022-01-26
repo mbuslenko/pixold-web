@@ -41,16 +41,23 @@ export class EventManager {
         this._context.style.cursor = 'grab';
         this._isPressedSpace = true;
         break;
+      case 'ControlLeft' || 'ControlRight':
+        this._context.style.cursor = 'zoom-in';
+        break;
     }
   }
 
   private _keyUpCallback(e: KeyboardEvent): void {
-    if (e.code === 'Space') {
-      this._isPressedSpace = false;
+    switch (e.code) {
+      case 'Space':
+        this._isPressedSpace = false;
 
-      if (!this._isDragging) {
+        if (!this._isDragging) {
+          this._context.style.cursor = 'default';
+        }
+        break;
+      case 'ControlLeft' || 'ControlRight':
         this._context.style.cursor = 'default';
-      }
     }
   }
 
@@ -110,7 +117,6 @@ export class EventManager {
     if (touches.length === 1) {
       this._map.dragStart(Vector.FromEventPosition(touches[0]));
 
-      // FIXME: touch in emulation doesn't work most of the time
       this._touchClick = true;
       // I use window.setTimeout instead of setTimeout because I need setTimeout to return type number instead of NodeJS.Timeout
       this._touchClickTimer = window.setTimeout(() => (this._touchClick = false), 250);

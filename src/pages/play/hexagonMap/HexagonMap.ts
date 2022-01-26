@@ -40,17 +40,17 @@ export class HexagonMap {
     this._canvasHexagon = canvasHexagon;
     this._canvasLine = canvasLine;
 
-    const ctxHexagon = this._canvasHexagon.getContext('2d');
-    const ctxLine = this._canvasLine.getContext('2d');
+    const contextHexagon = this._canvasHexagon.getContext('2d');
+    const contextLine = this._canvasLine.getContext('2d');
 
-    if (!ctxHexagon || !ctxLine) {
+    if (!contextHexagon || !contextLine) {
       throw new Error('no ctx');
     }
 
     this._setCanvasSizeAll();
 
-    this._contextHexagon = ctxHexagon;
-    this._contextLine = ctxLine;
+    this._contextHexagon = contextHexagon;
+    this._contextLine = contextLine;
 
     this._mapSystem = new MapSystem();
     this._renderSystem = new RenderSystem(this._contextHexagon, this._contextLine, this._mapSystem.map);
@@ -139,7 +139,7 @@ export class HexagonMap {
     this._updateMapTransform();
 
     this._renderSystem.drawHexagonAll(this._mapSystem.visibleMap);
-    this._renderSystem.drawActiveHexagon(this._mapSystem.activeHexagon);
+    this._renderSystem.drawActiveHexagonAll(this._mapSystem.activeHexagon);
   }
 
   run(): void {
@@ -178,6 +178,7 @@ export class HexagonMap {
 
   setAllOwnedHexagons(ownedHexagonAll: IGetResponseOwnedHexagonAll[]): void {
     this._mapSystem.setOwnedHexagonAll(ownedHexagonAll);
+    this._updateHexagonMap = this._updateHexagonMapCallback;
   }
 
   move(offset: Vector): void {
@@ -223,6 +224,12 @@ export class HexagonMap {
     );
   }
 
+  showOwnedHexagonAll(): void {
+    // TODO: refactoring
+    this._mapSystem.activeHexagon = this._mapSystem.ownedHexagonAll;
+    this._updateHexagonMap = this._updateHexagonMapCallback;
+  }
+
   click(position: Vector): void {
     position.subtract(this._mapTransform.getTranslation()).divideByValue(this._mapTransform.getScale());
 
@@ -230,7 +237,7 @@ export class HexagonMap {
 
     for (const hexagon of this._mapSystem.visibleMap) {
       if (this._isPositionInHexagon(position, hexagon)) {
-        this._mapSystem.activeHexagon = hexagon;
+        this._mapSystem.activeHexagon = [hexagon];
 
         this._clickOnHexagonCallback(hexagon.id);
 

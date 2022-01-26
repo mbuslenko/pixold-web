@@ -22,8 +22,7 @@ export class SceneSystem {
 
   private _ownedHexagonAll: Hexagon[];
   private _invisibleActiveHexagon: Hexagon;
-  // TODO: when need to show owned hexagons i will add them to activeHexagon and change it to Hexagon[];
-  activeHexagon: Hexagon;
+  activeHexagon: Hexagon[];
 
   get map(): Hexagon[] {
     return this._map;
@@ -62,7 +61,6 @@ export class SceneSystem {
     Hexagon.radius = 5;
 
     this._setSceneData();
-    this._generateRandomAttacks();
 
     this._ownedHexagonAll = [];
     // I made _invisibleActiveHexagon to eliminate if() in each frame inside of HexagonMap animate()
@@ -71,7 +69,7 @@ export class SceneSystem {
       Color.PINK,
       this._map.length,
     );
-    this.activeHexagon = this._invisibleActiveHexagon;
+    this.activeHexagon = [this._invisibleActiveHexagon];
     this._map.push(this._invisibleActiveHexagon);
   }
 
@@ -129,25 +127,7 @@ export class SceneSystem {
   }
 
   removeActiveHexagon(): void {
-    this.activeHexagon = this._invisibleActiveHexagon;
-  }
-
-  // HACK: test
-  private _generateRandomAttacks(): void {
-    const randomHex = () => Math.floor(Math.random() * this._map.length);
-
-    for (let i = 0; i < 50; i++) {
-      const attacker = this._map[randomHex()];
-      const defender = this._map[randomHex()];
-
-      attacker.color = this._generateRandomColor();
-      defender.color = this._generateRandomColor();
-
-      this._addAttackingHexagon({
-        attacker,
-        defender,
-      });
-    }
+    this.activeHexagon = [this._invisibleActiveHexagon];
   }
 
   private _addAttackingHexagon(attackingHexagon: HexagonAttack): void {

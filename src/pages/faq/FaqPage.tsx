@@ -17,6 +17,7 @@ import { HomeFooter } from '../home/HomeFooter';
 import { ShowInfoModalCallback } from './types';
 
 export const FaqPage: React.FC = () => {
+  // FIXME: after canceling <Show More> -> scrolls again
   const navigate = useNavigate();
   const [faqTopicData, setFaqTopicData] = useState<GetResponseFaq['data']>([]);
   const [isVisibleModal, setIsVisibleModal] = useState<boolean>(false);

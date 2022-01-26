@@ -105,6 +105,11 @@ export interface IGetResponseHexagonInfo {
   coinsToUpgrade: number;
 }
 
+export interface IPostDataHexagonBuy {
+  numericId: number;
+  userId: string;
+}
+
 export interface IReactFacebookFailureResponse {
   status?: string | undefined;
 }

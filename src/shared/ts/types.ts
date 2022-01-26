@@ -21,6 +21,7 @@ import {
   IGetResponseHexagonInfo,
   IPostDataHexagonChangeType,
   IPostDataHexagonSendCoins,
+  IPostDataHexagonBuy,
 } from './interfaces';
 
 export type GetResponseFaq = AxiosResponse<IGetResponseFaqTopic[]>;
@@ -42,6 +43,7 @@ export type RequestData =
   | IPostDataUsername
   | IPostDataRedeemCode
   | IPostDataHexagonChangeType
-  | IPostDataHexagonSendCoins;
+  | IPostDataHexagonSendCoins
+  | IPostDataHexagonBuy;
 
 export type AxiosInstanceFunction = (payload: IAxiosInstanceProps) => void;

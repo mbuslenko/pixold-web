@@ -1,6 +1,11 @@
 import { IAlertProps } from '../../components/interfaces';
 import { IGetResponseHexagonInfo } from '../../shared/ts/interfaces';
 
+export interface IPlayMenuCallback {
+  // TODO: refactoring
+  showMyTerritoryCallback?: () => void;
+}
+
 export interface IPlayPagePopupProps {
   hexagonId?: number;
   closePopupCallback: () => void;

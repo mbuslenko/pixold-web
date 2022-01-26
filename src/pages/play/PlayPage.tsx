@@ -16,6 +16,7 @@ export const PlayPage: React.FC = () => {
   const [hexagonId, setHexagonId] = useState<number>();
   const canvasHexagonRef = useRef<HTMLCanvasElement>(null);
   const canvasLineRef = useRef<HTMLCanvasElement>(null);
+  const [map, setMap] = useState<HexagonMap>();
 
   useLayoutEffect(() => {
     const { current: canvasHexagon } = canvasHexagonRef;
@@ -31,8 +32,8 @@ export const PlayPage: React.FC = () => {
       canvasHexagon,
       canvasLine,
       (hexagonId: number) => {
-        setIsVisiblePopup(true);
         setHexagonId(hexagonId);
+        setIsVisiblePopup(true);
       },
       () => setIsVisiblePopup(false),
     );
@@ -49,6 +50,8 @@ export const PlayPage: React.FC = () => {
     map.run();
     eventManager.setEvents();
 
+    setMap(map);
+
     return () => {
       map.stop();
       eventManager.unsetEvents();
@@ -59,7 +62,7 @@ export const PlayPage: React.FC = () => {
     <section className="play-page">
       <canvas className="play-page-canvas-hexagon" ref={canvasHexagonRef} />
       <canvas className="play-page-canvas-line" ref={canvasLineRef} />
-      <PlayMenu />
+      <PlayMenu showMyTerritoryCallback={map?.showOwnedHexagonAll.bind(map)} />
       {isVisiblePopup && (
         <PlayPagePopup
           hexagonId={hexagonId}

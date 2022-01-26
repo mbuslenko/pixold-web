@@ -1,12 +1,14 @@
 import { useState } from 'react';
+
 import { Button } from '../../components/button/Button';
 import { Dropdown } from '../../components/dropdown/Dropdown';
 import { Toggle } from '../../components/toggle/Toggle';
+
 import { IPlayPagePopupSettingsProps } from './interfaces';
 
 import './PlayPagePopupSettings.scss';
 
-export const PlayPagePopupSettings: React.FC<IPlayPagePopupSettingsProps> = ({ changeHexagonTypeCallback, setAlertPropsCallback }) => {
+export const PlayPagePopupSettings: React.FC<IPlayPagePopupSettingsProps> = ({ changeHexagonTypeCallback }) => {
   const [newHexagonType, setNewHexagon] = useState<string>();
 
   return (
@@ -24,7 +26,11 @@ export const PlayPagePopupSettings: React.FC<IPlayPagePopupSettingsProps> = ({ c
             onChange={(value: string) => setNewHexagon(value)}
           />
         </div>
-        <Button text="Save" appearance={{ priority: 'secondary' }} onClick={() => changeHexagonTypeCallback(newHexagonType)} />
+        <Button
+          text="Save"
+          appearance={{ priority: 'secondary' }}
+          onClick={() => changeHexagonTypeCallback(newHexagonType)}
+        />
       </div>
 
       <Toggle

@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { getAxiosInstance } from '../../shared/ts/axiosInstance';
+import { IGetResponseHexagonInfo } from '../../shared/ts/interfaces';
+import { GetResponseHexagonInfo } from '../../shared/ts/types';
 
 import { TabbedButtonGroup } from '../../components/tabbedButtonGroup/TabbedButtonGroup';
+import { Alert } from '../../components/alert/Alert';
+import { Button } from '../../components/button/Button';
+import { Modal } from '../../components/modal/Modal';
+import { IAlertProps } from '../../components/interfaces';
 
 import './PlayPagePopup.scss';
 import { IPlayPagePopupProps } from './interfaces';
 import { PlayPagePopupInfo } from './PlayPagePopupInfo';
 import { PlayPagePopupLevel } from './PlayPagePopupLevel';
 import { PlayPagePopupSettings } from './PlayPagePopupSettings';
-import { Alert } from '../../components/alert/Alert';
-import { Button } from '../../components/button/Button';
-import { Modal } from '../../components/modal/Modal';
-import { getAxiosInstance } from '../../shared/ts/axiosInstance';
-import { useNavigate } from 'react-router-dom';
-import { IAlertProps } from '../../components/interfaces';
-import { IGetResponseHexagonInfo } from '../../shared/ts/interfaces';
-import { GetResponseHexagonInfo } from '../../shared/ts/types';
 
 export const PlayPagePopup: React.FC<IPlayPagePopupProps> = ({ hexagonId = 1, closePopupCallback }) => {
   const navigate = useNavigate();
@@ -24,7 +25,6 @@ export const PlayPagePopup: React.FC<IPlayPagePopupProps> = ({ hexagonId = 1, cl
   const [hexagonInfo, setHexagonInfo] = useState<IGetResponseHexagonInfo>();
   const [selectedTab, setSelectedTab] = useState<string>('info');
 
-  // FIXME: on start mount it sends to requests. first for hexagonId === 1, second with actual hexagonId
   useEffect(() => {
     getAxiosInstance(navigate)({
       requestConfig: {
@@ -51,12 +51,30 @@ export const PlayPagePopup: React.FC<IPlayPagePopupProps> = ({ hexagonId = 1, cl
         data: { numericId: hexagonId, type: newHexagonType },
       },
       onResponse: () => setAlertProps({ type: 'green', heading: 'Type was changed successfully' }),
-      onError: ({ message }) => setAlertProps({ type: 'red', heading: 'Error', text: message }),
+      onError: (error) => setAlertProps({ type: 'red', heading: 'Error', text: error.response.data.message }),
     });
   };
 
   return (
     <section className="play-page-popup">
+      {/* HACK: test */}
+      <button
+        onClick={() =>
+          getAxiosInstance(navigate)({
+            requestConfig: {
+              method: 'post',
+              url: '/hexagon/buy',
+              data: {
+                numericId: hexagonId,
+                userId: localStorage.getItem('userId') as string,
+              },
+            },
+            onResponse: () => console.log(';)'),
+          })
+        }
+      >
+        Buy
+      </button>
       <div className="play-page-popup-menu">
         <TabbedButtonGroup
           name={'play-menu-popup-tab'}
@@ -77,7 +95,10 @@ export const PlayPagePopup: React.FC<IPlayPagePopupProps> = ({ hexagonId = 1, cl
       {infoIsVisible && selectedTab === 'level' ? (
         <PlayPagePopupLevel setModalIsVisibleCallback={setModalIsVisible} hexagonInfo={hexagonInfo} />
       ) : selectedTab === 'settings' ? (
-        <PlayPagePopupSettings changeHexagonTypeCallback={changeHexagonTypeCallback} setAlertPropsCallback={setAlertProps} />
+        <PlayPagePopupSettings
+          changeHexagonTypeCallback={changeHexagonTypeCallback}
+          setAlertPropsCallback={setAlertProps}
+        />
       ) : selectedTab === 'info' ? (
         <PlayPagePopupInfo
           setModalIsVisibleCallback={setModalIsVisible}
@@ -107,8 +128,7 @@ export const PlayPagePopup: React.FC<IPlayPagePopupProps> = ({ hexagonId = 1, cl
                 },
                 onResponse: () => setAlertProps({ type: 'green', heading: 'success' }),
                 onError: (error) => {
-                  // FIXME: error message isn't right
-                  setAlertProps({ type: 'red', heading: 'Error', text: error.message });
+                  setAlertProps({ type: 'red', heading: 'Error', text: error.response.data.message });
                   console.log(error);
                 },
               });
