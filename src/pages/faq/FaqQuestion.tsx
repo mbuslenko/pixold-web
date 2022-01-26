@@ -41,8 +41,11 @@ export const FaqQuestion: React.FC<IFaqQuestionProps> = ({ id, question, answer,
   return (
     <section id={id} ref={questionRef}>
       <h3 className="faq-question-heading">{question}</h3>
-      <p dangerouslySetInnerHTML={{ __html: answer }} ref={answerRef} className={`faq-question-text ${isTextOverflow && 'faq-short-text'}`}>
-      </p>
+      <p
+        dangerouslySetInnerHTML={{ __html: answer }}
+        ref={answerRef}
+        className={`faq-question-text ${isTextOverflow && 'faq-short-text'}`}
+      ></p>
       {isTextOverflow && (
         <Button
           text="Read more"
