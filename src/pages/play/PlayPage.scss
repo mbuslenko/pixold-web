@@ -2,6 +2,12 @@
   display: block;
 }
 
+.play-page {
+  overscroll-behavior: none;
+  touch-action: none;
+  -webkit-overflow-scrolling: none;
+}
+
 .play-page-canvas-hexagon {
   @extend %canvas;
 }

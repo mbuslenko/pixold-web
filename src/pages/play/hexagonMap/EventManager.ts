@@ -40,6 +40,7 @@ export class EventManager {
       case 'Space':
         this._context.style.cursor = 'grab';
         this._isPressedSpace = true;
+        e.preventDefault();
         break;
       case 'ControlLeft' || 'ControlRight':
         this._context.style.cursor = 'zoom-in';
@@ -55,6 +56,8 @@ export class EventManager {
         if (!this._isDragging) {
           this._context.style.cursor = 'default';
         }
+
+        e.preventDefault();
         break;
       case 'ControlLeft' || 'ControlRight':
         this._context.style.cursor = 'default';
