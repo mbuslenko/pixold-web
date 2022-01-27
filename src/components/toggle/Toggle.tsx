@@ -17,7 +17,7 @@ export const Toggle: React.FC<ICheckboxProps> = ({ text, value, priority, classN
           type="checkbox"
           className={`${styles.toggle} ${styles[priority]}`}
           value={value}
-          checked={checked}
+          defaultChecked={checked}
           onChange={onChangeCallback}
         />
         <span className={`${styles['toggle-slider']} ${styles[priority]} ${isChecked ? styles.checked : ''}`} />

@@ -1,14 +1,20 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { Button } from '../../components/button/Button';
 import { Dropdown } from '../../components/dropdown/Dropdown';
 import { Toggle } from '../../components/toggle/Toggle';
+import { getAxiosInstance } from '../../shared/ts/axiosInstance';
 
 import { IPlayPagePopupSettingsProps } from './interfaces';
 
 import './PlayPagePopupSettings.scss';
 
-export const PlayPagePopupSettings: React.FC<IPlayPagePopupSettingsProps> = ({ changeHexagonTypeCallback }) => {
+export const PlayPagePopupSettings: React.FC<IPlayPagePopupSettingsProps> = ({
+  hexagonInfo,
+  changeHexagonTypeCallback,
+}) => {
+  const navigate = useNavigate();
   const [newHexagonType, setNewHexagon] = useState<string>();
 
   return (
@@ -37,13 +43,37 @@ export const PlayPagePopupSettings: React.FC<IPlayPagePopupSettingsProps> = ({ c
         text={'Notify me when hexagon is attacked'}
         priority={'secondary'}
         value={'true'}
-        onChange={(isChecked: boolean) => console.log(['notify me when hexagon is attacked', isChecked])}
+        checked={!hexagonInfo?.isNotSubscribedOnNotifications.isAttacked}
+        onChange={(isChecked: boolean) =>
+          getAxiosInstance(navigate)({
+            requestConfig: {
+              method: 'post',
+              url: '/notifications/subscribe',
+              data: {
+                notificationsType: 'is-attacked',
+                subscribe: isChecked,
+              },
+            },
+          })
+        }
       />
       <Toggle
         text={'Notify me when storage is full'}
         priority={'secondary'}
         value={'true'}
-        onChange={(isChecked: boolean) => console.log(['notify me when storage is full', isChecked])}
+        checked={!hexagonInfo?.isNotSubscribedOnNotifications.fullStorage}
+        onChange={(isChecked: boolean) =>
+          getAxiosInstance(navigate)({
+            requestConfig: {
+              method: 'post',
+              url: '/notifications/subscribe',
+              data: {
+                notificationsType: 'full-storage',
+                subscribe: isChecked,
+              },
+            },
+          })
+        }
       />
 
       <div>

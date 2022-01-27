@@ -103,6 +103,15 @@ export interface IGetResponseHexagonInfo {
   owner: string;
   canAttack: boolean;
   coinsToUpgrade: number;
+  isNotSubscribedOnNotifications: {
+    isAttacked: boolean;
+    fullStorage: boolean;
+  };
+}
+
+export interface IPostDataNotification {
+  notificationsType: string;
+  subscribe: boolean;
 }
 
 export interface IPostDataHexagonBuy {
@@ -139,6 +148,6 @@ export interface IAxiosRequestConfig {
 
 export interface IAxiosInstanceProps {
   requestConfig: IAxiosRequestConfig;
-  onResponse: (response: AxiosResponse) => void;
+  onResponse?: (response: AxiosResponse) => void;
   onError?: (error: any) => void;
 }

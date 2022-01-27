@@ -96,6 +96,7 @@ export const PlayPagePopup: React.FC<IPlayPagePopupProps> = ({ hexagonId = 1, cl
         <PlayPagePopupLevel setModalIsVisibleCallback={setModalIsVisible} hexagonInfo={hexagonInfo} />
       ) : selectedTab === 'settings' ? (
         <PlayPagePopupSettings
+          hexagonInfo={hexagonInfo}
           changeHexagonTypeCallback={changeHexagonTypeCallback}
           setAlertPropsCallback={setAlertProps}
         />

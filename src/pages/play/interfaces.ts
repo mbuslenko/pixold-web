@@ -28,4 +28,5 @@ export interface IPlayPagePopupLevelProps {
 export interface IPlayPagePopupSettingsProps {
   changeHexagonTypeCallback: (hexagonType?: string) => void;
   setAlertPropsCallback: (props: IAlertProps) => void;
+  hexagonInfo?: IGetResponseHexagonInfo;
 }
