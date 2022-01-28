@@ -2,10 +2,10 @@
 
 %alert-icon {
   display: inline-block;
-  height: 20px;
-  width: 20px;
+  height: 10px;
+  width: 10px;
   position: absolute;
-  left: 34px;
+  left: 15px;
   padding-top: 2px;
 }
 
@@ -19,17 +19,17 @@
 
 .container {
   margin-top: 20px;
-  width: 576px;
+  width: 285px;
   display: flex;
   flex-direction: column;
-  padding: 30px 35px 35px 72px;
+  padding: 18px 16px 18px 36px;
   font-family: Roboto;
   font-size: 16px;
   background-color: $black;
   border: {
     width: 1px;
     style: solid;
-    radius: 24px;
+    radius: 15px;
   }
 
   &.blue {
@@ -79,8 +79,9 @@
 
 .close-icon {
   cursor: pointer;
-  height: fit-content;
-  padding-top: 7px;
+  margin-top: 6px;
+  width: 6px;
+  height: 6px;
 }
 
 .heading-wrapper {
@@ -90,8 +91,7 @@
 
 .heading {
   font-weight: 500;
-  font-size: 22px;
-  line-height: 26px;
+  font-size: 11px;
   padding-right: 15px;
   margin-bottom: 8px;
 }
@@ -106,7 +106,6 @@
 }
 
 .time {
-  font-size: 14px;
-  line-height: 24px;
+  font-size: 7px;
   color: #9faed7;
 }
