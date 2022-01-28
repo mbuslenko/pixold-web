@@ -1,55 +1,112 @@
 @import '../../shared/scss/variables.scss';
 
+%alert-icon {
+  display: inline-block;
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  left: 34px;
+  padding-top: 2px;
+}
+
+@mixin before-alert-icon($alert-icon-name) {
+  &::before {
+    @extend %alert-icon;
+
+    content: url('../../assets/svg/' + $alert-icon-name + '.svg');
+  }
+}
+
 .container {
-  position: fixed;
-  left: 50px;
-  bottom: 50px;
+  margin-top: 20px;
+  width: 576px;
   display: flex;
   flex-direction: column;
-  padding: 20px 24px;
+  padding: 30px 35px 35px 72px;
+  font-family: Roboto;
   font-size: 16px;
+  background-color: $black;
   border: {
     width: 1px;
     style: solid;
-    radius: 10px;
+    radius: 24px;
   }
 
   &.blue {
     border-color: #aed9ff;
-    background-color: #e5f3ff;
-    color: #104ea2;
+    padding: 30px 35px;
   }
 
   &.yellow {
-    border-color: #fff4e4;
-    background-color: #ffc061;
-    color: #7b430e;
+    border-color: #dca048;
+
+    .heading {
+      @include before-alert-icon('info-icon');
+    }
   }
 
   &.red {
-    border-color: #ffb5a5;
-    background-color: #fff3f0;
-    color: #d42600;
+    border-color: #fb3836;
+
+    .heading {
+      @include before-alert-icon('error-icon');
+    }
   }
 
   &.green {
-    border-color: #b0ceaf;
-    background-color: #dffcde;
-    color: #00b894;
-  }
+    border-color: #48b16e;
 
-  &.grey {
-    border-color: #b9b9b9;
-    background-color: $black;
-    color: #dfe6e9;
+    .heading {
+      @include before-alert-icon('success-icon');
+    }
   }
 }
 
+.info-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.info-title {
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 169%;
+  color: #237fd2;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.close-icon {
+  cursor: pointer;
+  height: fit-content;
+  padding-top: 7px;
+}
+
+.heading-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
 .heading {
-  font-weight: 600;
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 26px;
+  padding-right: 15px;
+  margin-bottom: 8px;
 }
 
 .text {
   margin-top: 8px;
   overflow-wrap: break-word;
+  font-size: 14px;
+  line-height: 24px;
+  color: $grey;
+  margin-bottom: 28px;
+}
+
+.time {
+  font-size: 14px;
+  line-height: 24px;
+  color: #9faed7;
 }
