@@ -5,6 +5,7 @@ import { Button } from '../../components/button/Button';
 import { Dropdown } from '../../components/dropdown/Dropdown';
 import { Toggle } from '../../components/toggle/Toggle';
 import { getAxiosInstance } from '../../shared/ts/axiosInstance';
+import { HexagonInfoType } from '../../shared/ts/types'
 
 import { IPlayPagePopupSettingsProps } from './interfaces';
 
@@ -15,7 +16,7 @@ export const PlayPagePopupSettings: React.FC<IPlayPagePopupSettingsProps> = ({
   changeHexagonTypeCallback,
 }) => {
   const navigate = useNavigate();
-  const [newHexagonType, setNewHexagon] = useState<string>();
+  const [newHexagonType, setNewHexagon] = useState<HexagonInfoType>();
 
   return (
     <section className="play-page-popup-settings-content">
@@ -29,7 +30,7 @@ export const PlayPagePopupSettings: React.FC<IPlayPagePopupSettingsProps> = ({
               { text: 'Defender', value: 'defender' },
               { text: 'Miner', value: 'miner' },
             ]}
-            onChange={(value: string) => setNewHexagon(value)}
+            onChange={(value: string) => setNewHexagon(value as HexagonInfoType)}
           />
         </div>
         <Button
@@ -43,7 +44,7 @@ export const PlayPagePopupSettings: React.FC<IPlayPagePopupSettingsProps> = ({
         text={'Notify me when hexagon is attacked'}
         priority={'secondary'}
         value={'true'}
-        checked={!hexagonInfo?.isNotSubscribedOnNotifications.isAttacked}
+        checked={!hexagonInfo.isNotSubscribedOnNotifications.isAttacked}
         onChange={(isChecked: boolean) =>
           getAxiosInstance(navigate)({
             requestConfig: {
@@ -61,7 +62,7 @@ export const PlayPagePopupSettings: React.FC<IPlayPagePopupSettingsProps> = ({
         text={'Notify me when storage is full'}
         priority={'secondary'}
         value={'true'}
-        checked={!hexagonInfo?.isNotSubscribedOnNotifications.fullStorage}
+        checked={!hexagonInfo.isNotSubscribedOnNotifications.fullStorage}
         onChange={(isChecked: boolean) =>
           getAxiosInstance(navigate)({
             requestConfig: {

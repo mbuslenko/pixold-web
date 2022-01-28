@@ -5,8 +5,9 @@ import { PostResponseAuth } from '../../shared/ts/types';
 import { getAxiosInstance } from '../../shared/ts/axiosInstance';
 import { IPostDataAuth } from '../../shared/ts/interfaces';
 
+import { Loader } from '../../components/loader/Loader';
+
 import './AuthLoadPage.scss';
-import loaderLogo from '../../assets/svg/loader-logo.svg';
 
 export const AuthLoadPage: React.FC = () => {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ export const AuthLoadPage: React.FC = () => {
     const responseData: IPostDataAuth = JSON.parse(window.localStorage.getItem('responseData') as string);
 
     if (!responseData) {
-      navigate('/auth');
+      navigate('/auth', { replace: true });
     }
 
     const responseCallback = (response: PostResponseAuth) => {
@@ -24,9 +25,9 @@ export const AuthLoadPage: React.FC = () => {
       window.localStorage.setItem('username', response.data.username);
 
       if (response.data.updateUsername === true) {
-        return navigate('/username');
+        return navigate('/username', { replace: true });
       } else {
-        return navigate('/play');
+        return navigate('/play', { replace: true });
       }
     };
 
@@ -41,9 +42,8 @@ export const AuthLoadPage: React.FC = () => {
   }, [navigate]);
 
   return (
-    <article className="loader-wrap">
-      <img src={loaderLogo} alt="loader Logo" className="loader-logo" />
-      <div className="loader-text">Loading...</div>
-    </article>
+    <section className='auth-load-page'>
+      <Loader/>
+    </section>
   );
 };

@@ -108,6 +108,8 @@ export class SceneSystem {
 
     for (const hexagonData of mapData) {
       const hexagon = new Hexagon(Vector.FromHexagonData(hexagonData), Color.PURPLE, hexagonIndex++);
+      // HACK: test
+      // const hexagon = new Hexagon(Vector.FromHexagonData(hexagonData), this._generateRandomColor(), hexagonIndex++);
 
       this._map.push(hexagon);
 
@@ -133,7 +135,7 @@ export class SceneSystem {
   private _addAttackingHexagon(attackingHexagon: HexagonAttack): void {
     const { attacker, defender } = attackingHexagon;
 
-    if (attacker.position <= defender.position) {
+    if (attacker.position.x < defender.position.x || attacker.position.y > defender.position.y) {
       this._leftAttackingHexagonAll.push(attackingHexagon);
 
       return;
@@ -143,14 +145,23 @@ export class SceneSystem {
   }
 
   private _generateRandomColor(): string {
-    // TODO: make better randomizing algorithm
-    const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+    const checkRgbValue = (value: number, avoidValue: number): number => {
+      const colorRange = 7;
 
-    if (randomColor === Color.PURPLE) {
-      return this._generateRandomColor();
-    }
+      if (value >= avoidValue - colorRange  && value <= avoidValue + colorRange) {
+        return avoidValue + (Math.ceil(Math.random() * colorRange) + colorRange) * Math.sign((value - avoidValue) * -2 + 1);
+      }
 
-    return randomColor;
+      return value;
+    };
+
+    // rgb to avoid "rgb(96, 74, 247)"
+    // 235 + 10 is to eliminate full white and full black colors
+    const red = checkRgbValue(Math.floor(Math.random() * 250) + 5, 96);
+    const green = checkRgbValue(Math.floor(Math.random() * 250) + 5, 74);
+    const blue = checkRgbValue(Math.floor(Math.random() * 250) + 5, 247);
+
+    return `rgb(${red}, ${green}, ${blue})`;
   }
 
   setOwnedHexagonAll(ownedHexagonAll: IGetResponseOwnedHexagonAll[]): void {

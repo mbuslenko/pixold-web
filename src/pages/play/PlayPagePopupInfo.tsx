@@ -11,14 +11,14 @@ import { levelNameAll } from './hexagonInfoData';
 
 export const PlayPagePopupInfo: React.FC<IPlayPagePopupInfoProps> = ({
   hexagonId,
+  hexagonInfo,
   setModalIsVisibleCallback,
   setAlertPropsCallback,
   changeTabCallback,
-  hexagonInfo,
 }) => {
   const navigate = useNavigate();
   const buttonClassName =
-    hexagonInfo?.owner !== localStorage.getItem('username') ? 'play-page-popup-info-button-hidden' : '';
+    hexagonInfo.owner !== localStorage.getItem('username') ? 'play-page-popup-info-button-hidden' : '';
 
   return (
     <section className="play-page-popup-tab">
@@ -29,7 +29,7 @@ export const PlayPagePopupInfo: React.FC<IPlayPagePopupInfoProps> = ({
         <div>
           <h3 className="play-page-popup-content-heading">Type</h3>
           <p className="play-page-popup-content-text">
-            {(hexagonInfo?.type.slice(0, 1).toUpperCase() ?? '') + hexagonInfo?.type.slice(1)}
+            {hexagonInfo.type.slice(0, 1).toUpperCase() + hexagonInfo.type.slice(1)}
           </p>
         </div>
         <Button
@@ -40,7 +40,7 @@ export const PlayPagePopupInfo: React.FC<IPlayPagePopupInfoProps> = ({
         />
         <div>
           <h3 className="play-page-popup-content-heading">Level</h3>
-          <p className="play-page-popup-content-text">{levelNameAll[hexagonInfo?.level ?? 'starter']}</p>
+          <p className="play-page-popup-content-text">{levelNameAll[hexagonInfo.level]}</p>
         </div>
         <Button
           text={'Upgrade'}
@@ -50,11 +50,11 @@ export const PlayPagePopupInfo: React.FC<IPlayPagePopupInfoProps> = ({
         />
         <div>
           <h3 className="play-page-popup-content-heading">Coins in storage</h3>
-          <p className="play-page-popup-content-text">{hexagonInfo?.coinsInStorage}</p>
+          <p className="play-page-popup-content-text">{hexagonInfo.coinsInStorage}</p>
         </div>
         <Button
           text={'Send to my wallet'}
-          disabled={hexagonInfo?.type !== 'miner'}
+          disabled={hexagonInfo.type !== 'miner'}
           className={buttonClassName}
           appearance={{ priority: 'secondary' }}
           onClick={() =>
@@ -76,12 +76,12 @@ export const PlayPagePopupInfo: React.FC<IPlayPagePopupInfoProps> = ({
         />
         <div>
           <h3 className="play-page-popup-content-heading">Owner</h3>
-          <p className="play-page-popup-content-text">{hexagonInfo?.owner}</p>
+          <p className="play-page-popup-content-text">{hexagonInfo.owner}</p>
         </div>
         <Button
           className="play-page-popup-info-attack-button"
           text={'Attack'}
-          disabled={!hexagonInfo?.canAttack}
+          disabled={!hexagonInfo.canAttack}
           appearance={{ priority: 'primary' }}
         />
       </div>

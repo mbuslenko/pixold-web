@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 
-import { RequestData } from './types';
+import { HexagonInfoType, RequestData } from './types';
 
 export interface IGetResponseFaqContent {
   id: string;
@@ -97,7 +97,7 @@ export enum HexagonLevel {
 }
 
 export interface IGetResponseHexagonInfo {
-  type: 'attack' | 'defender' | 'miner';
+  type: HexagonInfoType;
   level: keyof typeof HexagonLevel;
   coinsInStorage: number;
   owner: string;

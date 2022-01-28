@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-import { isScreen } from '../../shared/ts/helperFunctions';
+import { isScreen, redirect } from '../../shared/ts/helperFunctions';
 import { ScreenMaxWidth } from '../../shared/ts/enums';
 
 import { PlayMenuIconSvg } from '../../components/playMenuIconSvg/PlayMenuIconSvg';
@@ -12,6 +12,7 @@ import logo from '../../assets/svg/logo.svg';
 import { IPlayMenuCallback } from './interfaces';
 
 export const PlayMenu: React.FC<IPlayMenuCallback> = ({ showMyTerritoryCallback }) => {
+  const navigate = useNavigate();
   const [menuIsVisible, setMenuIsVisible] = useState<boolean>(false);
 
   const showMenuCallback = () => {
@@ -54,10 +55,10 @@ export const PlayMenu: React.FC<IPlayMenuCallback> = ({ showMyTerritoryCallback 
               <PlayMenuIconSvg iconName="redeem" className="play-menu-icon" />
               Redeem
             </Link>
-            <Link className="play-menu-link" to="/wallet">
+            <a className="play-menu-link" onClick={() => redirect(navigate, '/wallet')}>
               <PlayMenuIconSvg iconName="wallet" className="play-menu-icon" />
               Wallet
-            </Link>
+            </a>
           </div>
           <div className="play-menu-link-container">
             <Link className="play-menu-link" to="/faq">

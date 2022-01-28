@@ -25,6 +25,13 @@ export const redirect = (navigate: NavigateFunction, redirectTo: string): void =
     return;
   }
 
+  // TODO: what value is wallet when user doesn't have it
+  if (window.localStorage.getItem('wallet') && redirectTo === '/wallet') {
+    navigate('/wallet/connect');
+
+    return;
+  }
+
   navigate(redirectTo);
 };
 

@@ -3,13 +3,14 @@ import { useNavigate } from 'react-router-dom';
 
 import { getAxiosInstance } from '../../shared/ts/axiosInstance';
 import { IGetResponseHexagonInfo } from '../../shared/ts/interfaces';
-import { GetResponseHexagonInfo } from '../../shared/ts/types';
+import { GetResponseHexagonInfo, HexagonInfoType } from '../../shared/ts/types';
 
 import { TabbedButtonGroup } from '../../components/tabbedButtonGroup/TabbedButtonGroup';
 import { Alert } from '../../components/alert/Alert';
 import { Button } from '../../components/button/Button';
 import { Modal } from '../../components/modal/Modal';
 import { IAlertProps } from '../../components/interfaces';
+import { Loader } from '../../components/loader/Loader';
 
 import './PlayPagePopup.scss';
 import { IPlayPagePopupProps } from './interfaces';
@@ -17,15 +18,16 @@ import { PlayPagePopupInfo } from './PlayPagePopupInfo';
 import { PlayPagePopupLevel } from './PlayPagePopupLevel';
 import { PlayPagePopupSettings } from './PlayPagePopupSettings';
 
-export const PlayPagePopup: React.FC<IPlayPagePopupProps> = ({ hexagonId = 1, closePopupCallback }) => {
+export const PlayPagePopup: React.FC<IPlayPagePopupProps> = ({ hexagonId, closePopupCallback }) => {
   const navigate = useNavigate();
-  const [infoIsVisible, setInfoIsVisible] = useState(false);
+  const [hexagonInfo, setHexagonInfo] = useState<IGetResponseHexagonInfo | null>(null);
   const [alertProps, setAlertProps] = useState<IAlertProps | null>(null);
   const [modalIsVisible, setModalIsVisible] = useState<boolean>(false);
-  const [hexagonInfo, setHexagonInfo] = useState<IGetResponseHexagonInfo>();
   const [selectedTab, setSelectedTab] = useState<string>('info');
 
   useEffect(() => {
+    setHexagonInfo(null);
+
     getAxiosInstance(navigate)({
       requestConfig: {
         method: 'get',
@@ -34,12 +36,11 @@ export const PlayPagePopup: React.FC<IPlayPagePopupProps> = ({ hexagonId = 1, cl
       onResponse: (response: GetResponseHexagonInfo) => {
         console.log(response.data);
         setHexagonInfo(response.data);
-        setInfoIsVisible(true);
       },
     });
   }, [hexagonId, navigate]);
 
-  const changeHexagonTypeCallback = (newHexagonType?: string) => {
+  const changeHexagonTypeCallback = (newHexagonType?: HexagonInfoType) => {
     if (!newHexagonType) {
       return;
     }
@@ -50,7 +51,7 @@ export const PlayPagePopup: React.FC<IPlayPagePopupProps> = ({ hexagonId = 1, cl
         url: '/hexagon/change-type',
         data: { numericId: hexagonId, type: newHexagonType },
       },
-      onResponse: () => setAlertProps({ type: 'green', heading: 'Type was changed successfully' }),
+      onResponse: () => { setAlertProps({ type: 'green', heading: 'Type was changed successfully' }); hexagonInfo && setHexagonInfo({...hexagonInfo, type: newHexagonType}) },
       onError: (error) => setAlertProps({ type: 'red', heading: 'Error', text: error.response.data.message }),
     });
   };
@@ -92,15 +93,15 @@ export const PlayPagePopup: React.FC<IPlayPagePopupProps> = ({ hexagonId = 1, cl
           X
         </button>
       </div>
-      {infoIsVisible && selectedTab === 'level' ? (
+      {hexagonInfo && selectedTab === 'level' ? (
         <PlayPagePopupLevel setModalIsVisibleCallback={setModalIsVisible} hexagonInfo={hexagonInfo} />
-      ) : selectedTab === 'settings' ? (
+      ) : hexagonInfo && selectedTab === 'settings' ? (
         <PlayPagePopupSettings
           hexagonInfo={hexagonInfo}
           changeHexagonTypeCallback={changeHexagonTypeCallback}
           setAlertPropsCallback={setAlertProps}
         />
-      ) : selectedTab === 'info' ? (
+      ) : hexagonInfo && selectedTab === 'info' ? (
         <PlayPagePopupInfo
           setModalIsVisibleCallback={setModalIsVisible}
           setAlertPropsCallback={setAlertProps}
@@ -109,7 +110,7 @@ export const PlayPagePopup: React.FC<IPlayPagePopupProps> = ({ hexagonId = 1, cl
           changeTabCallback={(tab) => setSelectedTab(tab)}
         />
       ) : (
-        <></>
+        <Loader/>
       )}
       {modalIsVisible && (
         <Modal

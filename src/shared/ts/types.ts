@@ -25,6 +25,8 @@ import {
   IPostDataNotification,
 } from './interfaces';
 
+export type HexagonInfoType = 'attack' | 'defender' | 'miner';
+
 export type GetResponseFaq = AxiosResponse<IGetResponseFaqTopic[]>;
 export type GetResponseWallet = AxiosResponse<IGetResponseWallet>;
 export type GetResponseUsernameCheck = AxiosResponse<IGetResponseUsernameCheck>;

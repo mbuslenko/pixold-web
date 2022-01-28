@@ -19,7 +19,7 @@ export const AuthPage: React.FC = () => {
 
   useEffect(() => {
     if (window.localStorage.getItem('userId') && window.localStorage.getItem('accessToken')) {
-      navigate('/play');
+      navigate('/play', { replace: true });
     }
   }, [navigate]);
 
@@ -37,7 +37,7 @@ export const AuthPage: React.FC = () => {
 
     window.localStorage.setItem('responseData', JSON.stringify(responseData));
 
-    navigate('/auth/load');
+    navigate('/auth/load', { replace: true });
   };
 
   const handleFacebookAuthSuccess = async (responseFacebook: GetResponseLoginFacebook) => {
@@ -55,7 +55,7 @@ export const AuthPage: React.FC = () => {
 
     window.localStorage.setItem('responseData', JSON.stringify(responseData));
 
-    navigate('/auth/load');
+    navigate('/auth/load', { replace: true });
   };
 
   return (

@@ -9,6 +9,7 @@ import { Input } from '../../components/input/Input';
 import { InputStatus } from '../../components/types';
 
 import './UsernamePage.scss';
+import { redirect } from '../../shared/ts/helperFunctions'
 
 export const UsernamePage: React.FC = () => {
   const navigate = useNavigate();
@@ -49,7 +50,7 @@ export const UsernamePage: React.FC = () => {
         url: `/user/update/username`,
         data: { username },
       },
-      onResponse: () => navigate('/wallet'),
+      onResponse: () => redirect(navigate, '/wallet'),
     });
   };
 

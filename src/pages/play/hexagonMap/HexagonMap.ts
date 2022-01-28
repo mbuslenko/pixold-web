@@ -239,6 +239,7 @@ export class HexagonMap {
       if (this._isPositionInHexagon(position, hexagon)) {
         this._mapSystem.activeHexagon = [hexagon];
 
+        // TODO: id + 1 when send. id - 1 when receive
         this._clickOnHexagonCallback(hexagon.id);
 
         return;
