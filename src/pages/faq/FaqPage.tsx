@@ -63,7 +63,7 @@ export const FaqPage: React.FC = () => {
                 target="_blank"
                 rel="noreferrer noopener"
               >
-                <img src={emailSvg} alt="Email" className="faq-page-support-email-icon" />
+                <object className="faq-page-support-email-icon" data={emailSvg} type="image/svg+xml" title="Email" />
               </a>
               <a
                 href="https://t.me/pixold_help_bot"
@@ -71,7 +71,12 @@ export const FaqPage: React.FC = () => {
                 target="_blank"
                 rel="noreferrer noopener"
               >
-                <img src={telegramSvg} alt="Telegram" className="faq-page-support-telegram-icon" />
+                <object
+                  className="faq-page-support-telegram-icon"
+                  data={telegramSvg}
+                  type="image/svg+xml"
+                  title="Telegram"
+                />
               </a>
             </nav>
           </div>

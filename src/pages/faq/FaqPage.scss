@@ -47,6 +47,7 @@
 .faq-page-support-email-icon {
   width: 17px;
   height: 17px;
+  pointer-events: none;
 }
 
 .faq-page-support-link.faq-page-support-link-telegram {
@@ -57,6 +58,7 @@
 .faq-page-support-telegram-icon {
   width: 15px;
   height: 15px;
+  pointer-events: none;
 }
 
 .faq-info-modal-wrapper {
@@ -82,17 +84,12 @@
     padding: 0 0.72em;
   }
 
-  .faq-page-support {
-    flex-direction: column;
-    gap: 15px 0;
-    align-items: center;
-    margin-right: 0;
-    top: 285px;
-    bottom: unset;
-  }
-
   .faq-topic-container {
     padding: 0 2.25em 5.375em;
+  }
+
+  .faq-support-wrapper {
+    display: none;
   }
 
   .faq-button-small {

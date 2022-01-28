@@ -127,3 +127,7 @@ export interface IIconProps<I extends string> {
 export interface ILinkToFaqProps {
   questionId: string;
 }
+
+export interface INumberAnimationProps {
+  number: number;
+}
