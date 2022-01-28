@@ -19,15 +19,14 @@ export const unblockScrolling = (): void => {
 };
 
 export const redirect = (navigate: NavigateFunction, redirectTo: string): void => {
-  if (!window.localStorage.getItem('accessToken') && redirectTo === '/play') {
+  if (!localStorage.getItem('accessToken')) {
     navigate('/auth');
 
     return;
   }
 
-  // TODO: what value is wallet when user doesn't have it
-  if (window.localStorage.getItem('wallet') && redirectTo === '/wallet') {
-    navigate('/wallet/connect');
+  if (!localStorage.getItem('wallet') && redirectTo === '/wallet') {
+    navigate('/coin');
 
     return;
   }

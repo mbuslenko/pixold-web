@@ -146,7 +146,7 @@ export class SceneSystem {
 
   private _generateRandomColor(): string {
     const checkRgbValue = (value: number, avoidValue: number): number => {
-      const colorRange = 7;
+      const colorRange = 10;
 
       if (value >= avoidValue - colorRange && value <= avoidValue + colorRange) {
         return (

@@ -10,7 +10,7 @@ const axiosInstance = axios.create({
 
 export const getAxiosInstance = (navigate: NavigateFunction): AxiosInstanceFunction => {
   return ({ requestConfig, onResponse, onError }) => {
-    const accessToken = window.localStorage.getItem('accessToken');
+    const accessToken = localStorage.getItem('accessToken');
 
     if (accessToken) {
       axiosInstance.defaults.headers.common.Authorization = accessToken;
@@ -20,12 +20,14 @@ export const getAxiosInstance = (navigate: NavigateFunction): AxiosInstanceFunct
       .request(requestConfig)
       .then(onResponse)
       .catch((error) => {
-        if (error.response.status === 403 || error.response.status === 401) {
-          window.localStorage.clear();
+        const { status } = error.response;
+
+        if (status === 403 || status === 401) {
+          localStorage.clear();
           navigate('/auth', { replace: true });
 
           return;
-        } else if (error.response.status === 500) {
+        } else if (status === 500) {
           navigate('/500');
 
           return;

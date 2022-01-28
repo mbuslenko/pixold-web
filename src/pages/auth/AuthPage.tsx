@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 //eslint-disable-next-line
@@ -17,11 +16,9 @@ import { IFacebookLoginRenderProps } from './interfaces';
 export const AuthPage: React.FC = () => {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (window.localStorage.getItem('userId') && window.localStorage.getItem('accessToken')) {
-      navigate('/play', { replace: true });
-    }
-  }, [navigate]);
+  if (localStorage.getItem('userId') && localStorage.getItem('accessToken')) {
+    navigate('/play', { replace: true });
+  }
 
   const handleGoogleAuthSuccess = async (responseGoogle: GetResponseLoginGoogle) => {
     if (!('accessToken' in responseGoogle)) {
@@ -35,7 +32,7 @@ export const AuthPage: React.FC = () => {
       avatarUrl: responseGoogle.profileObj.imageUrl,
     };
 
-    window.localStorage.setItem('responseData', JSON.stringify(responseData));
+    localStorage.setItem('responseData', JSON.stringify(responseData));
 
     navigate('/auth/load', { replace: true });
   };
@@ -53,7 +50,7 @@ export const AuthPage: React.FC = () => {
       lastName: fullName[1],
     };
 
-    window.localStorage.setItem('responseData', JSON.stringify(responseData));
+    localStorage.setItem('responseData', JSON.stringify(responseData));
 
     navigate('/auth/load', { replace: true });
   };

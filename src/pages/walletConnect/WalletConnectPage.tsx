@@ -21,7 +21,7 @@ export const WalletConnectPage: React.FC = () => {
   const [isAlertVisible, setIsAlertVisible] = useState<boolean>(false);
   const [alertHeading, setAlertHeading] = useState<string>('');
   const postData = {
-    userId: window.localStorage.getItem('userId') ?? '',
+    userId: localStorage.getItem('userId') ?? '',
     publicKey,
     secret: secretKey,
   };

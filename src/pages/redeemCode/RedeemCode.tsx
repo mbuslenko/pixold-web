@@ -24,6 +24,8 @@ export const RedeemCode: React.FC = () => {
     code: redeemCodeKey,
   };
 
+  // TODO: redirect if !accessToken ?
+
   const redeemCodeInputCallback = (text: string, status: InputStatus | undefined) => {
     setRedeemCodeKey(text);
     setRedeemCodeStatus(status);

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { getAxiosInstance } from '../../../shared/ts/axiosInstance';
-import { GetResponseWallet } from '../../../shared/ts/types';
+import { IGetResponseWallet } from '../../../shared/ts/interfaces';
 
 import './WalletPage.scss';
 import { WalletSwitch } from './WalletSwitch';
@@ -16,28 +16,40 @@ export const WalletPage: React.FC = () => {
   const [xlm, setXlm] = useState<number>(0);
   const [usd, setUsd] = useState<number>(0);
 
-  const getUserResponseCallback = (response: GetResponseWallet): void => {
-    const { username, balanceInUSD, balanceInXLM, balanceInPXL } = response.data;
+  const setUserWallet = (wallet: IGetResponseWallet): void => {
+    const { username, balanceInUSD, balanceInXLM, balanceInPXL } = wallet;
 
     setUsername(username);
     setPxl(balanceInPXL);
     setXlm(balanceInXLM);
     setUsd(balanceInUSD);
+
+    localStorage.setItem('wallet', JSON.stringify(wallet));
   };
 
   useEffect(() => {
     const errorCallback = (error: any): void => {
       if (error.response.status === 400) {
-        navigate('/coin');
+        navigate('/coin', { replace: true });
       }
     };
+
+    const wallet = localStorage.getItem('wallet');
+
+    if (!wallet) {
+      navigate('/coin', { replace: true });
+
+      return;
+    }
+
+    setUserWallet(JSON.parse(wallet as string));
 
     getAxiosInstance(navigate)({
       requestConfig: {
         url: '/wallet',
         method: 'get',
       },
-      onResponse: getUserResponseCallback,
+      onResponse: (response) => setUserWallet(response.data),
       onError: errorCallback,
     });
   }, [navigate]);

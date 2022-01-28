@@ -17,6 +17,10 @@ export const SettingsPage: React.FC = () => {
   const [wallet, setWallet] = useState<string>('');
   const [username, setUsername] = useState<string>('');
 
+  if (!localStorage.getItem('accessToken')) {
+    navigate('/auth', { replace: true });
+  }
+
   const getUserResponseCallback = (response: GetResponseUserData): void => {
     const { username, avatarUrl, firstName, lastName, wallet } = response.data;
 
@@ -46,11 +50,12 @@ export const SettingsPage: React.FC = () => {
   };
 
   const logOutBtnCallback = () => {
-    window.localStorage.clear();
+    localStorage.clear();
     navigate('/auth');
   };
 
   return (
+    // TODO: try <Navigate to />; maybe it redirect immediately and won't give to render page
     <section className="settings-page">
       <header className="settings-header">
         <Link to="/play">

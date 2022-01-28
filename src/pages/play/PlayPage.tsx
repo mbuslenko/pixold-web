@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { getAxiosInstance } from '../../shared/ts/axiosInstance';
@@ -18,6 +18,10 @@ export const PlayPage: React.FC = () => {
   const canvasHexagonRef = useRef<HTMLCanvasElement>(null);
   const canvasLineRef = useRef<HTMLCanvasElement>(null);
   const [map, setMap] = useState<HexagonMap>();
+
+  if (!localStorage.getItem('accessToken')) {
+    navigate('/auth', { replace: true });
+  }
 
   useLayoutEffect(() => {
     const { current: playPage } = playPageRef;
