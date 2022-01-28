@@ -13,23 +13,19 @@ export const HomePage: React.FC = () => {
     <>
       <Alert
         type="blue"
-        heading="Info Title"
-        text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis vitae ultrices in sed. Feugiat metus amet, id sed volutpat enim sed. Cras vel vitae, lectus id. Egestas quam auctor commodo porttitor netus risus enim. Nec mi neque malesuada aenean euismod est lorem."
+        heading="Servers update"
+        text="Our servers are going through an upgrade. There may be technical problems in the game and services for 10 minutes. Please do not make any serious actions with your balance, etc."
         closeAlertCallback={() => console.log('222')}
       />
-      <Alert
-        type="green"
-        heading="Successfully Message Lorem ipsum dolor sit amet, consectetur Lorem ipsum dolor sit amet, consectetur Lorem ipsum dolor sit amet, consectetur Lorem ipsum dolor sit amet, consectetur"
-        closeAlertCallback={() => console.log('222')}
-      />
+      <Alert type="green" heading="Type was changed successfully" closeAlertCallback={() => console.log('222')} />
       <Alert
         type="yellow"
-        heading="Alert Message Lorem ipsum dolor sit amet, consectetur Lorem ipsum dolor sit amet, consectetur Lorem ipsum dolor sit amet, consectetur Lorem ipsum dolor sit amet, consectetur"
+        heading="Your previous attack was failed, Your previous attack was failed"
         closeAlertCallback={() => console.log('222')}
       />
       <Alert
         type="red"
-        heading="Error Message"
+        heading="You can not change type of other user hexagon, You can not change type of other user"
         closeAlertCallback={() => console.log('222')}
       />
       <HomeWelcomeScreen />

@@ -2,11 +2,11 @@
 
 %alert-icon {
   display: inline-block;
-  height: 10px;
-  width: 10px;
+  height: 15px;
+  width: 15px;
   position: absolute;
   left: 15px;
-  padding-top: 2px;
+  margin-top: 1px;
 }
 
 @mixin before-alert-icon($alert-icon-name) {
@@ -19,12 +19,12 @@
 
 .container {
   margin-top: 20px;
-  width: 285px;
+  width: 90vw;
+  max-width: 450px;
   display: flex;
   flex-direction: column;
-  padding: 18px 16px 18px 36px;
+  padding: 14px 16px 14px 36px;
   font-family: Roboto;
-  font-size: 16px;
   background-color: $black;
   border: {
     width: 1px;
@@ -34,14 +34,13 @@
 
   &.blue {
     border-color: #aed9ff;
-    padding: 30px 35px;
   }
 
   &.yellow {
     border-color: #dca048;
 
     .heading {
-      @include before-alert-icon('info-icon');
+      @include before-alert-icon('warning-icon');
     }
   }
 
@@ -66,22 +65,21 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 8px;
 }
 
 .info-title {
   font-weight: 500;
-  font-size: 13px;
-  line-height: 169%;
+  font-size: 12px;
   color: #237fd2;
   text-transform: uppercase;
-  margin-bottom: 8px;
 }
 
 .close-icon {
   cursor: pointer;
-  margin-top: 6px;
-  width: 6px;
-  height: 6px;
+  margin-top: 3px;
+  width: 10px;
+  height: 10px;
 }
 
 .heading-wrapper {
@@ -91,21 +89,19 @@
 
 .heading {
   font-weight: 500;
-  font-size: 11px;
-  padding-right: 15px;
+  font-size: 14px;
+  padding-right: 10px;
   margin-bottom: 8px;
 }
 
 .text {
-  margin-top: 8px;
+  margin-bottom: 8px;
   overflow-wrap: break-word;
-  font-size: 14px;
-  line-height: 24px;
+  font-size: 13px;
   color: $grey;
-  margin-bottom: 28px;
 }
 
 .time {
-  font-size: 7px;
+  font-size: 12px;
   color: #9faed7;
 }
