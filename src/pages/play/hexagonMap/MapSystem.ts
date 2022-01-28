@@ -148,8 +148,10 @@ export class SceneSystem {
     const checkRgbValue = (value: number, avoidValue: number): number => {
       const colorRange = 7;
 
-      if (value >= avoidValue - colorRange  && value <= avoidValue + colorRange) {
-        return avoidValue + (Math.ceil(Math.random() * colorRange) + colorRange) * Math.sign((value - avoidValue) * -2 + 1);
+      if (value >= avoidValue - colorRange && value <= avoidValue + colorRange) {
+        return (
+          avoidValue + (Math.ceil(Math.random() * colorRange) + colorRange) * Math.sign((value - avoidValue) * -2 + 1)
+        );
       }
 
       return value;

@@ -9,7 +9,7 @@ import { Input } from '../../components/input/Input';
 import { InputStatus } from '../../components/types';
 
 import './UsernamePage.scss';
-import { redirect } from '../../shared/ts/helperFunctions'
+import { redirect } from '../../shared/ts/helperFunctions';
 
 export const UsernamePage: React.FC = () => {
   const navigate = useNavigate();

@@ -32,9 +32,7 @@ export const PlayPagePopupLevel: React.FC<IPlayPagePopupLevelProps> = ({ hexagon
         </div>
         <div>
           <h3 className="play-page-popup-content-heading">On next level</h3>
-          <p className="play-page-popup-content-text">
-            {getNextItem(info.levelAll, HexagonLevel[hexagonInfo.level])}
-          </p>
+          <p className="play-page-popup-content-text">{getNextItem(info.levelAll, HexagonLevel[hexagonInfo.level])}</p>
         </div>
         <div className="play-page-popup-level-list">
           <h3 className="play-page-popup-content-heading">More about levels</h3>

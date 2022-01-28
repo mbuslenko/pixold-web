@@ -2,11 +2,11 @@ import { Button } from '../../../components/button/Button';
 import { Dropdown } from '../../../components/dropdown/Dropdown';
 import { Input } from '../../../components/input/Input';
 
-import { WalletSwitchProps } from '../interfaces';
+import { IWalletSwitchProps } from '../interfaces';
 
 import './WalletSwitch.scss';
 
-export const WalletSwitch: React.FC<WalletSwitchProps> = ({ onSubmit }) => {
+export const WalletSwitch: React.FC<IWalletSwitchProps> = ({ onSubmit }) => {
   return (
     <section className="wallet-switch-container">
       <div className="wallet-switch-input-container">

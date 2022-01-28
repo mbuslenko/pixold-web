@@ -51,7 +51,10 @@ export const PlayPagePopup: React.FC<IPlayPagePopupProps> = ({ hexagonId, closeP
         url: '/hexagon/change-type',
         data: { numericId: hexagonId, type: newHexagonType },
       },
-      onResponse: () => { setAlertProps({ type: 'green', heading: 'Type was changed successfully' }); hexagonInfo && setHexagonInfo({...hexagonInfo, type: newHexagonType}) },
+      onResponse: () => {
+        setAlertProps({ type: 'green', heading: 'Type was changed successfully' });
+        hexagonInfo && setHexagonInfo({ ...hexagonInfo, type: newHexagonType });
+      },
       onError: (error) => setAlertProps({ type: 'red', heading: 'Error', text: error.response.data.message }),
     });
   };
@@ -110,7 +113,7 @@ export const PlayPagePopup: React.FC<IPlayPagePopupProps> = ({ hexagonId, closeP
           changeTabCallback={(tab) => setSelectedTab(tab)}
         />
       ) : (
-        <Loader/>
+        <Loader />
       )}
       {modalIsVisible && (
         <Modal

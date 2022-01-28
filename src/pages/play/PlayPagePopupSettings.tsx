@@ -5,7 +5,7 @@ import { Button } from '../../components/button/Button';
 import { Dropdown } from '../../components/dropdown/Dropdown';
 import { Toggle } from '../../components/toggle/Toggle';
 import { getAxiosInstance } from '../../shared/ts/axiosInstance';
-import { HexagonInfoType } from '../../shared/ts/types'
+import { HexagonInfoType } from '../../shared/ts/types';
 
 import { IPlayPagePopupSettingsProps } from './interfaces';
 

@@ -1,20 +1,25 @@
 import { WalletBalanceCurrency } from './types';
 
-export interface WalletBalanceProps {
+export interface IWalletBalanceProps {
   balance: number;
   currency: WalletBalanceCurrency;
 }
 
-export interface WalletHeaderProps {
+export interface IWalletHeaderProps {
   username: string;
 }
 
-export interface WalletBalanceContainerProps {
+export interface IWalletBalanceContainerProps {
   pxl: number;
   xlm: number;
   usd: number;
 }
 
-export interface WalletSwitchProps {
+export interface IWalletSwitchProps {
   onSubmit: () => void;
+}
+
+export interface IWalletBalanceNumber {
+  number: number;
+  overflow: string;
 }

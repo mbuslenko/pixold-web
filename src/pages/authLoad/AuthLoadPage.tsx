@@ -42,8 +42,8 @@ export const AuthLoadPage: React.FC = () => {
   }, [navigate]);
 
   return (
-    <section className='auth-load-page'>
-      <Loader/>
+    <section className="auth-load-page">
+      <Loader />
     </section>
   );
 };
