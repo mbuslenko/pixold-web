@@ -1,55 +1,108 @@
 @import '../../shared/scss/variables.scss';
 
+%alert-icon {
+  display: inline-block;
+  height: 15px;
+  width: 15px;
+  position: absolute;
+  left: 15px;
+  margin-top: 2px;
+}
+
+@mixin before-alert-icon($alert-icon-name) {
+  &::before {
+    @extend %alert-icon;
+
+    content: url('../../assets/svg/' + $alert-icon-name + '.svg');
+  }
+}
+
 .container {
-  position: fixed;
-  left: 50px;
-  bottom: 50px;
+  margin-top: 20px;
+  width: 90vw;
+  max-width: 450px;
   display: flex;
   flex-direction: column;
-  padding: 20px 24px;
-  font-size: 16px;
+  padding: 14px 16px 14px 36px;
+  font-family: Roboto;
+  background-color: $black;
   border: {
     width: 1px;
     style: solid;
-    radius: 10px;
+    radius: 15px;
   }
 
   &.blue {
     border-color: #aed9ff;
-    background-color: #e5f3ff;
-    color: #104ea2;
+    padding-left: 14px;
   }
 
   &.yellow {
-    border-color: #fff4e4;
-    background-color: #ffc061;
-    color: #7b430e;
+    border-color: #dca048;
+
+    .heading {
+      @include before-alert-icon('warning-icon');
+    }
   }
 
   &.red {
-    border-color: #ffb5a5;
-    background-color: #fff3f0;
-    color: #d42600;
+    border-color: #fb3836;
+
+    .heading {
+      @include before-alert-icon('error-icon');
+    }
   }
 
   &.green {
-    border-color: #b0ceaf;
-    background-color: #dffcde;
-    color: #00b894;
-  }
+    border-color: #48b16e;
 
-  &.grey {
-    border-color: #b9b9b9;
-    background-color: $black;
-    color: #dfe6e9;
+    .heading {
+      @include before-alert-icon('success-icon');
+    }
   }
+}
+
+.info-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.info-title {
+  font-weight: 500;
+  font-size: 12px;
+  color: #237fd2;
+  text-transform: uppercase;
+}
+
+.close-icon {
+  cursor: pointer;
+  margin-top: 3px;
+  width: 10px;
+  height: 10px;
+}
+
+.heading-wrapper {
+  display: flex;
+  justify-content: space-between;
 }
 
 .heading {
-  font-weight: 600;
+  font-weight: 500;
+  font-size: 14px;
+  padding-right: 10px;
+  margin-bottom: 8px;
 }
 
 .text {
-  margin-top: 8px;
+  margin-bottom: 8px;
   overflow-wrap: break-word;
+  font-size: 13px;
+  color: $grey;
+}
+
+.time {
+  font-size: 12px;
+  color: #9faed7;
 }

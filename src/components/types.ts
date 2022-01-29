@@ -12,7 +12,7 @@ export type SecondaryButtonTheme = 'black-white' | 'yellow' | 'red' | 'blue' | '
 export type ModalTheme = 'blue-dark';
 export type ModalPositionType = 'absolute' | 'fixed' | 'relative';
 
-export type AlertType = 'blue' | 'yellow' | 'red' | 'green' | 'gray';
+export type AlertType = 'blue' | 'yellow' | 'red' | 'green';
 
 export type HexagonColor = 'red' | 'blue' | 'yellow';
 export type HexagonStrokeColor = 'red' | 'purple';

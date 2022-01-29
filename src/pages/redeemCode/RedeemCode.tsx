@@ -109,7 +109,9 @@ export const RedeemCode: React.FC = () => {
           />
         </a>
       </main>
-      {isAlertVisible && <Alert type="red" heading={alertHeading} onClick={() => setIsAlertVisible(false)} />}
+      {isAlertVisible && (
+        <Alert type="red" heading={alertHeading} closeAlertCallback={() => setIsAlertVisible(false)} />
+      )}
     </section>
   );
 };

@@ -97,7 +97,7 @@ export interface IAlertProps {
   type: AlertType;
   heading: string;
   text?: string;
-  onClick?: () => void;
+  closeAlertCallback: () => void;
 }
 
 export interface IModalPosition {

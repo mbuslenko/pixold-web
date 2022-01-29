@@ -115,7 +115,9 @@ export const WalletConnectPage: React.FC = () => {
         onClick={connectWalletCallback}
         className="wallet-submit-button"
       />
-      {isAlertVisible && <Alert type="red" heading={alertHeading} onClick={() => setIsAlertVisible(false)} />}
+      {isAlertVisible && (
+        <Alert type="red" heading={alertHeading} closeAlertCallback={() => setIsAlertVisible(false)} />
+      )}
     </section>
   );
 };
