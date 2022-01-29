@@ -1,4 +1,4 @@
-@mixin play-page-popup-content($padding, $template-columns: repeat(2, auto)) {
+@mixin play-popup-content($padding, $template-columns: repeat(2, auto)) {
   padding: $padding;
   display: grid;
   grid-template-columns: $template-columns;

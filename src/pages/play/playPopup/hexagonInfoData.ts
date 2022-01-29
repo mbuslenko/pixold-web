@@ -1,4 +1,4 @@
-import { HexagonLevel } from '../../shared/ts/interfaces';
+import { HexagonLevel } from '../../../shared/ts/interfaces';
 
 export const hexagonLevelInfo = {
   miner: {

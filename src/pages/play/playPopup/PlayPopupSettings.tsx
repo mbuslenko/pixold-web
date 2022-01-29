@@ -1,17 +1,17 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Button } from '../../components/button/Button';
-import { Dropdown } from '../../components/dropdown/Dropdown';
-import { Toggle } from '../../components/toggle/Toggle';
-import { getAxiosInstance } from '../../shared/ts/axiosInstance';
-import { HexagonInfoType } from '../../shared/ts/types';
+import { Button } from '../../../components/button/Button';
+import { Dropdown } from '../../../components/dropdown/Dropdown';
+import { Toggle } from '../../../components/toggle/Toggle';
+import { getAxiosInstance } from '../../../shared/ts/axiosInstance';
+import { HexagonInfoType } from '../../../shared/ts/types';
 
-import { IPlayPagePopupSettingsProps } from './interfaces';
+import { IPlayPopupSettingsProps } from './interfaces';
 
-import './PlayPagePopupSettings.scss';
+import './PlayPopupSettings.scss';
 
-export const PlayPagePopupSettings: React.FC<IPlayPagePopupSettingsProps> = ({
+export const PlayPopupSettings: React.FC<IPlayPopupSettingsProps> = ({
   hexagonInfo,
   changeHexagonTypeCallback,
 }) => {
@@ -19,10 +19,10 @@ export const PlayPagePopupSettings: React.FC<IPlayPagePopupSettingsProps> = ({
   const [newHexagonType, setNewHexagon] = useState<HexagonInfoType>();
 
   return (
-    <section className="play-page-popup-settings-content">
-      <div className="play-page-popup-settings-type-selection">
+    <section className="play-popup-settings-content">
+      <div className="play-popup-settings-type-selection">
         <div>
-          <h3 className="play-page-popup-content-heading">Type</h3>
+          <h3 className="play-popup-content-heading">Type</h3>
           <Dropdown
             placeholder="Choose new type"
             options={[
@@ -78,8 +78,8 @@ export const PlayPagePopupSettings: React.FC<IPlayPagePopupSettingsProps> = ({
       />
 
       <div>
-        <h3 className="play-page-popup-content-heading">Hexagon customization</h3>
-        <p className="play-page-popup-settings-content-text">Will be soon</p>
+        <h3 className="play-popup-content-heading">Hexagon customization</h3>
+        <p className="play-popup-settings-content-text">Will be soon</p>
       </div>
     </section>
   );

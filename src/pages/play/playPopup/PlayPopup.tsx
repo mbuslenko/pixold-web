@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { getAxiosInstance } from '../../shared/ts/axiosInstance';
-import { IGetResponseHexagonInfo } from '../../shared/ts/interfaces';
-import { GetResponseHexagonInfo, HexagonInfoType } from '../../shared/ts/types';
+import { getAxiosInstance } from '../../../shared/ts/axiosInstance';
+import { IGetResponseHexagonInfo } from '../../../shared/ts/interfaces';
+import { GetResponseHexagonInfo, HexagonInfoType } from '../../../shared/ts/types';
 
-import { TabbedButtonGroup } from '../../components/tabbedButtonGroup/TabbedButtonGroup';
-import { Alert } from '../../components/alert/Alert';
-import { Button } from '../../components/button/Button';
-import { Modal } from '../../components/modal/Modal';
-import { IAlertProps } from '../../components/interfaces';
-import { Loader } from '../../components/loader/Loader';
+import { TabbedButtonGroup } from '../../../components/tabbedButtonGroup/TabbedButtonGroup';
+import { Alert } from '../../../components/alert/Alert';
+import { Button } from '../../../components/button/Button';
+import { Modal } from '../../../components/modal/Modal';
+import { IAlertProps } from '../../../components/interfaces';
+import { Loader } from '../../../components/loader/Loader';
 
-import './PlayPagePopup.scss';
-import { IPlayPagePopupProps } from './interfaces';
-import { PlayPagePopupInfo } from './PlayPagePopupInfo';
-import { PlayPagePopupLevel } from './PlayPagePopupLevel';
-import { PlayPagePopupSettings } from './PlayPagePopupSettings';
+import './PlayPopup.scss';
+import { IPlayPopupProps } from './interfaces';
+import { PlayPopupInfo } from './PlayPopupInfo';
+import { PlayPopupLevel } from './PlayPopupLevel';
+import { PlayPopupSettings } from './PlayPopupSettings';
 
-export const PlayPagePopup: React.FC<IPlayPagePopupProps> = ({ hexagonId, closePopupCallback }) => {
+export const PlayPopup: React.FC<IPlayPopupProps> = ({ hexagonId, closePopupCallback }) => {
   const navigate = useNavigate();
   const [hexagonInfo, setHexagonInfo] = useState<IGetResponseHexagonInfo | null>(null);
   const [alertProps, setAlertProps] = useState<IAlertProps | null>(null);
@@ -60,7 +60,7 @@ export const PlayPagePopup: React.FC<IPlayPagePopupProps> = ({ hexagonId, closeP
   };
 
   return (
-    <section className="play-page-popup">
+    <section className="play-popup">
       {/* HACK: test */}
       <button
         onClick={() =>
@@ -79,7 +79,7 @@ export const PlayPagePopup: React.FC<IPlayPagePopupProps> = ({ hexagonId, closeP
       >
         Buy
       </button>
-      <div className="play-page-popup-menu">
+      <div className="play-popup-menu">
         <TabbedButtonGroup
           name={'play-menu-popup-tab'}
           value={selectedTab}
@@ -97,15 +97,15 @@ export const PlayPagePopup: React.FC<IPlayPagePopupProps> = ({ hexagonId, closeP
         </button>
       </div>
       {hexagonInfo && selectedTab === 'level' ? (
-        <PlayPagePopupLevel setModalIsVisibleCallback={setModalIsVisible} hexagonInfo={hexagonInfo} />
+        <PlayPopupLevel setModalIsVisibleCallback={setModalIsVisible} hexagonInfo={hexagonInfo} />
       ) : hexagonInfo && selectedTab === 'settings' ? (
-        <PlayPagePopupSettings
+        <PlayPopupSettings
           hexagonInfo={hexagonInfo}
           changeHexagonTypeCallback={changeHexagonTypeCallback}
           setAlertPropsCallback={setAlertProps}
         />
       ) : hexagonInfo && selectedTab === 'info' ? (
-        <PlayPagePopupInfo
+        <PlayPopupInfo
           setModalIsVisibleCallback={setModalIsVisible}
           setAlertPropsCallback={setAlertProps}
           hexagonInfo={hexagonInfo}
@@ -113,13 +113,13 @@ export const PlayPagePopup: React.FC<IPlayPagePopupProps> = ({ hexagonId, closeP
           changeTabCallback={(tab) => setSelectedTab(tab)}
         />
       ) : (
-        <Loader />
+        <Loader className='play-popup-loader' />
       )}
       {modalIsVisible && (
         <Modal
           heading={`An upgrade will take ${hexagonInfo?.coinsToUpgrade} coins from your wallet, are you sure?`}
           text=""
-          className="play-page-popup-modal"
+          className="play-popup-modal"
         >
           <Button
             text={'Submit'}

@@ -6,7 +6,7 @@ import { GetResponseAllHexagonOwned } from '../../shared/ts/types';
 
 import './PlayPage.scss';
 import { PlayMenu } from './PlayMenu';
-import { PlayPagePopup } from './PlayPagePopup';
+import { PlayPopup } from './playPopup/PlayPopup';
 import { HexagonMap } from './hexagonMap/HexagonMap';
 import { EventManager } from './hexagonMap/EventManager';
 
@@ -74,7 +74,7 @@ export const PlayPage: React.FC = () => {
       <canvas className="play-page-canvas-line" ref={canvasLineRef} />
       <PlayMenu showMyTerritoryCallback={map?.showOwnedHexagonAll.bind(map)} />
       {isVisiblePopup && hexagonId !== null && (
-        <PlayPagePopup
+        <PlayPopup
           hexagonId={hexagonId}
           closePopupCallback={() => {
             setIsVisiblePopup(false);

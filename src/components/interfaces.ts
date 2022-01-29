@@ -105,6 +105,10 @@ export interface IModalPosition {
   top: string;
 }
 
+export interface ILoaderProps {
+  className?: string;
+}
+
 export interface IModalProps {
   heading: string;
   text: string;
