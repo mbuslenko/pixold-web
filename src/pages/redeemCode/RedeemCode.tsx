@@ -75,8 +75,8 @@ export const RedeemCode: React.FC = () => {
       <main className="redeem-content">
         <h1 className="redeem-title">Redeem code</h1>
         <p className="redeem-text">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Blandit ultricies aliquam quis in accumsan, vel ut.
-          Posuere suscipit neque scelerisque libero.
+        To add a hexagon to your account, you need a code that you can 
+        get after purchasing from our OpenSea page. Enter the code in the line below
         </p>
 
         <div className="redeem-input-wrap">
