@@ -28,7 +28,7 @@ export const Alert: React.FC<IAlertProps> = ({ type, heading, text, closeAlertCa
 
   return (
     <div className={`${styles.container} ${styles[type]}`}>
-      {type === 'blue' && (
+      {type === 'info' && (
         <div className={`${styles['info-wrapper']}`}>
           <h3 className={styles['info-title']}>Info</h3>
           <img className={styles['close-icon']} src={closeSvg} alt="Close" onClick={closeAlertCallback} />
@@ -36,7 +36,7 @@ export const Alert: React.FC<IAlertProps> = ({ type, heading, text, closeAlertCa
       )}
       <div className={`${styles['heading-wrapper']}`}>
         <h2 className={styles.heading}>{heading}</h2>
-        {type !== 'blue' && (
+        {type !== 'info' && (
           <img className={styles['close-icon']} src={closeSvg} alt="Close" onClick={closeAlertCallback} />
         )}
       </div>

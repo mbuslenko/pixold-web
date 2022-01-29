@@ -1,4 +1,5 @@
 import { AxiosResponse } from 'axios';
+import { AlertType } from '../../components/types';
 
 import { HexagonInfoType, RequestData } from './types';
 
@@ -29,7 +30,7 @@ export interface IPostDataWalletConnect {
 
 export interface ISocketAttackMessage {
   to: string;
-  type: 'alert' | 'info' | 'success' | 'error';
+  type: AlertType;
   message: string;
 }
 

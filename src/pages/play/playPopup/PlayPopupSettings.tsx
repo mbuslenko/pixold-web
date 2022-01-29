@@ -11,10 +11,7 @@ import { IPlayPopupSettingsProps } from './interfaces';
 
 import './PlayPopupSettings.scss';
 
-export const PlayPopupSettings: React.FC<IPlayPopupSettingsProps> = ({
-  hexagonInfo,
-  changeHexagonTypeCallback,
-}) => {
+export const PlayPopupSettings: React.FC<IPlayPopupSettingsProps> = ({ hexagonInfo, changeHexagonTypeCallback }) => {
   const navigate = useNavigate();
   const [newHexagonType, setNewHexagon] = useState<HexagonInfoType>();
 

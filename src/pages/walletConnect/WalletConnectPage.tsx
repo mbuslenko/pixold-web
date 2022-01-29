@@ -86,10 +86,9 @@ export const WalletConnectPage: React.FC = () => {
         <LumenLogoSvg color="pink" className="wallet-connect-lumen-logo" />
         <h1 className="wallet-connect-heading">Connect a wallet</h1>
         <p className="wallet-connect-text">
-        To connect your wallet, you will need a Public key and a Secret key. 
-        Enter them in the fields below to connect your wallet. 
-        Once connected, you will be able to perform any in-game transactions.
-        For more info, visit our <Link to="/faq/f4fa1f54-a705-4039-989e-ff1177f60cc7">FAQ</Link> page.
+          To connect your wallet, you will need a Public key and a Secret key. Enter them in the fields below to connect
+          your wallet. Once connected, you will be able to perform any in-game transactions. For more info, visit our{' '}
+          <Link to="/faq/f4fa1f54-a705-4039-989e-ff1177f60cc7">FAQ</Link> page.
         </p>
       </div>
 
@@ -116,7 +115,7 @@ export const WalletConnectPage: React.FC = () => {
         className="wallet-submit-button"
       />
       {isAlertVisible && (
-        <Alert type="red" heading={alertHeading} closeAlertCallback={() => setIsAlertVisible(false)} />
+        <Alert type="error" heading={alertHeading} closeAlertCallback={() => setIsAlertVisible(false)} />
       )}
     </section>
   );

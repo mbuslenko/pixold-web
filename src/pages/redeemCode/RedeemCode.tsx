@@ -75,8 +75,8 @@ export const RedeemCode: React.FC = () => {
       <main className="redeem-content">
         <h1 className="redeem-title">Redeem code</h1>
         <p className="redeem-text">
-        To add a hexagon to your account, you need a code that you can 
-        get after purchasing from our OpenSea page. Enter the code in the line below
+          To add a hexagon to your account, you need a code that you can get after purchasing from our OpenSea page.
+          Enter the code in the line below
         </p>
 
         <div className="redeem-input-wrap">
@@ -110,7 +110,7 @@ export const RedeemCode: React.FC = () => {
         </a>
       </main>
       {isAlertVisible && (
-        <Alert type="red" heading={alertHeading} closeAlertCallback={() => setIsAlertVisible(false)} />
+        <Alert type="error" heading={alertHeading} closeAlertCallback={() => setIsAlertVisible(false)} />
       )}
     </section>
   );

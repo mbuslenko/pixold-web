@@ -8,13 +8,13 @@ import { GetResponseAllHexagonOwned } from '../../shared/ts/types';
 import { ISocketAttackMessage } from '../../shared/ts/interfaces';
 
 import { Alert } from '../../components/alert/Alert';
-import { IAlertProps } from '../../components/interfaces';
 
 import './PlayPage.scss';
 import { PlayMenu } from './PlayMenu';
 import { PlayPopup } from './playPopup/PlayPopup';
 import { HexagonMap } from './hexagonMap/HexagonMap';
 import { EventManager } from './hexagonMap/EventManager';
+import { PlayShowAlertCallback } from './types';
 
 export const PlayPage: React.FC = () => {
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ export const PlayPage: React.FC = () => {
   const [isVisiblePopup, setIsVisiblePopup] = useState(false);
   const [hexagonId, setHexagonId] = useState<number | null>(null);
   const [map, setMap] = useState<HexagonMap>();
-  const [alertProps, setAlertProps] = useState<IAlertProps | null>(null);
+  const [alertProps, setAlertProps] = useState<PlayShowAlertCallback>(null);
 
   const playPageRef = useRef<HTMLElement>(null);
   const canvasHexagonRef = useRef<HTMLCanvasElement>(null);
@@ -43,7 +43,7 @@ export const PlayPage: React.FC = () => {
 
     // I set onwheel through ref because in this situation: "<section onWheel={e => e.preventDefault()}>" event listener is passive.
     // That means i can't block default browser zoom for my elements.
-    playPage.onwheel = e => e.preventDefault();
+    playPage.onwheel = (e) => e.preventDefault();
 
     const axiosInstance = getAxiosInstance(navigate);
     // HACK: test
@@ -77,11 +77,15 @@ export const PlayPage: React.FC = () => {
         console.log(['Sir/Madam, you are under attacked', type, message]);
         // HACK: test
         setAlertProps({
-          type: 'yellow',
+          type,
           heading: message,
         });
       }
       // map;
+    });
+
+    socket.on('info', (payload) => {
+      console.log(payload);
     });
 
     map.run();
@@ -110,7 +114,7 @@ export const PlayPage: React.FC = () => {
           setAlertPropsCallback={setAlertProps}
         />
       )}
-      {alertProps && <Alert {...alertProps} onClick={() => setAlertProps(null)} />}
+      {alertProps && <Alert {...alertProps} closeAlertCallback={() => setAlertProps(null)} />}
     </section>
   );
 };

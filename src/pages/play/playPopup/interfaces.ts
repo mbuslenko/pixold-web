@@ -1,12 +1,12 @@
-import { IGetResponseHexagonInfo } from '../../../shared/ts/interfaces'
-import { HexagonInfoType } from '../../../shared/ts/types'
+import { IGetResponseHexagonInfo } from '../../../shared/ts/interfaces';
+import { HexagonInfoType } from '../../../shared/ts/types';
 
-import { IAlertProps } from '../../../components/interfaces'
+import { PlayShowAlertCallback } from '../types';
 
 export interface IPlayPopupProps {
   hexagonId: number;
   closePopupCallback: () => void;
-  setAlertPropsCallback: (props: IAlertProps) => void;
+  setAlertPropsCallback: (props: PlayShowAlertCallback) => void;
 }
 
 export interface IPlayPopupInfoProps {
@@ -14,7 +14,7 @@ export interface IPlayPopupInfoProps {
   hexagonInfo: IGetResponseHexagonInfo;
   changeTabCallback: (tab: string) => void;
   setModalIsVisibleCallback: (isVisible: boolean) => void;
-  setAlertPropsCallback: (props: IAlertProps) => void;
+  setAlertPropsCallback: (props: PlayShowAlertCallback) => void;
 }
 
 export interface IPlayPopupLevelProps {
@@ -25,5 +25,5 @@ export interface IPlayPopupLevelProps {
 export interface IPlayPopupSettingsProps {
   hexagonInfo: IGetResponseHexagonInfo;
   changeHexagonTypeCallback: (hexagonType?: HexagonInfoType) => void;
-  setAlertPropsCallback: (props: IAlertProps) => void;
+  setAlertPropsCallback: (props: PlayShowAlertCallback) => void;
 }

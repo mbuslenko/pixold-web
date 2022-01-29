@@ -17,8 +17,7 @@ export const PlayPopupInfo: React.FC<IPlayPopupInfoProps> = ({
   changeTabCallback,
 }) => {
   const navigate = useNavigate();
-  const buttonClassName =
-    hexagonInfo.owner !== localStorage.getItem('username') ? 'play-popup-info-button-hidden' : '';
+  const buttonClassName = hexagonInfo.owner !== localStorage.getItem('username') ? 'play-popup-info-button-hidden' : '';
 
   return (
     <section className="play-popup-tab">
@@ -66,15 +65,15 @@ export const PlayPopupInfo: React.FC<IPlayPopupInfoProps> = ({
               },
               onResponse: () =>
                 setAlertPropsCallback({
-                  type: 'green',
+                  type: 'success',
                   heading: 'The coins were successfully delivered to your wallet',
                 }),
               onError: (error) =>
-                setAlertPropsCallback({ type: 'red', heading: 'Error', text: error.response.data.message }),
+                setAlertPropsCallback({ type: 'error', heading: 'Error', text: error.response.data.message }),
             })
           }
         />
-        <div className='play-popup-content-owner'>
+        <div className="play-popup-content-owner">
           <div>
             <h3 className="play-popup-content-heading">Owner</h3>
             <p className="play-popup-content-text">{hexagonInfo.owner}</p>

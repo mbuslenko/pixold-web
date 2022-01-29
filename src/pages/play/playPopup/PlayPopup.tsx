@@ -13,8 +13,8 @@ import { IPlayPopupProps } from './interfaces';
 import { PlayPopupInfo } from './PlayPopupInfo';
 import { PlayPopupLevel } from './PlayPopupLevel';
 import { PlayPopupSettings } from './PlayPopupSettings';
-import { Button } from '../../../components/button/Button'
-import { Modal } from '../../../components/modal/Modal'
+import { Button } from '../../../components/button/Button';
+import { Modal } from '../../../components/modal/Modal';
 
 export const PlayPopup: React.FC<IPlayPopupProps> = ({ hexagonId, closePopupCallback, setAlertPropsCallback }) => {
   const navigate = useNavigate();
@@ -49,10 +49,10 @@ export const PlayPopup: React.FC<IPlayPopupProps> = ({ hexagonId, closePopupCall
         data: { numericId: hexagonId, type: newHexagonType },
       },
       onResponse: () => {
-        setAlertPropsCallback({ type: 'green', heading: 'Type was changed successfully' });
+        setAlertPropsCallback({ type: 'success', heading: 'Type was changed successfully' });
         hexagonInfo && setHexagonInfo({ ...hexagonInfo, type: newHexagonType });
       },
-      onError: (error) => setAlertPropsCallback({ type: 'red', heading: 'Error', text: error.response.data.message }),
+      onError: (error) => setAlertPropsCallback({ type: 'error', heading: 'Error', text: error.response.data.message }),
     });
   };
 
@@ -110,7 +110,7 @@ export const PlayPopup: React.FC<IPlayPopupProps> = ({ hexagonId, closePopupCall
           changeTabCallback={(tab) => setSelectedTab(tab)}
         />
       ) : (
-        <Loader className='play-popup-loader' />
+        <Loader className="play-popup-loader" />
       )}
       {modalIsVisible && (
         <Modal
@@ -128,9 +128,9 @@ export const PlayPopup: React.FC<IPlayPopupProps> = ({ hexagonId, closePopupCall
                   url: '/hexagon/upgrade',
                   data: { numericId: hexagonId },
                 },
-                onResponse: () => setAlertPropsCallback({ type: 'green', heading: 'success' }),
+                onResponse: () => setAlertPropsCallback({ type: 'success', heading: 'success' }),
                 onError: (error) => {
-                  setAlertPropsCallback({ type: 'red', heading: 'Error', text: error.response.data.message });
+                  setAlertPropsCallback({ type: 'error', heading: 'Error', text: error.response.data.message });
                   console.log(error);
                 },
               });
