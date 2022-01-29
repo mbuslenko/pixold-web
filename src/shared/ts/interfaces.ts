@@ -27,6 +27,12 @@ export interface IPostDataWalletConnect {
   secret: string;
 }
 
+export interface ISocketAttackMessage {
+  to: string;
+  type: 'alert' | 'info' | 'success' | 'error';
+  message: string;
+}
+
 export interface IPostResponseWalletConnect {
   id: string;
   balanceInUSD: number;

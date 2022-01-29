@@ -6,10 +6,6 @@ import { IGetResponseHexagonInfo } from '../../../shared/ts/interfaces';
 import { GetResponseHexagonInfo, HexagonInfoType } from '../../../shared/ts/types';
 
 import { TabbedButtonGroup } from '../../../components/tabbedButtonGroup/TabbedButtonGroup';
-import { Alert } from '../../../components/alert/Alert';
-import { Button } from '../../../components/button/Button';
-import { Modal } from '../../../components/modal/Modal';
-import { IAlertProps } from '../../../components/interfaces';
 import { Loader } from '../../../components/loader/Loader';
 
 import './PlayPopup.scss';
@@ -17,13 +13,14 @@ import { IPlayPopupProps } from './interfaces';
 import { PlayPopupInfo } from './PlayPopupInfo';
 import { PlayPopupLevel } from './PlayPopupLevel';
 import { PlayPopupSettings } from './PlayPopupSettings';
+import { Button } from '../../../components/button/Button'
+import { Modal } from '../../../components/modal/Modal'
 
-export const PlayPopup: React.FC<IPlayPopupProps> = ({ hexagonId, closePopupCallback }) => {
+export const PlayPopup: React.FC<IPlayPopupProps> = ({ hexagonId, closePopupCallback, setAlertPropsCallback }) => {
   const navigate = useNavigate();
   const [hexagonInfo, setHexagonInfo] = useState<IGetResponseHexagonInfo | null>(null);
-  const [alertProps, setAlertProps] = useState<IAlertProps | null>(null);
-  const [modalIsVisible, setModalIsVisible] = useState<boolean>(false);
   const [selectedTab, setSelectedTab] = useState<string>('info');
+  const [modalIsVisible, setModalIsVisible] = useState<boolean>(false);
 
   useEffect(() => {
     setHexagonInfo(null);
@@ -52,10 +49,10 @@ export const PlayPopup: React.FC<IPlayPopupProps> = ({ hexagonId, closePopupCall
         data: { numericId: hexagonId, type: newHexagonType },
       },
       onResponse: () => {
-        setAlertProps({ type: 'green', heading: 'Type was changed successfully' });
+        setAlertPropsCallback({ type: 'green', heading: 'Type was changed successfully' });
         hexagonInfo && setHexagonInfo({ ...hexagonInfo, type: newHexagonType });
       },
-      onError: (error) => setAlertProps({ type: 'red', heading: 'Error', text: error.response.data.message }),
+      onError: (error) => setAlertPropsCallback({ type: 'red', heading: 'Error', text: error.response.data.message }),
     });
   };
 
@@ -102,12 +99,12 @@ export const PlayPopup: React.FC<IPlayPopupProps> = ({ hexagonId, closePopupCall
         <PlayPopupSettings
           hexagonInfo={hexagonInfo}
           changeHexagonTypeCallback={changeHexagonTypeCallback}
-          setAlertPropsCallback={setAlertProps}
+          setAlertPropsCallback={setAlertPropsCallback}
         />
       ) : hexagonInfo && selectedTab === 'info' ? (
         <PlayPopupInfo
           setModalIsVisibleCallback={setModalIsVisible}
-          setAlertPropsCallback={setAlertProps}
+          setAlertPropsCallback={setAlertPropsCallback}
           hexagonInfo={hexagonInfo}
           hexagonId={hexagonId}
           changeTabCallback={(tab) => setSelectedTab(tab)}
@@ -131,9 +128,9 @@ export const PlayPopup: React.FC<IPlayPopupProps> = ({ hexagonId, closePopupCall
                   url: '/hexagon/upgrade',
                   data: { numericId: hexagonId },
                 },
-                onResponse: () => setAlertProps({ type: 'green', heading: 'success' }),
+                onResponse: () => setAlertPropsCallback({ type: 'green', heading: 'success' }),
                 onError: (error) => {
-                  setAlertProps({ type: 'red', heading: 'Error', text: error.response.data.message });
+                  setAlertPropsCallback({ type: 'red', heading: 'Error', text: error.response.data.message });
                   console.log(error);
                 },
               });
@@ -143,7 +140,6 @@ export const PlayPopup: React.FC<IPlayPopupProps> = ({ hexagonId, closePopupCall
           <Button text={'Cancel'} appearance={{ priority: 'secondary' }} onClick={() => setModalIsVisible(false)} />
         </Modal>
       )}
-      {alertProps && <Alert {...alertProps} onClick={() => setAlertProps(null)} />}
     </section>
   );
 };

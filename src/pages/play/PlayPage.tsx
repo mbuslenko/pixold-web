@@ -1,8 +1,14 @@
+import { io } from 'socket.io-client';
+
 import { useLayoutEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { getAxiosInstance } from '../../shared/ts/axiosInstance';
 import { GetResponseAllHexagonOwned } from '../../shared/ts/types';
+import { ISocketAttackMessage } from '../../shared/ts/interfaces';
+
+import { Alert } from '../../components/alert/Alert';
+import { IAlertProps } from '../../components/interfaces';
 
 import './PlayPage.scss';
 import { PlayMenu } from './PlayMenu';
@@ -12,12 +18,15 @@ import { EventManager } from './hexagonMap/EventManager';
 
 export const PlayPage: React.FC = () => {
   const navigate = useNavigate();
+
   const [isVisiblePopup, setIsVisiblePopup] = useState(false);
   const [hexagonId, setHexagonId] = useState<number | null>(null);
+  const [map, setMap] = useState<HexagonMap>();
+  const [alertProps, setAlertProps] = useState<IAlertProps | null>(null);
+
   const playPageRef = useRef<HTMLElement>(null);
   const canvasHexagonRef = useRef<HTMLCanvasElement>(null);
   const canvasLineRef = useRef<HTMLCanvasElement>(null);
-  const [map, setMap] = useState<HexagonMap>();
 
   if (!localStorage.getItem('accessToken')) {
     navigate('/auth', { replace: true });
@@ -47,6 +56,7 @@ export const PlayPage: React.FC = () => {
       },
       () => setIsVisiblePopup(false),
     );
+    // TODO: make eventManager inside of map
     const eventManager = new EventManager(canvasLine, map);
 
     axiosInstance({
@@ -57,12 +67,30 @@ export const PlayPage: React.FC = () => {
       onResponse: (response: GetResponseAllHexagonOwned) => map.setAllOwnedHexagons(response.data),
     });
 
+    const socket = io(process.env.REACT_APP_SOCKET_URL as string);
+
+    socket.on('attack', (payload: ISocketAttackMessage) => {
+      console.log('socket attack');
+      const { to, type, message } = payload;
+
+      if (to === localStorage.getItem('userId')) {
+        console.log(['Sir/Madam, you are under attacked', type, message]);
+        // HACK: test
+        setAlertProps({
+          type: 'yellow',
+          heading: message,
+        });
+      }
+      // map;
+    });
+
     map.run();
     eventManager.setEvents();
 
     setMap(map);
 
     return () => {
+      socket.close();
       map.stop();
       eventManager.unsetEvents();
     };
@@ -79,8 +107,10 @@ export const PlayPage: React.FC = () => {
           closePopupCallback={() => {
             setIsVisiblePopup(false);
           }}
+          setAlertPropsCallback={setAlertProps}
         />
       )}
+      {alertProps && <Alert {...alertProps} onClick={() => setAlertProps(null)} />}
     </section>
   );
 };

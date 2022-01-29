@@ -178,6 +178,7 @@ export class EventManager {
     this._context.onmousemove = this._mouseMoveCallback.bind(this);
     this._context.onmouseup = this._mouseUpCallback.bind(this);
 
+    // TODO: check touch positions and maybe select hexagon NEAR to touch position
     this._context.ontouchstart = this._touchStartCallback.bind(this);
     this._context.ontouchmove = this._touchMoveCallback.bind(this);
     this._context.ontouchend = this._touchEndCallback.bind(this);

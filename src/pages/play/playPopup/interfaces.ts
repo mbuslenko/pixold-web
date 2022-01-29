@@ -6,6 +6,7 @@ import { IAlertProps } from '../../../components/interfaces'
 export interface IPlayPopupProps {
   hexagonId: number;
   closePopupCallback: () => void;
+  setAlertPropsCallback: (props: IAlertProps) => void;
 }
 
 export interface IPlayPopupInfoProps {

@@ -239,8 +239,9 @@ export class HexagonMap {
       if (this._isPositionInHexagon(position, hexagon)) {
         this._mapSystem.activeHexagon = [hexagon];
 
-        // TODO: id + 1 when send. id - 1 when receive
-        this._clickOnHexagonCallback(hexagon.id);
+        // I do this because on back-end hexagonId starts from 1
+        this._clickOnHexagonCallback(hexagon.id + 1);
+        console.log(`owned: ${hexagon.color}; not owned: rgb(96, 74, 247)`);
 
         return;
       }

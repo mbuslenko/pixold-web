@@ -147,7 +147,8 @@ export class SceneSystem {
   private _generateRandomColor(): string {
     const generateRgbValue = (avoidValue: number): number => {
       const colorRange = 10;
-      const value = Math.floor(Math.random() * 255 - colorRange) + colorRange;
+      // 255 - colorRange is to eliminate full black colors
+      const value = Math.floor(Math.random() * (255 - colorRange)) + colorRange;
 
       if (value >= avoidValue - colorRange && value <= avoidValue + colorRange) {
         console.log('regenerate color');
@@ -162,7 +163,6 @@ export class SceneSystem {
     };
 
     // rgb to avoid "rgb(96, 74, 247)"
-    // 235 + 10 is to eliminate full white and full black colors
     return `rgb(${generateRgbValue(96)}, ${generateRgbValue(74)}, ${generateRgbValue(247)})`;
   }
 
@@ -173,14 +173,16 @@ export class SceneSystem {
       // TODO: refactoring;
       if (username === localStorage.username) {
         for (const hexagonId of hexagonIdAll) {
-          this._ownedHexagonAll.push(this._map[hexagonId]);
+          // I do this because on back-end hexagonId starts from 1
+          this._ownedHexagonAll.push(this._map[hexagonId - 1]);
         }
       }
 
       const hexagonColor = this._generateRandomColor();
 
       for (const hexagonId of hexagonIdAll) {
-        this._map[hexagonId].color = hexagonColor;
+        // I do this because on back-end hexagonId starts from 1
+        this._map[hexagonId - 1].color = hexagonColor;
       }
     }
   }
