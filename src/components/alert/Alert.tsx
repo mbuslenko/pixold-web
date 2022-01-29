@@ -11,13 +11,7 @@ export const Alert: React.FC<IAlertProps> = ({ type, heading, text, closeAlertCa
     const minutes = date.getMinutes();
     const ampm = hours >= 12 ? 'PM' : 'AM';
 
-    let time = '';
-
-    time += (hours ? hours : 12) + ':';
-    time += minutes < 10 ? '0' + minutes : minutes;
-    time += ampm;
-
-    return time;
+    return `${hours === 0 ? 12 : hours}:${minutes.toString().padStart(2, '0')}${ampm}`;
   };
 
   useEffect(() => {
