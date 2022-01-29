@@ -39,7 +39,7 @@ export const PlayMenu: React.FC<IPlayMenuCallback> = ({ showMyTerritoryCallback 
       <section className={`play-menu ${menuIsVisible && 'is-visible'}`}>
         <h2 className="play-menu-heading">Navigate</h2>
         <nav className="play-menu-navigation">
-          <Link to="/home">
+          <Link className="play-menu-logo-link" to="/home">
             <object className="play-menu-logo" data={logo} type="image/svg+xml" title="Logo" />
           </Link>
           <div className="play-menu-link-container">

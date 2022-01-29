@@ -145,10 +145,14 @@ export class SceneSystem {
   }
 
   private _generateRandomColor(): string {
-    const checkRgbValue = (value: number, avoidValue: number): number => {
+    const generateRgbValue = (avoidValue: number): number => {
       const colorRange = 10;
+      const value = Math.floor(Math.random() * 255 - colorRange) + colorRange;
 
       if (value >= avoidValue - colorRange && value <= avoidValue + colorRange) {
+        console.log('regenerate color');
+
+        // return generateRgbValue(avoidValue);
         return (
           avoidValue + (Math.ceil(Math.random() * colorRange) + colorRange) * Math.sign((value - avoidValue) * -2 + 1)
         );
@@ -159,11 +163,7 @@ export class SceneSystem {
 
     // rgb to avoid "rgb(96, 74, 247)"
     // 235 + 10 is to eliminate full white and full black colors
-    const red = checkRgbValue(Math.floor(Math.random() * 250) + 5, 96);
-    const green = checkRgbValue(Math.floor(Math.random() * 250) + 5, 74);
-    const blue = checkRgbValue(Math.floor(Math.random() * 250) + 5, 247);
-
-    return `rgb(${red}, ${green}, ${blue})`;
+    return `rgb(${generateRgbValue(96)}, ${generateRgbValue(74)}, ${generateRgbValue(247)})`;
   }
 
   setOwnedHexagonAll(ownedHexagonAll: IGetResponseOwnedHexagonAll[]): void {

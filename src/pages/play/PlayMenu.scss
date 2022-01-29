@@ -35,6 +35,7 @@
 .play-menu-navigation {
   display: flex;
   justify-content: space-between;
+  color: $purple;
 }
 
 .play-menu-logo {
@@ -49,7 +50,7 @@
 
 .play-menu-button,
 .play-menu-link {
-  color: $purple;
+  color: inherit;
 
   &:hover {
     color: $white;
@@ -164,9 +165,10 @@
   .play-menu-navigation {
     flex-direction: column;
     gap: 10vh 0;
+    color: $white;
   }
 
-  .play-menu-logo {
+  .play-menu-logo-link {
     display: none;
   }
 
@@ -189,6 +191,14 @@
 
   .play-menu-icon {
     margin: 0;
+
+    & .play-menu-icon-path {
+      fill: $white;
+    }
+
+    & .play-menu-icon-background {
+      opacity: 1;
+    }
   }
 
   .play-menu-logo-small {

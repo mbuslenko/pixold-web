@@ -34,7 +34,7 @@ export const PlayPage: React.FC = () => {
 
     // I set onwheel through ref because in this situation: "<section onWheel={e => e.preventDefault()}>" event listener is passive.
     // That means i can't block default browser zoom for my elements.
-    playPage.onwheel = (e) => e.preventDefault();
+    playPage.onwheel = e => e.preventDefault();
 
     const axiosInstance = getAxiosInstance(navigate);
     // HACK: test

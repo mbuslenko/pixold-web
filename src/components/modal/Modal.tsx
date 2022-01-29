@@ -13,7 +13,7 @@ export const Modal: React.FC<IModalProps> = ({ heading, text, children, position
   return (
     <div style={modalStyle} className={`${styles.container} ${modalTheme} ${modalClassName}`}>
       <h2 className={styles.heading}>{heading}</h2>
-      <p className={styles.text}>{text}</p>
+      <p className={styles.text} dangerouslySetInnerHTML={{ __html: text }}></p>
       {children && <div className={styles['button-container']}>{children}</div>}
     </div>
   );

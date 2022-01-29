@@ -50,7 +50,7 @@ export const UsernamePage: React.FC = () => {
         url: `/user/update/username`,
         data: { username },
       },
-      onResponse: () => redirect(navigate, '/wallet'),
+      onResponse: () => redirect(navigate, '/play'),
     });
   };
 

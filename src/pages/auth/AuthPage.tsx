@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 //eslint-disable-next-line
@@ -16,9 +17,13 @@ import { IFacebookLoginRenderProps } from './interfaces';
 export const AuthPage: React.FC = () => {
   const navigate = useNavigate();
 
-  if (localStorage.getItem('userId') && localStorage.getItem('accessToken')) {
-    navigate('/play', { replace: true });
-  }
+  useEffect(() => {
+    console.log(localStorage.getItem('accessToken'));
+
+    if (localStorage.getItem('userId') && localStorage.getItem('accessToken')) {
+      navigate('/play', { replace: true });
+    }
+  }, [navigate]);
 
   const handleGoogleAuthSuccess = async (responseGoogle: GetResponseLoginGoogle) => {
     if (!('accessToken' in responseGoogle)) {

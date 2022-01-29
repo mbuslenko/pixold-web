@@ -74,16 +74,18 @@ export const PlayPagePopupInfo: React.FC<IPlayPagePopupInfoProps> = ({
             })
           }
         />
-        <div>
-          <h3 className="play-page-popup-content-heading">Owner</h3>
-          <p className="play-page-popup-content-text">{hexagonInfo.owner}</p>
+        <div className='play-page-popup-content-owner'>
+          <div>
+            <h3 className="play-page-popup-content-heading">Owner</h3>
+            <p className="play-page-popup-content-text">{hexagonInfo.owner}</p>
+          </div>
+          <Button
+            className="play-page-popup-info-attack-button"
+            text={'Attack'}
+            disabled={!hexagonInfo.canAttack}
+            appearance={{ priority: 'primary' }}
+          />
         </div>
-        <Button
-          className="play-page-popup-info-attack-button"
-          text={'Attack'}
-          disabled={!hexagonInfo.canAttack}
-          appearance={{ priority: 'primary' }}
-        />
       </div>
     </section>
   );

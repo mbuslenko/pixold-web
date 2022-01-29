@@ -16,7 +16,9 @@ export const NumberAnimation: React.FC<INumberAnimationProps> = ({ number }) => 
       return;
     }
 
-    setTimeout(() => setCounter(counter + counterStep), 10);
+    const timer = setTimeout(() => setCounter(counter + counterStep), 10);
+
+    return () => clearTimeout(timer);
   }, [counter, number, counterStep]);
 
   return <>{counter}</>;

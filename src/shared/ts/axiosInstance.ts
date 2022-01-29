@@ -27,7 +27,9 @@ export const getAxiosInstance = (navigate: NavigateFunction): AxiosInstanceFunct
           navigate('/auth', { replace: true });
 
           return;
-        } else if (status === 500) {
+        }
+
+        if (status === 500) {
           navigate('/500');
 
           return;
