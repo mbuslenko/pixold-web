@@ -6,7 +6,7 @@
   width: 15px;
   position: absolute;
   left: 15px;
-  margin-top: 1px;
+  margin-top: 2px;
 }
 
 @mixin before-alert-icon($alert-icon-name) {
@@ -34,6 +34,7 @@
 
   &.blue {
     border-color: #aed9ff;
+    padding-left: 14px;
   }
 
   &.yellow {
