@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { getAxiosInstance } from '../../../shared/ts/axiosInstance';
 import { IGetResponseWallet } from '../../../shared/ts/interfaces';
 
 import './WalletPage.scss';
 import { WalletSwitch } from './WalletSwitch';
 import { WalletHeader } from './WalletHeader';
 import { WalletBalanceContainer } from './WalletBalanceContainer';
+import { client } from '../../../shared/ts/ClientCommunication';
 
 export const WalletPage: React.FC = () => {
   const navigate = useNavigate();
@@ -44,7 +44,7 @@ export const WalletPage: React.FC = () => {
 
     setUserWallet(JSON.parse(wallet as string));
 
-    getAxiosInstance(navigate)({
+    client.prepareRequest(navigate)({
       requestConfig: {
         url: '/wallet',
         method: 'get',

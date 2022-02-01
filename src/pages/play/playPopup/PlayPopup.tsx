@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { getAxiosInstance } from '../../../shared/ts/axiosInstance';
 import { IGetResponseHexagonInfo } from '../../../shared/ts/interfaces';
 import { GetResponseHexagonInfo, HexagonInfoType } from '../../../shared/ts/types';
 
@@ -15,8 +14,9 @@ import { PlayPopupLevel } from './PlayPopupLevel';
 import { PlayPopupSettings } from './PlayPopupSettings';
 import { Button } from '../../../components/button/Button';
 import { Modal } from '../../../components/modal/Modal';
+import { client } from '../../../shared/ts/ClientCommunication';
 
-export const PlayPopup: React.FC<IPlayPopupProps> = ({ hexagonId, closePopupCallback, setAlertPropsCallback }) => {
+export const PlayPopup: React.FC<IPlayPopupProps> = ({ hexagonId, closePopupCallback }) => {
   const navigate = useNavigate();
   const [hexagonInfo, setHexagonInfo] = useState<IGetResponseHexagonInfo | null>(null);
   const [selectedTab, setSelectedTab] = useState<string>('info');
@@ -25,7 +25,7 @@ export const PlayPopup: React.FC<IPlayPopupProps> = ({ hexagonId, closePopupCall
   useEffect(() => {
     setHexagonInfo(null);
 
-    getAxiosInstance(navigate)({
+    client.prepareRequest(navigate)({
       requestConfig: {
         method: 'get',
         url: `/hexagon/${hexagonId}`,
@@ -42,17 +42,17 @@ export const PlayPopup: React.FC<IPlayPopupProps> = ({ hexagonId, closePopupCall
       return;
     }
 
-    getAxiosInstance(navigate)({
+    client.prepareRequest(navigate)({
       requestConfig: {
         method: 'post',
         url: '/hexagon/change-type',
         data: { numericId: hexagonId, type: newHexagonType },
       },
-      onResponse: () => {
-        setAlertPropsCallback({ type: 'success', heading: 'Type was changed successfully' });
+      onResponse: (_, triggerAlertCallback) => {
+        triggerAlertCallback('Type was changed successfully');
         hexagonInfo && setHexagonInfo({ ...hexagonInfo, type: newHexagonType });
       },
-      onError: (error) => setAlertPropsCallback({ type: 'error', heading: 'Error', text: error.response.data.message }),
+      onError: (error, triggerAlertCallback) => triggerAlertCallback(error.response.data.message),
     });
   };
 
@@ -61,7 +61,7 @@ export const PlayPopup: React.FC<IPlayPopupProps> = ({ hexagonId, closePopupCall
       {/* HACK: test */}
       <button
         onClick={() =>
-          getAxiosInstance(navigate)({
+          client.prepareRequest(navigate)({
             requestConfig: {
               method: 'post',
               url: '/hexagon/buy',
@@ -86,8 +86,7 @@ export const PlayPopup: React.FC<IPlayPopupProps> = ({ hexagonId, closePopupCall
             { text: 'Settings', value: 'settings' },
           ]}
           onChange={(value) => setSelectedTab(value)}
-          // HACK: test
-          // disabled={hexagonInfo?.owner !== localStorage.getItem('username')}
+          disabled={hexagonInfo?.owner !== localStorage.getItem('username')}
         />
         <button className="play-page-close-popup-button" onClick={closePopupCallback}>
           X
@@ -99,12 +98,10 @@ export const PlayPopup: React.FC<IPlayPopupProps> = ({ hexagonId, closePopupCall
         <PlayPopupSettings
           hexagonInfo={hexagonInfo}
           changeHexagonTypeCallback={changeHexagonTypeCallback}
-          setAlertPropsCallback={setAlertPropsCallback}
         />
       ) : hexagonInfo && selectedTab === 'info' ? (
         <PlayPopupInfo
           setModalIsVisibleCallback={setModalIsVisible}
-          setAlertPropsCallback={setAlertPropsCallback}
           hexagonInfo={hexagonInfo}
           hexagonId={hexagonId}
           changeTabCallback={(tab) => setSelectedTab(tab)}
@@ -122,15 +119,15 @@ export const PlayPopup: React.FC<IPlayPopupProps> = ({ hexagonId, closePopupCall
             text={'Submit'}
             appearance={{ priority: 'primary' }}
             onClick={() => {
-              getAxiosInstance(navigate)({
+              client.prepareRequest(navigate)({
                 requestConfig: {
                   method: 'post',
                   url: '/hexagon/upgrade',
                   data: { numericId: hexagonId },
                 },
-                onResponse: () => setAlertPropsCallback({ type: 'success', heading: 'success' }),
-                onError: (error) => {
-                  setAlertPropsCallback({ type: 'error', heading: 'Error', text: error.response.data.message });
+                onResponse: (_, triggerAlertCallback) => triggerAlertCallback('success'),
+                onError: (error, triggerAlertCallback) => {
+                  triggerAlertCallback(error.response.data.message);
                   console.log(error);
                 },
               });

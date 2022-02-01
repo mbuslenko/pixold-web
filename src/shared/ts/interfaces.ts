@@ -30,8 +30,19 @@ export interface IPostDataWalletConnect {
 
 export interface ISocketAttackMessage {
   to: string;
-  type: AlertType;
+  type: Exclude<AlertType, 'info'>;
   message: string;
+}
+
+export interface ISocketInfoMessage {
+  title: string;
+  body: string;
+}
+
+export interface ISocketMapMessage {
+  from: number;
+  to: number;
+  attack: 'started' | 'ended';
 }
 
 export interface IPostResponseWalletConnect {
@@ -92,10 +103,23 @@ export interface IGetResponseUserData {
 }
 
 export interface IGetResponseOwnedHexagonAll {
-  username: string;
-  numericIds: number[];
+  hexagons: {
+    username: string;
+    numericIds: number[];
+  }[];
+  // HACK: test
+  // attacks: {
+  //   from: number;
+  //   to: number;
+  // }[];
 }
 
+export interface ISocketEventListener<E extends string, P extends {}> {
+  event: E;
+  callback: (payload: P) => void;
+}
+
+// TODO: make enum file for this
 export enum HexagonLevel {
   starter,
   middle,
@@ -155,6 +179,6 @@ export interface IAxiosRequestConfig {
 
 export interface IAxiosInstanceProps {
   requestConfig: IAxiosRequestConfig;
-  onResponse?: (response: AxiosResponse) => void;
-  onError?: (error: any) => void;
+  onResponse?: (response: AxiosResponse, triggerAlertCallback: (message: string) => void) => void;
+  onError?: (error: any, triggerAlertCallback: (message: string) => void) => void;
 }

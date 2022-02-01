@@ -34,4 +34,11 @@ export const redirect = (navigate: NavigateFunction, redirectTo: string): void =
   navigate(redirectTo);
 };
 
+export const checkAuth = (navigate: NavigateFunction): void => {
+  if (!localStorage.getItem('accessToken')) {
+    localStorage.clear();
+    navigate('/auth', { replace: true });
+  }
+};
+
 export const clamp = (num: number, min: number, max: number) => Math.min(max, Math.max(num, min));

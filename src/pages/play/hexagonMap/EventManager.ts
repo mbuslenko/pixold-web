@@ -11,6 +11,7 @@ export class EventManager {
   private _touchClick: boolean;
   private _touchClickTimer: number;
   private _isPressedSpace: boolean;
+  private _drawAttackLine: boolean;
 
   constructor(context: HTMLElement, map: HexagonMap) {
     this._context = context;
@@ -21,6 +22,7 @@ export class EventManager {
     this._touchClick = false;
     this._touchClickTimer = 0;
     this._isPressedSpace = false;
+    this._drawAttackLine = false;
   }
 
   private _keyDownCallback(e: KeyboardEvent): void {
@@ -70,6 +72,14 @@ export class EventManager {
     if (e.ctrlKey) {
       this._map.zoom(e.deltaY, Vector.FromEventPosition(e));
 
+      if (e.deltaY > 0) {
+        this._context.style.cursor = 'zoom-out';
+
+        return;
+      }
+
+      this._context.style.cursor = 'zoom-in';
+
       return;
     }
 
@@ -89,6 +99,9 @@ export class EventManager {
       this._isDragging = true;
       this._map.dragStart(Vector.FromEventPosition(e));
     }
+
+    // HACK: test
+    this._drawAttackLine = true;
   };
 
   private _mouseMoveCallback = (e: MouseEvent): void => {
@@ -96,6 +109,12 @@ export class EventManager {
 
     if (this._isDragging) {
       this._map.dragMove(Vector.FromEventPosition(e));
+
+      return;
+    }
+
+    if (this._drawAttackLine) {
+      this._map.drawAttackLine(Vector.FromEventPosition(e));
     }
   };
 
@@ -164,6 +183,10 @@ export class EventManager {
     }
 
     this._touchGroup = null;
+  }
+
+  drawAttackLineFromSelectedHexagon(): void {
+    this._drawAttackLine = true;
   }
 
   setEvents(): void {

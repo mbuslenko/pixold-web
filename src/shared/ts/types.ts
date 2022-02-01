@@ -2,6 +2,8 @@ import { AxiosResponse } from 'axios';
 
 import { GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
 
+import { IAlertProps } from '../../components/interfaces';
+
 import {
   IGetResponseFaqTopic,
   IGetResponseUsernameCheck,
@@ -23,6 +25,10 @@ import {
   IPostDataHexagonSendCoins,
   IPostDataHexagonBuy,
   IPostDataNotification,
+  ISocketEventListener,
+  ISocketAttackMessage,
+  ISocketInfoMessage,
+  ISocketMapMessage,
 } from './interfaces';
 
 export type HexagonInfoType = 'attack' | 'defender' | 'miner';
@@ -34,7 +40,7 @@ export type GetResponseUserData = AxiosResponse<IGetResponseUserData>;
 export type GetResponseLoginGoogle = GoogleLoginResponse | GoogleLoginResponseOffline;
 export type GetResponseHexagonFree = AxiosResponse<IGetResponseHexagonFree>;
 export type GetResponseLoginFacebook = IReactFacebookLoginInfo | IReactFacebookFailureResponse;
-export type GetResponseAllHexagonOwned = AxiosResponse<IGetResponseOwnedHexagonAll[]>;
+export type GetResponseAllHexagonOwned = AxiosResponse<IGetResponseOwnedHexagonAll>;
 export type GetResponseHexagonInfo = AxiosResponse<IGetResponseHexagonInfo>;
 
 export type PostResponseWalletConnect = AxiosResponse<IPostResponseWalletConnect>;
@@ -51,3 +57,8 @@ export type RequestData =
   | IPostDataNotification;
 
 export type AxiosInstanceFunction = (payload: IAxiosInstanceProps) => void;
+
+export type SocketEventListener =
+  | ISocketEventListener<'attack', ISocketAttackMessage>
+  | ISocketEventListener<'info', ISocketInfoMessage>
+  | ISocketEventListener<'map', ISocketMapMessage>;

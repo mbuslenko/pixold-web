@@ -1,25 +1,20 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { getAxiosInstance } from '../../shared/ts/axiosInstance';
-
 import { Button } from '../../components/button/Button';
 import { Input } from '../../components/input/Input';
-import { Alert } from '../../components/alert/Alert';
 import { InputStatus } from '../../components/types';
 import { LumenLogoSvg } from '../../components/lumenLogoSvg/LumenLogoSvg';
 
 import './WalletConnectPage.scss';
+import { client } from '../../shared/ts/ClientCommunication';
 
 export const WalletConnectPage: React.FC = () => {
   const navigate = useNavigate();
-  const request = getAxiosInstance(navigate);
   const [publicKey, setPublicKey] = useState<string>('');
   const [secretKey, setSecretKey] = useState<string>('');
   const [publicKeyStatus, setPublicKeyStatus] = useState<InputStatus>();
   const [secretKeyStatus, setSecretKeyStatus] = useState<InputStatus>();
-  const [isAlertVisible, setIsAlertVisible] = useState<boolean>(false);
-  const [alertHeading, setAlertHeading] = useState<string>('');
   const postData = {
     userId: localStorage.getItem('userId') ?? '',
     publicKey,
@@ -54,7 +49,7 @@ export const WalletConnectPage: React.FC = () => {
       return;
     }
 
-    request({
+    client.prepareRequest(navigate)({
       requestConfig: {
         method: 'post',
         url: `/wallet/connect`,
@@ -65,15 +60,11 @@ export const WalletConnectPage: React.FC = () => {
     });
   };
 
-  const postErrorCallback = (error: any) => {
-    if (error.response.status === 400) {
-      setAlertHeading(error.response.data.message);
-    }
-
-    setIsAlertVisible(true);
+  const postErrorCallback = (error: any, triggerAlertCallback: (message: string) => void) => {
+    triggerAlertCallback(error.response.data.message);
+    // TODO: set invalid key status depending on error
     setPublicKeyStatus('invalid');
     setSecretKeyStatus('invalid');
-    setTimeout(() => setIsAlertVisible(false), 5000);
   };
 
   return (
@@ -114,9 +105,6 @@ export const WalletConnectPage: React.FC = () => {
         onClick={connectWalletCallback}
         className="wallet-submit-button"
       />
-      {isAlertVisible && (
-        <Alert type="error" heading={alertHeading} closeAlertCallback={() => setIsAlertVisible(false)} />
-      )}
     </section>
   );
 };

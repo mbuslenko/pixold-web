@@ -2,12 +2,12 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { PostResponseAuth } from '../../shared/ts/types';
-import { getAxiosInstance } from '../../shared/ts/axiosInstance';
 import { IPostDataAuth } from '../../shared/ts/interfaces';
 
 import { Loader } from '../../components/loader/Loader';
 
 import './AuthLoadPage.scss';
+import { client } from '../../shared/ts/ClientCommunication';
 
 export const AuthLoadPage: React.FC = () => {
   const navigate = useNavigate();
@@ -29,6 +29,8 @@ export const AuthLoadPage: React.FC = () => {
         localStorage.setItem('wallet', JSON.stringify(wallet));
       }
 
+      client.connectSocket();
+
       if (updateUsername) {
         navigate('/username', { replace: true });
 
@@ -38,7 +40,7 @@ export const AuthLoadPage: React.FC = () => {
       navigate('/play', { replace: true });
     };
 
-    getAxiosInstance(navigate)({
+    client.prepareRequest(navigate)({
       requestConfig: {
         method: 'post',
         url: '/auth',

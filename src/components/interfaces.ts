@@ -1,6 +1,7 @@
 import { MouseEventHandler } from 'react';
 
 import {
+  AlertInfo,
   AlertType,
   ButtonTheme,
   ElementPriority,
@@ -96,8 +97,14 @@ export interface ITabbedButtonGroupProps {
 export interface IAlertProps {
   type: AlertType;
   heading: string;
+  date: Date;
   text?: string;
   closeAlertCallback: () => void;
+}
+
+export interface IAlertContainerProps {
+  isConnectedSocket: boolean;
+  showAttackAlerts?: boolean;
 }
 
 export interface IModalPosition {

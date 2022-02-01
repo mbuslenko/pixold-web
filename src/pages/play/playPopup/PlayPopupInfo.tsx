@@ -1,23 +1,22 @@
 import { useNavigate } from 'react-router-dom';
 
-import { getAxiosInstance } from '../../../shared/ts/axiosInstance';
-
 import { Button } from '../../../components/button/Button';
 
 import { IPlayPopupInfoProps } from './interfaces';
 
 import './PlayPopupInfo.scss';
 import { levelNameAll } from './hexagonInfoData';
+import { client } from '../../../shared/ts/ClientCommunication';
 
 export const PlayPopupInfo: React.FC<IPlayPopupInfoProps> = ({
   hexagonId,
   hexagonInfo,
   setModalIsVisibleCallback,
-  setAlertPropsCallback,
   changeTabCallback,
 }) => {
   const navigate = useNavigate();
   const buttonClassName = hexagonInfo.owner !== localStorage.getItem('username') ? 'play-popup-info-button-hidden' : '';
+  const canAttack = hexagonInfo.owner !== localStorage.getItem('username') || hexagonInfo.type !== 'attack';
 
   return (
     <section className="play-popup-tab">
@@ -57,19 +56,16 @@ export const PlayPopupInfo: React.FC<IPlayPopupInfoProps> = ({
           className={buttonClassName}
           appearance={{ priority: 'secondary' }}
           onClick={() =>
-            getAxiosInstance(navigate)({
+            client.prepareRequest(navigate)({
               requestConfig: {
                 method: 'post',
                 url: '/hexagon/send-coins',
                 data: { numericId: hexagonId },
               },
-              onResponse: () =>
-                setAlertPropsCallback({
-                  type: 'success',
-                  heading: 'The coins were successfully delivered to your wallet',
-                }),
-              onError: (error) =>
-                setAlertPropsCallback({ type: 'error', heading: 'Error', text: error.response.data.message }),
+              onResponse: (_, triggerAlertCallback) =>
+                triggerAlertCallback('The coins were successfully delivered to your wallet'),
+              onError: (error, triggerAlertCallback) =>
+                triggerAlertCallback(error.response.data.message),
             })
           }
         />
@@ -81,7 +77,7 @@ export const PlayPopupInfo: React.FC<IPlayPopupInfoProps> = ({
           <Button
             className="play-popup-info-attack-button"
             text={'Attack'}
-            disabled={!hexagonInfo.canAttack}
+            disabled={canAttack}
             appearance={{ priority: 'primary' }}
           />
         </div>

@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { getAxiosInstance } from '../../shared/ts/axiosInstance';
 import { GetResponseUserData } from '../../shared/ts/types';
 
 import { Button } from '../../components/button/Button';
 
 import './SettingsPage.scss';
 import logo from '../../assets/svg/logo.svg';
+import { client } from '../../shared/ts/ClientCommunication';
 
 export const SettingsPage: React.FC = () => {
   const navigate = useNavigate();
@@ -32,7 +32,7 @@ export const SettingsPage: React.FC = () => {
   };
 
   useEffect(() => {
-    getAxiosInstance(navigate)({
+    client.prepareRequest(navigate)({
       requestConfig: {
         url: '/user/me',
         method: 'get',
@@ -51,6 +51,7 @@ export const SettingsPage: React.FC = () => {
 
   const logOutBtnCallback = () => {
     localStorage.clear();
+    client.disconnectSocket();
     navigate('/auth');
   };
 

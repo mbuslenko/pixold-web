@@ -1,6 +1,6 @@
 import { clamp } from '../../../shared/ts/helperFunctions';
 import { IGetResponseOwnedHexagonAll } from '../../../shared/ts/interfaces';
-import { ScreenMaxWidth } from '../../../shared/ts/enums';
+import { Color, ScreenMaxWidth } from '../../../shared/ts/enums';
 
 import { Vector } from './Vector';
 import { SceneSystem as MapSystem } from './MapSystem';
@@ -25,6 +25,9 @@ export class HexagonMap {
   private _mapTransform: Matrix;
 
   private _requestAnimationFrameId: number;
+
+  // HACK: test
+  private _attackLine: { from: Vector; to: Vector; color: string };
 
   private _clickOnHexagonCallback: (hexagonId: number) => void;
   private _clickOutsideHexagonCallback: () => void;
@@ -72,6 +75,12 @@ export class HexagonMap {
 
     this._updateMapTransform();
     this._centerMap();
+
+    this._attackLine = {
+      from: new Vector(0, 0),
+      to: new Vector(0, 0),
+      color: Color.PINK,
+    };
   }
 
   private _setCanvasSizeAll(): void {
@@ -142,6 +151,16 @@ export class HexagonMap {
     this._renderSystem.drawActiveHexagonAll(this._mapSystem.activeHexagon);
   }
 
+  private _updateActiveHexagonCallback(notActiveHexagonAll: Hexagon[]): () => void {
+    return () => {
+      for (const hexagon of notActiveHexagonAll) {
+        this._renderSystem.clearActiveHexagon(hexagon);
+      }
+
+      this._renderSystem.drawActiveHexagonAll(this._mapSystem.activeHexagon);
+    };
+  }
+
   run(): void {
     const animate = () => {
       this._renderSystem.clearLineAll(this._mapSystem.mapSize);
@@ -152,6 +171,8 @@ export class HexagonMap {
         this._mapSystem.leftAttackingHexagonAll,
         this._mapSystem.rightAttackingHexagonAll,
       );
+
+      this._renderSystem.drawAttackLine(this._attackLine);
 
       this._updateHexagonMap = this._sleepHexagonSceneCallback;
 
@@ -176,10 +197,16 @@ export class HexagonMap {
     this._updateHexagonMap = this._updateHexagonMapCallback;
   }
 
-  setAllOwnedHexagons(ownedHexagonAll: IGetResponseOwnedHexagonAll[]): void {
+  setAllOwnedHexagons(ownedHexagonAll: IGetResponseOwnedHexagonAll): void {
     this._mapSystem.setOwnedHexagonAll(ownedHexagonAll);
     this._updateHexagonMap = this._updateHexagonMapCallback;
   }
+
+  // updateOwnedHexagon(hexagon: ): void {}
+
+  // setHexagonAttackAll(): void {}
+
+  // updateHexagonAttack(attack: { from: number, to: number, attack: 'started' | 'ended'}): void { }
 
   move(offset: Vector): void {
     const { width: windowWidth, height: windowHeight } = Size.FromWindow();
@@ -226,21 +253,30 @@ export class HexagonMap {
 
   showOwnedHexagonAll(): void {
     // TODO: refactoring
+    this._updateHexagonMap = this._updateActiveHexagonCallback(this._mapSystem.activeHexagon);
+
     this._mapSystem.activeHexagon = this._mapSystem.ownedHexagonAll;
-    this._updateHexagonMap = this._updateHexagonMapCallback;
+  }
+
+  drawAttackLine(position: Vector): void {
+    this._attackLine = {
+      from: this._mapSystem.activeHexagon[0].position,
+      to: position.subtract(this._mapTransform.getTranslation()).divideByValue(this._mapTransform.getScale()),
+      color: this._mapSystem.activeHexagon[0].color,
+    };
   }
 
   click(position: Vector): void {
     position.subtract(this._mapTransform.getTranslation()).divideByValue(this._mapTransform.getScale());
 
-    this._updateHexagonMap = this._updateHexagonMapCallback;
+    // TODO: i can set updateCallback only on change
+    this._updateHexagonMap = this._updateActiveHexagonCallback([...this._mapSystem.activeHexagon]);
 
     for (const hexagon of this._mapSystem.visibleMap) {
       if (this._isPositionInHexagon(position, hexagon)) {
         this._mapSystem.activeHexagon = [hexagon];
 
-        // I do this because on back-end hexagonId starts from 1
-        this._clickOnHexagonCallback(hexagon.id + 1);
+        this._clickOnHexagonCallback(hexagon.id);
         console.log(`owned: ${hexagon.color}; not owned: rgb(96, 74, 247)`);
 
         return;

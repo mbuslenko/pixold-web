@@ -21,7 +21,6 @@ export class SceneSystem {
   private _rightAttackingHexagonAll: HexagonAttack[];
 
   private _ownedHexagonAll: Hexagon[];
-  private _invisibleActiveHexagon: Hexagon;
   activeHexagon: Hexagon[];
 
   get map(): Hexagon[] {
@@ -58,19 +57,11 @@ export class SceneSystem {
     this._leftAttackingHexagonAll = [];
     this._rightAttackingHexagonAll = [];
 
-    Hexagon.radius = 5;
+    this._ownedHexagonAll = [];
+
+    this.activeHexagon = [];
 
     this._setSceneData();
-
-    this._ownedHexagonAll = [];
-    // I made _invisibleActiveHexagon to eliminate if() in each frame inside of HexagonMap animate()
-    this._invisibleActiveHexagon = new Hexagon(
-      new Vector(-(this._mapSize.width / 0.25) - Hexagon.radius * 2, 0),
-      Color.PINK,
-      this._map.length,
-    );
-    this.activeHexagon = [this._invisibleActiveHexagon];
-    this._map.push(this._invisibleActiveHexagon);
   }
 
   private _getNewGridCellSize(): Size {
@@ -108,8 +99,6 @@ export class SceneSystem {
 
     for (const hexagonData of mapData) {
       const hexagon = new Hexagon(Vector.FromHexagonData(hexagonData), Color.PURPLE, hexagonIndex++);
-      // HACK: test
-      // const hexagon = new Hexagon(Vector.FromHexagonData(hexagonData), this._generateRandomColor(), hexagonIndex++);
 
       this._map.push(hexagon);
 
@@ -122,14 +111,13 @@ export class SceneSystem {
     this._mapGrid = this._getNewGrid(this._gridCellSize);
     this._visibleMap = [];
 
-    // add slice(0, -1) because on map last index is invisibleActiveHexagon
-    for (const hexagon of this._map.slice(0, -1)) {
+    for (const hexagon of this._map) {
       this._addHexagonToGrid(hexagon);
     }
   }
 
   removeActiveHexagon(): void {
-    this.activeHexagon = [this._invisibleActiveHexagon];
+    this.activeHexagon = [];
   }
 
   private _addAttackingHexagon(attackingHexagon: HexagonAttack): void {
@@ -153,7 +141,6 @@ export class SceneSystem {
       if (value >= avoidValue - colorRange && value <= avoidValue + colorRange) {
         console.log('regenerate color');
 
-        // return generateRgbValue(avoidValue);
         return (
           avoidValue + (Math.ceil(Math.random() * colorRange) + colorRange) * Math.sign((value - avoidValue) * -2 + 1)
         );
@@ -166,23 +153,21 @@ export class SceneSystem {
     return `rgb(${generateRgbValue(96)}, ${generateRgbValue(74)}, ${generateRgbValue(247)})`;
   }
 
-  setOwnedHexagonAll(ownedHexagonAll: IGetResponseOwnedHexagonAll[]): void {
+  setOwnedHexagonAll(ownedHexagonAll: IGetResponseOwnedHexagonAll): void {
     this._ownedHexagonAll = [];
 
-    for (const { username, numericIds: hexagonIdAll } of ownedHexagonAll) {
+    for (const { username, numericIds: hexagonIdAll } of ownedHexagonAll.hexagons) {
       // TODO: refactoring;
       if (username === localStorage.username) {
         for (const hexagonId of hexagonIdAll) {
-          // I do this because on back-end hexagonId starts from 1
-          this._ownedHexagonAll.push(this._map[hexagonId - 1]);
+          this._ownedHexagonAll.push(this._map[hexagonId]);
         }
       }
 
       const hexagonColor = this._generateRandomColor();
 
       for (const hexagonId of hexagonIdAll) {
-        // I do this because on back-end hexagonId starts from 1
-        this._map[hexagonId - 1].color = hexagonColor;
+        this._map[hexagonId].color = hexagonColor;
       }
     }
   }

@@ -1,25 +1,20 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { getAxiosInstance } from '../../shared/ts/axiosInstance';
-
 import { Button } from '../../components/button/Button';
 import { Input } from '../../components/input/Input';
 import { InputStatus } from '../../components/types';
-import { Alert } from '../../components/alert/Alert';
 
 import './RedeemCode.scss';
+import { client } from '../../shared/ts/ClientCommunication';
 
 const openseaLink =
   'https://opensea.io/assets/matic/0x2953399124f0cbb46d2cbacd8a89cf0599974963/53812526196032344565437183040714628674999174739090954850032801003187019448321';
 
 export const RedeemCode: React.FC = () => {
   const navigate = useNavigate();
-  const request = getAxiosInstance(navigate);
   const [redeemCodeKey, setRedeemCodeKey] = useState<string>('');
   const [redeemCodeStatus, setRedeemCodeStatus] = useState<InputStatus>();
-  const [isAlertVisible, setIsAlertVisible] = useState<boolean>(false);
-  const [alertHeading, setAlertHeading] = useState<string>('');
   const postData = {
     code: redeemCodeKey,
   };
@@ -42,7 +37,7 @@ export const RedeemCode: React.FC = () => {
       return;
     }
 
-    request({
+    client.prepareRequest(navigate)({
       requestConfig: {
         method: 'post',
         url: `/hexagon/redeem`,
@@ -60,14 +55,9 @@ export const RedeemCode: React.FC = () => {
     navigate('/play');
   };
 
-  const postErrorCallback = (error: any) => {
-    if (error.response.status === 400) {
-      setAlertHeading(error.response.data.message);
-    }
-
-    setIsAlertVisible(true);
+  const postErrorCallback = (error: any, triggerAlertCallback: (message: string) => void) => {
+    triggerAlertCallback(error.response.data.message);
     setRedeemCodeStatus('invalid');
-    setTimeout(() => setIsAlertVisible(false), 5000);
   };
 
   return (
@@ -109,9 +99,6 @@ export const RedeemCode: React.FC = () => {
           />
         </a>
       </main>
-      {isAlertVisible && (
-        <Alert type="error" heading={alertHeading} closeAlertCallback={() => setIsAlertVisible(false)} />
-      )}
     </section>
   );
 };

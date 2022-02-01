@@ -1,28 +1,22 @@
-import { io } from 'socket.io-client';
-
 import { useLayoutEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { getAxiosInstance } from '../../shared/ts/axiosInstance';
 import { GetResponseAllHexagonOwned } from '../../shared/ts/types';
-import { ISocketAttackMessage } from '../../shared/ts/interfaces';
-
-import { Alert } from '../../components/alert/Alert';
 
 import './PlayPage.scss';
 import { PlayMenu } from './PlayMenu';
 import { PlayPopup } from './playPopup/PlayPopup';
 import { HexagonMap } from './hexagonMap/HexagonMap';
 import { EventManager } from './hexagonMap/EventManager';
-import { PlayShowAlertCallback } from './types';
+import { IPlayPageProps } from './interfaces';
+import { client } from '../../shared/ts/ClientCommunication';
 
-export const PlayPage: React.FC = () => {
+export const PlayPage: React.FC<IPlayPageProps> = ({ showAlertsCallback }) => {
   const navigate = useNavigate();
 
   const [isVisiblePopup, setIsVisiblePopup] = useState(false);
   const [hexagonId, setHexagonId] = useState<number | null>(null);
   const [map, setMap] = useState<HexagonMap>();
-  const [alertProps, setAlertProps] = useState<PlayShowAlertCallback>(null);
 
   const playPageRef = useRef<HTMLElement>(null);
   const canvasHexagonRef = useRef<HTMLCanvasElement>(null);
@@ -45,7 +39,6 @@ export const PlayPage: React.FC = () => {
     // That means i can't block default browser zoom for my elements.
     playPage.onwheel = (e) => e.preventDefault();
 
-    const axiosInstance = getAxiosInstance(navigate);
     // HACK: test
     const map = new HexagonMap(
       canvasHexagon,
@@ -59,7 +52,7 @@ export const PlayPage: React.FC = () => {
     // TODO: make eventManager inside of map
     const eventManager = new EventManager(canvasLine, map);
 
-    axiosInstance({
+    client.prepareRequest(navigate)({
       requestConfig: {
         method: 'get',
         url: '/hexagon/all/owned',
@@ -67,26 +60,14 @@ export const PlayPage: React.FC = () => {
       onResponse: (response: GetResponseAllHexagonOwned) => map.setAllOwnedHexagons(response.data),
     });
 
-    const socket = io(process.env.REACT_APP_SOCKET_URL as string);
+    // client.onEvent({
+    //   event: 'map',
+    //   callback: (eventMessage) => {
+    //     // TODO: add functionality to HexagonMap
+    //   },
+    // });
 
-    socket.on('attack', (payload: ISocketAttackMessage) => {
-      console.log('socket attack');
-      const { to, type, message } = payload;
-
-      if (to === localStorage.getItem('userId')) {
-        console.log(['Sir/Madam, you are under attacked', type, message]);
-        // HACK: test
-        setAlertProps({
-          type,
-          heading: message,
-        });
-      }
-      // map;
-    });
-
-    socket.on('info', (payload) => {
-      console.log(payload);
-    });
+    showAlertsCallback(true);
 
     map.run();
     eventManager.setEvents();
@@ -94,11 +75,12 @@ export const PlayPage: React.FC = () => {
     setMap(map);
 
     return () => {
-      socket.close();
+      // client.removeEventListenerAll('map')
+      showAlertsCallback(false);
       map.stop();
       eventManager.unsetEvents();
     };
-  }, [navigate]);
+  }, [navigate, showAlertsCallback]);
 
   return (
     <section className="play-page" ref={playPageRef}>
@@ -111,10 +93,8 @@ export const PlayPage: React.FC = () => {
           closePopupCallback={() => {
             setIsVisiblePopup(false);
           }}
-          setAlertPropsCallback={setAlertProps}
         />
       )}
-      {alertProps && <Alert {...alertProps} closeAlertCallback={() => setAlertProps(null)} />}
     </section>
   );
 };

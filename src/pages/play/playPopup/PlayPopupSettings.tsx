@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '../../../components/button/Button';
 import { Dropdown } from '../../../components/dropdown/Dropdown';
 import { Toggle } from '../../../components/toggle/Toggle';
-import { getAxiosInstance } from '../../../shared/ts/axiosInstance';
+import { client } from '../../../shared/ts/ClientCommunication';
 import { HexagonInfoType } from '../../../shared/ts/types';
 
 import { IPlayPopupSettingsProps } from './interfaces';
@@ -43,7 +43,7 @@ export const PlayPopupSettings: React.FC<IPlayPopupSettingsProps> = ({ hexagonIn
         value={'true'}
         checked={!hexagonInfo.isNotSubscribedOnNotifications.isAttacked}
         onChange={(isChecked: boolean) =>
-          getAxiosInstance(navigate)({
+          client.prepareRequest(navigate)({
             requestConfig: {
               method: 'post',
               url: '/notifications/subscribe',
@@ -61,7 +61,7 @@ export const PlayPopupSettings: React.FC<IPlayPopupSettingsProps> = ({ hexagonIn
         value={'true'}
         checked={!hexagonInfo.isNotSubscribedOnNotifications.fullStorage}
         onChange={(isChecked: boolean) =>
-          getAxiosInstance(navigate)({
+          client.prepareRequest(navigate)({
             requestConfig: {
               method: 'post',
               url: '/notifications/subscribe',
