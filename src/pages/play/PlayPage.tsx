@@ -64,6 +64,7 @@ export const PlayPage: React.FC<IPlayPageProps> = ({ showAlertsCallback }) => {
     client.onEvent({
       event: 'map',
       callback: (eventMessage: ISocketMapMessage) => {
+        console.log('map');
         map.updateHexagonAttack(eventMessage);
       },
     });
@@ -71,6 +72,7 @@ export const PlayPage: React.FC<IPlayPageProps> = ({ showAlertsCallback }) => {
     client.onEvent({
       event: 'newHexagon',
       callback: (eventMessage: ISocketNewHexagonMessage) => {
+        console.log('newHexagon');
         map.addOwnedHexagon(eventMessage);
       },
     });

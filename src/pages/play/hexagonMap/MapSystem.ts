@@ -25,6 +25,7 @@ export class SceneSystem {
   private _rightAttackingHexagonAll: HexagonAttack[];
 
   private _ownedHexagonAll: Map<string, Hexagon[]>;
+  private _invisibleHexagon: Hexagon;
   activeHexagon: Hexagon[];
 
   get map(): Hexagon[] {
@@ -54,9 +55,12 @@ export class SceneSystem {
 
   constructor() {
     Hexagon.radius = 5;
-
-    this._map = [];
     this._mapSize = new Size(1920, 860);
+
+    // I do this because on backend all hexagons start from 1 index
+    this._invisibleHexagon = new Hexagon(new Vector(-(this.mapSize.width * 4), 0), Color.BLACK, 0);
+
+    this._map = [this._invisibleHexagon];
     this._gridCellSize = this._getNewGridCellSize();
     this._mapGrid = this._getNewGrid(this._gridCellSize);
     this._visibleMap = [];
@@ -102,7 +106,8 @@ export class SceneSystem {
   }
 
   private _setSceneData(): void {
-    let hexagonIndex = 0;
+    // I do this because on backend all hexagons start from 1 index
+    let hexagonIndex = 1;
 
     for (const hexagonData of mapData) {
       const hexagon = new Hexagon(Vector.FromHexagonData(hexagonData), Color.PURPLE, hexagonIndex++);
@@ -118,7 +123,8 @@ export class SceneSystem {
     this._mapGrid = this._getNewGrid(this._gridCellSize);
     this._visibleMap = [];
 
-    for (const hexagon of this._map) {
+    // I do this because on 0 index is invisibleHexagon
+    for (const hexagon of this._map.slice(1)) {
       this._addHexagonToGrid(hexagon);
     }
   }
