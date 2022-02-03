@@ -27,6 +27,11 @@
   justify-content: center;
 }
 
+.coin-page-background-text {
+  width: 100%;
+  height: 50%;
+}
+
 .coin-page-icon {
   width: 45px;
   height: 45px;
@@ -126,6 +131,10 @@
   .coin-page-icon {
     height: 20px;
     width: 20px;
+  }
+
+  .coin-page-background-text {
+    height: initial;
   }
 }
 

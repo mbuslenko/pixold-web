@@ -56,7 +56,7 @@ export const WalletConnectPage: React.FC = () => {
         data: postData,
       },
       onResponse: (response) => {
-        localStorage.setItem('wallet', JSON.stringify(response));
+        localStorage.setItem('wallet', JSON.stringify(response.data));
         navigate('/wallet');
       },
       onError: postErrorCallback,

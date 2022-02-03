@@ -34,7 +34,9 @@ export const PlayPopupSettings: React.FC<IPlayPopupSettingsProps> = ({ hexagonIn
           text="Save"
           appearance={{ priority: 'secondary' }}
           onClick={() => {
-            if (newHexagonType !== hexagonInfo.type) changeHexagonTypeCallback(newHexagonType);
+            if (newHexagonType !== hexagonInfo.type) {
+              changeHexagonTypeCallback(newHexagonType);
+            }
           }}
         />
       </div>
