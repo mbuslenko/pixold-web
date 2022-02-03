@@ -18,11 +18,7 @@
 }
 
 @supports not (scrollbar-width: thin) {
-  .container::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  .container::-webkit-scrollbar-thumb {
-    background-color: transparent;
+  .container::-webkit-scrollbar{
+    width: 0px;
   }
 }
