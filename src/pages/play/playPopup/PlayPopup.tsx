@@ -80,24 +80,6 @@ export const PlayPopup: React.FC<IPlayPopupProps> = ({
 
   return (
     <section className="play-popup">
-      {/* HACK: test */}
-      <button
-        onClick={() =>
-          client.prepareRequest(navigate)({
-            requestConfig: {
-              method: 'post',
-              url: '/hexagon/buy',
-              data: {
-                numericId: hexagonId,
-                userId: localStorage.getItem('userId') as string,
-              },
-            },
-            onResponse: () => console.log(';)'),
-          })
-        }
-      >
-        Buy
-      </button>
       <div className="play-popup-menu">
         <TabbedButtonGroup
           name={'play-menu-popup-tab'}
