@@ -47,6 +47,8 @@ export const PlayPopup: React.FC<IPlayPopupProps> = ({
 
         const newHexagonInfo = { ...hexagonInfo, type: newHexagonType };
 
+        newHexagonInfo.level = 'starter';
+
         if (newHexagonType === 'miner') {
           newHexagonInfo.coinsInStorage = 0;
         } else {

@@ -56,7 +56,6 @@ export const SettingsPage: React.FC = () => {
   };
 
   return (
-    // TODO: try <Navigate to />; maybe it redirect immediately and won't give to render page
     <section className="settings-page">
       <header className="settings-header">
         <Link to="/play">

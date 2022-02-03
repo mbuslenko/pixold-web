@@ -23,20 +23,10 @@
 
 .username-controls-wrap {
   padding-top: 85px;
-  max-width: 400px;
 }
 
-.username-btn-submit {
-  margin-left: 20px;
-}
-
-@media screen and (max-width: $screen-max-width-smallest) {
-  .username-title {
-    max-width: 300px;
-  }
-
-  .username-btn-submit {
-    display: block;
-    margin: 24px auto 0;
-  }
+.username-button-container {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 30px;
 }

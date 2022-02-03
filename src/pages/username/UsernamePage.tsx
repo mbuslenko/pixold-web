@@ -72,18 +72,17 @@ export const UsernamePage: React.FC = () => {
           onInput={inputCallback}
           status={usernameStatus}
         />
-        <Button
-          text="Submit"
-          appearance={{ priority: 'primary' }}
-          onClick={submitUsernameCallback}
-          className="username-btn-submit"
-        />
-        <Link to={'/settings'}>
-        <Button
-          text="Cancel"
-          appearance={{ priority: 'secondary' }}
+        <div className="username-button-container">
+          <Button
+            text="Submit"
+            appearance={{ priority: 'primary' }}
+            onClick={submitUsernameCallback}
+            className="username-btn-submit"
           />
-        </Link>
+          <Link to={'/settings'}>
+            <Button text="Cancel" appearance={{ priority: 'secondary' }} />
+          </Link>
+        </div>
       </main>
     </section>
   );

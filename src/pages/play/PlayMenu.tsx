@@ -43,7 +43,18 @@ export const PlayMenu: React.FC<IPlayMenuCallback> = ({ showMyTerritoryCallback 
             <object className="play-menu-logo" data={logo} type="image/svg+xml" title="Logo" />
           </Link>
           <div className="play-menu-link-container">
-            <button className="play-menu-button" onClick={showMyTerritoryCallback}>
+            <button
+              className="play-menu-button"
+              onClick={() => {
+                if (isScreen(ScreenMaxWidth.MEDIUM)) {
+                  setMenuIsVisible(false);
+                }
+
+                if (showMyTerritoryCallback) {
+                  showMyTerritoryCallback();
+                }
+              }}
+            >
               <PlayMenuIconSvg iconName="territory" className="play-menu-icon" />
               My territory
             </button>

@@ -127,6 +127,10 @@
   .show-menu-button {
     backdrop-filter: blur(3px);
   }
+
+  .show-menu-button.is-active {
+    backdrop-filter: none;
+  }
 }
 
 @supports not (backdrop-filter: blur()) {
