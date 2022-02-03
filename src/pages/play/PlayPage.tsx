@@ -119,7 +119,7 @@ export const PlayPage: React.FC<IPlayPageProps> = ({ showAlertsCallback, isConne
               console.log(attackData);
               client.prepareRequest(navigate)({
                 requestConfig: {
-                  method: 'get',
+                  method: 'post',
                   url: '/hexagon/attack',
                   data: attackData,
                 },

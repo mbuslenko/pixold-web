@@ -69,7 +69,7 @@ export const AlertContainer: React.FC<IAlertContainerProps> = ({ isConnectedSock
       {alertLength > 5 && (
         <div className={styles['button-container']}>
           <Button
-            text={`${isVisibleContainer ? 'Hide' : 'Show'} alerts (${alertLength})`}
+            text={`${isVisibleContainer ? 'Hide' : 'Show'} alerts (${alertLength}${infoAlertAll.length !== 0 ? '!' : ''})`}
             appearance={{ priority: 'primary', theme: 'black-white' }}
             onClick={() => setIsVisibleContainer(!isVisibleContainer)}
             className={styles['show-button']}
