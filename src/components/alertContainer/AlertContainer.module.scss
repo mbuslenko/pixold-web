@@ -8,6 +8,7 @@
   gap: 20px 0;
   max-height: 100%;
   overflow: scroll;
+  z-index: 10;
 }
 
 @supports (scrollbar-width: thin) {

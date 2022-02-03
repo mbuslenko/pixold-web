@@ -153,7 +153,7 @@ export class EventManager {
 
       this._touchClick = true;
       // I use window.setTimeout instead of setTimeout because I need setTimeout to return type number instead of NodeJS.Timeout
-      this._touchClickTimer = window.setTimeout(() => (this._touchClick = false), 250);
+      this._touchClickTimer = window.setTimeout(() => (this._touchClick = false), 150);
 
       return;
     }

@@ -41,7 +41,19 @@ export const PlayPopup: React.FC<IPlayPopupProps> = ({
       },
       onResponse: (_, triggerAlertCallback) => {
         triggerAlertCallback('Type was changed successfully');
-        hexagonInfo && setHexagonInfo({ ...hexagonInfo, type: newHexagonType });
+        if (!hexagonInfo) {
+          return;
+        }
+
+        const newHexagonInfo = { ...hexagonInfo, type: newHexagonType };
+
+        if (newHexagonType === 'miner') {
+          newHexagonInfo.coinsInStorage = 0;
+        } else {
+          newHexagonInfo.health = 100;
+        }
+
+        setHexagonInfo(newHexagonInfo);
       },
       onError: (error, triggerAlertCallback) => triggerAlertCallback(error.response.data.message),
     });

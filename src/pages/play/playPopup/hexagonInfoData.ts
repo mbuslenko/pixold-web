@@ -1,4 +1,5 @@
 import { HexagonLevel } from '../../../shared/ts/interfaces';
+import { HexagonInfoType } from '../../../shared/ts/types';
 
 export const hexagonLevelInfo = {
   miner: {
@@ -14,6 +15,13 @@ export const levelNameAll: Record<keyof typeof HexagonLevel, string> = {
   middle: 'Middle',
   pro: 'Pro',
   supreme: 'Supreme',
+};
+
+export const typeNameAll: Record<HexagonInfoType, string> = {
+  attack: 'Attacker',
+  defender: 'Defender',
+  miner: 'Miner',
+  without: 'Without',
 };
 
 export const getNextItem = (array: any[], index: number) => array[Math.min(array.length - 1, index + 1)];

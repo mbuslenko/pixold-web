@@ -5,7 +5,7 @@ import { Button } from '../../../components/button/Button';
 import { IPlayPopupInfoProps } from './interfaces';
 
 import './PlayPopupInfo.scss';
-import { levelNameAll } from './hexagonInfoData';
+import { levelNameAll, typeNameAll } from './hexagonInfoData';
 import { client } from '../../../shared/ts/ClientCommunication';
 
 export const PlayPopupInfo: React.FC<IPlayPopupInfoProps> = ({
@@ -29,10 +29,7 @@ export const PlayPopupInfo: React.FC<IPlayPopupInfoProps> = ({
       <div className="play-popup-info-content">
         <div>
           <h3 className="play-popup-content-heading">Type</h3>
-          <p className="play-popup-content-text">
-            {/* TODO: change hexagonInfo.type to levelNameAll[hexagonInfo.type] */}
-            {hexagonInfo.type.slice(0, 1).toUpperCase() + hexagonInfo.type.slice(1)}
-          </p>
+          <p className="play-popup-content-text">{typeNameAll[hexagonInfo.type]}</p>
         </div>
         <Button
           text={'Change'}

@@ -65,7 +65,7 @@ export const AuthPage: React.FC = () => {
       <main className="login-content">
         <div className="logo" />
         <div className="login-title">Authenticate</div>
-        <div className="login-desc">You need to be authorized to play the play</div>
+        <div className="login-desc">You need to be authorized to play the game</div>
         <div className="login-btn-wrap">
           <GoogleLogin
             clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID ?? ''}
