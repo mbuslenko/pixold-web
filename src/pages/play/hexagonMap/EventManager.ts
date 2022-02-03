@@ -11,7 +11,7 @@ export class EventManager {
   private _touchClick: boolean;
   private _touchClickTimer: number;
   private _isPressedSpace: boolean;
-  drawAttackLine: boolean;
+  private _drawAttackLine: boolean;
 
   constructor(context: HTMLElement, map: HexagonMap) {
     this._context = context;
@@ -22,7 +22,19 @@ export class EventManager {
     this._touchClick = false;
     this._touchClickTimer = 0;
     this._isPressedSpace = false;
-    this.drawAttackLine = false;
+    this._drawAttackLine = false;
+  }
+
+  get drawAttackLine (): boolean {
+    return this._drawAttackLine;
+  }
+
+  set drawAttackLine (value: boolean) {
+    if (!value) {
+      this._map.hideAttackLine()
+    }
+
+    this._drawAttackLine = value;
   }
 
   private _keyDownCallback(e: KeyboardEvent): void {
@@ -104,7 +116,7 @@ export class EventManager {
   private _mouseMoveCallback = (e: MouseEvent): void => {
     e.preventDefault();
 
-    if (this.drawAttackLine) {
+    if (this._drawAttackLine) {
       this._map.drawAttackLine(Vector.FromEventPosition(e));
     }
 

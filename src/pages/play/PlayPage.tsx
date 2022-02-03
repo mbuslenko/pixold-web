@@ -122,6 +122,9 @@ export const PlayPage: React.FC<IPlayPageProps> = ({ showAlertsCallback }) => {
           },
         });
 
+        // TODO: switching between hexagons will still draw line
+        eventManager.drawAttackLine = false;
+
         return;
       }
 

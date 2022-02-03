@@ -177,7 +177,7 @@ export class HexagonMap {
         this._mapSystem.rightAttackingHexagonAll,
       );
 
-      this._renderSystem.drawAttackLine(this._attackLine);
+      this._renderSystem.drawActiveAttackLine(this._attackLine);
 
       this._updateHexagonMap = this._sleepHexagonSceneCallback;
 
@@ -305,10 +305,14 @@ export class HexagonMap {
 
     this._mapSystem.removeActiveHexagon();
     this._clickOutsideHexagonCallback();
+    this.hideAttackLine();
+  }
+
+  hideAttackLine (): void {
     this._attackLine = {
       from: new Vector(0, 0),
       to: new Vector(0, 0),
       color: Color.PINK,
-    };
+    }
   }
 }
