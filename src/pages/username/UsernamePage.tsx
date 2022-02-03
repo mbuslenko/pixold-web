@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { GetResponseUsernameCheck } from '../../shared/ts/types';
 
@@ -49,7 +49,10 @@ export const UsernamePage: React.FC = () => {
         url: `/user/update/username`,
         data: { username },
       },
-      onResponse: () => redirect(navigate, '/play'),
+      onResponse: () => {
+        localStorage.setItem('username', username);
+        redirect(navigate, '/play');
+      },
     });
   };
 
@@ -75,6 +78,12 @@ export const UsernamePage: React.FC = () => {
           onClick={submitUsernameCallback}
           className="username-btn-submit"
         />
+        <Link to={'/settings'}>
+        <Button
+          text="Cancel"
+          appearance={{ priority: 'secondary' }}
+          />
+        </Link>
       </main>
     </section>
   );

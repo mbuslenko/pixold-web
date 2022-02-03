@@ -58,7 +58,11 @@ export const PlayPopupInfo: React.FC<IPlayPopupInfoProps> = ({
               text={'Send to my wallet'}
               className={buttonClassName}
               appearance={{ priority: 'secondary' }}
-              onClick={() =>
+              onClick={() => {
+                if (hexagonInfo.coinsInStorage === 0) {
+                  return;
+                }
+
                 client.prepareRequest(navigate)({
                   requestConfig: {
                     method: 'post',
@@ -70,8 +74,8 @@ export const PlayPopupInfo: React.FC<IPlayPopupInfoProps> = ({
                     changeCoinsInStorageCallback(0);
                   },
                   onError: (error, triggerAlertCallback) => triggerAlertCallback(error.response.data.message),
-                })
-              }
+                });
+              }}
             />
           </>
         ) : hexagonInfo.type === 'defender' || hexagonInfo.type === 'attack' ? (
@@ -84,7 +88,11 @@ export const PlayPopupInfo: React.FC<IPlayPopupInfoProps> = ({
               text={'Repair'}
               className={buttonClassName}
               appearance={{ priority: 'secondary' }}
-              onClick={() =>
+              onClick={() => {
+                if (hexagonInfo.health === 100) {
+                  return;
+                }
+
                 client.prepareRequest(navigate)({
                   requestConfig: {
                     method: 'post',
@@ -96,8 +104,8 @@ export const PlayPopupInfo: React.FC<IPlayPopupInfoProps> = ({
                     changeHealthCallback(100);
                   },
                   onError: (error, triggerAlertCallback) => triggerAlertCallback(error.response.data.message),
-                })
-              }
+                });
+              }}
             />
           </>
         ) : (

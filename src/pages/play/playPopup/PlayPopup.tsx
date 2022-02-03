@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { HexagonLevel } from '../../../shared/ts/interfaces';
@@ -71,6 +71,10 @@ export const PlayPopup: React.FC<IPlayPopupProps> = ({
       triggerAlertCallback('Hexagon was upgraded successfully!');
     }
   };
+
+  useEffect(() => {
+    setSelectedTab('info');
+  }, [hexagonId]);
 
   return (
     <section className="play-popup">
