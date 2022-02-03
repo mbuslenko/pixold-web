@@ -94,7 +94,7 @@ export const PlayPopupInfo: React.FC<IPlayPopupInfoProps> = ({
                     data: { numericId: hexagonId },
                   },
                   onResponse: (_, triggerAlertCallback) => {
-                    triggerAlertCallback('The coins were successfully repaired');
+                    triggerAlertCallback('Hexagon was successfully repaired');
                     changeHealthCallback(100);
                   },
                   onError: (error, triggerAlertCallback) => triggerAlertCallback(error.response.data.message),

@@ -31,8 +31,10 @@ export const AlertContainer: React.FC<IAlertContainerProps> = ({ isConnectedSock
     if (showAttackAlerts) {
       client.onEvent({
         event: 'attack',
-        callback: ({ type, message }) => {
-          setAlertAll([{ type, heading: message, date: new Date() }, ...alertAll]);
+        callback: ({ to, type, message }) => {
+          if (to === localStorage.getItem('userId')) {
+            setAlertAll([{ type, heading: message, date: new Date() }, ...alertAll]);
+          }
         },
       });
     }
