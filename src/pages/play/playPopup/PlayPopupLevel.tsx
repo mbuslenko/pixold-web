@@ -7,9 +7,11 @@ import { Button } from '../../../components/button/Button';
 import './PlayPopupLevel.scss';
 import { hexagonLevelInfo, levelNameAll, getNextItem } from './hexagonInfoData';
 import { IPlayPopupLevelProps } from './interfaces';
+import { LinkToFaq } from '../../../components/linkToFaq/LinkToFaq'
 
 export const PlayPopupLevel: React.FC<IPlayPopupLevelProps> = ({ hexagonInfo, setModalIsVisibleCallback }) => {
-  const info = hexagonLevelInfo['attack'];
+  // HACK: test
+  const info = hexagonLevelInfo[hexagonInfo.type !== 'without' ? hexagonInfo.type : 'attack'];
 
   return (
     <section className="play-popup-tab">
@@ -25,6 +27,7 @@ export const PlayPopupLevel: React.FC<IPlayPopupLevelProps> = ({ hexagonInfo, se
           text={'Upgrade'}
           appearance={{ priority: 'secondary' }}
           onClick={() => setModalIsVisibleCallback(true)}
+          disabled={hexagonInfo.level === 'supreme'}
         />
         <div>
           <h3 className="play-popup-content-heading">{info.description}</h3>
@@ -45,9 +48,9 @@ export const PlayPopupLevel: React.FC<IPlayPopupLevelProps> = ({ hexagonInfo, se
             ))}
           </p>
         </div>
-        <Link to="/faq">
+        <LinkToFaq questionId=''>
           <Button text={'Read more'} appearance={{ priority: 'secondary' }} />
-        </Link>
+        </LinkToFaq>
       </div>
     </section>
   );

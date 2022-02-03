@@ -23,10 +23,6 @@ export class Hexagon {
     return Hexagon._radiusHalf;
   }
 
-  static {
-    this.radius = 5;
-  }
-
   constructor(position: Vector, color: string, id: number) {
     this.position = position;
     this.color = color;

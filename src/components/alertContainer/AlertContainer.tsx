@@ -49,13 +49,14 @@ export const AlertContainer: React.FC<IAlertContainerProps> = ({ isConnectedSock
         setInfoAlertAll([{ type: 'info', heading: title, text: body, date: new Date() }, ...infoAlertAll]);
       },
     });
-
-    client.onEvent({
-      event: 'attack',
-      callback: ({ type, message }) => {
-        setAlertAll([{ type, heading: message, date: new Date() }, ...alertAll]);
-      },
-    });
+    if (showAttackAlerts) {
+      client.onEvent({
+        event: 'attack',
+        callback: ({ type, message }) => {
+          setAlertAll([{ type, heading: message, date: new Date() }, ...alertAll]);
+        },
+      });
+    }
   } else {
     client.removeEventListenerAll('info');
     client.removeEventListenerAll('attack');
@@ -87,11 +88,9 @@ export const AlertContainer: React.FC<IAlertContainerProps> = ({ isConnectedSock
       {infoAlertAll.map((value, index) => (
         <Alert {...value} key={`info-${index}`} closeAlertCallback={closeInfoAlertCallback(index)} />
       ))}
-      {/* TODO: i need to show alerts even if showAttackAlerts is false */}
-      {showAttackAlerts &&
-        alertAll.map((value, index) => (
-          <Alert {...value} key={`alert-${index}`} closeAlertCallback={closeAttackAlertCallback(index)} />
-        ))}
+      {alertAll.map((value, index) => (
+        <Alert {...value} key={`alert-${index}`} closeAlertCallback={closeAttackAlertCallback(index)} />
+      ))}
     </article>
   );
 };

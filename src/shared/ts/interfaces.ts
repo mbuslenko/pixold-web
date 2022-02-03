@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { AlertType } from '../../components/types';
 
-import { HexagonInfoType, RequestData } from './types';
+import { HexagonInfoType, RequestData, SocketEventType } from './types';
 
 export interface IGetResponseFaqContent {
   id: string;
@@ -43,6 +43,11 @@ export interface ISocketMapMessage {
   from: number;
   to: number;
   attack: 'started' | 'ended';
+}
+
+export interface ISocketNewHexagonMessage {
+  numericId: number;
+  username: string;
 }
 
 export interface IPostResponseWalletConnect {
@@ -108,13 +113,13 @@ export interface IGetResponseOwnedHexagonAll {
     numericIds: number[];
   }[];
   // HACK: test
-  // attacks: {
-  //   from: number;
-  //   to: number;
-  // }[];
+  attacks: {
+    attackedId: number;
+    attackerId: number;
+  }[];
 }
 
-export interface ISocketEventListener<E extends string, P extends {}> {
+export interface ISocketEventListener<E extends SocketEventType, P extends {}> {
   event: E;
   callback: (payload: P) => void;
 }
@@ -132,6 +137,7 @@ export interface IGetResponseHexagonInfo {
   level: keyof typeof HexagonLevel;
   coinsInStorage: number;
   owner: string;
+  health: number;
   canAttack: boolean;
   coinsToUpgrade: number;
   isNotSubscribedOnNotifications: {

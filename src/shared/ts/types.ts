@@ -29,9 +29,10 @@ import {
   ISocketAttackMessage,
   ISocketInfoMessage,
   ISocketMapMessage,
+  ISocketNewHexagonMessage,
 } from './interfaces';
 
-export type HexagonInfoType = 'attack' | 'defender' | 'miner';
+export type HexagonInfoType = 'attack' | 'defender' | 'miner' | 'without';
 
 export type GetResponseFaq = AxiosResponse<IGetResponseFaqTopic[]>;
 export type GetResponseWallet = AxiosResponse<IGetResponseWallet>;
@@ -58,7 +59,9 @@ export type RequestData =
 
 export type AxiosInstanceFunction = (payload: IAxiosInstanceProps) => void;
 
+export type SocketEventType = 'attack' | 'info' | 'map' | 'newHexagon';
 export type SocketEventListener =
   | ISocketEventListener<'attack', ISocketAttackMessage>
   | ISocketEventListener<'info', ISocketInfoMessage>
-  | ISocketEventListener<'map', ISocketMapMessage>;
+  | ISocketEventListener<'map', ISocketMapMessage>
+  | ISocketEventListener<'newHexagon', ISocketNewHexagonMessage>;

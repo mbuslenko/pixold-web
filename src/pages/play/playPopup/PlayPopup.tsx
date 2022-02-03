@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { IGetResponseHexagonInfo } from '../../../shared/ts/interfaces';
+import { HexagonLevel, IGetResponseHexagonInfo } from '../../../shared/ts/interfaces';
 import { GetResponseHexagonInfo, HexagonInfoType } from '../../../shared/ts/types';
 
 import { TabbedButtonGroup } from '../../../components/tabbedButtonGroup/TabbedButtonGroup';
@@ -15,8 +15,9 @@ import { PlayPopupSettings } from './PlayPopupSettings';
 import { Button } from '../../../components/button/Button';
 import { Modal } from '../../../components/modal/Modal';
 import { client } from '../../../shared/ts/ClientCommunication';
+import { getNextItem, levelNameAll } from './hexagonInfoData';
 
-export const PlayPopup: React.FC<IPlayPopupProps> = ({ hexagonId, closePopupCallback }) => {
+export const PlayPopup: React.FC<IPlayPopupProps> = ({ hexagonId, closePopupCallback, drawAttackLineCallback }) => {
   const navigate = useNavigate();
   const [hexagonInfo, setHexagonInfo] = useState<IGetResponseHexagonInfo | null>(null);
   const [selectedTab, setSelectedTab] = useState<string>('info');
@@ -54,6 +55,16 @@ export const PlayPopup: React.FC<IPlayPopupProps> = ({ hexagonId, closePopupCall
       },
       onError: (error, triggerAlertCallback) => triggerAlertCallback(error.response.data.message),
     });
+  };
+
+  // TODO: make interface for parameters
+  const upgradeResponseCallback = (_: any, triggerAlertCallback: (message: string) => void) => {
+    if (hexagonInfo) {
+      const newHexagonInfo = { ...hexagonInfo, level: getNextItem(Object.entries(levelNameAll), HexagonLevel[hexagonInfo.level])[0] };
+
+      setHexagonInfo(newHexagonInfo);
+      triggerAlertCallback('Hexagon was upgraded successfully!');
+    }
   };
 
   return (
@@ -105,13 +116,16 @@ export const PlayPopup: React.FC<IPlayPopupProps> = ({ hexagonId, closePopupCall
           hexagonInfo={hexagonInfo}
           hexagonId={hexagonId}
           changeTabCallback={(tab) => setSelectedTab(tab)}
+          changeCoinsInStorageCallback={(coinsInStorage: number) => { setHexagonInfo({ ...hexagonInfo, coinsInStorage }); }}
+          changeHealthCallback={(health: number) => { setHexagonInfo({ ...hexagonInfo, health });}}
+          drawAttackLineCallback={drawAttackLineCallback}
         />
       ) : (
         <Loader className="play-popup-loader" />
       )}
-      {modalIsVisible && (
+      {modalIsVisible && hexagonInfo && (
         <Modal
-          heading={`An upgrade will take ${hexagonInfo?.coinsToUpgrade} coins from your wallet, are you sure?`}
+          heading={`An upgrade will take ${hexagonInfo.coinsToUpgrade} coins from your wallet, are you sure?`}
           text=""
           className="play-popup-modal"
         >
@@ -125,7 +139,7 @@ export const PlayPopup: React.FC<IPlayPopupProps> = ({ hexagonId, closePopupCall
                   url: '/hexagon/upgrade',
                   data: { numericId: hexagonId },
                 },
-                onResponse: (_, triggerAlertCallback) => triggerAlertCallback('success'),
+                onResponse: upgradeResponseCallback,
                 onError: (error, triggerAlertCallback) => {
                   triggerAlertCallback(error.response.data.message);
                   console.log(error);

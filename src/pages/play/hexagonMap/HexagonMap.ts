@@ -1,5 +1,5 @@
 import { clamp } from '../../../shared/ts/helperFunctions';
-import { IGetResponseOwnedHexagonAll } from '../../../shared/ts/interfaces';
+import { IGetResponseOwnedHexagonAll, ISocketMapMessage, ISocketNewHexagonMessage } from '../../../shared/ts/interfaces';
 import { Color, ScreenMaxWidth } from '../../../shared/ts/enums';
 
 import { Vector } from './Vector';
@@ -153,10 +153,13 @@ export class HexagonMap {
 
   private _updateActiveHexagonCallback(notActiveHexagonAll: Hexagon[]): () => void {
     return () => {
-      for (const hexagon of notActiveHexagonAll) {
-        this._renderSystem.clearActiveHexagon(hexagon);
-      }
+      // HACK: test
+      // for (const hexagon of notActiveHexagonAll) {
+      //   this._renderSystem.clearActiveHexagon(hexagon);
+      // }
 
+      this._renderSystem.clearHexagonAll(this._mapSystem.mapSize);
+      this._renderSystem.drawHexagonAll(this._mapSystem.visibleMap);
       this._renderSystem.drawActiveHexagonAll(this._mapSystem.activeHexagon);
     };
   }
@@ -199,14 +202,27 @@ export class HexagonMap {
 
   setAllOwnedHexagons(ownedHexagonAll: IGetResponseOwnedHexagonAll): void {
     this._mapSystem.setOwnedHexagonAll(ownedHexagonAll);
+
+    for (const attack of ownedHexagonAll.attacks) {
+      // HACK: test
+      this._mapSystem.addAttackingHexagon({
+        defender: this._mapSystem.map[attack.attackedId],
+        attacker: this._mapSystem.map[attack.attackerId],
+      });
+    }
+
     this._updateHexagonMap = this._updateHexagonMapCallback;
   }
 
-  // updateOwnedHexagon(hexagon: ): void {}
+  addOwnedHexagon(eventMessage: ISocketNewHexagonMessage): void {
+    this._mapSystem.addOwnedHexagon(eventMessage);
 
-  // setHexagonAttackAll(): void {}
+    this._updateHexagonMap = this._updateHexagonMapCallback;
+  }
 
-  // updateHexagonAttack(attack: { from: number, to: number, attack: 'started' | 'ended'}): void { }
+  updateHexagonAttack(attack: ISocketMapMessage): void {
+    this._mapSystem.updateHexagonAttack(attack);
+   }
 
   move(offset: Vector): void {
     const { width: windowWidth, height: windowHeight } = Size.FromWindow();

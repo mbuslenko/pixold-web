@@ -99,9 +99,6 @@ export class EventManager {
       this._isDragging = true;
       this._map.dragStart(Vector.FromEventPosition(e));
     }
-
-    // HACK: test
-    this._drawAttackLine = true;
   };
 
   private _mouseMoveCallback = (e: MouseEvent): void => {
@@ -187,6 +184,10 @@ export class EventManager {
 
   drawAttackLineFromSelectedHexagon(): void {
     this._drawAttackLine = true;
+  }
+
+  stopAttackLine(): void {
+    this._drawAttackLine = false;
   }
 
   setEvents(): void {

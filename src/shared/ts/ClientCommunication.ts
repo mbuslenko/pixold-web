@@ -2,7 +2,7 @@ import axios, { AxiosInstance } from 'axios';
 import { NavigateFunction } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import { IAxiosInstanceProps } from './interfaces';
-import { AxiosInstanceFunction, SocketEventListener } from './types';
+import { AxiosInstanceFunction, SocketEventListener, SocketEventType } from './types';
 
 class ClientCommunication {
   private readonly _axios: AxiosInstance;
@@ -48,14 +48,15 @@ class ClientCommunication {
           }
         })
         .catch(error => {
-          if (!error.response) {
-            this._axios.get(
-              `https://api.telegram.org/bot5014031741:AAFC3FFScFltAqKPeJ0QnWxYNFKHRDH4Y-E/sendMessage?chat_id=-709885501&text=@mbuslenko SERVER ERROR RESPONSE IS UNDEFINED`,
-            );
-            navigate('/500');
+          // TODO: uncomment for production
+          // if (!error.response) {
+          //   this._axios.get(
+          //     `https://api.telegram.org/bot5014031741:AAFC3FFScFltAqKPeJ0QnWxYNFKHRDH4Y-E/sendMessage?chat_id=-709885501&text=@mbuslenko SERVER ERROR RESPONSE IS UNDEFINED`,
+          //   );
+          //   navigate('/500');
 
-            return;
-          }
+          //   return;
+          // }
 
           const { status } = error.response;
 
@@ -83,19 +84,13 @@ class ClientCommunication {
   }
 
   onEvent(eventListener: SocketEventListener): void {
-    if (!this._socket) {
-      throw new Error('socket is not connected');
+    if (this._socket) {
+      this._socket.on(eventListener.event, eventListener.callback);
     }
-
-    this._socket.on(eventListener.event, eventListener.callback);
   }
 
-  removeEventListenerAll(event: 'attack' | 'info'): void {
-    if (!this._socket) {
-      throw new Error('socket is not connected');
-    }
-
-    this._socket.removeAllListeners(event);
+  removeEventListenerAll(event: SocketEventType): void {
+    this._socket?.removeAllListeners(event);
   }
 
   connectSocket(): void {

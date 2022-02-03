@@ -1,6 +1,6 @@
 import { Color } from '../../../shared/ts/enums';
 import { clamp } from '../../../shared/ts/helperFunctions';
-import { IGetResponseOwnedHexagonAll } from '../../../shared/ts/interfaces';
+import { IGetResponseOwnedHexagonAll, ISocketMapMessage, ISocketNewHexagonMessage } from '../../../shared/ts/interfaces';
 
 import { Grid } from './Grid';
 import { Hexagon } from './Hexagon';
@@ -20,7 +20,7 @@ export class SceneSystem {
   private _leftAttackingHexagonAll: HexagonAttack[];
   private _rightAttackingHexagonAll: HexagonAttack[];
 
-  private _ownedHexagonAll: Hexagon[];
+  private _ownedHexagonAll: Map<string, Hexagon[]>;
   activeHexagon: Hexagon[];
 
   get map(): Hexagon[] {
@@ -32,7 +32,8 @@ export class SceneSystem {
   }
 
   get ownedHexagonAll(): Hexagon[] {
-    return this._ownedHexagonAll;
+    // HACK: test
+    return [...this._ownedHexagonAll.values()].flat();
   }
 
   get mapSize(): Size {
@@ -48,6 +49,8 @@ export class SceneSystem {
   }
 
   constructor() {
+    Hexagon.radius = 5;
+
     this._map = [];
     this._mapSize = new Size(1920, 860);
     this._gridCellSize = this._getNewGridCellSize();
@@ -57,7 +60,7 @@ export class SceneSystem {
     this._leftAttackingHexagonAll = [];
     this._rightAttackingHexagonAll = [];
 
-    this._ownedHexagonAll = [];
+    this._ownedHexagonAll = new Map();
 
     this.activeHexagon = [];
 
@@ -120,16 +123,43 @@ export class SceneSystem {
     this.activeHexagon = [];
   }
 
-  private _addAttackingHexagon(attackingHexagon: HexagonAttack): void {
+  addAttackingHexagon(attackingHexagon: HexagonAttack): void {
     const { attacker, defender } = attackingHexagon;
 
-    if (attacker.position.x < defender.position.x || attacker.position.y > defender.position.y) {
+    if (attacker.position.x > defender.position.x || attacker.position.y > defender.position.y) {
       this._leftAttackingHexagonAll.push(attackingHexagon);
 
       return;
     }
 
     this._rightAttackingHexagonAll.push(attackingHexagon);
+  }
+
+  updateHexagonAttack(attack: ISocketMapMessage): void {
+    // HACK: test
+    if (attack.attack === 'started') {
+      this.addAttackingHexagon({
+        attacker: this._map[attack.from],
+        defender: this._map[attack.to]
+      })
+
+      return;
+    }
+
+    // HACK: test
+    let hexagonAttack = this._leftAttackingHexagonAll.find(({ attacker, defender }) => attacker.id === attack.from && defender.id === attack.to);
+
+    if (hexagonAttack) {
+      this._leftAttackingHexagonAll.splice(this._leftAttackingHexagonAll.indexOf(hexagonAttack), 1);
+
+      return;
+    }
+
+    hexagonAttack = this._rightAttackingHexagonAll.find(({ attacker, defender }) => attacker.id === attack.from && defender.id === attack.to)
+
+    if (hexagonAttack) {
+      this._rightAttackingHexagonAll.splice(this._leftAttackingHexagonAll.indexOf(hexagonAttack), 1);
+    }
   }
 
   private _generateRandomColor(): string {
@@ -154,13 +184,17 @@ export class SceneSystem {
   }
 
   setOwnedHexagonAll(ownedHexagonAll: IGetResponseOwnedHexagonAll): void {
-    this._ownedHexagonAll = [];
+    this._ownedHexagonAll = new Map();
 
     for (const { username, numericIds: hexagonIdAll } of ownedHexagonAll.hexagons) {
       // TODO: refactoring;
       if (username === localStorage.username) {
+        const hexagonAll: Hexagon[] = [];
+
+        this._ownedHexagonAll.set(username, hexagonAll);
+
         for (const hexagonId of hexagonIdAll) {
-          this._ownedHexagonAll.push(this._map[hexagonId]);
+          hexagonAll.push(this._map[hexagonId]);
         }
       }
 
@@ -170,6 +204,22 @@ export class SceneSystem {
         this._map[hexagonId].color = hexagonColor;
       }
     }
+  }
+
+  addOwnedHexagon (eventMessage: ISocketNewHexagonMessage): void {
+    const { username, numericId } = eventMessage;
+    const newOwnedHexagon = this._map[numericId];
+    const ownedHexagonAll = this._ownedHexagonAll.get(username);
+
+    if (ownedHexagonAll) {
+      newOwnedHexagon.color = ownedHexagonAll[0].color;
+      ownedHexagonAll.push(newOwnedHexagon);
+
+      return;
+    }
+
+    newOwnedHexagon.color = this._generateRandomColor();
+    this._ownedHexagonAll.set(username, [newOwnedHexagon]);
   }
 
   setTransformHexagonAll(mapTransform: Matrix): void {
