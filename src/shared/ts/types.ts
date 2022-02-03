@@ -2,8 +2,6 @@ import { AxiosResponse } from 'axios';
 
 import { GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
 
-import { IAlertProps } from '../../components/interfaces';
-
 import {
   IGetResponseFaqTopic,
   IGetResponseUsernameCheck,

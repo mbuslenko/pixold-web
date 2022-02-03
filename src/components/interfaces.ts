@@ -1,7 +1,6 @@
 import { MouseEventHandler } from 'react';
 
 import {
-  AlertInfo,
   AlertType,
   ButtonTheme,
   ElementPriority,
