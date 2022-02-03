@@ -7,7 +7,7 @@ import { Button } from '../../../components/button/Button';
 import './PlayPopupLevel.scss';
 import { hexagonLevelInfo, levelNameAll, getNextItem } from './hexagonInfoData';
 import { IPlayPopupLevelProps } from './interfaces';
-import { LinkToFaq } from '../../../components/linkToFaq/LinkToFaq'
+import { LinkToFaq } from '../../../components/linkToFaq/LinkToFaq';
 
 export const PlayPopupLevel: React.FC<IPlayPopupLevelProps> = ({ hexagonInfo, setModalIsVisibleCallback }) => {
   // HACK: test
@@ -48,7 +48,7 @@ export const PlayPopupLevel: React.FC<IPlayPopupLevelProps> = ({ hexagonInfo, se
             ))}
           </p>
         </div>
-        <LinkToFaq questionId=''>
+        <LinkToFaq questionId="">
           <Button text={'Read more'} appearance={{ priority: 'secondary' }} />
         </LinkToFaq>
       </div>

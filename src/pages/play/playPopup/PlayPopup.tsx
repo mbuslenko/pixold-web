@@ -17,26 +17,16 @@ import { Modal } from '../../../components/modal/Modal';
 import { client } from '../../../shared/ts/ClientCommunication';
 import { getNextItem, levelNameAll } from './hexagonInfoData';
 
-export const PlayPopup: React.FC<IPlayPopupProps> = ({ hexagonId, closePopupCallback, drawAttackLineCallback }) => {
+export const PlayPopup: React.FC<IPlayPopupProps> = ({
+  hexagonId,
+  hexagonInfo,
+  setHexagonInfo,
+  closePopupCallback,
+  drawAttackLineCallback,
+}) => {
   const navigate = useNavigate();
-  const [hexagonInfo, setHexagonInfo] = useState<IGetResponseHexagonInfo | null>(null);
-  const [selectedTab, setSelectedTab] = useState<string>('info');
-  const [modalIsVisible, setModalIsVisible] = useState<boolean>(false);
-
-  useEffect(() => {
-    setHexagonInfo(null);
-
-    client.prepareRequest(navigate)({
-      requestConfig: {
-        method: 'get',
-        url: `/hexagon/${hexagonId}`,
-      },
-      onResponse: (response: GetResponseHexagonInfo) => {
-        console.log(response.data);
-        setHexagonInfo(response.data);
-      },
-    });
-  }, [hexagonId, navigate]);
+  const [selectedTab, setSelectedTab] = useState('info');
+  const [modalIsVisible, setModalIsVisible] = useState(false);
 
   const changeHexagonTypeCallback = (newHexagonType?: HexagonInfoType) => {
     if (!newHexagonType) {
@@ -60,7 +50,10 @@ export const PlayPopup: React.FC<IPlayPopupProps> = ({ hexagonId, closePopupCall
   // TODO: make interface for parameters
   const upgradeResponseCallback = (_: any, triggerAlertCallback: (message: string) => void) => {
     if (hexagonInfo) {
-      const newHexagonInfo = { ...hexagonInfo, level: getNextItem(Object.entries(levelNameAll), HexagonLevel[hexagonInfo.level])[0] };
+      const newHexagonInfo = {
+        ...hexagonInfo,
+        level: getNextItem(Object.entries(levelNameAll), HexagonLevel[hexagonInfo.level])[0],
+      };
 
       setHexagonInfo(newHexagonInfo);
       triggerAlertCallback('Hexagon was upgraded successfully!');
@@ -106,19 +99,20 @@ export const PlayPopup: React.FC<IPlayPopupProps> = ({ hexagonId, closePopupCall
       {hexagonInfo && selectedTab === 'level' ? (
         <PlayPopupLevel setModalIsVisibleCallback={setModalIsVisible} hexagonInfo={hexagonInfo} />
       ) : hexagonInfo && selectedTab === 'settings' ? (
-        <PlayPopupSettings
-          hexagonInfo={hexagonInfo}
-          changeHexagonTypeCallback={changeHexagonTypeCallback}
-        />
+        <PlayPopupSettings hexagonInfo={hexagonInfo} changeHexagonTypeCallback={changeHexagonTypeCallback} />
       ) : hexagonInfo && selectedTab === 'info' ? (
         <PlayPopupInfo
           setModalIsVisibleCallback={setModalIsVisible}
           hexagonInfo={hexagonInfo}
           hexagonId={hexagonId}
           changeTabCallback={(tab) => setSelectedTab(tab)}
-          changeCoinsInStorageCallback={(coinsInStorage: number) => { setHexagonInfo({ ...hexagonInfo, coinsInStorage }); }}
-          changeHealthCallback={(health: number) => { setHexagonInfo({ ...hexagonInfo, health });}}
-          drawAttackLineCallback={drawAttackLineCallback}
+          changeCoinsInStorageCallback={(coinsInStorage: number) => {
+            setHexagonInfo({ ...hexagonInfo, coinsInStorage });
+          }}
+          changeHealthCallback={(health: number) => {
+            setHexagonInfo({ ...hexagonInfo, health });
+          }}
+          drawAttackLineCallback={() => drawAttackLineCallback(hexagonId)}
         />
       ) : (
         <Loader className="play-popup-loader" />

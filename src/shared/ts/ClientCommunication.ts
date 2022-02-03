@@ -42,12 +42,12 @@ class ClientCommunication {
 
       this._axios
         .request(requestConfig)
-        .then(response => {
+        .then((response) => {
           if (onResponse) {
             onResponse(response, this.requestResponseCallback);
           }
         })
-        .catch(error => {
+        .catch((error) => {
           // TODO: uncomment for production
           // if (!error.response) {
           //   this._axios.get(

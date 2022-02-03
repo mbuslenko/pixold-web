@@ -1,5 +1,9 @@
 import { clamp } from '../../../shared/ts/helperFunctions';
-import { IGetResponseOwnedHexagonAll, ISocketMapMessage, ISocketNewHexagonMessage } from '../../../shared/ts/interfaces';
+import {
+  IGetResponseOwnedHexagonAll,
+  ISocketMapMessage,
+  ISocketNewHexagonMessage,
+} from '../../../shared/ts/interfaces';
 import { Color, ScreenMaxWidth } from '../../../shared/ts/enums';
 
 import { Vector } from './Vector';
@@ -29,7 +33,7 @@ export class HexagonMap {
   // HACK: test
   private _attackLine: { from: Vector; to: Vector; color: string };
 
-  private _clickOnHexagonCallback: (hexagonId: number) => void;
+  clickOnHexagonCallback?: (hexagonId: number) => void;
   private _clickOutsideHexagonCallback: () => void;
   private _updateHexagonMap: () => void;
   private _sleepHexagonSceneCallback: () => void;
@@ -37,7 +41,6 @@ export class HexagonMap {
   constructor(
     canvasHexagon: HTMLCanvasElement,
     canvasLine: HTMLCanvasElement,
-    clickOnHexagonCallback: (hexagonId: number) => void,
     clickOutsideHexagonCallback: () => void,
   ) {
     this._canvasHexagon = canvasHexagon;
@@ -66,7 +69,6 @@ export class HexagonMap {
 
     this._requestAnimationFrameId = 0;
 
-    this._clickOnHexagonCallback = clickOnHexagonCallback;
     this._clickOutsideHexagonCallback = clickOutsideHexagonCallback;
     this._sleepHexagonSceneCallback = () => {
       // I made empty function to eliminate if() in each frame inside of animate()
@@ -222,7 +224,7 @@ export class HexagonMap {
 
   updateHexagonAttack(attack: ISocketMapMessage): void {
     this._mapSystem.updateHexagonAttack(attack);
-   }
+  }
 
   move(offset: Vector): void {
     const { width: windowWidth, height: windowHeight } = Size.FromWindow();
@@ -292,7 +294,9 @@ export class HexagonMap {
       if (this._isPositionInHexagon(position, hexagon)) {
         this._mapSystem.activeHexagon = [hexagon];
 
-        this._clickOnHexagonCallback(hexagon.id);
+        if (this.clickOnHexagonCallback) {
+          this.clickOnHexagonCallback(hexagon.id);
+        }
         console.log(`owned: ${hexagon.color}; not owned: rgb(96, 74, 247)`);
 
         return;
@@ -301,5 +305,10 @@ export class HexagonMap {
 
     this._mapSystem.removeActiveHexagon();
     this._clickOutsideHexagonCallback();
+    this._attackLine = {
+      from: new Vector(0, 0),
+      to: new Vector(0, 0),
+      color: Color.PINK,
+    };
   }
 }

@@ -66,7 +66,7 @@ export const AlertContainer: React.FC<IAlertContainerProps> = ({ isConnectedSock
     setAlertAll([{ type: 'error', heading: message, date: new Date() }, ...alertAll]);
   };
 
-  client.requestResponseCallback = message => {
+  client.requestResponseCallback = (message) => {
     setAlertAll([{ type: 'success', heading: message, date: new Date() }, ...alertAll]);
   };
 

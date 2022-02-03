@@ -30,6 +30,7 @@ import {
   ISocketInfoMessage,
   ISocketMapMessage,
   ISocketNewHexagonMessage,
+  IPostDataHexagonAttack,
 } from './interfaces';
 
 export type HexagonInfoType = 'attack' | 'defender' | 'miner' | 'without';
@@ -55,6 +56,7 @@ export type RequestData =
   | IPostDataHexagonChangeType
   | IPostDataHexagonSendCoins
   | IPostDataHexagonBuy
+  | IPostDataHexagonAttack
   | IPostDataNotification;
 
 export type AxiosInstanceFunction = (payload: IAxiosInstanceProps) => void;

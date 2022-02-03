@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { GetResponseAllHexagonOwned } from '../../shared/ts/types';
+import { GetResponseAllHexagonOwned, GetResponseHexagonInfo } from '../../shared/ts/types';
 
 import './PlayPage.scss';
 import { PlayMenu } from './PlayMenu';
@@ -10,13 +10,16 @@ import { HexagonMap } from './hexagonMap/HexagonMap';
 import { EventManager } from './hexagonMap/EventManager';
 import { IPlayPageProps } from './interfaces';
 import { client } from '../../shared/ts/ClientCommunication';
-import { ISocketMapMessage, ISocketNewHexagonMessage } from '../../shared/ts/interfaces'
+import { IGetResponseHexagonInfo, ISocketMapMessage, ISocketNewHexagonMessage } from '../../shared/ts/interfaces';
 
 export const PlayPage: React.FC<IPlayPageProps> = ({ showAlertsCallback }) => {
   const navigate = useNavigate();
 
   const [isVisiblePopup, setIsVisiblePopup] = useState(false);
+  const [hexagonAttackerId, setHexagonAttackerId] = useState<number | null>(null);
   const [hexagonId, setHexagonId] = useState<number | null>(null);
+  const [hexagonInfo, setHexagonInfo] = useState<IGetResponseHexagonInfo | null>(null);
+
   const [map, setMap] = useState<HexagonMap>();
   const [eventManager, setEventManager] = useState<EventManager>();
 
@@ -42,15 +45,10 @@ export const PlayPage: React.FC<IPlayPageProps> = ({ showAlertsCallback }) => {
     playPage.onwheel = (e) => e.preventDefault();
 
     // HACK: test
-    const map = new HexagonMap(
-      canvasHexagon,
-      canvasLine,
-      (hexagonId: number) => {
-        setHexagonId(hexagonId);
-        setIsVisiblePopup(true);
-      },
-      () => setIsVisiblePopup(false),
-    );
+    const map = new HexagonMap(canvasHexagon, canvasLine, () => {
+      setIsVisiblePopup(false);
+      eventManager.drawAttackLine = false;
+    });
     // TODO: make eventManager inside of map
     const eventManager = new EventManager(canvasLine, map);
 
@@ -59,6 +57,7 @@ export const PlayPage: React.FC<IPlayPageProps> = ({ showAlertsCallback }) => {
         method: 'get',
         url: '/hexagon/all/owned',
       },
+      // TODO: make adjustments for backend starting hexagon id from 1
       onResponse: (response: GetResponseAllHexagonOwned) => map.setAllOwnedHexagons(response.data),
     });
 
@@ -73,7 +72,7 @@ export const PlayPage: React.FC<IPlayPageProps> = ({ showAlertsCallback }) => {
       event: 'newHexagon',
       callback: (eventMessage: ISocketNewHexagonMessage) => {
         map.addOwnedHexagon(eventMessage);
-      }
+      },
     });
 
     showAlertsCallback(true);
@@ -82,7 +81,7 @@ export const PlayPage: React.FC<IPlayPageProps> = ({ showAlertsCallback }) => {
     eventManager.setEvents();
 
     setMap(map);
-    setEventManager(eventManager)
+    setEventManager(eventManager);
 
     return () => {
       client.removeEventListenerAll('map');
@@ -94,6 +93,55 @@ export const PlayPage: React.FC<IPlayPageProps> = ({ showAlertsCallback }) => {
     };
   }, [navigate, showAlertsCallback]);
 
+  useEffect(() => {
+    if (!map || !eventManager) {
+      return;
+    }
+
+    map.clickOnHexagonCallback = (hexagonId: number) => {
+      console.log(eventManager.drawAttackLine);
+      if (eventManager.drawAttackLine) {
+        client.prepareRequest(navigate)({
+          requestConfig: {
+            method: 'get',
+            url: `/hexagon/${hexagonId}`,
+          },
+          onResponse: (response: GetResponseHexagonInfo): void => {
+            if (response.data.canAttack && hexagonAttackerId && hexagonId) {
+              const attackData = { from: hexagonAttackerId, to: hexagonId }
+
+              console.log(attackData);
+              client.prepareRequest(navigate)({
+                requestConfig: {
+                  method: 'get',
+                  url: '/hexagon/attack',
+                  data: attackData,
+                },
+              });
+            }
+          },
+        });
+
+        return;
+      }
+
+      setHexagonInfo(null);
+      setHexagonId(hexagonId);
+      setIsVisiblePopup(true);
+
+      client.prepareRequest(navigate)({
+        requestConfig: {
+          method: 'get',
+          url: `/hexagon/${hexagonId}`,
+        },
+        onResponse: (response: GetResponseHexagonInfo): void => {
+          console.log(response.data);
+          setHexagonInfo(response.data);
+        },
+      });
+    };
+  }, [eventManager, hexagonAttackerId, hexagonId, map, navigate]);
+
   return (
     <section className="play-page" ref={playPageRef}>
       <canvas className="play-page-canvas-hexagon" ref={canvasHexagonRef} />
@@ -102,15 +150,18 @@ export const PlayPage: React.FC<IPlayPageProps> = ({ showAlertsCallback }) => {
       {isVisiblePopup && hexagonId !== null && (
         <PlayPopup
           hexagonId={hexagonId}
+          hexagonInfo={hexagonInfo}
+          setHexagonInfo={setHexagonInfo}
           closePopupCallback={() => {
             setIsVisiblePopup(false);
           }}
           // TODO: finish attack
-          drawAttackLineCallback={() => {
-            eventManager?.drawAttackLineFromSelectedHexagon();
-          }}
-          stopAttackLineCallback={() => {
-            eventManager?.stopAttackLine();
+          drawAttackLineCallback={(hexagonId: number) => {
+            if (eventManager) {
+              setHexagonAttackerId(hexagonId);
+              eventManager.drawAttackLine = true;
+              setIsVisiblePopup(false);
+            }
           }}
         />
       )}

@@ -15,7 +15,7 @@ export const PlayPopupInfo: React.FC<IPlayPopupInfoProps> = ({
   changeCoinsInStorageCallback,
   changeHealthCallback,
   changeTabCallback,
-  drawAttackLineCallback
+  drawAttackLineCallback,
 }) => {
   const navigate = useNavigate();
   const buttonClassName = hexagonInfo.owner !== localStorage.getItem('username') ? 'play-popup-info-button-hidden' : '';
@@ -51,60 +51,61 @@ export const PlayPopupInfo: React.FC<IPlayPopupInfoProps> = ({
           onClick={() => setModalIsVisibleCallback(true)}
           disabled={hexagonInfo.level === 'supreme'}
         />
-        {hexagonInfo.type === 'miner' ? <>
-          <div>
-            <h3 className="play-popup-content-heading">Coins in storage</h3>
-            <p className="play-popup-content-text">{hexagonInfo.coinsInStorage}</p>
-          </div>
-          <Button
-            text={'Send to my wallet'}
-            className={buttonClassName}
-            appearance={{ priority: 'secondary' }}
-            onClick={() =>
-              client.prepareRequest(navigate)({
-                requestConfig: {
-                  method: 'post',
-                  url: '/hexagon/send-coins',
-                  data: { numericId: hexagonId },
-                },
-                onResponse: (_, triggerAlertCallback) => {
-                  triggerAlertCallback('The coins were successfully delivered to your wallet')
-                  changeCoinsInStorageCallback(0);
-                },
-                onError: (error, triggerAlertCallback) =>
-                  triggerAlertCallback(error.response.data.message),
-              })
-            }
-          />
-        </>
-        : hexagonInfo.type === 'defender' || hexagonInfo.type === 'attack' ? <>
-          <div>
-            <h3 className="play-popup-content-heading">Health</h3>
-            <p className="play-popup-content-text">{hexagonInfo.health}</p>
-          </div>
-          <Button
-            text={'Repair'}
-            className={buttonClassName}
-            appearance={{ priority: 'secondary' }}
-            onClick={() =>
-              client.prepareRequest(navigate)({
-                requestConfig: {
-                  method: 'post',
-                  url: '/hexagon/repair',
-                  data: { numericId: hexagonId },
-                },
-                onResponse: (_, triggerAlertCallback) => {
-                  triggerAlertCallback('The coins were successfully repaired')
-                  changeHealthCallback(100);
-                },
-                onError: (error, triggerAlertCallback) =>
-                  triggerAlertCallback(error.response.data.message),
-              })
-            }
-          />
-        </>
-        : <></>
-        }
+        {hexagonInfo.type === 'miner' ? (
+          <>
+            <div>
+              <h3 className="play-popup-content-heading">Coins in storage</h3>
+              <p className="play-popup-content-text">{hexagonInfo.coinsInStorage}</p>
+            </div>
+            <Button
+              text={'Send to my wallet'}
+              className={buttonClassName}
+              appearance={{ priority: 'secondary' }}
+              onClick={() =>
+                client.prepareRequest(navigate)({
+                  requestConfig: {
+                    method: 'post',
+                    url: '/hexagon/send-coins',
+                    data: { numericId: hexagonId },
+                  },
+                  onResponse: (_, triggerAlertCallback) => {
+                    triggerAlertCallback('The coins were successfully delivered to your wallet');
+                    changeCoinsInStorageCallback(0);
+                  },
+                  onError: (error, triggerAlertCallback) => triggerAlertCallback(error.response.data.message),
+                })
+              }
+            />
+          </>
+        ) : hexagonInfo.type === 'defender' || hexagonInfo.type === 'attack' ? (
+          <>
+            <div>
+              <h3 className="play-popup-content-heading">Health</h3>
+              <p className="play-popup-content-text">{hexagonInfo.health}</p>
+            </div>
+            <Button
+              text={'Repair'}
+              className={buttonClassName}
+              appearance={{ priority: 'secondary' }}
+              onClick={() =>
+                client.prepareRequest(navigate)({
+                  requestConfig: {
+                    method: 'post',
+                    url: '/hexagon/repair',
+                    data: { numericId: hexagonId },
+                  },
+                  onResponse: (_, triggerAlertCallback) => {
+                    triggerAlertCallback('The coins were successfully repaired');
+                    changeHealthCallback(100);
+                  },
+                  onError: (error, triggerAlertCallback) => triggerAlertCallback(error.response.data.message),
+                })
+              }
+            />
+          </>
+        ) : (
+          <></>
+        )}
         <div className="play-popup-content-owner">
           <div>
             <h3 className="play-popup-content-heading">Owner</h3>

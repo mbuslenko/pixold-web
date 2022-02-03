@@ -1,6 +1,10 @@
 import { Color } from '../../../shared/ts/enums';
 import { clamp } from '../../../shared/ts/helperFunctions';
-import { IGetResponseOwnedHexagonAll, ISocketMapMessage, ISocketNewHexagonMessage } from '../../../shared/ts/interfaces';
+import {
+  IGetResponseOwnedHexagonAll,
+  ISocketMapMessage,
+  ISocketNewHexagonMessage,
+} from '../../../shared/ts/interfaces';
 
 import { Grid } from './Grid';
 import { Hexagon } from './Hexagon';
@@ -140,14 +144,16 @@ export class SceneSystem {
     if (attack.attack === 'started') {
       this.addAttackingHexagon({
         attacker: this._map[attack.from],
-        defender: this._map[attack.to]
-      })
+        defender: this._map[attack.to],
+      });
 
       return;
     }
 
     // HACK: test
-    let hexagonAttack = this._leftAttackingHexagonAll.find(({ attacker, defender }) => attacker.id === attack.from && defender.id === attack.to);
+    let hexagonAttack = this._leftAttackingHexagonAll.find(
+      ({ attacker, defender }) => attacker.id === attack.from && defender.id === attack.to,
+    );
 
     if (hexagonAttack) {
       this._leftAttackingHexagonAll.splice(this._leftAttackingHexagonAll.indexOf(hexagonAttack), 1);
@@ -155,7 +161,9 @@ export class SceneSystem {
       return;
     }
 
-    hexagonAttack = this._rightAttackingHexagonAll.find(({ attacker, defender }) => attacker.id === attack.from && defender.id === attack.to)
+    hexagonAttack = this._rightAttackingHexagonAll.find(
+      ({ attacker, defender }) => attacker.id === attack.from && defender.id === attack.to,
+    );
 
     if (hexagonAttack) {
       this._rightAttackingHexagonAll.splice(this._leftAttackingHexagonAll.indexOf(hexagonAttack), 1);
@@ -206,7 +214,7 @@ export class SceneSystem {
     }
   }
 
-  addOwnedHexagon (eventMessage: ISocketNewHexagonMessage): void {
+  addOwnedHexagon(eventMessage: ISocketNewHexagonMessage): void {
     const { username, numericId } = eventMessage;
     const newOwnedHexagon = this._map[numericId];
     const ownedHexagonAll = this._ownedHexagonAll.get(username);

@@ -3,9 +3,10 @@ import { HexagonInfoType } from '../../../shared/ts/types';
 
 export interface IPlayPopupProps {
   hexagonId: number;
+  hexagonInfo: IGetResponseHexagonInfo | null;
+  setHexagonInfo: (newHexagonInfo: IGetResponseHexagonInfo) => void;
   closePopupCallback: () => void;
-  drawAttackLineCallback: () => void;
-  stopAttackLineCallback: () => void;
+  drawAttackLineCallback: (hexagonId: number) => void;
 }
 
 export interface IPlayPopupInfoProps {

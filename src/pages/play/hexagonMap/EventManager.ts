@@ -11,7 +11,7 @@ export class EventManager {
   private _touchClick: boolean;
   private _touchClickTimer: number;
   private _isPressedSpace: boolean;
-  private _drawAttackLine: boolean;
+  drawAttackLine: boolean;
 
   constructor(context: HTMLElement, map: HexagonMap) {
     this._context = context;
@@ -22,7 +22,7 @@ export class EventManager {
     this._touchClick = false;
     this._touchClickTimer = 0;
     this._isPressedSpace = false;
-    this._drawAttackLine = false;
+    this.drawAttackLine = false;
   }
 
   private _keyDownCallback(e: KeyboardEvent): void {
@@ -104,14 +104,14 @@ export class EventManager {
   private _mouseMoveCallback = (e: MouseEvent): void => {
     e.preventDefault();
 
+    if (this.drawAttackLine) {
+      this._map.drawAttackLine(Vector.FromEventPosition(e));
+    }
+
     if (this._isDragging) {
       this._map.dragMove(Vector.FromEventPosition(e));
 
       return;
-    }
-
-    if (this._drawAttackLine) {
-      this._map.drawAttackLine(Vector.FromEventPosition(e));
     }
   };
 
@@ -134,7 +134,10 @@ export class EventManager {
     e.preventDefault();
 
     if (touches.length === 1) {
-      this._map.dragStart(Vector.FromEventPosition(touches[0]));
+      const firstTouch = Vector.FromEventPosition(touches[0]);
+
+      this._map.dragStart(firstTouch);
+      this._lastTouch = firstTouch;
 
       this._touchClick = true;
       // I use window.setTimeout instead of setTimeout because I need setTimeout to return type number instead of NodeJS.Timeout
@@ -180,14 +183,6 @@ export class EventManager {
     }
 
     this._touchGroup = null;
-  }
-
-  drawAttackLineFromSelectedHexagon(): void {
-    this._drawAttackLine = true;
-  }
-
-  stopAttackLine(): void {
-    this._drawAttackLine = false;
   }
 
   setEvents(): void {

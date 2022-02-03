@@ -156,6 +156,11 @@ export interface IPostDataHexagonBuy {
   userId: string;
 }
 
+export interface IPostDataHexagonAttack {
+  from: number;
+  to: number;
+}
+
 export interface IReactFacebookFailureResponse {
   status?: string | undefined;
 }

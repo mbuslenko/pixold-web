@@ -28,7 +28,7 @@ export const App: React.FC = () => {
     client.onSocketConnect = () => setIsConnectedSocket(true);
     client.onSocketDisconnect = () => setIsConnectedSocket(false);
     client.connectSocket();
-    console.log('connection')
+    console.log('connection');
   }, []);
 
   return (
