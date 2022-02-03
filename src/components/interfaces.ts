@@ -52,6 +52,7 @@ export interface ICheckboxProps {
   text: string;
   priority: ElementPriority;
   value: string;
+  className?: string;
   checked?: boolean;
   onChange: (isChecked: boolean) => void;
 }
@@ -86,6 +87,8 @@ export interface ITabbedButtonGroupOption {
 
 export interface ITabbedButtonGroupProps {
   name: string;
+  value?: string;
+  disabled?: boolean;
   options: ITabbedButtonGroupOption[];
   onChange: (value: string) => void;
 }
@@ -93,13 +96,23 @@ export interface ITabbedButtonGroupProps {
 export interface IAlertProps {
   type: AlertType;
   heading: string;
+  date: Date;
   text?: string;
   closeAlertCallback: () => void;
+}
+
+export interface IAlertContainerProps {
+  isConnectedSocket: boolean;
+  showAttackAlerts?: boolean;
 }
 
 export interface IModalPosition {
   left: string;
   top: string;
+}
+
+export interface ILoaderProps {
+  className?: string;
 }
 
 export interface IModalProps {

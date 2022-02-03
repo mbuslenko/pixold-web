@@ -1,9 +1,10 @@
-@import '../../shared/variables.scss';
+@import '../../shared/scss/variables.scss';
 
 .container {
   display: inline-block;
   border-radius: 4px;
   border: 1px solid $purple;
+  z-index: 1;
 }
 
 .label {
@@ -14,6 +15,10 @@
 
   &:not(&:last-child) {
     border-right: 1px solid $purple;
+  }
+
+  &.disabled {
+    cursor: not-allowed;
   }
 }
 
@@ -26,14 +31,15 @@
     color: $white;
 
     &::before {
-      content: '';
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
       background-color: $purple;
-      z-index: -1;
+    }
+  }
+
+  &:not(&:checked):disabled + .description {
+    color: $purple;
+
+    &::before {
+      background-color: $grey-dark;
     }
   }
 }
@@ -43,5 +49,21 @@
   font: {
     size: 18px;
     weight: 600;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+  }
+}
+
+@media screen and (max-width: $screen-max-width-small) {
+  .description {
+    font-size: 14px;
   }
 }

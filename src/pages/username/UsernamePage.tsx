@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { getAxiosInstance } from '../../shared/ts/axiosInstance';
 import { GetResponseUsernameCheck } from '../../shared/ts/types';
 
 import { Button } from '../../components/button/Button';
@@ -9,10 +8,11 @@ import { Input } from '../../components/input/Input';
 import { InputStatus } from '../../components/types';
 
 import './UsernamePage.scss';
+import { redirect } from '../../shared/ts/helperFunctions';
+import { client } from '../../shared/ts/ClientCommunication';
 
 export const UsernamePage: React.FC = () => {
   const navigate = useNavigate();
-  const request = getAxiosInstance(navigate);
 
   const [username, setUsername] = useState<string>('');
   const [usernameStatus, setUsernameStatus] = useState<InputStatus>();
@@ -24,7 +24,7 @@ export const UsernamePage: React.FC = () => {
       return;
     }
 
-    request({
+    client.prepareRequest(navigate)({
       requestConfig: {
         method: 'get',
         url: `/user/check/username/${username}`,
@@ -43,13 +43,13 @@ export const UsernamePage: React.FC = () => {
 
     setUsernameStatus('valid');
 
-    request({
+    client.prepareRequest(navigate)({
       requestConfig: {
         method: 'post',
         url: `/user/update/username`,
         data: { username },
       },
-      onResponse: () => navigate('/wallet'),
+      onResponse: () => redirect(navigate, '/play'),
     });
   };
 

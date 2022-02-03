@@ -1,6 +1,10 @@
 import { Color } from '../../../shared/ts/enums';
 import { clamp } from '../../../shared/ts/helperFunctions';
-import { IGetResponseOwnedHexagonAll } from '../../../shared/ts/interfaces';
+import {
+  IGetResponseOwnedHexagonAll,
+  ISocketMapMessage,
+  ISocketNewHexagonMessage,
+} from '../../../shared/ts/interfaces';
 
 import { Grid } from './Grid';
 import { Hexagon } from './Hexagon';
@@ -20,8 +24,9 @@ export class SceneSystem {
   private _leftAttackingHexagonAll: HexagonAttack[];
   private _rightAttackingHexagonAll: HexagonAttack[];
 
-  private _invisibleActiveHexagon: Hexagon;
-  activeHexagon: Hexagon;
+  private _ownedHexagonAll: Map<string, Hexagon[]>;
+  private _invisibleHexagon: Hexagon;
+  activeHexagon: Hexagon[];
 
   get map(): Hexagon[] {
     return this._map;
@@ -29,6 +34,11 @@ export class SceneSystem {
 
   get visibleMap(): Hexagon[] {
     return this._visibleMap;
+  }
+
+  get ownedHexagonAll(): Hexagon[] {
+    // HACK: test
+    return [...this._ownedHexagonAll.values()].flat();
   }
 
   get mapSize(): Size {
@@ -44,8 +54,13 @@ export class SceneSystem {
   }
 
   constructor() {
-    this._map = [];
+    Hexagon.radius = 5;
     this._mapSize = new Size(1920, 860);
+
+    // I do this because on backend all hexagons start from 1 index
+    this._invisibleHexagon = new Hexagon(new Vector(-(this.mapSize.width * 4), 0), Color.BLACK, 0);
+
+    this._map = [this._invisibleHexagon];
     this._gridCellSize = this._getNewGridCellSize();
     this._mapGrid = this._getNewGrid(this._gridCellSize);
     this._visibleMap = [];
@@ -53,19 +68,11 @@ export class SceneSystem {
     this._leftAttackingHexagonAll = [];
     this._rightAttackingHexagonAll = [];
 
-    Hexagon.radius = 5;
+    this._ownedHexagonAll = new Map();
+
+    this.activeHexagon = [];
 
     this._setSceneData();
-    this._generateRandomAttacks();
-
-    // I made _invisibleActiveHexagon to eliminate if() in each frame inside of HexagonMap animate()
-    this._invisibleActiveHexagon = new Hexagon(
-      new Vector(-(this._mapSize.width / 0.25) - Hexagon.radius * 2, 0),
-      Color.PINK,
-      this._map.length,
-    );
-    this.activeHexagon = this._invisibleActiveHexagon;
-    this._map.push(this._invisibleActiveHexagon);
   }
 
   private _getNewGridCellSize(): Size {
@@ -99,7 +106,8 @@ export class SceneSystem {
   }
 
   private _setSceneData(): void {
-    let hexagonIndex = 0;
+    // I do this because on backend all hexagons start from 1 index
+    let hexagonIndex = 1;
 
     for (const hexagonData of mapData) {
       const hexagon = new Hexagon(Vector.FromHexagonData(hexagonData), Color.PURPLE, hexagonIndex++);
@@ -115,38 +123,20 @@ export class SceneSystem {
     this._mapGrid = this._getNewGrid(this._gridCellSize);
     this._visibleMap = [];
 
-    // add slice(0, -1) because on map last index is invisibleActiveHexagon
-    for (const hexagon of this._map.slice(0, -1)) {
+    // I do this because on 0 index is invisibleHexagon
+    for (const hexagon of this._map.slice(1)) {
       this._addHexagonToGrid(hexagon);
     }
   }
 
   removeActiveHexagon(): void {
-    this.activeHexagon = this._invisibleActiveHexagon;
+    this.activeHexagon = [];
   }
 
-  // HACK: test
-  private _generateRandomAttacks(): void {
-    const randomHex = () => Math.floor(Math.random() * this._map.length);
-
-    for (let i = 0; i < 50; i++) {
-      const attacker = this._map[randomHex()];
-      const defender = this._map[randomHex()];
-
-      attacker.color = this._generateRandomColor();
-      defender.color = this._generateRandomColor();
-
-      this._addAttackingHexagon({
-        attacker,
-        defender,
-      });
-    }
-  }
-
-  private _addAttackingHexagon(attackingHexagon: HexagonAttack): void {
+  addAttackingHexagon(attackingHexagon: HexagonAttack): void {
     const { attacker, defender } = attackingHexagon;
 
-    if (attacker.position <= defender.position) {
+    if (attacker.position.x > defender.position.x || attacker.position.y > defender.position.y) {
       this._leftAttackingHexagonAll.push(attackingHexagon);
 
       return;
@@ -155,29 +145,95 @@ export class SceneSystem {
     this._rightAttackingHexagonAll.push(attackingHexagon);
   }
 
-  private _generateRandomColor(): string {
-    // TODO: make better randomizing algorithm
-    const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+  updateHexagonAttack(attack: ISocketMapMessage): void {
+    // HACK: test
+    if (attack.attack === 'started') {
+      this.addAttackingHexagon({
+        attacker: this._map[attack.from],
+        defender: this._map[attack.to],
+      });
 
-    if (randomColor === Color.PURPLE) {
-      return this._generateRandomColor();
+      return;
     }
 
-    return randomColor;
+    // HACK: test
+    let hexagonAttack = this._leftAttackingHexagonAll.find(
+      ({ attacker, defender }) => attacker.id === attack.from && defender.id === attack.to,
+    );
+
+    if (hexagonAttack) {
+      this._leftAttackingHexagonAll.splice(this._leftAttackingHexagonAll.indexOf(hexagonAttack), 1);
+
+      return;
+    }
+
+    hexagonAttack = this._rightAttackingHexagonAll.find(
+      ({ attacker, defender }) => attacker.id === attack.from && defender.id === attack.to,
+    );
+
+    if (hexagonAttack) {
+      this._rightAttackingHexagonAll.splice(this._leftAttackingHexagonAll.indexOf(hexagonAttack), 1);
+    }
   }
 
-  setOwnedHexagonAll(ownedHexagonAll: IGetResponseOwnedHexagonAll[]): void {
-    // TODO: for showing owners territory I need to get username from auth
-    // for (const { username, numericIds: hexagonIdAll } of ownedHexagonAll) {
-    // if (username === localStorage.username) { this._ownedHexagonAll = numericIds }
+  private _generateRandomColor(): string {
+    const generateRgbValue = (avoidValue: number): number => {
+      const colorRange = 10;
+      // 255 - colorRange is to eliminate full black colors
+      const value = Math.floor(Math.random() * (255 - colorRange)) + colorRange;
 
-    for (const { numericIds: hexagonIdAll } of ownedHexagonAll) {
+      if (value >= avoidValue - colorRange && value <= avoidValue + colorRange) {
+        console.log('regenerate color');
+
+        return (
+          avoidValue + (Math.ceil(Math.random() * colorRange) + colorRange) * Math.sign((value - avoidValue) * -2 + 1)
+        );
+      }
+
+      return value;
+    };
+
+    // rgb to avoid "rgb(96, 74, 247)"
+    return `rgb(${generateRgbValue(96)}, ${generateRgbValue(74)}, ${generateRgbValue(247)})`;
+  }
+
+  setOwnedHexagonAll(ownedHexagonAll: IGetResponseOwnedHexagonAll): void {
+    this._ownedHexagonAll = new Map();
+
+    for (const { username, numericIds: hexagonIdAll } of ownedHexagonAll.hexagons) {
+      // TODO: refactoring;
+      if (username === localStorage.username) {
+        const hexagonAll: Hexagon[] = [];
+
+        this._ownedHexagonAll.set(username, hexagonAll);
+
+        for (const hexagonId of hexagonIdAll) {
+          hexagonAll.push(this._map[hexagonId]);
+        }
+      }
+
       const hexagonColor = this._generateRandomColor();
 
       for (const hexagonId of hexagonIdAll) {
         this._map[hexagonId].color = hexagonColor;
       }
     }
+  }
+
+  addOwnedHexagon(eventMessage: ISocketNewHexagonMessage): void {
+    const { username, numericId } = eventMessage;
+    const newOwnedHexagon = this._map[numericId];
+    const ownedHexagonAll = this._ownedHexagonAll.get(username);
+
+    if (ownedHexagonAll) {
+      newOwnedHexagon.color = ownedHexagonAll[0].color;
+      ownedHexagonAll.push(newOwnedHexagon);
+
+      return;
+    }
+
+    newOwnedHexagon.color = this._generateRandomColor();
+    this._ownedHexagonAll.set(username, [newOwnedHexagon]);
   }
 
   setTransformHexagonAll(mapTransform: Matrix): void {
@@ -188,11 +244,8 @@ export class SceneSystem {
     const startRow = Math.max(Math.floor(-y / gridCellSize.height - 1), 0);
     const startColumn = Math.max(Math.floor(-x / gridCellSize.width - 1), 0);
 
-    const endRow = Math.min(Math.floor((heightWindow - y) / gridCellSize.height + 1), this._mapGrid.value.length - 1);
-    const endColumn = Math.min(
-      Math.floor((widthWindow - x) / gridCellSize.width + 1),
-      this._mapGrid.value[0].length - 1,
-    );
+    const endRow = Math.min(Math.floor((heightWindow - y) / gridCellSize.height + 1), this._mapGrid.rowCount - 1);
+    const endColumn = Math.min(Math.floor((widthWindow - x) / gridCellSize.width + 1), this._mapGrid.columnCount - 1);
 
     this._visibleMap = [];
 

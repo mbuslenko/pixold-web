@@ -1,4 +1,4 @@
-import { IIconProps, ISvgProps } from './interfaces';
+import { IAlertProps, IIconProps, ISvgProps } from './interfaces';
 
 export type ElementPriority = 'primary' | 'secondary';
 
@@ -12,7 +12,8 @@ export type SecondaryButtonTheme = 'black-white' | 'yellow' | 'red' | 'blue' | '
 export type ModalTheme = 'blue-dark';
 export type ModalPositionType = 'absolute' | 'fixed' | 'relative';
 
-export type AlertType = 'blue' | 'yellow' | 'red' | 'green';
+export type AlertType = 'alert' | 'info' | 'success' | 'error';
+export type AlertInfo = Omit<IAlertProps, 'closeAlertCallback'>;
 
 export type HexagonColor = 'red' | 'blue' | 'yellow';
 export type HexagonStrokeColor = 'red' | 'purple';

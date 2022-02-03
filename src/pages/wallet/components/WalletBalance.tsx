@@ -1,33 +1,34 @@
 import { PixelCoinLogoSvg } from '../../../components/pixelCoinLogoSvg/PixelCoinLogoSvg';
 import { LumenLogoSvg } from '../../../components/lumenLogoSvg/LumenLogoSvg';
+import { NumberAnimation } from '../../../components/numberAnimation/NumberAnimation';
 
 import './WalletBalance.scss';
 import dollarSignImg from '../../../assets/svg/dollar-sign.svg';
-import { WalletBalanceProps } from '../interfaces';
+import { IWalletBalanceNumber, IWalletBalanceProps } from '../interfaces';
 import { WalletBalanceCurrency } from '../types';
 
 const balanceMaxLength = 6;
 const textSliceEnd = balanceMaxLength - 1;
 const balanceOverflow = '...';
 
-export const WalletBalance: React.FC<WalletBalanceProps> = ({ balance, currency }) => {
-  const adjustBalanceLength = (balance: number): string => {
+export const WalletBalance: React.FC<IWalletBalanceProps> = ({ balance, currency }) => {
+  const adjustBalanceLength = (balance: number): IWalletBalanceNumber => {
     const balanceText: string = balance.toString();
     const balanceDigitCount: number = balance.toString().replace('.', '').length;
 
     if (balanceDigitCount <= balanceMaxLength) {
-      return balanceText;
+      return { number: balance, overflow: '' };
     }
 
     if (Number.isInteger(balance)) {
-      return balanceText.slice(0, textSliceEnd) + balanceOverflow;
+      return { number: Number(balanceText.slice(0, textSliceEnd)), overflow: balanceOverflow };
     }
 
     if (balanceText.indexOf('.') < textSliceEnd) {
-      return balanceText.slice(0, textSliceEnd + 1) + balanceOverflow;
+      return { number: Number(balanceText.slice(0, textSliceEnd + 1)), overflow: balanceOverflow };
     }
 
-    return balanceText.slice(0, textSliceEnd) + balanceOverflow;
+    return { number: Number(balanceText.slice(0, textSliceEnd)), overflow: balanceOverflow };
   };
 
   const getImgFromCurrency = (currency: WalletBalanceCurrency): JSX.Element => {
@@ -41,10 +42,15 @@ export const WalletBalance: React.FC<WalletBalanceProps> = ({ balance, currency 
     }
   };
 
+  const { number, overflow } = adjustBalanceLength(balance);
+
   return (
     <div className="wallet-balance">
       {getImgFromCurrency(currency)}
-      <span>{`${adjustBalanceLength(balance)} ${currency}`}</span>
+      <span>
+        <NumberAnimation number={number} />
+        {`${overflow} ${currency}`}
+      </span>
     </div>
   );
 };

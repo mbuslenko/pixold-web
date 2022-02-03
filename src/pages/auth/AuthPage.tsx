@@ -18,8 +18,10 @@ export const AuthPage: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (window.localStorage.getItem('userId') && window.localStorage.getItem('accessToken')) {
-      navigate('/play');
+    console.log(localStorage.getItem('accessToken'));
+
+    if (localStorage.getItem('userId') && localStorage.getItem('accessToken')) {
+      navigate('/play', { replace: true });
     }
   }, [navigate]);
 
@@ -35,9 +37,9 @@ export const AuthPage: React.FC = () => {
       avatarUrl: responseGoogle.profileObj.imageUrl,
     };
 
-    window.localStorage.setItem('responseData', JSON.stringify(responseData));
+    localStorage.setItem('responseData', JSON.stringify(responseData));
 
-    navigate('/auth/load');
+    navigate('/auth/load', { replace: true });
   };
 
   const handleFacebookAuthSuccess = async (responseFacebook: GetResponseLoginFacebook) => {
@@ -53,9 +55,9 @@ export const AuthPage: React.FC = () => {
       lastName: fullName[1],
     };
 
-    window.localStorage.setItem('responseData', JSON.stringify(responseData));
+    localStorage.setItem('responseData', JSON.stringify(responseData));
 
-    navigate('/auth/load');
+    navigate('/auth/load', { replace: true });
   };
 
   return (

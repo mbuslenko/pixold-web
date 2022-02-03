@@ -2,34 +2,45 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { PostResponseAuth } from '../../shared/ts/types';
-import { getAxiosInstance } from '../../shared/ts/axiosInstance';
 import { IPostDataAuth } from '../../shared/ts/interfaces';
 
+import { Loader } from '../../components/loader/Loader';
+
 import './AuthLoadPage.scss';
-import loaderLogo from '../../assets/svg/loader-logo.svg';
+import { client } from '../../shared/ts/ClientCommunication';
 
 export const AuthLoadPage: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const responseData: IPostDataAuth = JSON.parse(window.localStorage.getItem('responseData') as string);
+    const responseData: IPostDataAuth = JSON.parse(localStorage.getItem('responseData') as string);
 
     if (!responseData) {
-      navigate('/auth');
+      navigate('/auth', { replace: true });
     }
 
     const responseCallback = (response: PostResponseAuth) => {
-      window.localStorage.setItem('userId', response.data.userId);
-      window.localStorage.setItem('accessToken', response.data.accessToken);
+      const { userId, accessToken, username, wallet, updateUsername } = response.data;
 
-      if (response.data.updateUsername === true) {
-        return navigate('/username');
-      } else {
-        return navigate('/play');
+      localStorage.setItem('userId', userId);
+      localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem('username', username);
+      if (wallet) {
+        localStorage.setItem('wallet', JSON.stringify(wallet));
       }
+
+      client.connectSocket();
+
+      if (updateUsername) {
+        navigate('/username', { replace: true });
+
+        return;
+      }
+
+      navigate('/play', { replace: true });
     };
 
-    getAxiosInstance(navigate)({
+    client.prepareRequest(navigate)({
       requestConfig: {
         method: 'post',
         url: '/auth',
@@ -40,9 +51,8 @@ export const AuthLoadPage: React.FC = () => {
   }, [navigate]);
 
   return (
-    <article className="loader-wrap">
-      <img src={loaderLogo} alt="loader Logo" className="loader-logo" />
-      <div className="loader-text">Loading...</div>
-    </article>
+    <section className="auth-load-page">
+      <Loader />
+    </section>
   );
 };

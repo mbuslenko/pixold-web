@@ -1,0 +1,27 @@
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 20px 0 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px 0;
+  max-height: 100%;
+  overflow: scroll;
+}
+
+@supports (scrollbar-width: thin) {
+  .container {
+    scrollbar-color: transparent transparent;
+  }
+}
+
+@supports not (scrollbar-width: thin) {
+  .container::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .container::-webkit-scrollbar-thumb {
+    background-color: transparent;
+  }
+}

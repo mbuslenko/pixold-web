@@ -1,8 +1,8 @@
 import './WalletBalanceContainer.scss';
 import { WalletBalance } from './WalletBalance';
-import { WalletBalanceContainerProps } from '../interfaces';
+import { IWalletBalanceContainerProps } from '../interfaces';
 
-export const WalletBalanceContainer: React.FC<WalletBalanceContainerProps> = ({ pxl, xlm, usd }) => {
+export const WalletBalanceContainer: React.FC<IWalletBalanceContainerProps> = ({ pxl, xlm, usd }) => {
   return (
     <section>
       <h2 className="wallet-balance-heading">Your balance</h2>

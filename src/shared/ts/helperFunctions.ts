@@ -19,13 +19,26 @@ export const unblockScrolling = (): void => {
 };
 
 export const redirect = (navigate: NavigateFunction, redirectTo: string): void => {
-  if (!window.localStorage.getItem('accessToken') && redirectTo === '/play') {
+  if (!localStorage.getItem('accessToken')) {
     navigate('/auth');
 
     return;
   }
 
+  if (!localStorage.getItem('wallet') && redirectTo === '/wallet') {
+    navigate('/coin');
+
+    return;
+  }
+
   navigate(redirectTo);
+};
+
+export const checkAuth = (navigate: NavigateFunction): void => {
+  if (!localStorage.getItem('accessToken')) {
+    localStorage.clear();
+    navigate('/auth', { replace: true });
+  }
 };
 
 export const clamp = (num: number, min: number, max: number) => Math.min(max, Math.max(num, min));

@@ -6,7 +6,6 @@
   width: 15px;
   position: absolute;
   left: 15px;
-  margin-top: 2px;
 }
 
 @mixin before-alert-icon($alert-icon-name) {
@@ -17,9 +16,9 @@
   }
 }
 
-.container {
-  margin-top: 20px;
+.alert {
   width: 90vw;
+  position: relative;
   max-width: 450px;
   display: flex;
   flex-direction: column;
@@ -32,12 +31,12 @@
     radius: 15px;
   }
 
-  &.blue {
+  &.info {
     border-color: #aed9ff;
     padding-left: 14px;
   }
 
-  &.yellow {
+  &.warning {
     border-color: #dca048;
 
     .heading {
@@ -45,7 +44,7 @@
     }
   }
 
-  &.red {
+  &.error {
     border-color: #fb3836;
 
     .heading {
@@ -53,7 +52,7 @@
     }
   }
 
-  &.green {
+  &.success {
     border-color: #48b16e;
 
     .heading {

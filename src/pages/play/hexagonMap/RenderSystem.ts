@@ -1,7 +1,9 @@
+import { Color } from '../../../shared/ts/enums';
 import { Hexagon } from './Hexagon';
 import { HexagonAttack } from './interfaces';
 import { Matrix } from './Matrix';
 import { Size } from './Size';
+import { Vector } from './Vector';
 
 export class RenderSystem {
   private _contextHexagon: CanvasRenderingContext2D;
@@ -44,6 +46,16 @@ export class RenderSystem {
     this._contextHexagon.clearRect(-200, -200, sceneSize.width + 400, sceneSize.height + 400);
   }
 
+  clearActiveHexagon(hexagon: Hexagon): void {
+    this._contextHexagon.fillStyle = hexagon.color;
+
+    // HACK: test
+    this._contextHexagon.strokeStyle = Color.BLACK;
+
+    this._contextHexagon.stroke(this._hexagonPathAll[hexagon.id]);
+    this._contextHexagon.fill(this._hexagonPathAll[hexagon.id]);
+  }
+
   clearLineAll(sceneSize: Size): void {
     this._contextLine.clearRect(-200, -200, sceneSize.width + 400, sceneSize.height + 400);
   }
@@ -63,9 +75,36 @@ export class RenderSystem {
     }
   }
 
-  drawActiveHexagon(hexagon: Hexagon): void {
-    this._contextHexagon.fillStyle = hexagon.color;
-    this._contextHexagon.stroke(this._hexagonPathAll[hexagon.id]);
+  drawActiveHexagonAll(hexagonAll: Hexagon[]): void {
+    this._contextHexagon.strokeStyle = Color.WHITE;
+
+    for (const hexagon of hexagonAll) {
+      this._contextHexagon.fillStyle = hexagon.color;
+      this._contextHexagon.stroke(this._hexagonPathAll[hexagon.id]);
+    }
+  }
+
+  drawActiveAttackLine(attackLine: { from: Vector; to: Vector; color: string }) {
+    this._contextLine.lineDashOffset = this._leftAttackLineOffset;
+    this.drawAttackLine(attackLine);
+  }
+
+  drawAttackLine(attackLine: { from: Vector; to: Vector; color: string }) {
+    const { from, to, color } = attackLine;
+    const { x, y } = to.copy().subtract(from);
+    const middlePoint = to
+      .copy()
+      .add(from)
+      .divideByValue(2)
+      .addX(-y / 3)
+      .addY(-x / 3);
+
+    this._contextLine.beginPath();
+    this._contextLine.moveTo(from.x, from.y);
+    this._contextLine.quadraticCurveTo(middlePoint.x, middlePoint.y, to.x, to.y);
+    this._contextLine.strokeStyle = color;
+    this._contextLine.stroke();
+    this._contextLine.closePath();
   }
 
   private _drawHexagonAttack(hexagonAttack: HexagonAttack) {

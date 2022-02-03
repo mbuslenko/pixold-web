@@ -1,6 +1,7 @@
 import { AxiosResponse } from 'axios';
+import { AlertType } from '../../components/types';
 
-import { RequestData } from './types';
+import { HexagonInfoType, RequestData, SocketEventType } from './types';
 
 export interface IGetResponseFaqContent {
   id: string;
@@ -27,6 +28,28 @@ export interface IPostDataWalletConnect {
   secret: string;
 }
 
+export interface ISocketAttackMessage {
+  to: string;
+  type: Exclude<AlertType, 'info'>;
+  message: string;
+}
+
+export interface ISocketInfoMessage {
+  title: string;
+  body: string;
+}
+
+export interface ISocketMapMessage {
+  from: number;
+  to: number;
+  attack: 'started' | 'ended';
+}
+
+export interface ISocketNewHexagonMessage {
+  numericId: number;
+  username: string;
+}
+
 export interface IPostResponseWalletConnect {
   id: string;
   balanceInUSD: number;
@@ -45,6 +68,8 @@ export interface IPostResponseAuth {
   userId: string;
   accessToken: string;
   updateUsername: boolean;
+  username: string;
+  wallet: IGetResponseWallet;
 }
 
 export interface IPostDataUsername {
@@ -53,6 +78,15 @@ export interface IPostDataUsername {
 
 export interface IPostDataRedeemCode {
   code: string;
+}
+
+export interface IPostDataHexagonSendCoins {
+  numericId: number;
+}
+
+export interface IPostDataHexagonChangeType {
+  numericId: number;
+  type: string;
 }
 
 export interface IGetResponseUsernameCheck {
@@ -74,8 +108,57 @@ export interface IGetResponseUserData {
 }
 
 export interface IGetResponseOwnedHexagonAll {
-  username: string;
-  numericIds: number[];
+  hexagons: {
+    username: string;
+    numericIds: number[];
+  }[];
+  // HACK: test
+  attacks: {
+    attackedId: number;
+    attackerId: number;
+  }[];
+}
+
+export interface ISocketEventListener<E extends SocketEventType, P extends {}> {
+  event: E;
+  callback: (payload: P) => void;
+}
+
+// TODO: make enum file for this
+export enum HexagonLevel {
+  starter,
+  middle,
+  pro,
+  supreme,
+}
+
+export interface IGetResponseHexagonInfo {
+  type: HexagonInfoType;
+  level: keyof typeof HexagonLevel;
+  coinsInStorage: number;
+  owner: string;
+  health: number;
+  canAttack: boolean;
+  coinsToUpgrade: number;
+  isNotSubscribedOnNotifications: {
+    isAttacked: boolean;
+    fullStorage: boolean;
+  };
+}
+
+export interface IPostDataNotification {
+  notificationsType: string;
+  subscribe: boolean;
+}
+
+export interface IPostDataHexagonBuy {
+  numericId: number;
+  userId: string;
+}
+
+export interface IPostDataHexagonAttack {
+  from: number;
+  to: number;
 }
 
 export interface IReactFacebookFailureResponse {
@@ -107,6 +190,6 @@ export interface IAxiosRequestConfig {
 
 export interface IAxiosInstanceProps {
   requestConfig: IAxiosRequestConfig;
-  onResponse: (response: AxiosResponse) => void;
-  onError?: (error: any) => void;
+  onResponse?: (response: AxiosResponse, triggerAlertCallback: (message: string) => void) => void;
+  onError?: (error: any, triggerAlertCallback: (message: string) => void) => void;
 }

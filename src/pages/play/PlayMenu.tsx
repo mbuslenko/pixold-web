@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-import { isScreen } from '../../shared/ts/helperFunctions';
+import { isScreen, redirect } from '../../shared/ts/helperFunctions';
 import { ScreenMaxWidth } from '../../shared/ts/enums';
 
 import { PlayMenuIconSvg } from '../../components/playMenuIconSvg/PlayMenuIconSvg';
@@ -9,8 +9,10 @@ import { PlayMenuShowIconSvg } from '../../components/playMenuShowIconSvg/PlayMe
 
 import './PlayMenu.scss';
 import logo from '../../assets/svg/logo.svg';
+import { IPlayMenuCallback } from './interfaces';
 
-export const PlayMenu: React.FC = () => {
+export const PlayMenu: React.FC<IPlayMenuCallback> = ({ showMyTerritoryCallback }) => {
+  const navigate = useNavigate();
   const [menuIsVisible, setMenuIsVisible] = useState<boolean>(false);
 
   const showMenuCallback = () => {
@@ -37,11 +39,11 @@ export const PlayMenu: React.FC = () => {
       <section className={`play-menu ${menuIsVisible && 'is-visible'}`}>
         <h2 className="play-menu-heading">Navigate</h2>
         <nav className="play-menu-navigation">
-          <Link to="/home">
+          <Link className="play-menu-logo-link" to="/home">
             <object className="play-menu-logo" data={logo} type="image/svg+xml" title="Logo" />
           </Link>
           <div className="play-menu-link-container">
-            <button className="play-menu-button" onClick={() => console.log(';)')}>
+            <button className="play-menu-button" onClick={showMyTerritoryCallback}>
               <PlayMenuIconSvg iconName="territory" className="play-menu-icon" />
               My territory
             </button>
@@ -53,10 +55,10 @@ export const PlayMenu: React.FC = () => {
               <PlayMenuIconSvg iconName="redeem" className="play-menu-icon" />
               Redeem
             </Link>
-            <Link className="play-menu-link" to="/wallet">
+            <button className="play-menu-button" onClick={() => redirect(navigate, '/wallet')}>
               <PlayMenuIconSvg iconName="wallet" className="play-menu-icon" />
               Wallet
-            </Link>
+            </button>
           </div>
           <div className="play-menu-link-container">
             <Link className="play-menu-link" to="/faq">

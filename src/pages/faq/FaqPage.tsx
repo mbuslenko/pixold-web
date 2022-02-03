@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 
 import { blockScrolling, unblockScrolling } from '../../shared/ts/helperFunctions';
 import { GetResponseFaq } from '../../shared/ts/types';
-import { getAxiosInstance } from '../../shared/ts/axiosInstance';
 
 import { Button } from '../../components/button/Button';
 import { Modal } from '../../components/modal/Modal';
@@ -15,8 +14,10 @@ import { FaqHeader } from './FaqHeader';
 import { FaqTopic } from './FaqTopic';
 import { HomeFooter } from '../home/HomeFooter';
 import { ShowInfoModalCallback } from './types';
+import { client } from '../../shared/ts/ClientCommunication';
 
 export const FaqPage: React.FC = () => {
+  // FIXME: after canceling <Show More> -> scrolls again
   const navigate = useNavigate();
   const [faqTopicData, setFaqTopicData] = useState<GetResponseFaq['data']>([]);
   const [isVisibleModal, setIsVisibleModal] = useState<boolean>(false);
@@ -36,7 +37,7 @@ export const FaqPage: React.FC = () => {
   };
 
   useEffect(() => {
-    getAxiosInstance(navigate)({
+    client.prepareRequest(navigate)({
       requestConfig: {
         method: 'get',
         url: '/faq',

@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { getAxiosInstance } from '../../shared/ts/axiosInstance';
 import { GetResponseHexagonFree } from '../../shared/ts/types';
 
 import { Button } from '../../components/button/Button';
@@ -10,13 +9,14 @@ import './HomeOpenseaScreen.scss';
 import hexagonCardImg from '../../assets/svg/hexagon-card.svg';
 import hexagonCardBackgroundImg from '../../assets/svg/hexagon-card-background.svg';
 import hexagonScreenCardImg from '../../assets/svg/hexagon-screen-card.svg';
+import { client } from '../../shared/ts/ClientCommunication';
 
 export const HomeOpenseaScreen: React.FC = () => {
   const navigate = useNavigate();
   const [hexagonInfo, setHexagonInfo] = useState<GetResponseHexagonFree['data']>();
 
   useEffect(() => {
-    getAxiosInstance(navigate)({
+    client.prepareRequest(navigate)({
       requestConfig: {
         method: 'get',
         url: '/hexagon/one-free',

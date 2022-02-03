@@ -19,6 +19,12 @@ export const FaqQuestion: React.FC<IFaqQuestionProps> = ({ id, question, answer,
   useLayoutEffect(() => {
     const answerDomHeight = answerRef.current?.offsetHeight ?? 0;
 
+    if (id === questionId) {
+      setTimeout(() => {
+        questionRef.current?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      }, 500);
+    }
+
     if (answerDomHeight > AnswerTextDomHeight.LARGE && !isScreen(ScreenMaxWidth.SMALL)) {
       setIsTextOverflow(true);
 
@@ -27,14 +33,6 @@ export const FaqQuestion: React.FC<IFaqQuestionProps> = ({ id, question, answer,
 
     if (answerDomHeight > AnswerTextDomHeight.SMALL && isScreen(ScreenMaxWidth.SMALL)) {
       setIsTextOverflow(true);
-
-      return;
-    }
-
-    if (id === questionId) {
-      setTimeout(() => {
-        questionRef.current?.scrollIntoView({ block: 'center' });
-      }, 500);
     }
   }, [id, questionId]);
 

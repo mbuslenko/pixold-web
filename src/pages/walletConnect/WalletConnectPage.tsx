@@ -1,27 +1,22 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { getAxiosInstance } from '../../shared/ts/axiosInstance';
-
 import { Button } from '../../components/button/Button';
 import { Input } from '../../components/input/Input';
-import { Alert } from '../../components/alert/Alert';
 import { InputStatus } from '../../components/types';
 import { LumenLogoSvg } from '../../components/lumenLogoSvg/LumenLogoSvg';
 
 import './WalletConnectPage.scss';
+import { client } from '../../shared/ts/ClientCommunication';
 
 export const WalletConnectPage: React.FC = () => {
   const navigate = useNavigate();
-  const request = getAxiosInstance(navigate);
   const [publicKey, setPublicKey] = useState<string>('');
   const [secretKey, setSecretKey] = useState<string>('');
   const [publicKeyStatus, setPublicKeyStatus] = useState<InputStatus>();
   const [secretKeyStatus, setSecretKeyStatus] = useState<InputStatus>();
-  const [isAlertVisible, setIsAlertVisible] = useState<boolean>(false);
-  const [alertHeading, setAlertHeading] = useState<string>('');
   const postData = {
-    userId: window.localStorage.getItem('userId') ?? '',
+    userId: localStorage.getItem('userId') ?? '',
     publicKey,
     secret: secretKey,
   };
@@ -54,7 +49,7 @@ export const WalletConnectPage: React.FC = () => {
       return;
     }
 
-    request({
+    client.prepareRequest(navigate)({
       requestConfig: {
         method: 'post',
         url: `/wallet/connect`,
@@ -65,15 +60,11 @@ export const WalletConnectPage: React.FC = () => {
     });
   };
 
-  const postErrorCallback = (error: any) => {
-    if (error.response.status === 400) {
-      setAlertHeading(error.response.data.message);
-    }
-
-    setIsAlertVisible(true);
+  const postErrorCallback = (error: any, triggerAlertCallback: (message: string) => void) => {
+    triggerAlertCallback(error.response.data.message);
+    // TODO: set invalid key status depending on error
     setPublicKeyStatus('invalid');
     setSecretKeyStatus('invalid');
-    setTimeout(() => setIsAlertVisible(false), 5000);
   };
 
   return (
@@ -86,9 +77,9 @@ export const WalletConnectPage: React.FC = () => {
         <LumenLogoSvg color="pink" className="wallet-connect-lumen-logo" />
         <h1 className="wallet-connect-heading">Connect a wallet</h1>
         <p className="wallet-connect-text">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Blandit ultricies aliquam quis in accumsan, vel ut.
-          Posuere suscipit neque scelerisque libero. Quisque ipsum tristique arcu velit facilisi nec lectus. Commodo sed
-          elementum congue consequat.
+          To connect your wallet, you will need a Public key and a Secret key. Enter them in the fields below to connect
+          your wallet. Once connected, you will be able to perform any in-game transactions. For more info, visit our{' '}
+          <Link to="/faq/f4fa1f54-a705-4039-989e-ff1177f60cc7">FAQ</Link> page.
         </p>
       </div>
 
@@ -112,11 +103,8 @@ export const WalletConnectPage: React.FC = () => {
         text="Submit"
         appearance={{ priority: 'primary', theme: 'pink' }}
         onClick={connectWalletCallback}
-        className="no-shrink"
+        className="wallet-submit-button"
       />
-      {isAlertVisible && (
-        <Alert type="red" heading={alertHeading} closeAlertCallback={() => setIsAlertVisible(false)} />
-      )}
     </section>
   );
 };

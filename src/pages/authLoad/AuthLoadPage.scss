@@ -1,34 +1,3 @@
-.loader-wrap {
-  width: 100%;
+.auth-load-page {
   height: 100vh;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.loader-logo {
-  animation: loader-logo 1.5s linear infinite;
-}
-
-@keyframes loader-logo {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-.loader-text {
-  padding-top: 29px;
-  font-family: Montserrat;
-  font-weight: bold;
-  font-size: 25px;
-  line-height: 30px;
-  letter-spacing: -0.02em;
-
-  display: inline-block;
-  position: relative;
 }

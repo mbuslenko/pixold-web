@@ -1,4 +1,4 @@
-@import '../../shared/variables.scss';
+@import '../../shared/scss/variables.scss';
 
 .toggle {
   appearance: none;
@@ -10,6 +10,7 @@
   box-sizing: border-box;
   width: 38px;
   height: 24px;
+  flex-shrink: 0;
   border: {
     width: 1px;
     style: solid;
@@ -36,20 +37,21 @@
   }
 
   &.secondary {
-    background-color: $grey;
+    background-color: $white;
   }
 }
 
 .toggle-description {
   margin-left: 12px;
   font-size: 20px;
+  letter-spacing: -0.02em;
 
   &.primary {
     color: $font-black;
   }
 
   &.secondary {
-    color: $grey;
+    color: $white;
   }
 }
 

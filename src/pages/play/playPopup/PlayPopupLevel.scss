@@ -1,0 +1,25 @@
+@import '../../../shared/scss/variables.scss';
+
+@import './mixins.scss';
+
+.play-popup-level-content {
+  @include play-popup-content(clamp(25px, 9vh, 85px) 0 0 0.5vw);
+}
+
+.play-popup-level-list {
+  grid-column: 1 / 3;
+
+  & .play-popup-content-text {
+    letter-spacing: -0.04em;
+  }
+}
+
+.play-popup-current-level {
+  color: $purple;
+}
+
+@media screen and (max-width: $screen-max-width-medium) {
+  .play-popup-level-content {
+    padding-top: 4vh;
+  }
+}

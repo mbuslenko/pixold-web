@@ -1,0 +1,43 @@
+@import '../../../shared/scss/variables.scss';
+
+@import './extends.scss';
+@import './mixins.scss';
+
+.play-popup-info-content {
+  @include play-popup-content(clamp(25px, 9vh, 85px) 1.5vw 0);
+}
+
+.play-popup-info-hexagon-id {
+  color: $purple;
+}
+
+.play-popup-info-attack-button {
+  justify-self: center;
+}
+
+.play-popup-info-button-hidden {
+  visibility: hidden;
+}
+
+.play-popup-content-owner {
+  display: flex;
+  grid-column: 1/3;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0 15px;
+  min-width: 80%;
+
+  & .play-popup-content-text {
+    word-break: break-all;
+  }
+}
+
+@media screen and (max-width: $screen-max-width-medium) {
+  .play-popup-info-content {
+    padding: 4vh 0 0;
+  }
+
+  .play-popup-info-attack-button {
+    justify-self: unset;
+  }
+}

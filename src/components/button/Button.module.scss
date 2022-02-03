@@ -36,7 +36,7 @@
 
 .button {
   border-radius: 10px;
-  padding: 0 18px;
+  padding: 0 16px;
   height: 44px;
   font: {
     size: 18px;
@@ -137,12 +137,12 @@
 
   &:not(&:disabled):hover {
     border-width: 4px;
-    padding: 0 16px;
+    padding: 0 14px;
   }
 
   &:not(&:disabled):active {
     border-width: 3px;
-    padding: 0 17px;
+    padding: 0 15px;
   }
 
   &:disabled {
