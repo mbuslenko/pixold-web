@@ -55,11 +55,10 @@ export const PlayMenu: React.FC<IPlayMenuCallback> = ({ showMyTerritoryCallback 
               <PlayMenuIconSvg iconName="redeem" className="play-menu-icon" />
               Redeem
             </Link>
-            {/* TODO: change <a> to something else */}
-            <a className="play-menu-link" onClick={() => redirect(navigate, '/wallet')}>
+            <button className="play-menu-button" onClick={() => redirect(navigate, '/wallet')}>
               <PlayMenuIconSvg iconName="wallet" className="play-menu-icon" />
               Wallet
-            </a>
+            </button>
           </div>
           <div className="play-menu-link-container">
             <Link className="play-menu-link" to="/faq">

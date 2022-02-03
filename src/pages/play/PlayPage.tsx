@@ -108,7 +108,7 @@ export const PlayPage: React.FC<IPlayPageProps> = ({ showAlertsCallback }) => {
           },
           onResponse: (response: GetResponseHexagonInfo): void => {
             if (response.data.canAttack && hexagonAttackerId && hexagonId) {
-              const attackData = { from: hexagonAttackerId, to: hexagonId }
+              const attackData = { from: hexagonAttackerId, to: hexagonId };
 
               console.log(attackData);
               client.prepareRequest(navigate)({

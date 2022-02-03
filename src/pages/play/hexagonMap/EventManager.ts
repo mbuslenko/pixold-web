@@ -25,13 +25,13 @@ export class EventManager {
     this._drawAttackLine = false;
   }
 
-  get drawAttackLine (): boolean {
+  get drawAttackLine(): boolean {
     return this._drawAttackLine;
   }
 
-  set drawAttackLine (value: boolean) {
+  set drawAttackLine(value: boolean) {
     if (!value) {
-      this._map.hideAttackLine()
+      this._map.hideAttackLine();
     }
 
     this._drawAttackLine = value;

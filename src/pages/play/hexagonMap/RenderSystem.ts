@@ -85,7 +85,7 @@ export class RenderSystem {
   }
 
   drawActiveAttackLine(attackLine: { from: Vector; to: Vector; color: string }) {
-    this._contextLine.lineDashOffset = this._leftAttackLineOffset
+    this._contextLine.lineDashOffset = this._leftAttackLineOffset;
     this.drawAttackLine(attackLine);
   }
 

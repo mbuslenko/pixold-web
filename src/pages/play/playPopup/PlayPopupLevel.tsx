@@ -1,5 +1,3 @@
-import { Link } from 'react-router-dom';
-
 import { HexagonLevel } from '../../../shared/ts/interfaces';
 
 import { Button } from '../../../components/button/Button';

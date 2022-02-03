@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { HexagonLevel, IGetResponseHexagonInfo } from '../../../shared/ts/interfaces';
-import { GetResponseHexagonInfo, HexagonInfoType } from '../../../shared/ts/types';
+import { HexagonLevel } from '../../../shared/ts/interfaces';
+import { HexagonInfoType } from '../../../shared/ts/types';
 
 import { TabbedButtonGroup } from '../../../components/tabbedButtonGroup/TabbedButtonGroup';
 import { Loader } from '../../../components/loader/Loader';

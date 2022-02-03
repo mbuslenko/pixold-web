@@ -153,7 +153,8 @@ export class HexagonMap {
     this._renderSystem.drawActiveHexagonAll(this._mapSystem.activeHexagon);
   }
 
-  private _updateActiveHexagonCallback(notActiveHexagonAll: Hexagon[]): () => void {
+  private _updateActiveHexagonCallback(): () => void {
+    // private _updateActiveHexagonCallback(notActiveHexagonAll: Hexagon[]): () => void {
     return () => {
       // HACK: test
       // for (const hexagon of notActiveHexagonAll) {
@@ -271,7 +272,8 @@ export class HexagonMap {
 
   showOwnedHexagonAll(): void {
     // TODO: refactoring
-    this._updateHexagonMap = this._updateActiveHexagonCallback(this._mapSystem.activeHexagon);
+    // this._updateHexagonMap = this._updateActiveHexagonCallback(this._mapSystem.activeHexagon);
+    this._updateHexagonMap = this._updateActiveHexagonCallback();
 
     this._mapSystem.activeHexagon = this._mapSystem.ownedHexagonAll;
   }
@@ -288,7 +290,8 @@ export class HexagonMap {
     position.subtract(this._mapTransform.getTranslation()).divideByValue(this._mapTransform.getScale());
 
     // TODO: i can set updateCallback only on change
-    this._updateHexagonMap = this._updateActiveHexagonCallback([...this._mapSystem.activeHexagon]);
+    // this._updateHexagonMap = this._updateActiveHexagonCallback([...this._mapSystem.activeHexagon]);
+    this._updateHexagonMap = this._updateActiveHexagonCallback();
 
     for (const hexagon of this._mapSystem.visibleMap) {
       if (this._isPositionInHexagon(position, hexagon)) {
@@ -308,11 +311,11 @@ export class HexagonMap {
     this.hideAttackLine();
   }
 
-  hideAttackLine (): void {
+  hideAttackLine(): void {
     this._attackLine = {
       from: new Vector(0, 0),
       to: new Vector(0, 0),
       color: Color.PINK,
-    }
+    };
   }
 }
