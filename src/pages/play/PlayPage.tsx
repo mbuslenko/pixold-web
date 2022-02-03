@@ -12,7 +12,7 @@ import { IPlayPageProps } from './interfaces';
 import { client } from '../../shared/ts/ClientCommunication';
 import { IGetResponseHexagonInfo, ISocketMapMessage, ISocketNewHexagonMessage } from '../../shared/ts/interfaces';
 
-export const PlayPage: React.FC<IPlayPageProps> = ({ showAlertsCallback }) => {
+export const PlayPage: React.FC<IPlayPageProps> = ({ showAlertsCallback, isConnectedSocket }) => {
   const navigate = useNavigate();
 
   const [isVisiblePopup, setIsVisiblePopup] = useState(false);
@@ -61,22 +61,6 @@ export const PlayPage: React.FC<IPlayPageProps> = ({ showAlertsCallback }) => {
       onResponse: (response: GetResponseAllHexagonOwned) => map.setAllOwnedHexagons(response.data),
     });
 
-    client.onEvent({
-      event: 'map',
-      callback: (eventMessage: ISocketMapMessage) => {
-        console.log('map');
-        map.updateHexagonAttack(eventMessage);
-      },
-    });
-
-    client.onEvent({
-      event: 'newHexagon',
-      callback: (eventMessage: ISocketNewHexagonMessage) => {
-        console.log('newHexagon');
-        map.addOwnedHexagon(eventMessage);
-      },
-    });
-
     showAlertsCallback(true);
 
     map.run();
@@ -94,6 +78,26 @@ export const PlayPage: React.FC<IPlayPageProps> = ({ showAlertsCallback }) => {
       eventManager.unsetEvents();
     };
   }, [navigate, showAlertsCallback]);
+
+  useEffect(() => {
+    if (!map) {
+      return;
+    }
+
+    client.onEvent({
+      event: 'map',
+      callback: (eventMessage: ISocketMapMessage) => {
+        map.updateHexagonAttack(eventMessage);
+      },
+    });
+
+    client.onEvent({
+      event: 'newHexagon',
+      callback: (eventMessage: ISocketNewHexagonMessage) => {
+        map.addOwnedHexagon(eventMessage);
+      },
+    });
+  }, [isConnectedSocket, map]);
 
   useEffect(() => {
     if (!map || !eventManager) {

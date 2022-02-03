@@ -7,29 +7,6 @@ import { Alert } from '../alert/Alert';
 import { client } from '../../shared/ts/ClientCommunication';
 
 export const AlertContainer: React.FC<IAlertContainerProps> = ({ isConnectedSocket, showAttackAlerts }) => {
-  // const [infoAlertAll, setInfoAlertAll] = useState<AlertInfo[]>([
-  //   { type: 'info', heading: '1', date: new Date() },
-  //   { type: 'info', heading: '2', date: new Date() },
-  //   { type: 'info', heading: '3', date: new Date() },
-  //   { type: 'info', heading: '4', date: new Date() },
-  //   { type: 'info', heading: '5', date: new Date() },
-  //   { type: 'info', heading: '6', date: new Date() },
-  //   { type: 'info', heading: '7', date: new Date() },
-  //   { type: 'info', heading: '8', date: new Date() },
-  //   { type: 'info', heading: '9', date: new Date() },
-  // ]);
-  // const [alertAll, setAlertAll] = useState<AlertInfo[]>([
-  //   { type: 'error', heading: '1', date: new Date() },
-  //   { type: 'error', heading: '2', date: new Date() },
-  //   { type: 'error', heading: '3', date: new Date() },
-  //   { type: 'error', heading: '4', date: new Date() },
-  //   { type: 'error', heading: '5', date: new Date() },
-  //   { type: 'error', heading: '6', date: new Date() },
-  //   { type: 'error', heading: '7', date: new Date() },
-  //   { type: 'error', heading: '8', date: new Date() },
-  //   { type: 'error', heading: '9', date: new Date() },
-  // ]);
-
   const [infoAlertAll, setInfoAlertAll] = useState<AlertInfo[]>([]);
   const [alertAll, setAlertAll] = useState<AlertInfo[]>([]);
   const alertContainer = useRef<HTMLDivElement>(null);

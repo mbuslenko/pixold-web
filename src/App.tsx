@@ -45,7 +45,10 @@ export const App: React.FC = () => {
           <Route path="/coin" element={<CoinPage />} />
           <Route path="/wallet" element={<WalletPage />} />
           <Route path="/wallet/connect" element={<WalletConnectPage />} />
-          <Route path="/play" element={<PlayPage showAlertsCallback={setIsAttackAlertsVisible} />} />
+          <Route
+            path="/play"
+            element={<PlayPage isConnectedSocket={isConnectedSocket} showAlertsCallback={setIsAttackAlertsVisible} />}
+          />
           <Route path="/players" element={<PlayersPage />} />
           <Route path="/username" element={<UsernamePage />} />
           <Route path="/settings" element={<SettingsPage />} />

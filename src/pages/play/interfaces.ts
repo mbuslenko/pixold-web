@@ -1,4 +1,5 @@
 export interface IPlayPageProps {
+  isConnectedSocket: boolean;
   showAlertsCallback: (isShown: boolean) => void;
 }
 
