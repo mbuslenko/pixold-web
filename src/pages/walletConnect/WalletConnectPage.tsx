@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate  } from 'react-router-dom';
 
 import { Button } from '../../components/button/Button';
 import { Input } from '../../components/input/Input';
@@ -72,9 +72,9 @@ export const WalletConnectPage: React.FC = () => {
 
   return (
     <section className="wallet-connect-page">
-      <Link className="go-back-link" to="/coin">
-        <Button text="←" appearance={{ priority: 'secondary', theme: 'black-white' }} />
-      </Link>
+      <Button className="go-back-link" text="←" appearance={{ priority: 'secondary', theme: 'black-white' }}
+        onClick={() => navigate(-1)}
+      />
 
       <div className="wallet-connect-text-container">
         <LumenLogoSvg color="pink" className="wallet-connect-lumen-logo" />
