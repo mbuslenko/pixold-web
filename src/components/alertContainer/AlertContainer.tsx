@@ -5,8 +5,10 @@ import { IAlertContainerProps } from '../interfaces';
 import { AlertInfo } from '../types';
 import { Alert } from '../alert/Alert';
 import { client } from '../../shared/ts/ClientCommunication';
+import { Button } from '../button/Button';
 
 export const AlertContainer: React.FC<IAlertContainerProps> = ({ isConnectedSocket, showAttackAlerts }) => {
+  const [isVisibleContainer, setIsVisibleContainer] = useState(true);
   const [infoAlertAll, setInfoAlertAll] = useState<AlertInfo[]>([]);
   const [alertAll, setAlertAll] = useState<AlertInfo[]>([]);
   const alertContainer = useRef<HTMLDivElement>(null);
@@ -60,14 +62,36 @@ export const AlertContainer: React.FC<IAlertContainerProps> = ({ isConnectedSock
     }
   }, [isConnectedSocket]);
 
+  const alertLength = infoAlertAll.length + alertAll.length;
+
   return (
     <article className={styles.container} ref={alertContainer}>
-      {infoAlertAll.map((value, index) => (
-        <Alert {...value} key={`info-${index}`} closeAlertCallback={closeInfoAlertCallback(index)} />
-      ))}
-      {alertAll.map((value, index) => (
-        <Alert {...value} key={`alert-${index}`} closeAlertCallback={closeAttackAlertCallback(index)} />
-      ))}
+      {alertLength > 5 && (
+        <div className={styles['button-container']}>
+          <Button
+            text={`${isVisibleContainer ? 'Hide' : 'Show'} alerts (${alertLength})`}
+            appearance={{ priority: 'primary', theme: 'black-white' }}
+            onClick={() => setIsVisibleContainer(!isVisibleContainer)}
+            className={styles['show-button']}
+          />
+          <Button
+            text="Clear"
+            onClick={() => {
+              setInfoAlertAll([]);
+              setAlertAll([]);
+            }}
+            appearance={{ priority: 'secondary', theme: 'black-white' }}
+          />
+        </div>
+      )}
+      {(alertLength <= 5 || isVisibleContainer) && [
+        infoAlertAll.map((value, index) => (
+          <Alert {...value} key={`info-${index}`} closeAlertCallback={closeInfoAlertCallback(index)} />
+        )),
+        alertAll.map((value, index) => (
+          <Alert {...value} key={`alert-${index}`} closeAlertCallback={closeAttackAlertCallback(index)} />
+        )),
+      ]}
     </article>
   );
 };

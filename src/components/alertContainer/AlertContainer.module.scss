@@ -5,10 +5,22 @@
   padding: 20px 0 20px 20px;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: 20px 0;
   max-height: 100%;
   overflow: scroll;
   z-index: 10;
+}
+
+.button-container {
+  max-width: 450px;
+  width: 100vw;
+  display: flex;
+  justify-content: space-between;
+}
+
+.show-button {
+  flex-shrink: 0;
 }
 
 @supports (scrollbar-width: thin) {

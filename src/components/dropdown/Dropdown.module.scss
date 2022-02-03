@@ -59,4 +59,8 @@
   color: $white;
   background-color: transparent;
   padding: 18px 45px 18px 22px;
+
+  &:hover {
+    background-color: $grey-dark;
+  }
 }

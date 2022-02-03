@@ -4,6 +4,9 @@
   max-width: 1920px;
   height: 100vh;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 .settings-header {
@@ -38,7 +41,6 @@
 }
 
 .settings-title-surname {
-  height: 36px;
   font-weight: bold;
   font-size: 30px;
   line-height: 36px;
@@ -48,7 +50,6 @@
 }
 
 .settings-surname {
-  height: 36px;
   font-size: 30px;
   line-height: 36px;
   letter-spacing: -0.02em;
@@ -63,7 +64,6 @@
 }
 
 .settings-title-wallet {
-  height: 18px;
   font-size: 15px;
   line-height: 18px;
   letter-spacing: -0.02em;
@@ -71,7 +71,6 @@
 
 .settings-wallet {
   max-width: 390px;
-  height: 48px;
   overflow-wrap: anywhere;
 
   font-size: 20px;
@@ -117,7 +116,6 @@
 
   .settings-wallet {
     padding: 0 28px;
-    height: 72px;
   }
 
   .settings-btn {

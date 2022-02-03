@@ -9,6 +9,7 @@ export const Input: React.FC<IInputProps> = ({
   description,
   status,
   disabledPopup,
+  defaultValue,
   className,
   onInput,
 }) => {
@@ -37,6 +38,7 @@ export const Input: React.FC<IInputProps> = ({
           placeholder={placeholder}
           disabled={inputStatus === 'disabled'}
           onInput={onInputCallback}
+          defaultValue={defaultValue}
         />
       </div>
       <span className={styles.description}>{description}</span>

@@ -18,7 +18,7 @@ export const UsernamePage: React.FC = () => {
   const [usernameStatus, setUsernameStatus] = useState<InputStatus>();
 
   const submitUsernameCallback = () => {
-    if (username.length === 0 || usernameStatus === 'invalid') {
+    if (username.length === 0 || usernameStatus === 'invalid' || /[^\w^_^\d]/.test(username)) {
       setUsernameStatus('invalid');
 
       return;
@@ -71,6 +71,7 @@ export const UsernamePage: React.FC = () => {
           description="Username"
           onInput={inputCallback}
           status={usernameStatus}
+          defaultValue={localStorage.getItem('username') ?? ''}
         />
         <div className="username-button-container">
           <Button

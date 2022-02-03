@@ -58,11 +58,8 @@ export const PlayPopupInfo: React.FC<IPlayPopupInfoProps> = ({
               text={'Send to my wallet'}
               className={buttonClassName}
               appearance={{ priority: 'secondary' }}
+              disabled={hexagonInfo.coinsInStorage === 0}
               onClick={() => {
-                if (hexagonInfo.coinsInStorage === 0) {
-                  return;
-                }
-
                 client.prepareRequest(navigate)({
                   requestConfig: {
                     method: 'post',
@@ -88,11 +85,8 @@ export const PlayPopupInfo: React.FC<IPlayPopupInfoProps> = ({
               text={'Repair'}
               className={buttonClassName}
               appearance={{ priority: 'secondary' }}
+              disabled={hexagonInfo.health === 100}
               onClick={() => {
-                if (hexagonInfo.health === 100) {
-                  return;
-                }
-
                 client.prepareRequest(navigate)({
                   requestConfig: {
                     method: 'post',

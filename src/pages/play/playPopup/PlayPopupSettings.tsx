@@ -15,6 +15,20 @@ export const PlayPopupSettings: React.FC<IPlayPopupSettingsProps> = ({ hexagonIn
   const navigate = useNavigate();
   const [newHexagonType, setNewHexagon] = useState<HexagonInfoType>();
 
+  const dropdownOptions = [
+    { text: 'Attacker', value: 'attack' },
+    { text: 'Defender', value: 'defender' },
+    { text: 'Miner', value: 'miner' },
+  ];
+
+  for (let i = 0; i < dropdownOptions.length; i++) {
+    if (dropdownOptions[i].value === hexagonInfo.type) {
+      dropdownOptions.splice(i, 1);
+
+      break;
+    }
+  }
+
   return (
     <section className="play-popup-settings-content">
       <div className="play-popup-settings-type-selection">
@@ -22,11 +36,7 @@ export const PlayPopupSettings: React.FC<IPlayPopupSettingsProps> = ({ hexagonIn
           <h3 className="play-popup-content-heading">Type</h3>
           <Dropdown
             placeholder="Choose new type"
-            options={[
-              { text: 'Attacker', value: 'attack' },
-              { text: 'Defender', value: 'defender' },
-              { text: 'Miner', value: 'miner' },
-            ]}
+            options={dropdownOptions}
             onChange={(value: string) => setNewHexagon(value as HexagonInfoType)}
           />
         </div>

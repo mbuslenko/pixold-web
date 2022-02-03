@@ -162,13 +162,13 @@
 
 @media screen and (max-width: $screen-max-width-medium) {
   .play-menu-wrapper {
+    height: clamp(100px, 90vh, 1000px);
     width: 90%;
     left: 5%;
     bottom: 5vh;
   }
 
   .play-menu {
-    height: clamp(100px, 90vh, 1000px);
     flex-direction: column;
     padding: 34px 24px 12px;
     justify-content: space-between;

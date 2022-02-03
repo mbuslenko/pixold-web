@@ -64,6 +64,7 @@ export interface IInputProps {
   status?: InputStatus;
   disabledPopup?: string;
   className?: string;
+  defaultValue?: string;
   onInput: (text: string, status: InputStatus | undefined) => void;
 }
 
