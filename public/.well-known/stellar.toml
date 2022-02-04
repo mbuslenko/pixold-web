@@ -1,0 +1,17 @@
+ACCOUNTS = ["GBQJEBCMHKRHGFBU7QXD7ZJK3VVDSMN7TGGFB5HQVG46KSV3C7EPIYHF", "GA76UYPNVDFAG3HGOOSJAZYZNEU7RC6FFKRQC6T57PXZTXOM2DYAMTQY"]
+[DOCUMENTATION]
+ORG_NAME = "Pixold"
+ORG_OFFICIAL_EMAIL = "hello@pixold.io"
+ORG_URL = "https://pixold.io"
+[[CURRENCIES]]
+code = "PXL"
+desc = "In-game asset for https://pixold.io"
+display_decimals = 7
+fixed_number = 888000000
+image = "https://pixold.io/pxl-coin.png"
+issuer = "GBQJEBCMHKRHGFBU7QXD7ZJK3VVDSMN7TGGFB5HQVG46KSV3C7EPIYHF"
+name = "PXL Coin"
+status = "live"
+[[PRINCIPALS]]
+email = "mike@pixold.io"
+name = "Mike Buslenko"
