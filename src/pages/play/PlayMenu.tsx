@@ -35,8 +35,8 @@ export const PlayMenu: React.FC<IPlayMenuCallback> = ({ showMyTerritoryCallback 
   }, []);
 
   return (
-    <div className="play-menu-wrapper">
-      <section className={`play-menu ${menuIsVisible && 'is-visible'}`}>
+    <div className={`play-menu-wrapper ${menuIsVisible ? 'is-visible' : ''}`}>
+      <section className={`play-menu ${menuIsVisible ? 'is-visible' : ''}`}>
         <h2 className="play-menu-heading">Navigate</h2>
         <nav className="play-menu-navigation">
           <Link className="play-menu-logo-link" to="/home">
@@ -85,7 +85,7 @@ export const PlayMenu: React.FC<IPlayMenuCallback> = ({ showMyTerritoryCallback 
         <img src={logo} className="play-menu-logo-small" alt="logo" />
       </section>
       <button
-        className={`play-menu-button show-menu-button ${menuIsVisible && 'is-active'}`}
+        className={`play-menu-button show-menu-button ${menuIsVisible ? 'is-active' : ''}`}
         onClick={() => setMenuIsVisible(!menuIsVisible)}
       >
         <PlayMenuShowIconSvg className="show-menu-button-icon" color={menuIsVisible ? 'white' : 'purple'} />
