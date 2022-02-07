@@ -163,7 +163,11 @@
 @media screen and (max-width: $screen-max-width-medium) {
   .play-menu-wrapper {
     width: initial;
-    inset: 5%;
+    inset: auto auto 5% 5%;
+
+    &.is-visible {
+      inset: 5%;
+    }
   }
 
   .play-menu {
