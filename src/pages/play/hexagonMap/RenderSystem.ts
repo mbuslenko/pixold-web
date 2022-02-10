@@ -84,12 +84,12 @@ export class RenderSystem {
     }
   }
 
-  drawActiveAttackLine(attackLine: { from: Vector; to: Vector; color: string }) {
+  drawActiveAttackLine(attackLine: { from: Vector; to: Vector; color: string }): void  {
     this._contextLine.lineDashOffset = this._leftAttackLineOffset;
     this.drawAttackLine(attackLine);
   }
 
-  drawAttackLine(attackLine: { from: Vector; to: Vector; color: string }) {
+  drawAttackLine(attackLine: { from: Vector; to: Vector; color: string }): void  {
     const { from, to, color } = attackLine;
     const { x, y } = to.copy().subtract(from);
     const middlePoint = to

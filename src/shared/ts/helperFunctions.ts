@@ -41,4 +41,4 @@ export const checkAuth = (navigate: NavigateFunction): void => {
   }
 };
 
-export const clamp = (num: number, min: number, max: number) => Math.min(max, Math.max(num, min));
+export const clamp = (num: number, min: number, max: number): number  => Math.min(max, Math.max(num, min));
