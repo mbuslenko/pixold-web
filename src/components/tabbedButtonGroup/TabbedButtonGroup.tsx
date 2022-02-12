@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { ITabbedButtonGroupProps } from '../interfaces';
 import styles from './TabbedButtonGroup.module.scss';
 
-// TODO: set highlight on selected input even if disabled
 export const TabbedButtonGroup: React.FC<ITabbedButtonGroupProps> = ({ name, disabled, value, options, onChange }) => {
   const [inputValue, setInputValue] = useState<string>();
 

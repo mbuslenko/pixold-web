@@ -9,21 +9,28 @@ import './HomeOpenseaScreen.scss';
 import hexagonCardImg from '../../assets/svg/hexagon-card.svg';
 import hexagonCardBackgroundImg from '../../assets/svg/hexagon-card-background.svg';
 import hexagonScreenCardImg from '../../assets/svg/hexagon-screen-card.svg';
-import { client } from '../../shared/ts/ClientCommunication';
+import { prepareRequest } from '../../shared/ts/clientCommunication';
+import { useDispatch } from 'react-redux';
 
 export const HomeOpenseaScreen: React.FC = () => {
+  const dispatch = useDispatch();
+
   const navigate = useNavigate();
+
   const [hexagonInfo, setHexagonInfo] = useState<GetResponseHexagonFree['data']>();
 
   useEffect(() => {
-    client.prepareRequest(navigate)({
+    prepareRequest(
+      navigate,
+      dispatch,
+    )({
       requestConfig: {
         method: 'get',
         url: '/hexagon/one-free',
       },
       onResponse: (response: GetResponseHexagonFree) => setHexagonInfo(response.data),
     });
-  }, [navigate]);
+  }, [dispatch, navigate]);
 
   return (
     <section className="opensea-screen">

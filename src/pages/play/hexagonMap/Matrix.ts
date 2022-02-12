@@ -34,22 +34,8 @@ export class Matrix {
     return new Vector(this.value[0][2], this.value[1][2]);
   }
 
-  setTranslation(vector: Vector): Matrix {
-    this.value[0][2] = vector.x;
-    this.value[1][2] = vector.y;
-
-    return this;
-  }
-
   getScale(): number {
     return this.value[0][0];
-  }
-
-  setScaleFactor(scaleFactor: number): Matrix {
-    this.value[0][0] = scaleFactor;
-    this.value[1][1] = scaleFactor;
-
-    return this;
   }
 
   static CreateScale(scaleFactor: number): Matrix {

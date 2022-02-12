@@ -1,8 +1,8 @@
-import { Button } from '../../../components/button/Button';
-import { Dropdown } from '../../../components/dropdown/Dropdown';
-import { Input } from '../../../components/input/Input';
+import { Button } from '../../components/button/Button';
+import { Dropdown } from '../../components/dropdown/Dropdown';
+import { Input } from '../../components/input/Input';
 
-import { IWalletSwitchProps } from '../interfaces';
+import { IWalletSwitchProps } from './interfaces';
 
 import './WalletSwitch.scss';
 

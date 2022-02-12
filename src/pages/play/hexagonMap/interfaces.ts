@@ -1,11 +1,18 @@
 import { Hexagon } from './Hexagon';
+import { Vector } from './Vector'
 
-export interface HexagonAttack {
+export interface IHexagonAttack {
   attacker: Hexagon;
   defender: Hexagon;
 }
 
-export interface HexagonMapData {
+export interface IAttackLine {
+  from: Vector;
+  to: Vector;
+  color: string;
+}
+
+export interface IHexagonMapData {
   x: number;
   y: number;
 }

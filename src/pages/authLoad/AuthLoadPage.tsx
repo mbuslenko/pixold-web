@@ -7,17 +7,19 @@ import { IPostDataAuth } from '../../shared/ts/interfaces';
 import { Loader } from '../../components/loader/Loader';
 
 import './AuthLoadPage.scss';
-import { client } from '../../shared/ts/ClientCommunication';
+import { connectSocket, prepareRequest } from '../../shared/ts/clientCommunication';
+import { useDispatch } from 'react-redux';
+import { checkAuth } from '../../shared/ts/helperFunctions';
 
 export const AuthLoadPage: React.FC = () => {
+  const dispatch = useDispatch();
+
   const navigate = useNavigate();
 
   useEffect(() => {
     const responseData: IPostDataAuth = JSON.parse(localStorage.getItem('responseData') as string);
 
-    if (!responseData) {
-      navigate('/auth', { replace: true });
-    }
+    checkAuth(navigate);
 
     const responseCallback = (response: PostResponseAuth) => {
       const { userId, accessToken, username, wallet, updateUsername } = response.data;
@@ -29,7 +31,7 @@ export const AuthLoadPage: React.FC = () => {
         localStorage.setItem('wallet', JSON.stringify(wallet));
       }
 
-      client.connectSocket();
+      connectSocket(dispatch);
 
       if (updateUsername) {
         navigate('/username', { replace: true });
@@ -40,7 +42,10 @@ export const AuthLoadPage: React.FC = () => {
       navigate('/play', { replace: true });
     };
 
-    client.prepareRequest(navigate)({
+    prepareRequest(
+      navigate,
+      dispatch,
+    )({
       requestConfig: {
         method: 'post',
         url: '/auth',
@@ -48,7 +53,7 @@ export const AuthLoadPage: React.FC = () => {
       },
       onResponse: responseCallback,
     });
-  }, [navigate]);
+  }, [dispatch, navigate]);
 
   return (
     <section className="auth-load-page">

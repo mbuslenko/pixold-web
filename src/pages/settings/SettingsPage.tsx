@@ -7,21 +7,22 @@ import { Button } from '../../components/button/Button';
 
 import './SettingsPage.scss';
 import logo from '../../assets/svg/logo.svg';
-import { client } from '../../shared/ts/ClientCommunication';
 import { Loader } from '../../components/loader/Loader';
+import { disconnectSocket, prepareRequest } from '../../shared/ts/clientCommunication';
+import { useDispatch } from 'react-redux';
+import { checkAuth } from '../../shared/ts/helperFunctions';
 
 export const SettingsPage: React.FC = () => {
+  const dispatch = useDispatch();
+
   const navigate = useNavigate();
+
   const [firstName, setFirstName] = useState<string>('');
   const [lastName, setLastName] = useState<string>('');
   const [avatarUrl, setAvatarUrl] = useState<string>('');
   const [wallet, setWallet] = useState<string>('');
   const [username, setUsername] = useState<string>('');
   const [isVisibleInfo, setIsVisibleInfo] = useState(false);
-
-  if (!localStorage.getItem('accessToken')) {
-    navigate('/auth', { replace: true });
-  }
 
   const getUserResponseCallback = (response: GetResponseUserData): void => {
     const { username, avatarUrl, firstName, lastName, wallet } = response.data;
@@ -35,16 +36,6 @@ export const SettingsPage: React.FC = () => {
     setIsVisibleInfo(true);
   };
 
-  useEffect(() => {
-    client.prepareRequest(navigate)({
-      requestConfig: {
-        url: '/user/me',
-        method: 'get',
-      },
-      onResponse: getUserResponseCallback,
-    });
-  }, [navigate]);
-
   const changeUsernameBtnCallback = () => {
     navigate('/username');
   };
@@ -55,9 +46,24 @@ export const SettingsPage: React.FC = () => {
 
   const logOutBtnCallback = () => {
     localStorage.clear();
-    client.disconnectSocket();
+    disconnectSocket(dispatch);
     navigate('/auth');
   };
+
+  checkAuth(navigate);
+
+  useEffect(() => {
+    prepareRequest(
+      navigate,
+      dispatch,
+    )({
+      requestConfig: {
+        url: '/user/me',
+        method: 'get',
+      },
+      onResponse: getUserResponseCallback,
+    });
+  }, [dispatch, navigate]);
 
   return (
     <section className="settings-page">

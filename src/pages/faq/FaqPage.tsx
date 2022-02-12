@@ -14,11 +14,14 @@ import { FaqHeader } from './FaqHeader';
 import { FaqTopic } from './FaqTopic';
 import { HomeFooter } from '../home/HomeFooter';
 import { ShowInfoModalCallback } from './types';
-import { client } from '../../shared/ts/ClientCommunication';
+import { prepareRequest } from '../../shared/ts/clientCommunication';
+import { useDispatch } from 'react-redux';
 
 export const FaqPage: React.FC = () => {
-  // FIXME: after canceling <Show More> -> scrolls again
+  const dispatch = useDispatch();
+
   const navigate = useNavigate();
+
   const [faqTopicData, setFaqTopicData] = useState<GetResponseFaq['data']>([]);
   const [isVisibleModal, setIsVisibleModal] = useState<boolean>(false);
   const [modalHeading, setModalHeading] = useState<string>('');
@@ -37,14 +40,17 @@ export const FaqPage: React.FC = () => {
   };
 
   useEffect(() => {
-    client.prepareRequest(navigate)({
+    prepareRequest(
+      navigate,
+      dispatch,
+    )({
       requestConfig: {
         method: 'get',
         url: '/faq',
       },
       onResponse: (response: GetResponseFaq) => setFaqTopicData(response.data),
     });
-  }, [navigate]);
+  }, [navigate, dispatch]);
 
   return (
     <section className="faq-page">

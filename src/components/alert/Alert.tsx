@@ -3,10 +3,11 @@ import closeSvg from '../../assets/svg/close-icon.svg';
 import { IAlertProps } from '../interfaces';
 
 export const Alert: React.FC<IAlertProps> = ({ type, heading, text, date, closeAlertCallback }) => {
-  const formatAMPM = (date: Date) => {
+  const formatAMPM = (dateString: string) => {
+    const date = new Date(dateString);
     const hours = date.getHours() % 12;
     const minutes = date.getMinutes();
-    const ampm = hours >= 12 ? 'PM' : 'AM';
+    const ampm = date.getHours() >= 12 ? 'PM' : 'AM';
 
     return `${hours === 0 ? 12 : hours}:${minutes.toString().padStart(2, '0')}${ampm}`;
   };

@@ -1,11 +1,11 @@
-import { PixelCoinLogoSvg } from '../../../components/pixelCoinLogoSvg/PixelCoinLogoSvg';
-import { LumenLogoSvg } from '../../../components/lumenLogoSvg/LumenLogoSvg';
-import { NumberAnimation } from '../../../components/numberAnimation/NumberAnimation';
+import { PixelCoinLogoSvg } from '../../components/pixelCoinLogoSvg/PixelCoinLogoSvg';
+import { LumenLogoSvg } from '../../components/lumenLogoSvg/LumenLogoSvg';
+import { NumberAnimation } from '../../components/numberAnimation/NumberAnimation';
 
 import './WalletBalance.scss';
-import dollarSignImg from '../../../assets/svg/dollar-sign.svg';
-import { IWalletBalanceNumber, IWalletBalanceProps } from '../interfaces';
-import { WalletBalanceCurrency } from '../types';
+import dollarSignImg from '../../assets/svg/dollar-sign.svg';
+import { IWalletBalanceNumber, IWalletBalanceProps } from './interfaces';
+import { WalletBalanceCurrency } from './types';
 
 const balanceMaxLength = 6;
 const textSliceEnd = balanceMaxLength - 1;

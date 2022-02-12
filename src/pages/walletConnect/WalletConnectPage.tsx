@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate  } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { Button } from '../../components/button/Button';
 import { Input } from '../../components/input/Input';
@@ -7,14 +7,21 @@ import { InputStatus } from '../../components/types';
 import { LumenLogoSvg } from '../../components/lumenLogoSvg/LumenLogoSvg';
 
 import './WalletConnectPage.scss';
-import { client } from '../../shared/ts/ClientCommunication';
+import { prepareRequest } from '../../shared/ts/clientCommunication';
+import { useDispatch } from 'react-redux';
+import { addAlert } from '../../store/alertSlice';
+import { PostResponseWalletConnect } from '../../shared/ts/types';
 
 export const WalletConnectPage: React.FC = () => {
+  const dispatch = useDispatch();
+
   const navigate = useNavigate();
+
   const [publicKey, setPublicKey] = useState<string>('');
   const [secretKey, setSecretKey] = useState<string>('');
   const [publicKeyStatus, setPublicKeyStatus] = useState<InputStatus>();
   const [secretKeyStatus, setSecretKeyStatus] = useState<InputStatus>();
+
   const postData = {
     userId: localStorage.getItem('userId') ?? '',
     publicKey,
@@ -25,9 +32,22 @@ export const WalletConnectPage: React.FC = () => {
     setPublicKey(text);
     setPublicKeyStatus(status);
   };
+
   const secretKeyInputCallback = (text: string, status: InputStatus | undefined) => {
     setSecretKey(text);
     setSecretKeyStatus(status);
+  };
+
+  const postResponseCallback = (response: PostResponseWalletConnect) => {
+    localStorage.setItem('wallet', JSON.stringify(response.data));
+    navigate('/wallet');
+  };
+
+  const postErrorCallback = (error: any) => {
+    dispatch(addAlert({ type: 'error', heading: error.response.data.message }));
+    // TODO: set invalid key status depending on error
+    setPublicKeyStatus('invalid');
+    setSecretKeyStatus('invalid');
   };
 
   const connectWalletCallback = () => {
@@ -43,36 +63,34 @@ export const WalletConnectPage: React.FC = () => {
       }
 
       return;
-    } else if (secretKey.length === 0) {
+    }
+
+    if (secretKey.length === 0) {
       setSecretKeyStatus('invalid');
 
       return;
     }
 
-    client.prepareRequest(navigate)({
+    prepareRequest(
+      navigate,
+      dispatch,
+    )({
       requestConfig: {
         method: 'post',
         url: `/wallet/connect`,
         data: postData,
       },
-      onResponse: (response) => {
-        localStorage.setItem('wallet', JSON.stringify(response.data));
-        navigate('/wallet');
-      },
+      onResponse: postResponseCallback,
       onError: postErrorCallback,
     });
   };
 
-  const postErrorCallback = (error: any, triggerAlertCallback: (message: string) => void) => {
-    triggerAlertCallback(error.response.data.message);
-    // TODO: set invalid key status depending on error
-    setPublicKeyStatus('invalid');
-    setSecretKeyStatus('invalid');
-  };
-
   return (
     <section className="wallet-connect-page">
-      <Button className="go-back-link" text="←" appearance={{ priority: 'secondary', theme: 'black-white' }}
+      <Button
+        className="go-back-link"
+        text="←"
+        appearance={{ priority: 'secondary', theme: 'black-white' }}
         onClick={() => navigate(-1)}
       />
 

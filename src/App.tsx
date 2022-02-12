@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import { AlertContainer } from './components/alertContainer/AlertContainer';
@@ -9,7 +9,7 @@ import { Error404Page } from './pages/errors/error404/Error404Page';
 import { Error500Page } from './pages/errors/error500/Error500Page';
 import { FaqPage } from './pages/faq/FaqPage';
 import { HomePage } from './pages/home/HomePage';
-import { WalletPage } from './pages/wallet/components/WalletPage';
+import { WalletPage } from './pages/wallet/WalletPage';
 import { WalletConnectPage } from './pages/walletConnect/WalletConnectPage';
 import { AuthPage } from './pages/auth/AuthPage';
 import { AuthLoadPage } from './pages/authLoad/AuthLoadPage';
@@ -18,18 +18,17 @@ import { PlayersPage } from './pages/players/PlayersPage';
 import { SettingsPage } from './pages/settings/SettingsPage';
 import { PlayPage } from './pages/play/PlayPage';
 import { RedeemCode } from './pages/redeemCode/RedeemCode';
-import { client } from './shared/ts/ClientCommunication';
+import { useDispatch } from 'react-redux';
+import { connectSocket } from './shared/ts/clientCommunication';
 
 export const App: React.FC = () => {
-  const [isAttackAlertsVisible, setIsAttackAlertsVisible] = useState(false);
-  const [isConnectedSocket, setIsConnectedSocket] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    client.onSocketConnect = () => setIsConnectedSocket(true);
-    client.onSocketDisconnect = () => setIsConnectedSocket(false);
-    client.connectSocket();
-    console.log('connection');
-  }, []);
+    connectSocket(dispatch);
+  }, [dispatch]);
+
+  console.log('APP render');
 
   return (
     <>
@@ -45,10 +44,7 @@ export const App: React.FC = () => {
           <Route path="/coin" element={<CoinPage />} />
           <Route path="/wallet" element={<WalletPage />} />
           <Route path="/wallet/connect" element={<WalletConnectPage />} />
-          <Route
-            path="/play"
-            element={<PlayPage isConnectedSocket={isConnectedSocket} showAlertsCallback={setIsAttackAlertsVisible} />}
-          />
+          <Route path="/play" element={<PlayPage />} />
           <Route path="/players" element={<PlayersPage />} />
           <Route path="/username" element={<UsernamePage />} />
           <Route path="/settings" element={<SettingsPage />} />
@@ -57,7 +53,7 @@ export const App: React.FC = () => {
           <Route path="*" element={<Error404Page />} />
         </Routes>
       </BrowserRouter>
-      <AlertContainer isConnectedSocket={isConnectedSocket} showAttackAlerts={isAttackAlertsVisible} />
+      <AlertContainer />
     </>
   );
 };

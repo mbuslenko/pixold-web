@@ -9,13 +9,18 @@ import { InputStatus } from '../../components/types';
 
 import './UsernamePage.scss';
 import { redirect } from '../../shared/ts/helperFunctions';
-import { client } from '../../shared/ts/ClientCommunication';
+import { prepareRequest } from '../../shared/ts/clientCommunication';
+import { useDispatch } from 'react-redux';
 
 export const UsernamePage: React.FC = () => {
+  const dispatch = useDispatch();
+
   const navigate = useNavigate();
 
   const [username, setUsername] = useState<string>('');
   const [usernameStatus, setUsernameStatus] = useState<InputStatus>();
+
+  const request = prepareRequest(navigate, dispatch);
 
   const submitUsernameCallback = () => {
     if (username.length === 0 || usernameStatus === 'invalid' || /[^\w^_^\d]/.test(username)) {
@@ -24,7 +29,7 @@ export const UsernamePage: React.FC = () => {
       return;
     }
 
-    client.prepareRequest(navigate)({
+    request({
       requestConfig: {
         method: 'get',
         url: `/user/check/username/${username}`,
@@ -43,7 +48,7 @@ export const UsernamePage: React.FC = () => {
 
     setUsernameStatus('valid');
 
-    client.prepareRequest(navigate)({
+    request({
       requestConfig: {
         method: 'post',
         url: `/user/update/username`,

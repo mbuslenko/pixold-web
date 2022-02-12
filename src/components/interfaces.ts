@@ -97,13 +97,12 @@ export interface ITabbedButtonGroupProps {
 export interface IAlertProps {
   type: AlertType;
   heading: string;
-  date: Date;
+  date: string;
   text?: string;
   closeAlertCallback: () => void;
 }
 
 export interface IAlertContainerProps {
-  isConnectedSocket: boolean;
   showAttackAlerts?: boolean;
 }
 
@@ -118,7 +117,7 @@ export interface ILoaderProps {
 
 export interface IModalProps {
   heading: string;
-  text: string;
+  text?: string;
   positionType?: ModalPositionType;
   position?: IModalPosition;
   theme?: ModalTheme;

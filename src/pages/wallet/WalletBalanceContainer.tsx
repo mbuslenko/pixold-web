@@ -1,6 +1,6 @@
 import './WalletBalanceContainer.scss';
 import { WalletBalance } from './WalletBalance';
-import { IWalletBalanceContainerProps } from '../interfaces';
+import { IWalletBalanceContainerProps } from './interfaces';
 
 export const WalletBalanceContainer: React.FC<IWalletBalanceContainerProps> = ({ pxl, xlm, usd }) => {
   return (

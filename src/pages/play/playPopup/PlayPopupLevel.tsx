@@ -18,7 +18,9 @@ export const PlayPopupLevel: React.FC<IPlayPopupLevelProps> = ({ hexagonInfo, se
         <div>
           <h3 className="play-popup-content-heading">Next level</h3>
           <p className="play-popup-content-text">
-            {hexagonInfo.level === 'supreme' ? 'Max level' : getNextItem(Object.entries(levelNameAll), HexagonLevel[hexagonInfo.level])[1]}
+            {hexagonInfo.level === 'supreme'
+              ? 'Max level'
+              : getNextItem(Object.entries(levelNameAll), HexagonLevel[hexagonInfo.level])[1]}
           </p>
         </div>
         <Button

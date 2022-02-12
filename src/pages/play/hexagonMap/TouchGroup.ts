@@ -10,7 +10,7 @@ export class TouchGroup {
     this.firstTouch = firstTouch;
     this.secondTouch = secondTouch;
     this.middlePoint = this.firstTouch.copy().getMiddle(this.secondTouch);
-    this.distanceToMiddle = firstTouch.distance(this.middlePoint) + secondTouch.distance(this.middlePoint);
+    this.distanceToMiddle = firstTouch.getDistance(this.middlePoint) + secondTouch.getDistance(this.middlePoint);
   }
 
   static FromTouchList(toucheList: TouchList): TouchGroup {

@@ -1,16 +1,20 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { IGetResponseWallet } from '../../../shared/ts/interfaces';
+import { IGetResponseWallet } from '../../shared/ts/interfaces';
 
 import './WalletPage.scss';
 import { WalletSwitch } from './WalletSwitch';
 import { WalletHeader } from './WalletHeader';
 import { WalletBalanceContainer } from './WalletBalanceContainer';
-import { client } from '../../../shared/ts/ClientCommunication';
+import { prepareRequest } from '../../shared/ts/clientCommunication';
+import { useDispatch } from 'react-redux';
 
 export const WalletPage: React.FC = () => {
+  const dispatch = useDispatch();
+
   const navigate = useNavigate();
+
   const [username, setUsername] = useState<string>('');
   const [pxl, setPxl] = useState<number>(0);
   const [xlm, setXlm] = useState<number>(0);
@@ -44,7 +48,10 @@ export const WalletPage: React.FC = () => {
 
     setUserWallet(JSON.parse(wallet as string));
 
-    client.prepareRequest(navigate)({
+    prepareRequest(
+      navigate,
+      dispatch,
+    )({
       requestConfig: {
         url: '/wallet',
         method: 'get',
@@ -52,7 +59,7 @@ export const WalletPage: React.FC = () => {
       onResponse: (response) => setUserWallet(response.data),
       onError: errorCallback,
     });
-  }, [navigate]);
+  }, [dispatch, navigate]);
 
   return (
     <section className="wallet-page">

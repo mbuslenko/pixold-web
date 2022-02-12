@@ -8,7 +8,7 @@ import {
 
 import { Grid } from './Grid';
 import { Hexagon } from './Hexagon';
-import { HexagonAttack } from './interfaces';
+import { IHexagonAttack } from './interfaces';
 import { mapData } from './mapData';
 import { Matrix } from './Matrix';
 import { Size } from './Size';
@@ -21,8 +21,8 @@ export class SceneSystem {
   private _mapGrid: Grid;
   private _visibleMap: Hexagon[];
 
-  private _leftAttackingHexagonAll: HexagonAttack[];
-  private _rightAttackingHexagonAll: HexagonAttack[];
+  private _leftAttackingHexagonAll: IHexagonAttack[];
+  private _rightAttackingHexagonAll: IHexagonAttack[];
 
   private _ownedHexagonAll: Map<string, Hexagon[]>;
   private _invisibleHexagon: Hexagon;
@@ -45,11 +45,11 @@ export class SceneSystem {
     return this._mapSize;
   }
 
-  get leftAttackingHexagonAll(): HexagonAttack[] {
+  get leftAttackingHexagonAll(): IHexagonAttack[] {
     return this._leftAttackingHexagonAll;
   }
 
-  get rightAttackingHexagonAll(): HexagonAttack[] {
+  get rightAttackingHexagonAll(): IHexagonAttack[] {
     return this._rightAttackingHexagonAll;
   }
 
@@ -133,7 +133,7 @@ export class SceneSystem {
     this.activeHexagon = [];
   }
 
-  addAttackingHexagon(attackingHexagon: HexagonAttack): void {
+  addAttackingHexagon(attackingHexagon: IHexagonAttack): void {
     const { attacker, defender } = attackingHexagon;
 
     if (attacker.position.x > defender.position.x || attacker.position.y > defender.position.y) {
@@ -145,12 +145,12 @@ export class SceneSystem {
     this._rightAttackingHexagonAll.push(attackingHexagon);
   }
 
-  updateHexagonAttack(attack: ISocketMapMessage): void {
+  updateHexagonAttack(attackMessage: ISocketMapMessage): void {
     // HACK: test
-    if (attack.attack === 'started') {
+    if (attackMessage.attack === 'started') {
       this.addAttackingHexagon({
-        attacker: this._map[attack.from],
-        defender: this._map[attack.to],
+        attacker: this._map[attackMessage.from],
+        defender: this._map[attackMessage.to],
       });
 
       return;
@@ -158,7 +158,7 @@ export class SceneSystem {
 
     // HACK: test
     let hexagonAttack = this._leftAttackingHexagonAll.find(
-      ({ attacker, defender }) => attacker.id === attack.from && defender.id === attack.to,
+      ({ attacker, defender }) => attacker.id === attackMessage.from && defender.id === attackMessage.to,
     );
 
     if (hexagonAttack) {
@@ -168,7 +168,7 @@ export class SceneSystem {
     }
 
     hexagonAttack = this._rightAttackingHexagonAll.find(
-      ({ attacker, defender }) => attacker.id === attack.from && defender.id === attack.to,
+      ({ attacker, defender }) => attacker.id === attackMessage.from && defender.id === attackMessage.to,
     );
 
     if (hexagonAttack) {

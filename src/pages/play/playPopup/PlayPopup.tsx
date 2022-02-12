@@ -14,8 +14,10 @@ import { PlayPopupLevel } from './PlayPopupLevel';
 import { PlayPopupSettings } from './PlayPopupSettings';
 import { Button } from '../../../components/button/Button';
 import { Modal } from '../../../components/modal/Modal';
-import { client } from '../../../shared/ts/ClientCommunication';
 import { getNextItem, levelNameAll } from './hexagonInfoData';
+import { addAlert } from '../../../store/alertSlice';
+import { useDispatch } from 'react-redux';
+import { prepareRequest } from '../../../shared/ts/clientCommunication';
 
 export const PlayPopup: React.FC<IPlayPopupProps> = ({
   hexagonId,
@@ -24,7 +26,8 @@ export const PlayPopup: React.FC<IPlayPopupProps> = ({
   closePopupCallback,
   drawAttackLineCallback,
 }) => {
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const request = prepareRequest(useNavigate(), dispatch);
   const [selectedTab, setSelectedTab] = useState('info');
   const [modalIsVisible, setModalIsVisible] = useState(false);
 
@@ -33,14 +36,16 @@ export const PlayPopup: React.FC<IPlayPopupProps> = ({
       return;
     }
 
-    client.prepareRequest(navigate)({
+    request({
       requestConfig: {
         method: 'post',
         url: '/hexagon/change-type',
         data: { numericId: hexagonId, type: newHexagonType },
       },
-      onResponse: (_, triggerAlertCallback) => {
-        triggerAlertCallback('Type was changed successfully');
+      onResponse: () => {
+        // triggerAlertCallback('Type was changed successfully');
+        dispatch(addAlert({ type: 'success', heading: 'Type was changed successfully' }));
+
         if (!hexagonInfo) {
           return;
         }
@@ -57,12 +62,12 @@ export const PlayPopup: React.FC<IPlayPopupProps> = ({
 
         setHexagonInfo(newHexagonInfo);
       },
-      onError: (error, triggerAlertCallback) => triggerAlertCallback(error.response.data.message),
+      onError: (error) => dispatch(addAlert({ type: 'error', heading: error.response.data.message })),
     });
   };
 
   // TODO: make interface for parameters
-  const upgradeResponseCallback = (_: any, triggerAlertCallback: (message: string) => void) => {
+  const upgradeResponseCallback = () => {
     if (hexagonInfo) {
       const newHexagonInfo = {
         ...hexagonInfo,
@@ -70,7 +75,7 @@ export const PlayPopup: React.FC<IPlayPopupProps> = ({
       };
 
       setHexagonInfo(newHexagonInfo);
-      triggerAlertCallback('Hexagon was upgraded successfully!');
+      dispatch(addAlert({ type: 'success', heading: 'Hexagon was upgraded successfully!' }));
     }
   };
 
@@ -120,24 +125,20 @@ export const PlayPopup: React.FC<IPlayPopupProps> = ({
       {modalIsVisible && hexagonInfo && (
         <Modal
           heading={`An upgrade will take ${hexagonInfo.coinsToUpgrade} coins from your wallet, are you sure?`}
-          text=""
           className="play-popup-modal"
         >
           <Button
             text={'Submit'}
             appearance={{ priority: 'primary' }}
             onClick={() => {
-              client.prepareRequest(navigate)({
+              request({
                 requestConfig: {
                   method: 'post',
                   url: '/hexagon/upgrade',
                   data: { numericId: hexagonId },
                 },
                 onResponse: upgradeResponseCallback,
-                onError: (error, triggerAlertCallback) => {
-                  triggerAlertCallback(error.response.data.message);
-                  console.log(error);
-                },
+                onError: (error) => dispatch(addAlert({ type: 'error', heading: error.response.data.message })),
               });
               setModalIsVisible(false);
             }}

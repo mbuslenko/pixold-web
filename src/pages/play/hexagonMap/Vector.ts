@@ -1,4 +1,4 @@
-import { HexagonMapData } from './interfaces';
+import { IHexagonMapData } from './interfaces';
 import { Size } from './Size';
 
 export class Vector {
@@ -50,14 +50,14 @@ export class Vector {
     return this;
   }
 
-  multiplyByValue(scaleFactor: number): Vector {
-    this.x *= scaleFactor;
-    this.y *= scaleFactor;
+  multiplyByValue(value: number): Vector {
+    this.x *= value;
+    this.y *= value;
 
     return this;
   }
 
-  distance(vector: Vector): number {
+  getDistance(vector: Vector): number {
     const xDifference = this.x - vector.x;
     const yDifference = this.y - vector.y;
 
@@ -72,7 +72,7 @@ export class Vector {
     return new Vector(this.x, this.y);
   }
 
-  static FromHexagonData(hexagonData: HexagonMapData): Vector {
+  static FromHexagonData(hexagonData: IHexagonMapData): Vector {
     return new Vector(hexagonData.x, hexagonData.y);
   }
 

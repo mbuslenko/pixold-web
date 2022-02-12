@@ -6,7 +6,9 @@ import { IPlayPopupInfoProps } from './interfaces';
 
 import './PlayPopupInfo.scss';
 import { levelNameAll, typeNameAll } from './hexagonInfoData';
-import { client } from '../../../shared/ts/ClientCommunication';
+import { prepareRequest } from '../../../shared/ts/clientCommunication';
+import { useDispatch } from 'react-redux';
+import { addAlert } from '../../../store/alertSlice';
 
 export const PlayPopupInfo: React.FC<IPlayPopupInfoProps> = ({
   hexagonId,
@@ -18,6 +20,7 @@ export const PlayPopupInfo: React.FC<IPlayPopupInfoProps> = ({
   drawAttackLineCallback,
 }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const buttonClassName = hexagonInfo.owner !== localStorage.getItem('username') ? 'play-popup-info-button-hidden' : '';
   const canAttack = hexagonInfo.owner === localStorage.getItem('username') && hexagonInfo.type === 'attack';
 
@@ -60,17 +63,22 @@ export const PlayPopupInfo: React.FC<IPlayPopupInfoProps> = ({
               appearance={{ priority: 'secondary' }}
               disabled={hexagonInfo.coinsInStorage === 0}
               onClick={() => {
-                client.prepareRequest(navigate)({
+                prepareRequest(
+                  navigate,
+                  dispatch,
+                )({
                   requestConfig: {
                     method: 'post',
                     url: '/hexagon/send-coins',
                     data: { numericId: hexagonId },
                   },
-                  onResponse: (_, triggerAlertCallback) => {
-                    triggerAlertCallback('The coins were successfully delivered to your wallet');
+                  onResponse: () => {
+                    dispatch(
+                      addAlert({ type: 'success', heading: 'The coins were successfully delivered to your wallet' }),
+                    );
                     changeCoinsInStorageCallback(0);
                   },
-                  onError: (error, triggerAlertCallback) => triggerAlertCallback(error.response.data.message),
+                  onError: (error) => dispatch(addAlert({ type: 'error', heading: error.response.data.message })),
                 });
               }}
             />
@@ -87,17 +95,20 @@ export const PlayPopupInfo: React.FC<IPlayPopupInfoProps> = ({
               appearance={{ priority: 'secondary' }}
               disabled={hexagonInfo.health === 100}
               onClick={() => {
-                client.prepareRequest(navigate)({
+                prepareRequest(
+                  navigate,
+                  dispatch,
+                )({
                   requestConfig: {
                     method: 'post',
                     url: '/hexagon/repair',
                     data: { numericId: hexagonId },
                   },
-                  onResponse: (_, triggerAlertCallback) => {
-                    triggerAlertCallback('Hexagon was successfully repaired');
+                  onResponse: () => {
+                    dispatch(addAlert({ type: 'success', heading: 'Hexagon was successfully repaired' }));
                     changeHealthCallback(100);
                   },
-                  onError: (error, triggerAlertCallback) => triggerAlertCallback(error.response.data.message),
+                  onError: (error) => dispatch(addAlert({ type: 'error', heading: error.response.data.message })),
                 });
               }}
             />
@@ -105,14 +116,14 @@ export const PlayPopupInfo: React.FC<IPlayPopupInfoProps> = ({
         ) : (
           <></>
         )}
-        <div className="play-popup-content-owner">
-          <div>
+        <div className="play-popup-content-owner-wrapper">
+          <div className="play-popup-content-owner">
             <h3 className="play-popup-content-heading">Owner</h3>
             <p className="play-popup-content-text">{hexagonInfo.owner}</p>
           </div>
 
           <Button
-            className={`play-popup-info-attack-button ${buttonClassName}`}
+            className={buttonClassName}
             text={'Attack'}
             appearance={{ priority: 'primary' }}
             disabled={!canAttack}

@@ -1,6 +1,6 @@
-import { HexagonMapData } from './interfaces';
+import { IHexagonMapData } from './interfaces';
 
-export const mapData: HexagonMapData[] = [
+export const mapData: IHexagonMapData[] = [
   { x: 685.8921197972753, y: 18 },
   { x: 696.2844246426887, y: 18 },
   { x: 706.676729488102, y: 18 },

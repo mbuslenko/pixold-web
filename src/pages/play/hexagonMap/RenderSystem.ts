@@ -1,6 +1,6 @@
 import { Color } from '../../../shared/ts/enums';
 import { Hexagon } from './Hexagon';
-import { HexagonAttack } from './interfaces';
+import { IHexagonAttack } from './interfaces';
 import { Matrix } from './Matrix';
 import { Size } from './Size';
 import { Vector } from './Vector';
@@ -57,7 +57,8 @@ export class RenderSystem {
   }
 
   clearLineAll(sceneSize: Size): void {
-    this._contextLine.clearRect(-200, -200, sceneSize.width + 400, sceneSize.height + 400);
+    // TODO: or should i forbid user to mouse over them map?
+    this._contextLine.clearRect(-sceneSize.width, -sceneSize.height, sceneSize.width * 3, sceneSize.height * 3);
   }
 
   setTransformHexagonAll(transform: Matrix): void {
@@ -107,7 +108,7 @@ export class RenderSystem {
     this._contextLine.closePath();
   }
 
-  private _drawHexagonAttack(hexagonAttack: HexagonAttack) {
+  private _drawHexagonAttack(hexagonAttack: IHexagonAttack) {
     const { attacker, defender } = hexagonAttack;
 
     const { x, y } = defender.position.copy().subtract(attacker.position);
@@ -126,7 +127,7 @@ export class RenderSystem {
     this._contextLine.closePath();
   }
 
-  drawHexagonAttackAll(leftHexagonAttacks: HexagonAttack[], rightHexagonAttacks: HexagonAttack[]): void {
+  drawHexagonAttackAll(leftHexagonAttacks: IHexagonAttack[], rightHexagonAttacks: IHexagonAttack[]): void {
     this._leftAttackLineOffset -= 1 % 2;
     this._contextLine.lineDashOffset = this._leftAttackLineOffset;
 

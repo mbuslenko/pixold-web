@@ -11,7 +11,7 @@ export class EventManager {
   private _touchClick: boolean;
   private _touchClickTimer: number;
   private _isPressedSpace: boolean;
-  private _drawAttackLine: boolean;
+  private _attackerId: number | null;
 
   constructor(context: HTMLElement, map: HexagonMap) {
     this._context = context;
@@ -22,19 +22,19 @@ export class EventManager {
     this._touchClick = false;
     this._touchClickTimer = 0;
     this._isPressedSpace = false;
-    this._drawAttackLine = false;
+    this._attackerId = null;
   }
 
-  get drawAttackLine(): boolean {
-    return this._drawAttackLine;
+  get attackerId(): number | null {
+    return this._attackerId;
   }
 
-  set drawAttackLine(value: boolean) {
+  set attackerId(value: number | null) {
     if (!value) {
       this._map.hideAttackLine();
     }
 
-    this._drawAttackLine = value;
+    this._attackerId = value;
   }
 
   private _keyDownCallback(e: KeyboardEvent): void {
@@ -116,7 +116,7 @@ export class EventManager {
   private _mouseMoveCallback = (e: MouseEvent): void => {
     e.preventDefault();
 
-    if (this._drawAttackLine) {
+    if (this._attackerId) {
       this._map.drawAttackLine(Vector.FromEventPosition(e));
     }
 
@@ -178,7 +178,7 @@ export class EventManager {
 
     const secondTouch = Vector.FromEventPosition(touches[1]);
     const distanceToMiddle =
-      firstTouch.distance(this._touchGroup.middlePoint) + secondTouch.distance(this._touchGroup.middlePoint);
+      firstTouch.getDistance(this._touchGroup.middlePoint) + secondTouch.getDistance(this._touchGroup.middlePoint);
 
     this._map.zoom(-(distanceToMiddle - this._touchGroup.distanceToMiddle) / 10, this._touchGroup.middlePoint);
 
@@ -209,7 +209,6 @@ export class EventManager {
     this._context.onmousemove = this._mouseMoveCallback.bind(this);
     this._context.onmouseup = this._mouseUpCallback.bind(this);
 
-    // TODO: check touch positions and maybe select hexagon NEAR to touch position
     this._context.ontouchstart = this._touchStartCallback.bind(this);
     this._context.ontouchmove = this._touchMoveCallback.bind(this);
     this._context.ontouchend = this._touchEndCallback.bind(this);

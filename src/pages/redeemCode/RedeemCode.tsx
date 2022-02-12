@@ -1,25 +1,29 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { Button } from '../../components/button/Button';
 import { Input } from '../../components/input/Input';
 import { InputStatus } from '../../components/types';
+import { prepareRequest } from '../../shared/ts/clientCommunication';
+import { addAlert } from '../../store/alertSlice';
 
 import './RedeemCode.scss';
-import { client } from '../../shared/ts/ClientCommunication';
 
 const openseaLink =
   'https://opensea.io/assets/matic/0x2953399124f0cbb46d2cbacd8a89cf0599974963/53812526196032344565437183040714628674999174739090954850032801003187019448321';
 
 export const RedeemCode: React.FC = () => {
+  const dispatch = useDispatch();
+
   const navigate = useNavigate();
+
   const [redeemCodeKey, setRedeemCodeKey] = useState<string>('');
   const [redeemCodeStatus, setRedeemCodeStatus] = useState<InputStatus>();
+
   const postData = {
     code: redeemCodeKey,
   };
-
-  // TODO: redirect if !accessToken ?
 
   const redeemCodeInputCallback = (text: string, status: InputStatus | undefined) => {
     setRedeemCodeKey(text);
@@ -37,27 +41,28 @@ export const RedeemCode: React.FC = () => {
       return;
     }
 
-    client.prepareRequest(navigate)({
+    const postResponseCallback = () => {
+      setRedeemCodeStatus('valid');
+      navigate('/play');
+    };
+
+    const postErrorCallback = (error: any) => {
+      dispatch(addAlert({ type: 'error', heading: error.response.data.message }));
+      setRedeemCodeStatus('invalid');
+    };
+
+    prepareRequest(
+      navigate,
+      dispatch,
+    )({
       requestConfig: {
         method: 'post',
         url: `/hexagon/redeem`,
         data: postData,
       },
-      onResponse: () => {
-        setRedeemCodeStatus('valid');
-        navigate('/play');
-      },
+      onResponse: postResponseCallback,
       onError: postErrorCallback,
     });
-  };
-
-  const redeemCodeCancelCallback = () => {
-    navigate('/play');
-  };
-
-  const postErrorCallback = (error: any, triggerAlertCallback: (message: string) => void) => {
-    triggerAlertCallback(error.response.data.message);
-    setRedeemCodeStatus('invalid');
   };
 
   return (
@@ -82,7 +87,7 @@ export const RedeemCode: React.FC = () => {
             <Button
               text="Cancel"
               appearance={{ priority: 'secondary', theme: 'grey' }}
-              onClick={redeemCodeCancelCallback}
+              onClick={() => navigate('/play')}
             />
           </div>
         </div>

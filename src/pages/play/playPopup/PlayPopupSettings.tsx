@@ -1,10 +1,11 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { Button } from '../../../components/button/Button';
 import { Dropdown } from '../../../components/dropdown/Dropdown';
 import { Toggle } from '../../../components/toggle/Toggle';
-import { client } from '../../../shared/ts/ClientCommunication';
+import { prepareRequest } from '../../../shared/ts/clientCommunication';
 import { HexagonInfoType } from '../../../shared/ts/types';
 
 import { IPlayPopupSettingsProps } from './interfaces';
@@ -13,6 +14,7 @@ import './PlayPopupSettings.scss';
 
 export const PlayPopupSettings: React.FC<IPlayPopupSettingsProps> = ({ hexagonInfo, changeHexagonTypeCallback }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [newHexagonType, setNewHexagon] = useState<HexagonInfoType>();
 
   const dropdownOptions = [
@@ -57,7 +59,10 @@ export const PlayPopupSettings: React.FC<IPlayPopupSettingsProps> = ({ hexagonIn
         value={'true'}
         checked={!hexagonInfo.isNotSubscribedOnNotifications.isAttacked}
         onChange={(isChecked: boolean) =>
-          client.prepareRequest(navigate)({
+          prepareRequest(
+            navigate,
+            dispatch,
+          )({
             requestConfig: {
               method: 'post',
               url: '/notifications/subscribe',
@@ -75,7 +80,10 @@ export const PlayPopupSettings: React.FC<IPlayPopupSettingsProps> = ({ hexagonIn
         value={'true'}
         checked={!hexagonInfo.isNotSubscribedOnNotifications.fullStorage}
         onChange={(isChecked: boolean) =>
-          client.prepareRequest(navigate)({
+          prepareRequest(
+            navigate,
+            dispatch,
+          )({
             requestConfig: {
               method: 'post',
               url: '/notifications/subscribe',

@@ -190,6 +190,6 @@ export interface IAxiosRequestConfig {
 
 export interface IAxiosInstanceProps {
   requestConfig: IAxiosRequestConfig;
-  onResponse?: (response: AxiosResponse, triggerAlertCallback: (message: string) => void) => void;
-  onError?: (error: any, triggerAlertCallback: (message: string) => void) => void;
+  onResponse?: (response: AxiosResponse) => void;
+  onError?: (error: any) => void;
 }

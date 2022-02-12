@@ -17,14 +17,6 @@ import { IFacebookLoginRenderProps } from './interfaces';
 export const AuthPage: React.FC = () => {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log(localStorage.getItem('accessToken'));
-
-    if (localStorage.getItem('userId') && localStorage.getItem('accessToken')) {
-      navigate('/play', { replace: true });
-    }
-  }, [navigate]);
-
   const handleGoogleAuthSuccess = async (responseGoogle: GetResponseLoginGoogle) => {
     if (!('accessToken' in responseGoogle)) {
       return;
@@ -59,6 +51,12 @@ export const AuthPage: React.FC = () => {
 
     navigate('/auth/load', { replace: true });
   };
+
+  useEffect(() => {
+    if (localStorage.getItem('accessToken')) {
+      navigate('/play', { replace: true });
+    }
+  }, [navigate]);
 
   return (
     <section className="login-wrap">

@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
 
-import { Button } from '../../../components/button/Button';
+import { Button } from '../../components/button/Button';
 
 import './WalletHeader.scss';
-import logoImg from '../../../assets/svg/logo.svg';
-import { IWalletHeaderProps } from '../interfaces';
+import logoImg from '../../assets/svg/logo.svg';
+import { IWalletHeaderProps } from './interfaces';
 
 const usernameMaxLength = 10;
 const usernameOverflow = '...';
