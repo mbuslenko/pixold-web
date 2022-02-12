@@ -43,7 +43,6 @@ export const PlayPopup: React.FC<IPlayPopupProps> = ({
         data: { numericId: hexagonId, type: newHexagonType },
       },
       onResponse: () => {
-        // triggerAlertCallback('Type was changed successfully');
         dispatch(addAlert({ type: 'success', heading: 'Type was changed successfully' }));
 
         if (!hexagonInfo) {

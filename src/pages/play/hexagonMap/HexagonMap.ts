@@ -301,6 +301,8 @@ export class HexagonMap {
 
     for (const hexagon of this._mapSystem.visibleMap) {
       if (this._isPositionInHexagon(position, hexagon)) {
+        this._clickOnHexagonCallback(hexagon.id);
+
         if (this._mapSystem.activeHexagon.length === 1 && this._mapSystem.activeHexagon[0].id === hexagon.id) {
           return;
         }
@@ -309,7 +311,6 @@ export class HexagonMap {
 
         // this._updateHexagonMap = this._updateActiveHexagonCallback([...this._mapSystem.activeHexagon]);
         this._updateHexagonMap = this._updateActiveHexagonCallback();
-        this._clickOnHexagonCallback(hexagon.id);
 
         console.log(`owned: ${hexagon.color}; not owned: rgb(96, 74, 247)`);
 
@@ -320,8 +321,9 @@ export class HexagonMap {
     if (this._mapSystem.activeHexagon.length > 0) {
       this._updateHexagonMap = this._updateActiveHexagonCallback();
       this._mapSystem.removeActiveHexagon();
-      this._clickOutsideHexagonCallback();
     }
+
+    this._clickOutsideHexagonCallback();
 
     this.hideAttackLine();
   }

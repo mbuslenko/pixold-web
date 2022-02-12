@@ -42,7 +42,7 @@ export const AlertContainer: React.FC = () => {
             onClick={() => setIsVisibleContainer(!isVisibleContainer)}
             className={styles['show-button']}
           />
-          <Button text="Clear" onClick={clearAlertAll} appearance={{ priority: 'secondary', theme: 'black-white' }} />
+          <Button text="Clear" onClick={() => dispatch(clearAlertAll())} appearance={{ priority: 'secondary', theme: 'black-white' }} />
         </div>
       )}
       {(alertLength <= 5 || isVisibleContainer) && [
