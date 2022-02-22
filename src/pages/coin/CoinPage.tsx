@@ -5,16 +5,16 @@ import { PixelCoinLogoSvg } from '../../components/pixelCoinLogoSvg/PixelCoinLog
 import { LumenLogoSvg } from '../../components/lumenLogoSvg/LumenLogoSvg';
 
 import './CoinPage.scss';
-import pageBackgroundImg1 from '../../assets/svg/coin-page-background-1.svg';
-import pageBackgroundImg2 from '../../assets/svg/coin-page-background-2.svg';
+import pageBackgroundImgTop from '../../assets/svg/coin-page-background-top.svg';
+import pageBackgroundImgBottom from '../../assets/svg/coin-page-background-bottom.svg';
 import pixelCoinCircleImg from '../../assets/svg/pixel-coin-circle.svg';
 
 export const CoinPage: React.FC = () => {
   return (
     <section className="coin-page">
       <div className="coin-page-background">
-        <img className="coin-page-background-text" src={pageBackgroundImg1} alt="" />
-        <img className="coin-page-background-text" src={pageBackgroundImg2} alt="" />
+        <img className="coin-page-background-text" src={pageBackgroundImgTop} alt="" />
+        <img className="coin-page-background-text" src={pageBackgroundImgBottom} alt="" />
       </div>
       <main className="coin-page-content">
         <div>

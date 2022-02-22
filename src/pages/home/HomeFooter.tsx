@@ -25,17 +25,17 @@ export const HomeFooter: React.FC = () => {
           <ul className="home-footer-social-list">
             <li>
               <a href="https://discord.gg/v782DCSf9E" target="_blank" rel="noreferrer noopener">
-                <img src={discordIcon} alt="Discord" />
+                <img src={discordIcon} alt="Discord" className="home-footer-social-icon" />
               </a>
             </li>
             <li>
               <a href="https://instagram.com/pixold.io" target="_blank" rel="noreferrer noopener">
-                <img src={instagramIcon} alt="Instagram" />
+                <img src={instagramIcon} alt="Instagram" className="home-footer-social-icon" />
               </a>
             </li>
             <li>
               <a href="https://t.me/pixold_help_bot" target="_blank" rel="noreferrer noopener">
-                <img src={telegramIcon} alt="Telegram" />
+                <img src={telegramIcon} alt="Telegram" className="home-footer-social-icon" />
               </a>
             </li>
           </ul>

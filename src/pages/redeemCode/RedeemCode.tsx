@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { Button } from '../../components/button/Button';
@@ -7,6 +6,7 @@ import { Input } from '../../components/input/Input';
 import { InputStatus } from '../../components/types';
 import { prepareRequest } from '../../shared/ts/clientCommunication';
 import { addAlert } from '../../store/alertSlice';
+import { useAppDispatch } from '../../store/store';
 
 import './RedeemCode.scss';
 
@@ -14,7 +14,7 @@ const openseaLink =
   'https://opensea.io/assets/matic/0x2953399124f0cbb46d2cbacd8a89cf0599974963/53812526196032344565437183040714628674999174739090954850032801003187019448321';
 
 export const RedeemCode: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
 

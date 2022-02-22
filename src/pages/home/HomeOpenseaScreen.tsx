@@ -10,10 +10,10 @@ import hexagonCardImg from '../../assets/svg/hexagon-card.svg';
 import hexagonCardBackgroundImg from '../../assets/svg/hexagon-card-background.svg';
 import hexagonScreenCardImg from '../../assets/svg/hexagon-screen-card.svg';
 import { prepareRequest } from '../../shared/ts/clientCommunication';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../../store/store';
 
 export const HomeOpenseaScreen: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
 

@@ -35,8 +35,9 @@ export class HexagonMap {
 
   private _clickOnHexagonCallback: (hexagonId: number) => void;
   private _clickOutsideHexagonCallback: () => void;
-  private _updateHexagonMap: () => void;
+
   private _sleepHexagonSceneCallback: () => void;
+  private _updateHexagonMap: () => void;
 
   constructor(
     canvasHexagon: HTMLCanvasElement,
@@ -72,6 +73,7 @@ export class HexagonMap {
 
     this._clickOnHexagonCallback = clickOnHexagonCallback;
     this._clickOutsideHexagonCallback = clickOutsideHexagonCallback;
+
     this._sleepHexagonSceneCallback = () => {
       // I made empty function to eliminate if() in each frame inside of animate()
     };
@@ -155,18 +157,10 @@ export class HexagonMap {
     this._renderSystem.drawActiveHexagonAll(this._mapSystem.activeHexagon);
   }
 
-  private _updateActiveHexagonCallback(): () => void {
-    // private _updateActiveHexagonCallback(notActiveHexagonAll: Hexagon[]): () => void {
-    return () => {
-      // HACK: test
-      // for (const hexagon of notActiveHexagonAll) {
-      //   this._renderSystem.clearActiveHexagon(hexagon);
-      // }
-
-      this._renderSystem.clearHexagonAll(this._mapSystem.mapSize);
-      this._renderSystem.drawHexagonAll(this._mapSystem.visibleMap);
-      this._renderSystem.drawActiveHexagonAll(this._mapSystem.activeHexagon);
-    };
+  private _updateActiveHexagonCallback(): void {
+    this._renderSystem.clearHexagonAll(this._mapSystem.mapSize);
+    this._renderSystem.drawHexagonAll(this._mapSystem.visibleMap);
+    this._renderSystem.drawActiveHexagonAll(this._mapSystem.activeHexagon);
   }
 
   run(): void {
@@ -209,7 +203,6 @@ export class HexagonMap {
     this._mapSystem.setOwnedHexagonAll(ownedHexagonAll);
 
     for (const attack of ownedHexagonAll.attacks) {
-      // HACK: test
       this._mapSystem.addAttackingHexagon({
         defender: this._mapSystem.map[attack.attackedId],
         attacker: this._mapSystem.map[attack.attackerId],
@@ -272,28 +265,35 @@ export class HexagonMap {
     );
   }
 
-  showOwnedHexagonAll(): void {
-    // TODO: refactoring
-    // this._updateHexagonMap = this._updateActiveHexagonCallback(this._mapSystem.activeHexagon);
-    this._updateHexagonMap = this._updateActiveHexagonCallback();
-
-    this._mapSystem.activeHexagon = this._mapSystem.ownedHexagonAll;
+  showOwnedHexagonAll(username: string): void {
+    this._mapSystem.activeHexagon = this._mapSystem.getOwnedHexagonAll(username);
+    this._updateHexagonMap = this._updateActiveHexagonCallback;
   }
 
-  drawAttackLine(position: Vector): void {
+  drawAttackLineToPosition(position: Vector): void {
+    const { width: mapWidth, height: mapHeight } = this._mapSystem.mapSize;
+
+    position.subtract(this._mapTransform.getTranslation()).divideByValue(this._mapTransform.getScale());
+    position.x = clamp(position.x, 0, mapWidth);
+    position.y = clamp(position.y, 0, mapHeight);
+
     this._attackLine = {
       from: this._mapSystem.activeHexagon[0].position,
-      to: position.subtract(this._mapTransform.getTranslation()).divideByValue(this._mapTransform.getScale()),
+      to: position,
       color: this._mapSystem.activeHexagon[0].color,
     };
   }
 
-  hideAttackLine(): void {
+  hideAttackLineToPosition(): void {
     this._attackLine = {
       from: new Vector(0, 0),
       to: new Vector(0, 0),
       color: Color.PINK,
     };
+  }
+
+  private _sameActiveHexagon(hexagon: Hexagon): boolean {
+    return this._mapSystem.activeHexagon.length === 1 && this._mapSystem.activeHexagon[0].id === hexagon.id;
   }
 
   click(position: Vector): void {
@@ -303,14 +303,13 @@ export class HexagonMap {
       if (this._isPositionInHexagon(position, hexagon)) {
         this._clickOnHexagonCallback(hexagon.id);
 
-        if (this._mapSystem.activeHexagon.length === 1 && this._mapSystem.activeHexagon[0].id === hexagon.id) {
+        if (this._sameActiveHexagon(hexagon)) {
           return;
         }
 
         this._mapSystem.activeHexagon = [hexagon];
 
-        // this._updateHexagonMap = this._updateActiveHexagonCallback([...this._mapSystem.activeHexagon]);
-        this._updateHexagonMap = this._updateActiveHexagonCallback();
+        this._updateHexagonMap = this._updateActiveHexagonCallback;
 
         console.log(`owned: ${hexagon.color}; not owned: rgb(96, 74, 247)`);
 
@@ -319,12 +318,12 @@ export class HexagonMap {
     }
 
     if (this._mapSystem.activeHexagon.length > 0) {
-      this._updateHexagonMap = this._updateActiveHexagonCallback();
-      this._mapSystem.removeActiveHexagon();
+      this._mapSystem.activeHexagon = [];
+      this._updateHexagonMap = this._updateActiveHexagonCallback;
     }
 
     this._clickOutsideHexagonCallback();
 
-    this.hideAttackLine();
+    this.hideAttackLineToPosition();
   }
 }

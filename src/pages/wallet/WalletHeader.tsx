@@ -4,12 +4,14 @@ import { Button } from '../../components/button/Button';
 
 import './WalletHeader.scss';
 import logoImg from '../../assets/svg/logo.svg';
-import { IWalletHeaderProps } from './interfaces';
+import { useAppSelector } from '../../store/store';
 
 const usernameMaxLength = 10;
 const usernameOverflow = '...';
 
-export const WalletHeader: React.FC<IWalletHeaderProps> = ({ username }) => {
+export const WalletHeader: React.FC = () => {
+  const username = useAppSelector((state) => state.user.username) ?? '';
+
   const adjustUsernameLength = (username: string): string => {
     if (username.length <= usernameMaxLength) {
       return username;

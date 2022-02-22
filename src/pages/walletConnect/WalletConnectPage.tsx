@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { Button } from '../../components/button/Button';
 import { Input } from '../../components/input/Input';
@@ -8,12 +8,16 @@ import { LumenLogoSvg } from '../../components/lumenLogoSvg/LumenLogoSvg';
 
 import './WalletConnectPage.scss';
 import { prepareRequest } from '../../shared/ts/clientCommunication';
-import { useDispatch } from 'react-redux';
 import { addAlert } from '../../store/alertSlice';
 import { PostResponseWalletConnect } from '../../shared/ts/types';
+import { useAppDispatch, useAppSelector } from '../../store/store';
+import { LinkToFaq } from '../../components/linkToFaq/LinkToFaq';
+import { setUserWallet } from '../../store/userSlice';
 
 export const WalletConnectPage: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+
+  const userId = useAppSelector((state) => state.user.userId);
 
   const navigate = useNavigate();
 
@@ -23,7 +27,7 @@ export const WalletConnectPage: React.FC = () => {
   const [secretKeyStatus, setSecretKeyStatus] = useState<InputStatus>();
 
   const postData = {
-    userId: localStorage.getItem('userId') ?? '',
+    userId: userId ?? '',
     publicKey,
     secret: secretKey,
   };
@@ -39,13 +43,12 @@ export const WalletConnectPage: React.FC = () => {
   };
 
   const postResponseCallback = (response: PostResponseWalletConnect) => {
-    localStorage.setItem('wallet', JSON.stringify(response.data));
+    dispatch(setUserWallet(response.data));
     navigate('/wallet');
   };
 
   const postErrorCallback = (error: any) => {
     dispatch(addAlert({ type: 'error', heading: error.response.data.message }));
-    // TODO: set invalid key status depending on error
     setPublicKeyStatus('invalid');
     setSecretKeyStatus('invalid');
   };
@@ -100,7 +103,7 @@ export const WalletConnectPage: React.FC = () => {
         <p className="wallet-connect-text">
           To connect your wallet, you will need a Public key and a Secret key. Enter them in the fields below to connect
           your wallet. Once connected, you will be able to perform any in-game transactions. For more info, visit our{' '}
-          <Link to="/faq/f4fa1f54-a705-4039-989e-ff1177f60cc7">FAQ</Link> page.
+          <LinkToFaq questionId="f4fa1f54-a705-4039-989e-ff1177f60cc7">FAQ</LinkToFaq> page.
         </p>
       </div>
 

@@ -13,30 +13,33 @@ const alertSlice = createSlice({
   name: 'alert',
   initialState,
   reducers: {
-    setIsShownAttackAlert: (state, action: PayloadAction<boolean>) => {
+    setIsShownAttackAlert: (state, action: PayloadAction<boolean>): void => {
       state.isShownAttackAlert = action.payload;
     },
 
-    addInfoAlert: (state, action: PayloadAction<Omit<AlertInfo, 'type' | 'date'>>) => {
+    addInfoAlert: (state, action: PayloadAction<Omit<AlertInfo, 'type' | 'date'>>): void => {
       state.infoAlertAll = [{ date: new Date().toString(), ...action.payload }, ...state.infoAlertAll];
     },
-    removeInfoAlert: (state, action: PayloadAction<number>) => {
+
+    removeInfoAlert: (state, action: PayloadAction<number>): void => {
       state.infoAlertAll = [
         ...state.infoAlertAll.slice(0, action.payload),
         ...state.infoAlertAll.slice(action.payload + 1),
       ];
     },
 
-    addAlert: (state, action: PayloadAction<Omit<AlertInfo, 'date'>>) => {
+    addAlert: (state, action: PayloadAction<Omit<AlertInfo, 'date'>>): void => {
       state.alertAll = [{ date: new Date().toString(), ...action.payload }, ...state.alertAll];
     },
-    removeAlert: (state, action: PayloadAction<number>) => {
+
+    removeAlert: (state, action: PayloadAction<number>): void => {
       state.alertAll = [...state.alertAll.slice(0, action.payload), ...state.alertAll.slice(action.payload + 1)];
     },
 
-    clearAlertAll: (state) => {
+    clearAlertAll: (state): void => {
       state.infoAlertAll = [];
       state.alertAll = [];
+      state.isShownAttackAlert = false;
     },
   },
 });

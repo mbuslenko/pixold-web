@@ -20,6 +20,15 @@ export interface IPlayPopupInfoProps {
   drawAttackLineCallback: () => void;
 }
 
+export interface IPlayPopupInfoMaintenanceProps {
+  heading: string;
+  text: string;
+  buttonText: string;
+  buttonClassName: string;
+  isDisabledButton: boolean;
+  buttonCallback: () => void;
+}
+
 export interface IPlayPopupLevelProps {
   hexagonInfo: IGetResponseHexagonInfo;
   setModalIsVisibleCallback: (isVisible: boolean) => void;
@@ -28,4 +37,10 @@ export interface IPlayPopupLevelProps {
 export interface IPlayPopupSettingsProps {
   hexagonInfo: IGetResponseHexagonInfo;
   changeHexagonTypeCallback: (hexagonType?: HexagonInfoType) => void;
+}
+
+export interface ILevelNameAll {
+  value: string;
+  nextValue: string;
+  index: number;
 }

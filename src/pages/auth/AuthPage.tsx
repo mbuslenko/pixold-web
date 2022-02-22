@@ -7,14 +7,20 @@ import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props
 import GoogleLogin from 'react-google-login';
 
 import { GetResponseLoginFacebook, GetResponseLoginGoogle } from '../../shared/ts/types';
-import { IPostDataAuth } from '../../shared/ts/interfaces';
+
+import { useAppDispatch, useAppSelector } from '../../store/store';
 
 import { Button } from '../../components/button/Button';
 
 import './AuthPage.scss';
 import { IFacebookLoginRenderProps } from './interfaces';
+import { setPostDataAuth } from '../../store/userSlice';
 
 export const AuthPage: React.FC = () => {
+  const dispatch = useAppDispatch();
+
+  const accessToken = useAppSelector((state) => state.user.accessToken);
+
   const navigate = useNavigate();
 
   const handleGoogleAuthSuccess = async (responseGoogle: GetResponseLoginGoogle) => {
@@ -22,14 +28,14 @@ export const AuthPage: React.FC = () => {
       return;
     }
 
-    const responseData: IPostDataAuth = {
-      email: responseGoogle.profileObj.email,
-      firstName: responseGoogle.profileObj.givenName,
-      lastName: responseGoogle.profileObj.familyName,
-      avatarUrl: responseGoogle.profileObj.imageUrl,
-    };
-
-    localStorage.setItem('responseData', JSON.stringify(responseData));
+    dispatch(
+      setPostDataAuth({
+        email: responseGoogle.profileObj.email,
+        firstName: responseGoogle.profileObj.givenName,
+        lastName: responseGoogle.profileObj.familyName,
+        avatarUrl: responseGoogle.profileObj.imageUrl,
+      }),
+    );
 
     navigate('/auth/load', { replace: true });
   };
@@ -40,23 +46,24 @@ export const AuthPage: React.FC = () => {
     }
 
     const fullName = responseFacebook.name.split(' ');
-    const responseData: IPostDataAuth = {
-      email: responseFacebook.email,
-      avatarUrl: responseFacebook.picture.data.url,
-      firstName: fullName[0],
-      lastName: fullName[1],
-    };
 
-    localStorage.setItem('responseData', JSON.stringify(responseData));
+    dispatch(
+      setPostDataAuth({
+        email: responseFacebook.email,
+        avatarUrl: responseFacebook.picture.data.url,
+        firstName: fullName[0],
+        lastName: fullName[1],
+      }),
+    );
 
     navigate('/auth/load', { replace: true });
   };
 
   useEffect(() => {
-    if (localStorage.getItem('accessToken')) {
+    if (accessToken) {
       navigate('/play', { replace: true });
     }
-  }, [navigate]);
+  }, [accessToken, navigate]);
 
   return (
     <section className="login-wrap">

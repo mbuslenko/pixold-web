@@ -8,45 +8,41 @@ import { WalletSwitch } from './WalletSwitch';
 import { WalletHeader } from './WalletHeader';
 import { WalletBalanceContainer } from './WalletBalanceContainer';
 import { prepareRequest } from '../../shared/ts/clientCommunication';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../store/store';
+import { setUsername, setUserWallet } from '../../store/userSlice';
 
 export const WalletPage: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+
+  const wallet = useAppSelector((state) => state.user.wallet);
 
   const navigate = useNavigate();
 
-  const [username, setUsername] = useState<string>('');
-  const [pxl, setPxl] = useState<number>(0);
-  const [xlm, setXlm] = useState<number>(0);
-  const [usd, setUsd] = useState<number>(0);
+  const [pxl, setPxl] = useState<number>(wallet?.balanceInPXL ?? 0);
+  const [xlm, setXlm] = useState<number>(wallet?.balanceInXLM ?? 0);
+  const [usd, setUsd] = useState<number>(wallet?.balanceInUSD ?? 0);
 
-  const setUserWallet = (wallet: IGetResponseWallet): void => {
-    const { username, balanceInUSD, balanceInXLM, balanceInPXL } = wallet;
-
-    setUsername(username);
-    setPxl(balanceInPXL);
-    setXlm(balanceInXLM);
-    setUsd(balanceInUSD);
-
-    localStorage.setItem('wallet', JSON.stringify(wallet));
-  };
+  if (!wallet) {
+    navigate('/coin', { replace: true });
+  }
 
   useEffect(() => {
+    const updateWallet = (wallet: IGetResponseWallet): void => {
+      const { username, balanceInUSD, balanceInXLM, balanceInPXL } = wallet;
+
+      setPxl(balanceInPXL);
+      setXlm(balanceInXLM);
+      setUsd(balanceInUSD);
+
+      dispatch(setUsername(username));
+      dispatch(setUserWallet(wallet));
+    };
+
     const errorCallback = (error: any): void => {
       if (error.response.status === 400) {
         navigate('/coin', { replace: true });
       }
     };
-
-    const wallet = localStorage.getItem('wallet');
-
-    if (!wallet) {
-      navigate('/coin', { replace: true });
-
-      return;
-    }
-
-    setUserWallet(JSON.parse(wallet as string));
 
     prepareRequest(
       navigate,
@@ -56,14 +52,14 @@ export const WalletPage: React.FC = () => {
         url: '/wallet',
         method: 'get',
       },
-      onResponse: (response) => setUserWallet(response.data),
+      onResponse: (response) => updateWallet(response.data),
       onError: errorCallback,
     });
   }, [dispatch, navigate]);
 
   return (
     <section className="wallet-page">
-      <WalletHeader username={username} />
+      <WalletHeader />
       <main className="wallet-page-main">
         <WalletBalanceContainer pxl={pxl} xlm={xlm} usd={usd} />
         <WalletSwitch onSubmit={() => console.log('switch submit')} />

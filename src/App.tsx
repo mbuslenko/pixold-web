@@ -18,15 +18,19 @@ import { PlayersPage } from './pages/players/PlayersPage';
 import { SettingsPage } from './pages/settings/SettingsPage';
 import { PlayPage } from './pages/play/PlayPage';
 import { RedeemCode } from './pages/redeemCode/RedeemCode';
-import { useDispatch } from 'react-redux';
 import { connectSocket } from './shared/ts/clientCommunication';
+import { useAppDispatch, useAppSelector } from './store/store';
 
 export const App: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+
+  const accessToken = useAppSelector((state) => state.user.accessToken);
 
   useEffect(() => {
-    connectSocket(dispatch);
-  }, [dispatch]);
+    if (accessToken) {
+      connectSocket(dispatch, accessToken);
+    }
+  }, [dispatch, accessToken]);
 
   console.log('APP render');
 

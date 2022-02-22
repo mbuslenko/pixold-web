@@ -9,11 +9,13 @@ import './SettingsPage.scss';
 import logo from '../../assets/svg/logo.svg';
 import { Loader } from '../../components/loader/Loader';
 import { disconnectSocket, prepareRequest } from '../../shared/ts/clientCommunication';
-import { useDispatch } from 'react-redux';
-import { checkAuth } from '../../shared/ts/helperFunctions';
+import { checkIsAuth } from '../../shared/ts/helperFunctions';
+import { useAppDispatch } from '../../store/store';
+import { clearUserInfo } from '../../store/userSlice';
+import { clearAlertAll } from '../../store/alertSlice';
 
 export const SettingsPage: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
 
@@ -45,14 +47,19 @@ export const SettingsPage: React.FC = () => {
   };
 
   const logOutBtnCallback = () => {
-    localStorage.clear();
     disconnectSocket(dispatch);
+    dispatch(clearUserInfo());
+    dispatch(clearAlertAll());
     navigate('/auth');
   };
 
-  checkAuth(navigate);
-
   useEffect(() => {
+    const isAuth = checkIsAuth(dispatch, navigate);
+
+    if (!isAuth) {
+      return;
+    }
+
     prepareRequest(
       navigate,
       dispatch,

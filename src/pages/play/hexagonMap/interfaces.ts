@@ -1,9 +1,14 @@
 import { Hexagon } from './Hexagon';
-import { Vector } from './Vector'
+import { Vector } from './Vector';
 
 export interface IHexagonAttack {
   attacker: Hexagon;
   defender: Hexagon;
+}
+
+export interface INewHexagonAttack {
+  attacker: number;
+  defender: number;
 }
 
 export interface IAttackLine {

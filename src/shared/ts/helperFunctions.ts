@@ -1,4 +1,8 @@
+import { Dispatch } from '@reduxjs/toolkit';
 import { NavigateFunction } from 'react-router-dom';
+import { clearAlertAll } from '../../store/alertSlice';
+import { clearUserInfo } from '../../store/userSlice';
+import { disconnectSocket } from './clientCommunication';
 
 import { ScreenMaxWidth } from './enums';
 
@@ -34,11 +38,24 @@ export const redirect = (navigate: NavigateFunction, redirectTo: string): void =
   navigate(redirectTo);
 };
 
-export const checkAuth = (navigate: NavigateFunction): void => {
+export const checkIsAuth = (dispatch: Dispatch, navigate: NavigateFunction): boolean => {
   if (!localStorage.getItem('accessToken')) {
-    localStorage.clear();
     navigate('/auth', { replace: true });
+    dispatch(clearUserInfo());
+    dispatch(clearAlertAll());
+    disconnectSocket(dispatch);
+
+    return false;
   }
+
+  return true;
 };
 
 export const clamp = (num: number, min: number, max: number) => Math.min(max, Math.max(num, min));
+
+export const adjustDecimalLength = (number: number, decimalLength: number): string => {
+  const integer = Math.floor(number);
+
+  // I do number + 1 and n + 1 to eliminate case when number is similar to 0.123
+  return `${integer}.${((number + 1) % (integer + 1)).toString().slice(2, 2 + decimalLength)}`;
+};

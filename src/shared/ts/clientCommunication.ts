@@ -1,11 +1,14 @@
-import { Dispatch } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { NavigateFunction } from 'react-router-dom';
 import { io } from 'socket.io-client';
-import { addInfoAlert } from '../../store/alertSlice';
+
+import { Dispatch } from '@reduxjs/toolkit';
+import { NavigateFunction } from 'react-router-dom';
+
+import { addInfoAlert, clearAlertAll } from '../../store/alertSlice';
 import { setIsSocketConnected } from '../../store/socketSlice';
 import { IAxiosInstanceProps } from './interfaces';
 import { AxiosInstanceFunction, SocketEventListener, SocketEventType } from './types';
+import { clearUserInfo } from '../../store/userSlice';
 
 const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL,
@@ -21,19 +24,12 @@ export const removeSocketEventListenerAll = (event: SocketEventType): void => {
   socket?.removeAllListeners(event);
 };
 
-export const connectSocket = (dispatch: Dispatch): void => {
+export const connectSocket = (dispatch: Dispatch, accessToken: string): void => {
   if (socket) {
     return;
   }
 
-  // HACK: for dev
-  // if (process.env.NODE_ENV) {
-  //   console.log('socket in dev mode');
-
-  //   return;
-  // }
-
-  if (localStorage.getItem('accessToken')) {
+  if (accessToken) {
     socket = io(process.env.REACT_APP_BASE_URL as string);
 
     socket.on('connect', () => {
@@ -49,7 +45,7 @@ export const connectSocket = (dispatch: Dispatch): void => {
 
 export const disconnectSocket = (dispatch: Dispatch): void => {
   if (!socket) {
-    throw new Error('socket is not connected');
+    return;
   }
 
   socket.on('disconnect', () => {
@@ -68,13 +64,6 @@ export const prepareRequest = (navigate: NavigateFunction, dispatch: Dispatch): 
     if (accessToken) {
       axiosInstance.defaults.headers.common.Authorization = accessToken;
     }
-
-    // HACK: for dev
-    // if (process.env.NODE_ENV) {
-    //   console.log('request in dev mode');
-
-    //   return;
-    // }
 
     axiosInstance
       .request(requestConfig)
@@ -97,9 +86,9 @@ export const prepareRequest = (navigate: NavigateFunction, dispatch: Dispatch): 
         const { status } = error.response;
 
         if (status === 403 || status === 401) {
+          dispatch(clearUserInfo());
+          dispatch(clearAlertAll());
           disconnectSocket(dispatch);
-
-          localStorage.clear();
 
           navigate('/auth', { replace: true });
 

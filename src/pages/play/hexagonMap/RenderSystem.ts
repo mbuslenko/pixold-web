@@ -46,19 +46,8 @@ export class RenderSystem {
     this._contextHexagon.clearRect(-200, -200, sceneSize.width + 400, sceneSize.height + 400);
   }
 
-  clearActiveHexagon(hexagon: Hexagon): void {
-    this._contextHexagon.fillStyle = hexagon.color;
-
-    // HACK: test
-    this._contextHexagon.strokeStyle = Color.BLACK;
-
-    this._contextHexagon.stroke(this._hexagonPathAll[hexagon.id]);
-    this._contextHexagon.fill(this._hexagonPathAll[hexagon.id]);
-  }
-
   clearLineAll(sceneSize: Size): void {
-    // TODO: or should i forbid user to mouse over them map?
-    this._contextLine.clearRect(-sceneSize.width, -sceneSize.height, sceneSize.width * 3, sceneSize.height * 3);
+    this._contextLine.clearRect(-200, -200, sceneSize.width + 400, sceneSize.height + 400);
   }
 
   setTransformHexagonAll(transform: Matrix): void {
@@ -128,14 +117,14 @@ export class RenderSystem {
   }
 
   drawHexagonAttackAll(leftHexagonAttacks: IHexagonAttack[], rightHexagonAttacks: IHexagonAttack[]): void {
-    this._leftAttackLineOffset -= 1 % 2;
+    this._leftAttackLineOffset -= 1;
     this._contextLine.lineDashOffset = this._leftAttackLineOffset;
 
     for (const attack of leftHexagonAttacks) {
       this._drawHexagonAttack(attack);
     }
 
-    this._rightAttackLineOffset += 1 % 2;
+    this._rightAttackLineOffset += 1;
     this._contextLine.lineDashOffset = this._rightAttackLineOffset;
 
     for (const attack of rightHexagonAttacks) {

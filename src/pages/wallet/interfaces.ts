@@ -5,10 +5,6 @@ export interface IWalletBalanceProps {
   currency: WalletBalanceCurrency;
 }
 
-export interface IWalletHeaderProps {
-  username: string;
-}
-
 export interface IWalletBalanceContainerProps {
   pxl: number;
   xlm: number;

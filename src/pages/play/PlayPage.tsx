@@ -1,24 +1,46 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { IGetResponseHexagonInfo, ISocketMapMessage, ISocketNewHexagonMessage } from '../../shared/ts/interfaces';
+import { prepareRequest, onSocketEvent, removeSocketEventListenerAll } from '../../shared/ts/clientCommunication';
+import { AxiosInstanceFunction, GetResponseAllHexagonOwned, GetResponseHexagonInfo } from '../../shared/ts/types';
+import { checkIsAuth } from '../../shared/ts/helperFunctions';
+
+import { addAlert, setIsShownAttackAlert } from '../../store/alertSlice';
+import { useAppDispatch, useAppSelector } from '../../store/store';
+
 import './PlayPage.scss';
 import { PlayMenu } from './PlayMenu';
 import { PlayPopup } from './playPopup/PlayPopup';
-import { IGetResponseHexagonInfo, ISocketMapMessage, ISocketNewHexagonMessage } from '../../shared/ts/interfaces';
-import { prepareRequest, onSocketEvent, removeSocketEventListenerAll } from '../../shared/ts/clientCommunication';
-import { GetResponseAllHexagonOwned, GetResponseHexagonInfo } from '../../shared/ts/types';
 import { EventManager } from './hexagonMap/EventManager';
 import { HexagonMap } from './hexagonMap/HexagonMap';
-import { useDispatch, useSelector } from 'react-redux';
-import { addAlert, setIsShownAttackAlert } from '../../store/alertSlice';
-import { RootState } from '../../store/types';
-import { checkAuth } from '../../shared/ts/helperFunctions';
+import { Loader } from '../../components/loader/Loader';
+
+const prepareAttackRequest = (
+  request: AxiosInstanceFunction,
+  attackerId: number,
+  defenderId: number,
+): ((response: GetResponseHexagonInfo) => void) => {
+  return (response: GetResponseHexagonInfo) => {
+    if (!response.data.canAttack) {
+      return;
+    }
+
+    request({
+      requestConfig: {
+        method: 'post',
+        url: '/hexagon/attack',
+        data: { from: attackerId, to: defenderId },
+      },
+    });
+  };
+};
 
 export const PlayPage: React.FC = () => {
-  console.log('PlayPage render');
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const isSocketConnected = useSelector((state: RootState) => state.socket.isSocketConnected);
+  const isSocketConnected = useAppSelector((state) => state.socket.isSocketConnected);
+  const { userId } = useAppSelector((state) => state.user);
 
   const navigate = useNavigate();
 
@@ -27,6 +49,7 @@ export const PlayPage: React.FC = () => {
   const playPageRef = useRef<HTMLElement>(null);
 
   const [isVisiblePopup, setIsVisiblePopup] = useState(false);
+  const [isVisibleLoader, setIsVisibleLoader] = useState(true);
   const [hexagonId, setHexagonId] = useState<number | null>(null);
   const [hexagonInfo, setHexagonInfo] = useState<IGetResponseHexagonInfo | null>(null);
   const [map, setMap] = useState<HexagonMap>();
@@ -39,9 +62,14 @@ export const PlayPage: React.FC = () => {
     }
   };
 
-  checkAuth(navigate);
-
+  // PlayPage init useEffect
   useEffect(() => {
+    const isAuth = checkIsAuth(dispatch, navigate);
+
+    if (!isAuth) {
+      return;
+    }
+
     console.log('PlayPage init effect');
     const { current: playPage } = playPageRef;
     const { current: canvasHexagon } = canvasHexagonRef;
@@ -52,46 +80,26 @@ export const PlayPage: React.FC = () => {
     }
 
     const request = prepareRequest(navigate, dispatch);
+
     const clickOnHexagonCallback = (hexagonId: number) => {
-      if (eventManager.attackerId) {
-        request({
-          requestConfig: {
-            method: 'get',
-            url: `/hexagon/${hexagonId}`,
-          },
-          onResponse: (response: GetResponseHexagonInfo): void => {
-            console.log([response.data.canAttack, eventManager.attackerId, hexagonId]);
-            if (response.data.canAttack && eventManager.attackerId && hexagonId) {
-              const attackData = { from: eventManager.attackerId, to: hexagonId };
+      let getResponseHexagonInfoCallback = (response: GetResponseHexagonInfo): void => setHexagonInfo(response.data);
 
-              eventManager.attackerId = null;
+      if (!eventManager.attackerId) {
+        setHexagonInfo(null);
+        setHexagonId(hexagonId);
+        setIsVisiblePopup(true);
+      } else {
+        getResponseHexagonInfoCallback = prepareAttackRequest(request, eventManager.attackerId, hexagonId);
 
-              request({
-                requestConfig: {
-                  method: 'post',
-                  url: '/hexagon/attack',
-                  data: attackData,
-                },
-              });
-            }
-          },
-        });
-
-        // eventManager.attackerId = null;
-
-        return;
+        eventManager.attackerId = null;
       }
-
-      setHexagonInfo(null);
-      setHexagonId(hexagonId);
-      setIsVisiblePopup(true);
 
       request({
         requestConfig: {
           method: 'get',
           url: `/hexagon/${hexagonId}`,
         },
-        onResponse: (response: GetResponseHexagonInfo): void => setHexagonInfo(response.data),
+        onResponse: getResponseHexagonInfoCallback,
       });
     };
 
@@ -101,8 +109,9 @@ export const PlayPage: React.FC = () => {
     };
 
     const map = new HexagonMap(canvasHexagon, canvasLine, clickOnHexagonCallback, clickOutsideHexagonCallback);
-    // TODO: make eventManager inside of map
     const eventManager = new EventManager(canvasLine, map);
+
+    let loaderTimer = 0;
 
     // I set onwheel through ref because in this situation: "<section onWheel={e => e.preventDefault()}>" event listener is passive.
     // That means i can't block default browser zoom for my elements.
@@ -113,7 +122,13 @@ export const PlayPage: React.FC = () => {
         method: 'get',
         url: '/hexagon/all/owned',
       },
-      onResponse: (response: GetResponseAllHexagonOwned) => map.setAllOwnedHexagons(response.data),
+      onResponse: (response: GetResponseAllHexagonOwned) => {
+        map.setAllOwnedHexagons(response.data);
+
+        loaderTimer = window.setTimeout(() => {
+          setIsVisibleLoader(false);
+        }, 200);
+      },
     });
 
     map.run();
@@ -129,9 +144,12 @@ export const PlayPage: React.FC = () => {
 
       map.stop();
       eventManager.unsetEvents();
+
+      clearTimeout(loaderTimer);
     };
   }, [dispatch, navigate]);
 
+  // PlayPage socket connection useEffect
   useEffect(() => {
     if (!map || !eventManager || !isSocketConnected) {
       return;
@@ -140,7 +158,7 @@ export const PlayPage: React.FC = () => {
     onSocketEvent({
       event: 'attack',
       callback: ({ to, type, message }) => {
-        if (to === localStorage.getItem('userId')) {
+        if (to === userId) {
           dispatch(addAlert({ type, heading: message }));
         }
       },
@@ -148,16 +166,12 @@ export const PlayPage: React.FC = () => {
 
     onSocketEvent({
       event: 'map',
-      callback: (eventMessage: ISocketMapMessage) => {
-        map.updateHexagonAttack(eventMessage);
-      },
+      callback: (eventMessage: ISocketMapMessage) => map.updateHexagonAttack(eventMessage),
     });
 
     onSocketEvent({
       event: 'newHexagon',
-      callback: (eventMessage: ISocketNewHexagonMessage) => {
-        map.addOwnedHexagon(eventMessage);
-      },
+      callback: (eventMessage: ISocketNewHexagonMessage) => map.addOwnedHexagon(eventMessage),
     });
 
     return () => {
@@ -165,13 +179,21 @@ export const PlayPage: React.FC = () => {
       removeSocketEventListenerAll('newHexagon');
       removeSocketEventListenerAll('attack');
     };
-  }, [dispatch, eventManager, isSocketConnected, map, navigate]);
+  }, [dispatch, eventManager, isSocketConnected, map, navigate, userId]);
 
   return (
     <section className="play-page" ref={playPageRef}>
       <canvas className="play-page-canvas-hexagon" ref={canvasHexagonRef} />
       <canvas className="play-page-canvas-line" ref={canvasLineRef} />
-      <PlayMenu showMyTerritoryCallback={map?.showOwnedHexagonAll.bind(map)} />
+
+      {isVisibleLoader && (
+        <div className="play-page-loader-wrapper">
+          <Loader />
+        </div>
+      )}
+
+      <PlayMenu showOwnedTerritoryCallback={map?.showOwnedHexagonAll.bind(map)} />
+
       {isVisiblePopup && hexagonId !== null && (
         <PlayPopup
           hexagonId={hexagonId}

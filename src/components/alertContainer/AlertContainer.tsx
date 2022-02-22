@@ -1,17 +1,19 @@
 import { useEffect, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
-import styles from './AlertContainer.module.scss';
+import { clearAlertAll, removeAlert, removeInfoAlert } from '../../store/alertSlice';
+import { useAppSelector } from '../../store/store';
+
 import { Alert } from '../alert/Alert';
 import { Button } from '../button/Button';
-import { useDispatch, useSelector } from 'react-redux';
-import { clearAlertAll, removeAlert, removeInfoAlert } from '../../store/alertSlice';
-import { RootState } from '../../store/types';
+
+import styles from './AlertContainer.module.scss';
 
 export const AlertContainer: React.FC = () => {
   console.log('AlertContainer render');
   const dispatch = useDispatch();
 
-  const { infoAlertAll, alertAll } = useSelector((state: RootState) => state.alert);
+  const { infoAlertAll, alertAll } = useAppSelector((state) => state.alert);
 
   const alertContainer = useRef<HTMLDivElement>(null);
 
@@ -34,17 +36,6 @@ export const AlertContainer: React.FC = () => {
 
   return (
     <article className={styles.container} ref={alertContainer}>
-      {alertLength > 5 && (
-        <div className={styles['button-container']}>
-          <Button
-            text={showAlertButtonText}
-            appearance={{ priority: 'primary', theme: 'black-white' }}
-            onClick={() => setIsVisibleContainer(!isVisibleContainer)}
-            className={styles['show-button']}
-          />
-          <Button text="Clear" onClick={() => dispatch(clearAlertAll())} appearance={{ priority: 'secondary', theme: 'black-white' }} />
-        </div>
-      )}
       {(alertLength <= 5 || isVisibleContainer) && [
         infoAlertAll.map((value, index) => (
           <Alert
@@ -58,6 +49,22 @@ export const AlertContainer: React.FC = () => {
           <Alert {...value} key={`alert-${index}`} closeAlertCallback={() => dispatch(removeAlert(index))} />
         )),
       ]}
+      {alertLength > 5 && (
+        <div className={styles['button-container']}>
+          <Button
+            text={showAlertButtonText}
+            appearance={{ priority: 'primary', theme: 'black-white' }}
+            className={styles['show-button']}
+            onClick={() => setIsVisibleContainer(!isVisibleContainer)}
+          />
+          <Button
+            text="Clear"
+            appearance={{ priority: 'secondary', theme: 'black-white' }}
+            className={styles['clear-button']}
+            onClick={() => dispatch(clearAlertAll())}
+          />
+        </div>
+      )}
     </article>
   );
 };

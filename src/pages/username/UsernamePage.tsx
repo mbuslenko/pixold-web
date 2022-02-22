@@ -10,20 +10,23 @@ import { InputStatus } from '../../components/types';
 import './UsernamePage.scss';
 import { redirect } from '../../shared/ts/helperFunctions';
 import { prepareRequest } from '../../shared/ts/clientCommunication';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../store/store';
+import { setUsername } from '../../store/userSlice';
 
 export const UsernamePage: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
 
-  const [username, setUsername] = useState<string>('');
+  const currentUsername = useAppSelector((state) => state.user.username) ?? '';
+
+  const [newUsername, setNewUsername] = useState<string>('');
   const [usernameStatus, setUsernameStatus] = useState<InputStatus>();
 
   const request = prepareRequest(navigate, dispatch);
 
   const submitUsernameCallback = () => {
-    if (username.length === 0 || usernameStatus === 'invalid' || /[^\w^_^\d]/.test(username)) {
+    if (newUsername.length === 0 || usernameStatus === 'invalid' || /[^\w^_^\d]/.test(newUsername)) {
       setUsernameStatus('invalid');
 
       return;
@@ -32,7 +35,7 @@ export const UsernamePage: React.FC = () => {
     request({
       requestConfig: {
         method: 'get',
-        url: `/user/check/username/${username}`,
+        url: `/user/check/username/${newUsername}`,
       },
       onResponse: submitUsernameResponseCallback,
       onError: () => setUsernameStatus('invalid'),
@@ -52,17 +55,17 @@ export const UsernamePage: React.FC = () => {
       requestConfig: {
         method: 'post',
         url: `/user/update/username`,
-        data: { username },
+        data: { username: newUsername },
       },
       onResponse: () => {
-        localStorage.setItem('username', username);
+        dispatch(setUsername(newUsername));
         redirect(navigate, '/play');
       },
     });
   };
 
   const inputCallback = (text: string, status: InputStatus | undefined) => {
-    setUsername(text);
+    setNewUsername(text);
     setUsernameStatus(status);
   };
 
@@ -76,7 +79,7 @@ export const UsernamePage: React.FC = () => {
           description="Username"
           onInput={inputCallback}
           status={usernameStatus}
-          defaultValue={localStorage.getItem('username') ?? ''}
+          defaultValue={currentUsername}
         />
         <div className="username-button-container">
           <Button

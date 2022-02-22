@@ -36,11 +36,6 @@ export class SceneSystem {
     return this._visibleMap;
   }
 
-  get ownedHexagonAll(): Hexagon[] {
-    // HACK: test
-    return [...this._ownedHexagonAll.values()].flat();
-  }
-
   get mapSize(): Size {
     return this._mapSize;
   }
@@ -118,6 +113,35 @@ export class SceneSystem {
     }
   }
 
+  private _generateRandomColor(): string {
+    const generateRgbValue = (avoidValue: number): number => {
+      const colorRange = 10;
+      // 255 - colorRange is to eliminate full black colors
+      const value = Math.floor(Math.random() * (255 - colorRange * 2)) + colorRange;
+
+      if (Math.abs(value - avoidValue) <= colorRange) {
+        return (
+          avoidValue + (Math.ceil(Math.random() * colorRange) + colorRange) * Math.sign((value - avoidValue) * -2 + 1)
+        );
+      }
+
+      return value;
+    };
+
+    // rgb to avoid "rgb(96, 74, 247)"
+    return `rgb(${generateRgbValue(96)}, ${generateRgbValue(74)}, ${generateRgbValue(247)})`;
+  }
+
+  getOwnedHexagonAll(username: string): Hexagon[] {
+    const ownedHexagonAll = this._ownedHexagonAll.get(username);
+
+    if (!ownedHexagonAll) {
+      return [];
+    }
+
+    return [...ownedHexagonAll].flat();
+  }
+
   resize(): void {
     this._gridCellSize = this._getNewGridCellSize();
     this._mapGrid = this._getNewGrid(this._gridCellSize);
@@ -127,10 +151,6 @@ export class SceneSystem {
     for (const hexagon of this._map.slice(1)) {
       this._addHexagonToGrid(hexagon);
     }
-  }
-
-  removeActiveHexagon(): void {
-    this.activeHexagon = [];
   }
 
   addAttackingHexagon(attackingHexagon: IHexagonAttack): void {
@@ -146,7 +166,6 @@ export class SceneSystem {
   }
 
   updateHexagonAttack(attackMessage: ISocketMapMessage): void {
-    // HACK: test
     if (attackMessage.attack === 'started') {
       this.addAttackingHexagon({
         attacker: this._map[attackMessage.from],
@@ -156,7 +175,6 @@ export class SceneSystem {
       return;
     }
 
-    // HACK: test
     let hexagonAttack = this._leftAttackingHexagonAll.find(
       ({ attacker, defender }) => attacker.id === attackMessage.from && defender.id === attackMessage.to,
     );
@@ -176,46 +194,21 @@ export class SceneSystem {
     }
   }
 
-  private _generateRandomColor(): string {
-    const generateRgbValue = (avoidValue: number): number => {
-      const colorRange = 10;
-      // 255 - colorRange is to eliminate full black colors
-      const value = Math.floor(Math.random() * (255 - colorRange)) + colorRange;
-
-      if (value >= avoidValue - colorRange && value <= avoidValue + colorRange) {
-        console.log('regenerate color');
-
-        return (
-          avoidValue + (Math.ceil(Math.random() * colorRange) + colorRange) * Math.sign((value - avoidValue) * -2 + 1)
-        );
-      }
-
-      return value;
-    };
-
-    // rgb to avoid "rgb(96, 74, 247)"
-    return `rgb(${generateRgbValue(96)}, ${generateRgbValue(74)}, ${generateRgbValue(247)})`;
-  }
-
   setOwnedHexagonAll(ownedHexagonAll: IGetResponseOwnedHexagonAll): void {
     this._ownedHexagonAll = new Map();
 
     for (const { username, numericIds: hexagonIdAll } of ownedHexagonAll.hexagons) {
-      // TODO: refactoring;
-      if (username === localStorage.username) {
-        const hexagonAll: Hexagon[] = [];
-
-        this._ownedHexagonAll.set(username, hexagonAll);
-
-        for (const hexagonId of hexagonIdAll) {
-          hexagonAll.push(this._map[hexagonId]);
-        }
-      }
-
+      const hexagonAll: Hexagon[] = [];
       const hexagonColor = this._generateRandomColor();
 
+      this._ownedHexagonAll.set(username, hexagonAll);
+
       for (const hexagonId of hexagonIdAll) {
-        this._map[hexagonId].color = hexagonColor;
+        const hexagon = this._map[hexagonId];
+
+        hexagon.color = hexagonColor;
+
+        hexagonAll.push(hexagon);
       }
     }
   }

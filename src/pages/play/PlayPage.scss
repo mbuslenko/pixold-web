@@ -1,3 +1,5 @@
+@import '../../shared/scss/variables.scss';
+
 %canvas {
   display: block;
 }
@@ -6,6 +8,15 @@
   overscroll-behavior: none;
   touch-action: none;
   -webkit-overflow-scrolling: none;
+}
+
+.play-page-loader-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba($black, 0.5)
 }
 
 .play-page-canvas-hexagon {

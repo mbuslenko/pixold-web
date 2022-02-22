@@ -10,19 +10,31 @@ import { PlayMenuShowIconSvg } from '../../components/playMenuShowIconSvg/PlayMe
 import './PlayMenu.scss';
 import logo from '../../assets/svg/logo.svg';
 import { IPlayMenuCallback } from './interfaces';
+import { useAppSelector } from '../../store/store';
 
-export const PlayMenu: React.FC<IPlayMenuCallback> = ({ showMyTerritoryCallback }) => {
+export const PlayMenu: React.FC<IPlayMenuCallback> = ({ showOwnedTerritoryCallback: showMyTerritoryCallback }) => {
+  const username = useAppSelector((state) => state.user.username);
+
   const navigate = useNavigate();
+
   const [menuIsVisible, setMenuIsVisible] = useState<boolean>(false);
 
   const showMenuCallback = () => {
-    if (isScreen(ScreenMaxWidth.MEDIUM)) {
-      setMenuIsVisible(false);
+    setMenuIsVisible(!isScreen(ScreenMaxWidth.MEDIUM));
+  };
 
+  const showMyTerritoryButtonCallback = () => {
+    if (!username) {
       return;
     }
 
-    setMenuIsVisible(true);
+    if (isScreen(ScreenMaxWidth.MEDIUM)) {
+      setMenuIsVisible(false);
+    }
+
+    if (showMyTerritoryCallback) {
+      showMyTerritoryCallback(username);
+    }
   };
 
   useEffect(() => {
@@ -43,18 +55,7 @@ export const PlayMenu: React.FC<IPlayMenuCallback> = ({ showMyTerritoryCallback 
             <object className="play-menu-logo" data={logo} type="image/svg+xml" title="Logo" />
           </Link>
           <div className="play-menu-link-container">
-            <button
-              className="play-menu-button"
-              onClick={() => {
-                if (isScreen(ScreenMaxWidth.MEDIUM)) {
-                  setMenuIsVisible(false);
-                }
-
-                if (showMyTerritoryCallback) {
-                  showMyTerritoryCallback();
-                }
-              }}
-            >
+            <button className="play-menu-button" onClick={showMyTerritoryButtonCallback}>
               <PlayMenuIconSvg iconName="territory" className="play-menu-icon" />
               My territory
             </button>

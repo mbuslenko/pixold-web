@@ -125,7 +125,8 @@
 @supports (backdrop-filter: blur()) {
   .play-menu,
   .show-menu-button {
-    backdrop-filter: blur(3px);
+    background-color: rgba($blue-dark, 0.7);
+    backdrop-filter: blur(5px);
   }
 
   .show-menu-button.is-active {

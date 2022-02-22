@@ -1,6 +1,5 @@
 export interface IPlayMenuCallback {
-  // TODO: refactoring
-  showMyTerritoryCallback?: () => void;
+  showOwnedTerritoryCallback?: (ownerUsername: string) => void;
 }
 
 export interface IPlayMapProps {

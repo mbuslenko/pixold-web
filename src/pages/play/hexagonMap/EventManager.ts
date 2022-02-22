@@ -31,7 +31,7 @@ export class EventManager {
 
   set attackerId(value: number | null) {
     if (!value) {
-      this._map.hideAttackLine();
+      this._map.hideAttackLineToPosition();
     }
 
     this._attackerId = value;
@@ -117,7 +117,7 @@ export class EventManager {
     e.preventDefault();
 
     if (this._attackerId) {
-      this._map.drawAttackLine(Vector.FromEventPosition(e));
+      this._map.drawAttackLineToPosition(Vector.FromEventPosition(e));
     }
 
     if (this._isDragging) {
@@ -217,6 +217,8 @@ export class EventManager {
   }
 
   unsetEvents(): void {
+    clearTimeout(this._touchClickTimer);
+
     window.onresize = null;
 
     window.onkeydown = null;
@@ -232,7 +234,7 @@ export class EventManager {
     this._context.ontouchmove = null;
     this._context.ontouchend = null;
 
-    document.body.style.overflow = 'unset';
+    document.body.style.overflow = 'initial';
     this._context.style.cursor = 'default';
   }
 }

@@ -1,6 +1,8 @@
 import { AxiosResponse } from 'axios';
+
 import { AlertType } from '../../components/types';
 
+import { HexagonLevelType } from './types';
 import { HexagonInfoType, RequestData, SocketEventType } from './types';
 
 export interface IGetResponseFaqContent {
@@ -69,7 +71,7 @@ export interface IPostResponseAuth {
   accessToken: string;
   updateUsername: boolean;
   username: string;
-  wallet: IGetResponseWallet;
+  wallet: IGetResponseWallet | null;
 }
 
 export interface IPostDataUsername {
@@ -107,16 +109,19 @@ export interface IGetResponseUserData {
   wallet: string;
 }
 
+export interface IOwnedHexagonAll {
+  username: string;
+  numericIds: number[];
+}
+
+export interface IHexagonAttackAll {
+  attackedId: number;
+  attackerId: number;
+}
+
 export interface IGetResponseOwnedHexagonAll {
-  hexagons: {
-    username: string;
-    numericIds: number[];
-  }[];
-  // HACK: test
-  attacks: {
-    attackedId: number;
-    attackerId: number;
-  }[];
+  hexagons: IOwnedHexagonAll[];
+  attacks: IHexagonAttackAll[];
 }
 
 export interface ISocketEventListener<E extends SocketEventType, P extends {}> {
@@ -124,17 +129,10 @@ export interface ISocketEventListener<E extends SocketEventType, P extends {}> {
   callback: (payload: P) => void;
 }
 
-// TODO: make enum file for this
-export enum HexagonLevel {
-  starter,
-  middle,
-  pro,
-  supreme,
-}
-
 export interface IGetResponseHexagonInfo {
   type: HexagonInfoType;
-  level: keyof typeof HexagonLevel;
+  level: HexagonLevelType;
+  coinsToRepair: number;
   coinsInStorage: number;
   owner: string;
   health: number;

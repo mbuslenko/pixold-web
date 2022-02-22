@@ -32,6 +32,7 @@ import {
 } from './interfaces';
 
 export type HexagonInfoType = 'attack' | 'defender' | 'miner' | 'without';
+export type HexagonLevelType = 'starter' | 'middle' | 'pro' | 'supreme';
 
 export type GetResponseFaq = AxiosResponse<IGetResponseFaqTopic[]>;
 export type GetResponseWallet = AxiosResponse<IGetResponseWallet>;

@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { Button } from '../../../components/button/Button';
@@ -7,14 +6,17 @@ import { Dropdown } from '../../../components/dropdown/Dropdown';
 import { Toggle } from '../../../components/toggle/Toggle';
 import { prepareRequest } from '../../../shared/ts/clientCommunication';
 import { HexagonInfoType } from '../../../shared/ts/types';
+import { useAppDispatch } from '../../../store/store';
 
 import { IPlayPopupSettingsProps } from './interfaces';
 
 import './PlayPopupSettings.scss';
 
 export const PlayPopupSettings: React.FC<IPlayPopupSettingsProps> = ({ hexagonInfo, changeHexagonTypeCallback }) => {
+  const dispatch = useAppDispatch();
+
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+
   const [newHexagonType, setNewHexagon] = useState<HexagonInfoType>();
 
   const dropdownOptions = [
@@ -22,6 +24,24 @@ export const PlayPopupSettings: React.FC<IPlayPopupSettingsProps> = ({ hexagonIn
     { text: 'Defender', value: 'defender' },
     { text: 'Miner', value: 'miner' },
   ];
+
+  const getSubscribeOnNotificationsCallback = (notificationsType: string) => {
+    return (isChecked: boolean) => {
+      prepareRequest(
+        navigate,
+        dispatch,
+      )({
+        requestConfig: {
+          method: 'post',
+          url: '/notifications/subscribe',
+          data: {
+            notificationsType,
+            subscribe: isChecked,
+          },
+        },
+      });
+    };
+  };
 
   for (let i = 0; i < dropdownOptions.length; i++) {
     if (dropdownOptions[i].value === hexagonInfo.type) {
@@ -58,42 +78,14 @@ export const PlayPopupSettings: React.FC<IPlayPopupSettingsProps> = ({ hexagonIn
         priority={'secondary'}
         value={'true'}
         checked={!hexagonInfo.isNotSubscribedOnNotifications.isAttacked}
-        onChange={(isChecked: boolean) =>
-          prepareRequest(
-            navigate,
-            dispatch,
-          )({
-            requestConfig: {
-              method: 'post',
-              url: '/notifications/subscribe',
-              data: {
-                notificationsType: 'is-attacked',
-                subscribe: isChecked,
-              },
-            },
-          })
-        }
+        onChange={getSubscribeOnNotificationsCallback('is-attacked')}
       />
       <Toggle
         text={'Notify me when storage is full'}
         priority={'secondary'}
         value={'true'}
         checked={!hexagonInfo.isNotSubscribedOnNotifications.fullStorage}
-        onChange={(isChecked: boolean) =>
-          prepareRequest(
-            navigate,
-            dispatch,
-          )({
-            requestConfig: {
-              method: 'post',
-              url: '/notifications/subscribe',
-              data: {
-                notificationsType: 'full-storage',
-                subscribe: isChecked,
-              },
-            },
-          })
-        }
+        onChange={getSubscribeOnNotificationsCallback('full-storage')}
       />
 
       <div>

@@ -1,20 +1,28 @@
-import { HexagonLevel } from '../../../shared/ts/interfaces';
+import { HexagonLevelType } from '../../../shared/ts/types';
 import { HexagonInfoType } from '../../../shared/ts/types';
 
-export const hexagonLevelInfo = {
+import { ILevelNameAll } from './interfaces';
+
+export const hexagonActionChance = {
   miner: {
     description: 'Chance to mine',
-    levelAll: ['15%', '40%', '50%', '65%'],
+    chance: ['15%', '40%', '50%', '65%'],
   },
-  attack: { description: 'Chance of a successful attack', levelAll: ['15%-30%', '15%-45%', '15%-60%', '15%-80%'] },
-  defender: { description: 'Change of repel an attack', levelAll: ['50%', '70%', '90%', '98%'] },
+  attack: {
+    description: 'Chance of a successful attack',
+    chance: ['15%-30%', '15%-45%', '15%-60%', '15%-80%'],
+  },
+  defender: {
+    description: 'Change of repel an attack',
+    chance: ['50%', '70%', '90%', '98%'],
+  },
 };
 
-export const levelNameAll: Record<keyof typeof HexagonLevel, string> = {
-  starter: 'Starter',
-  middle: 'Middle',
-  pro: 'Pro',
-  supreme: 'Supreme',
+export const levelNameAll: Record<HexagonLevelType, ILevelNameAll> = {
+  starter: { value: 'Starter', nextValue: 'Middle', index: 0 },
+  middle: { value: 'Middle', nextValue: 'Pro', index: 1 },
+  pro: { value: 'Pro', nextValue: 'Supreme', index: 2 },
+  supreme: { value: 'Supreme', nextValue: 'Max level', index: 3 },
 };
 
 export const typeNameAll: Record<HexagonInfoType, string> = {
@@ -24,4 +32,8 @@ export const typeNameAll: Record<HexagonInfoType, string> = {
   without: 'Without',
 };
 
-export const getNextItem = (array: any[], index: number) => array[Math.min(array.length - 1, index + 1)];
+export const getActionChance = (chanceAll: string[], hexagonLevelType: HexagonLevelType) =>
+  chanceAll[levelNameAll[hexagonLevelType].index];
+
+export const getNextLevelActionChance = (chanceAll: string[], hexagonLevelType: HexagonLevelType) =>
+  chanceAll[Math.min(chanceAll.length - 1, levelNameAll[hexagonLevelType].index + 1)];

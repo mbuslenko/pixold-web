@@ -15,10 +15,10 @@ import { FaqTopic } from './FaqTopic';
 import { HomeFooter } from '../home/HomeFooter';
 import { ShowInfoModalCallback } from './types';
 import { prepareRequest } from '../../shared/ts/clientCommunication';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../../store/store';
 
 export const FaqPage: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
 

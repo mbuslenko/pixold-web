@@ -1,37 +1,31 @@
-import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { PostResponseAuth } from '../../shared/ts/types';
-import { IPostDataAuth } from '../../shared/ts/interfaces';
+import { connectSocket, prepareRequest } from '../../shared/ts/clientCommunication';
+
+import { useAppDispatch, useAppSelector } from '../../store/store';
 
 import { Loader } from '../../components/loader/Loader';
 
 import './AuthLoadPage.scss';
-import { connectSocket, prepareRequest } from '../../shared/ts/clientCommunication';
-import { useDispatch } from 'react-redux';
-import { checkAuth } from '../../shared/ts/helperFunctions';
+import { setUserInfo } from '../../store/userSlice';
+import { useEffect } from 'react';
 
 export const AuthLoadPage: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+
+  const postDataAuth = useAppSelector((state) => state.user.postDataAuth);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    const responseData: IPostDataAuth = JSON.parse(localStorage.getItem('responseData') as string);
-
-    checkAuth(navigate);
-
     const responseCallback = (response: PostResponseAuth) => {
-      const { userId, accessToken, username, wallet, updateUsername } = response.data;
+      console.log('auth response');
+      const { accessToken, updateUsername } = response.data;
 
-      localStorage.setItem('userId', userId);
-      localStorage.setItem('accessToken', accessToken);
-      localStorage.setItem('username', username);
-      if (wallet) {
-        localStorage.setItem('wallet', JSON.stringify(wallet));
-      }
+      dispatch(setUserInfo(response.data));
 
-      connectSocket(dispatch);
+      connectSocket(dispatch, accessToken);
 
       if (updateUsername) {
         navigate('/username', { replace: true });
@@ -42,6 +36,13 @@ export const AuthLoadPage: React.FC = () => {
       navigate('/play', { replace: true });
     };
 
+    console.log(['post data', postDataAuth]);
+
+    if (!postDataAuth) {
+      console.log('no post data');
+      return;
+    }
+
     prepareRequest(
       navigate,
       dispatch,
@@ -49,11 +50,11 @@ export const AuthLoadPage: React.FC = () => {
       requestConfig: {
         method: 'post',
         url: '/auth',
-        data: responseData,
+        data: postDataAuth,
       },
       onResponse: responseCallback,
     });
-  }, [dispatch, navigate]);
+  }, [dispatch, navigate, postDataAuth]);
 
   return (
     <section className="auth-load-page">
