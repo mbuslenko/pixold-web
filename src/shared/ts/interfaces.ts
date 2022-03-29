@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { AlertType } from '../../components/types';
 
-import { HexagonInfoType, RequestData, SocketEventType } from './types';
+import { AuthPlatform, HexagonInfoType, RequestData, SocketEventType } from './types';
 
 export interface IGetResponseFaqContent {
   id: string;
@@ -62,6 +62,8 @@ export interface IPostDataAuth {
   firstName: string;
   lastName?: string;
   avatarUrl: string;
+  accessToken: string;
+  platform: AuthPlatform;
 }
 
 export interface IPostResponseAuth {

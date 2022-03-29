@@ -35,6 +35,8 @@ export const AuthPage: React.FC = () => {
       firstName: responseGoogle.profileObj.givenName,
       lastName: responseGoogle.profileObj.familyName,
       avatarUrl: responseGoogle.profileObj.imageUrl,
+      accessToken: responseGoogle.accessToken,
+      platform: 'google',
     };
 
     localStorage.setItem('responseData', JSON.stringify(responseData));
@@ -53,6 +55,8 @@ export const AuthPage: React.FC = () => {
       avatarUrl: responseFacebook.picture.data.url,
       firstName: fullName[0],
       lastName: fullName[1],
+      accessToken: responseFacebook.accessToken,
+      platform: 'facebook',
     };
 
     localStorage.setItem('responseData', JSON.stringify(responseData));

@@ -65,3 +65,5 @@ export type SocketEventListener =
   | ISocketEventListener<'info', ISocketInfoMessage>
   | ISocketEventListener<'map', ISocketMapMessage>
   | ISocketEventListener<'newHexagon', ISocketNewHexagonMessage>;
+
+export type AuthPlatform = 'facebook' | 'google';
