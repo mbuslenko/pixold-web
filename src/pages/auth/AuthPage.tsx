@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 import GoogleLogin from 'react-google-login';
 
-import { GetResponseLoginFacebook, GetResponseLoginGoogle, AuthPlatform } from '../../shared/ts/types';
+import { GetResponseLoginFacebook, GetResponseLoginGoogle } from '../../shared/ts/types';
 import { IPostDataAuth } from '../../shared/ts/interfaces';
 
 import { Button } from '../../components/button/Button';
