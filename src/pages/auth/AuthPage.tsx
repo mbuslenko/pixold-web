@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 import GoogleLogin from 'react-google-login';
 
-import { GetResponseLoginFacebook, GetResponseLoginGoogle } from '../../shared/ts/types';
+import { GetResponseLoginFacebook, GetResponseLoginGoogle, AuthPlatform } from '../../shared/ts/types';
 import { IPostDataAuth } from '../../shared/ts/interfaces';
 
 import { Button } from '../../components/button/Button';
@@ -35,6 +35,8 @@ export const AuthPage: React.FC = () => {
       firstName: responseGoogle.profileObj.givenName,
       lastName: responseGoogle.profileObj.familyName,
       avatarUrl: responseGoogle.profileObj.imageUrl,
+      accessToken: responseGoogle.accessToken,
+      platform: 'google',
     };
 
     localStorage.setItem('responseData', JSON.stringify(responseData));
@@ -53,6 +55,8 @@ export const AuthPage: React.FC = () => {
       avatarUrl: responseFacebook.picture.data.url,
       firstName: fullName[0],
       lastName: fullName[1],
+      accessToken: responseFacebook.accessToken,
+      platform: 'facebook',
     };
 
     localStorage.setItem('responseData', JSON.stringify(responseData));
